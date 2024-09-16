@@ -1,6 +1,10 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Exe
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Pkg
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.UUID
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -21,7 +25,7 @@ kotlin {
     
     sourceSets {
         val desktopMain by getting
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -35,7 +39,10 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation("com.tecknobit.equinoxcompose:Equinox-Compose:1.0.1")
+            implementation(libs.equinox.compose)
+            implementation(libs.precompose)
+            implementation(libs.coil3.coil.compose)
+            implementation(libs.coil.network.okhttp)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -61,7 +68,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "*/**"
         }
     }
     buildTypes {
@@ -80,6 +87,7 @@ android {
         debugImplementation(compose.uiTooling)
     }
 }
+
 dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
 }
@@ -87,11 +95,46 @@ dependencies {
 compose.desktop {
     application {
         mainClass = "com.tecknobit.ametista.MainKt"
-
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.tecknobit.ametista"
+            targetFormats(Deb, Pkg, Exe)
+            modules(
+                "java.compiler", "java.instrument", "java.management", "java.naming", "java.net.http", "java.prefs",
+                "java.rmi", "java.scripting", "java.security.jgss", "java.sql", "jdk.jfr", "jdk.unsupported"
+            )
+            packageName = "Ametista"
             packageVersion = "1.0.0"
+            description = "" // TODO: "TO SET"
+            copyright = "© 2024 Tecknobit"
+            vendor = "Tecknobit"
+            licenseFile.set(project.file("LICENSE"))
+            macOS {
+                bundleID = "com.tecknobit.ametista"
+                iconFile.set(project.file("src/desktopMain/resources/logo.icns"))
+            }
+            windows {
+                iconFile.set(project.file("src/desktopMain/resources/logo.ico"))
+                upgradeUuid = UUID.randomUUID().toString()
+            }
+            linux {
+                iconFile.set(project.file("src/desktopMain/resources/logo.png"))
+                packageName = "com-tecknobit-ametista"
+                debMaintainer = "infotecknobitcompany@gmail.com"
+                appRelease = "1.0.0"
+                appCategory = "PERSONALIZATION"
+                rpmLicenseType = "MIT"
+            }
+        }
+        buildTypes.release.proguard {
+            configurationFiles.from(project.file("compose-desktop.pro"))
+            obfuscate.set(true)
         }
     }
+}
+
+configurations.all {
+    exclude("commons-logging", "commons-logging")
+}
+
+tasks.withType<ProcessResources> {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
