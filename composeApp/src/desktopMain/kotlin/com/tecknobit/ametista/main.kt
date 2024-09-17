@@ -6,6 +6,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
+import moe.tlaster.precompose.ProvidePreComposeLocals
 import org.jetbrains.compose.resources.stringResource
 
 fun main() = application {
@@ -17,6 +18,8 @@ fun main() = application {
         ),
         //icon = TODO: TO SET //painterResource("logo.png")
     ) {
-        App()
+        ProvidePreComposeLocals {
+            App()
+        }
     }
 }
