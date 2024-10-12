@@ -1,12 +1,21 @@
 package com.tecknobit.ametista.ui.screens
 
+import com.tecknobit.apimanager.annotations.Structure
 import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
+import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 
-abstract class AmetistaScreen : EquinoxScreen() {
+@Structure
+abstract class AmetistaScreen<V : EquinoxViewModel>(
+    viewModel: V? = null
+) : EquinoxScreen<V>(
+    viewModel = viewModel
+) {
 
     companion object {
 
-        const val SPLASH_SCREEN = "Splashscreen"
+        const val SPLASHSCREEN = "Splashscreen"
+
+        const val APPLICATIONS_SCREEN = "ApplicationsScreen"
 
     }
 

@@ -10,7 +10,9 @@ import coil3.addLastModifiedToFileCacheKey
 import coil3.compose.LocalPlatformContext
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASH_SCREEN
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
+import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import moe.tlaster.precompose.PreComposeApp
@@ -29,12 +31,12 @@ import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
 /**
- * **bodyFontFamily** -> the Refy's body font family
+ * **bodyFontFamily** -> the Ametista's body font family
  */
 lateinit var bodyFontFamily: FontFamily
 
 /**
- * **displayFontFamily** -> the Refy's font family
+ * **displayFontFamily** -> the Ametista's font family
  */
 lateinit var displayFontFamily: FontFamily
 
@@ -83,12 +85,17 @@ fun App() {
         AmetistaTheme {
             NavHost(
                 navigator = navigator,
-                initialRoute = SPLASH_SCREEN
+                initialRoute = SPLASHSCREEN
             ) {
                 scene(
-                    route = SPLASH_SCREEN
+                    route = SPLASHSCREEN
                 ) {
                     Splashscreen().ShowContent()
+                }
+                scene(
+                    route = APPLICATIONS_SCREEN
+                ) {
+                    ApplicationsScreen().ShowContent()
                 }
             }
         }

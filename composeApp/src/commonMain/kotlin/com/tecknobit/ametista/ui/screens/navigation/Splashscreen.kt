@@ -10,15 +10,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
+import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
 
-class Splashscreen: AmetistaScreen() {
+class Splashscreen: AmetistaScreen<EquinoxViewModel>() {
 
     @Composable
     override fun ArrangeScreenContent() {
@@ -58,6 +62,21 @@ class Splashscreen: AmetistaScreen() {
                 )
             }
         }
+
+        // TODO: TO REMOVE
+        LaunchedEffect(true) {
+            delay(250)
+            navigator.navigate(APPLICATIONS_SCREEN)
+        }
+    }
+
+    /**
+     * Function to collect or instantiate the states of the screen
+     *
+     * No-any params required
+     */
+    @Composable
+    override fun CollectStates() {
     }
 
 }

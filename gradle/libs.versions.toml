@@ -3,26 +3,30 @@ agp = "8.2.2"
 android-compileSdk = "34"
 android-minSdk = "26"
 android-targetSdk = "34"
-androidx-activityCompose = "1.9.1"
+androidx-activityCompose = "1.9.2"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.1.4"
 androidx-core-ktx = "1.13.1"
 androidx-espresso-core = "3.6.1"
-androidx-lifecycle = "2.8.0"
+androidx-lifecycle = "2.8.2"
 androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
-coil-kt-coilCompose = "3.0.0-alpha07"
+apimanager = "2.2.4"
+coil-kt-coilCompose = "3.0.0-alpha10"
 compose-plugin = "1.7.0-beta02"
-equinox-compose = "1.0.1"
+equinox = "1.0.4"
+equinox-compose = "1.0.2"
 junit = "4.13.2"
 kotlin = "2.0.20"
-kotlinx-coroutines = "1.8.1"
-precompose = "1.6.1"
-uiTextGoogleFonts = "1.7.1"
+kotlinx-coroutines = "1.9.0"
+precompose = "1.7.0-alpha01"
+uiTextGoogleFonts = "1.7.3"
 
 [libraries]
+apimanager = { module = "com.github.N7ghtm4r3:APIManager", version.ref = "apimanager" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil-kt-coilCompose" }
 coil3-coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil-kt-coilCompose" }
+equinox = { module = "io.github.n7ghtm4r3:Equinox", version.ref = "equinox" }
 equinox-compose = { module = "io.github.n7ghtm4r3:Equinox-Compose", version.ref = "equinox-compose" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

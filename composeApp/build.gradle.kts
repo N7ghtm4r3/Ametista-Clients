@@ -29,6 +29,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.ui.text.google.fonts)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -40,10 +41,12 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.equinox)
             implementation(libs.equinox.compose)
             implementation(libs.precompose)
             implementation(libs.coil3.coil.compose)
             implementation(libs.coil.network.okhttp)
+            implementation(libs.apimanager)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -87,10 +90,6 @@ android {
     dependencies {
         debugImplementation(compose.uiTooling)
     }
-}
-
-dependencies {
-    implementation(libs.androidx.ui.text.google.fonts)
 }
 
 compose.desktop {
