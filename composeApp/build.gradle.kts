@@ -47,6 +47,7 @@ kotlin {
             implementation(libs.coil3.coil.compose)
             implementation(libs.coil.network.okhttp)
             implementation(libs.apimanager)
+            implementation(libs.lazyPaginationCompose)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

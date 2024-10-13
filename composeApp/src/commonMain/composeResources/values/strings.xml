@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Ametista</string>
-    <string name="app_version">1.0.0</string>ì
+    <string name="app_version">1.0.0</string>
+    <string name="applications">Applications</string>
 </resources>
