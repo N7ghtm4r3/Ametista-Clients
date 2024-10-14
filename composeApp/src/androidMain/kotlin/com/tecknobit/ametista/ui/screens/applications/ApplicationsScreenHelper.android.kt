@@ -1,7 +1,10 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.tecknobit.ametista.ui.screens.applications
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -12,15 +15,19 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +40,7 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.tecknobit.ametista.imageLoader
+import com.tecknobit.ametistacore.models.AmetistaApplication
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 
 @Composable
@@ -44,7 +52,7 @@ actual fun Applications(
     PaginatedLazyColumn(
         modifier = Modifier
             .padding(
-                top = paddingValues.calculateTopPadding() + 16.dp,
+                top = paddingValues.calculateTopPadding(),
                 bottom = paddingValues.calculateBottomPadding() + 16.dp
             )
             .fillMaxHeight(),
@@ -63,29 +71,46 @@ actual fun Applications(
         // The rest of LazyColumn params
     ) {
         items(
-            items = listOf("fwefw"),
-            key = { it }
-        ) {
-            ApplicationItem()
+            items = listOf(AmetistaApplication("Space"), AmetistaApplication("ggg")), // TODO: USE THE REAL VALUES
+            key = { application -> application.id }
+        ) { application ->
+            ApplicationItem(
+                application = application
+            )
         }
     }
 }
 
-@NonRestartableComposable
 @Composable
-actual fun ApplicationItem() {
+@NonRestartableComposable
+actual fun ApplicationItem(
+    application: AmetistaApplication
+) {
+    val expandDescription = remember { mutableStateOf(false) }
     ListItem(
+        modifier = Modifier
+            .combinedClickable(
+                onClick = {
+                    // TODO: NAV TO APPLICATION
+                },
+                onDoubleClick = { expandDescription.value = true },
+                onLongClick = {
+                    // TODO: TO EDIT
+                }
+            ),
         leadingContent = {
-
+            ApplicationIcon(
+                application = application
+            )
         },
         headlineContent = {
             Text(
-                text = "Application name"
+                text = application.name
             )
         },
         supportingContent = {
             Text(
-                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce consequat imperdiet accumsan. Quisque nisl mi, dignissim et mauris pharetra, laoreet dictum leo. Aenean efficitur lorem a nibh ullamcorper, a commodo lorem tincidunt. Integer cursus posuere tempor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Maecenas ullamcorper elit a varius placerat. Vivamus nec ex ultricies, accumsan est sed, facilisis ipsum. Vivamus condimentum lacinia mi, at ultrices purus tincidunt eget. Ut dictum mi augue, vitae maximus mi feugiat sit amet. Mauris ipsum arcu, fermentum non orci non, blandit bibendum dui. Sed nulla justo, posuere at lectus venenatis, ullamcorper porttitor odio. Cras sed dolor turpis. Duis eu varius mauris, at euismod enim. Nulla facilisi. Pellentesque consequat venenatis tortor id aliquam.",
+                text = application.description,
                 maxLines = 4,
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis
@@ -95,27 +120,52 @@ actual fun ApplicationItem() {
             Column(
                 modifier = Modifier
                     .height(110.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                    contentDescription = null
-                )
+                IconButton(
+                    onClick = {
+                        // TODO: MAKE THE REQUEST THEN
+                    }
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .weight(1f),
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.error
+                    )
+                }
+                IconButton(
+                    onClick = {
+                        // TODO: NAV TO APPLICATION
+                    }
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .weight(1f),
+                        imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                        contentDescription = null
+                    )
+                }
             }
         }
     )
     HorizontalDivider()
+    ExpandApplicationDescription(
+        expand = expandDescription,
+        application = application
+    )
 }
 
 @NonRestartableComposable
 @Composable
 actual fun ApplicationIcon(
-    modifier: Modifier
+    modifier: Modifier,
+    application: AmetistaApplication
 ) {
     AsyncImage(
         modifier = modifier
-            .size(100.dp)
+            .size(95.dp)
             .border(
                 width = 1.5.dp,
                 color = MaterialTheme.colorScheme.primaryContainer,
@@ -123,7 +173,7 @@ actual fun ApplicationIcon(
             )
             .clip(CircleShape),
         model = ImageRequest.Builder(LocalPlatformContext.current)
-            .data("https://www.euroschoolindia.com/wp-content/uploads/2023/06/facts-about-space.jpg")
+            .data(application.icon)
             .crossfade(true)
             .crossfade(500)
             .build(),
