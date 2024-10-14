@@ -75,7 +75,8 @@ actual fun Applications(
             key = { application -> application.id }
         ) { application ->
             ApplicationItem(
-                application = application
+                application = application,
+                viewModel = viewModel
             )
         }
     }
@@ -84,9 +85,11 @@ actual fun Applications(
 @Composable
 @NonRestartableComposable
 actual fun ApplicationItem(
-    application: AmetistaApplication
+    application: AmetistaApplication,
+    viewModel: ApplicationsScreenViewModel
 ) {
     val expandDescription = remember { mutableStateOf(false) }
+    val deleteApplication = remember { mutableStateOf(false) }
     ListItem(
         modifier = Modifier
             .combinedClickable(
@@ -123,9 +126,7 @@ actual fun ApplicationItem(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 IconButton(
-                    onClick = {
-                        // TODO: MAKE THE REQUEST THEN
-                    }
+                    onClick = { deleteApplication.value = true }
                 ) {
                     Icon(
                         modifier = Modifier
@@ -135,6 +136,11 @@ actual fun ApplicationItem(
                         tint = MaterialTheme.colorScheme.error
                     )
                 }
+                DeleteApplication(
+                    show = deleteApplication,
+                    application = application,
+                    viewModel = viewModel
+                )
                 IconButton(
                     onClick = {
                         // TODO: NAV TO APPLICATION

@@ -84,7 +84,8 @@ actual fun Applications(
                 key = { application -> application.id }
             ) { application ->
                 ApplicationItem(
-                    application = application
+                    application = application,
+                    viewModel = viewModel
                 )
             }
         }
@@ -94,9 +95,11 @@ actual fun Applications(
 @Composable
 @NonRestartableComposable
 actual fun ApplicationItem(
-    application: AmetistaApplication
+    application: AmetistaApplication,
+    viewModel: ApplicationsScreenViewModel
 ) {
     val expandDescription = remember { mutableStateOf(false) }
+    val deleteApplication = remember { mutableStateOf(false) }
     Card (
         modifier = Modifier
             .padding(
@@ -137,9 +140,7 @@ actual fun ApplicationItem(
         IconButton(
             modifier = Modifier
                 .align(Alignment.End),
-            onClick = {
-                // TODO: MAKE THE REQUEST THEN
-            }
+            onClick = { deleteApplication.value = true }
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,
@@ -147,6 +148,11 @@ actual fun ApplicationItem(
                 tint = MaterialTheme.colorScheme.error
             )
         }
+        DeleteApplication(
+            show = deleteApplication,
+            viewModel = viewModel,
+            application = application
+        )
     }
     ExpandApplicationDescription(
         expand = expandDescription,

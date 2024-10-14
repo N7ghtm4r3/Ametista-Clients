@@ -2,10 +2,18 @@
 
 package com.tecknobit.ametista.ui.screens.applications
 
+import ametista.composeapp.generated.resources.Res.string
+import ametista.composeapp.generated.resources.confirm
+import ametista.composeapp.generated.resources.delete_application_text
+import ametista.composeapp.generated.resources.delete_application_title
+import ametista.composeapp.generated.resources.dismiss
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
@@ -20,6 +28,8 @@ import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametistacore.models.AmetistaApplication
+import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @NonRestartableComposable
@@ -31,7 +41,8 @@ expect fun Applications(
 @Composable
 @NonRestartableComposable
 expect fun ApplicationItem(
-    application: AmetistaApplication
+    application: AmetistaApplication,
+    viewModel: ApplicationsScreenViewModel
 )
 
 @Composable
@@ -77,4 +88,31 @@ fun ExpandApplicationDescription(
             }
         }
     }
+}
+
+@Composable
+@NonRestartableComposable
+fun DeleteApplication(
+    show: MutableState<Boolean>,
+    application: AmetistaApplication,
+    viewModel: ApplicationsScreenViewModel
+) {
+    EquinoxAlertDialog(
+        modifier = Modifier
+            .widthIn(
+                max = 400.dp
+            ),
+        show = show,
+        viewModel = viewModel,
+        icon = Icons.Default.Delete,
+        title = stringResource(string.delete_application_title, application.name),
+        text = stringResource(string.delete_application_text),
+        dismissText = stringResource(string.dismiss),
+        confirmText = stringResource(string.confirm),
+        confirmAction = {
+            // TODO: MAKE THE REQUEST THEN
+            show.value = false
+            viewModel.restartRefresher()
+        }
+    )
 }
