@@ -4,20 +4,58 @@ package com.tecknobit.ametista.ui.screens.applications
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.applications
+import ametista.composeapp.generated.resources.search_placeholder
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Android
+import androidx.compose.material.icons.filled.DesktopWindows
+import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.NonRestartableComposable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import com.tecknobit.ametista.ui.icons.Globe
+import com.tecknobit.ametista.ui.icons.Ios
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
+import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.ANDROID
+import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.DESKTOP
+import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.IOS
+import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.WEB
+import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import org.jetbrains.compose.resources.stringResource
 
 class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
@@ -63,10 +101,158 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                 }
             }
         ) { paddingValues ->
-            Applications(
-                paddingValues = paddingValues,
-                viewModel = viewModel!!
+            Column {
+                FiltersSection(
+                    paddingValues = paddingValues
+                )
+                Applications(
+                    viewModel = viewModel!!
+                )
+            }
+        }
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun FiltersSection(
+        paddingValues: PaddingValues
+    ) {
+        Column (
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row (
+                modifier = Modifier
+                    .padding(
+                        top = paddingValues.calculateTopPadding()
+                    )
+                    .padding(
+                        all = 16.dp
+                    )
+                    .widthIn(
+                        max = 800.dp
+                    ),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                SearchBar(
+                    modifier = Modifier
+                        .weight(3f)
+                )
+                PlatformsMenu(
+                    modifier = Modifier
+                        .weight(1f)
+                )
+            }
+        }
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun SearchBar(
+        modifier: Modifier
+    ) {
+        EquinoxOutlinedTextField(
+            modifier = modifier,
+            outlinedTextFieldColors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer
+            ),
+            value = viewModel!!.filterQuery,
+            placeholder = Res.string.search_placeholder,
+            trailingIcon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = null
+                )
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Search
             )
+        )
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun PlatformsMenu(
+        modifier: Modifier
+    ) {
+        var expanded by remember { mutableStateOf(false) }
+        Column (
+            modifier = modifier,
+            horizontalAlignment = Alignment.End
+        ) {
+            IconButton(
+                onClick = { expanded = true }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.FilterList,
+                    contentDescription = null
+                )
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    Platform.entries.forEach { platform ->
+                        PlatformItem(
+                            platform = platform
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun PlatformItem(
+        platform: Platform
+    ) {
+        DropdownMenuItem(
+            text = {
+                Row (
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .weight(1f),
+                        imageVector = platform.icon(),
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier
+                            .weight(1f),
+                        text = platform.name,
+                        textAlign = TextAlign.Center
+                    )
+                    Checkbox(
+                        modifier = Modifier
+                            .weight(1f),
+                        checked = viewModel!!.platformsFilter.contains(platform),
+                        onCheckedChange = { checked ->
+                            viewModel!!.managePlatforms(
+                                checked = checked,
+                                platform = platform
+                            )
+                        }
+                    )
+                }
+            },
+            onClick = {
+                viewModel!!.managePlatforms(
+                    platform = platform
+                )
+            }
+        )
+    }
+
+    private fun Platform.icon() : ImageVector {
+        return when(this) {
+            ANDROID -> Icons.Default.Android
+            IOS -> Ios
+            DESKTOP -> Icons.Default.DesktopWindows
+            WEB -> Globe
         }
     }
 
@@ -77,6 +263,8 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
      */
     @Composable
     override fun CollectStates() {
+        viewModel!!.filterQuery = remember { mutableStateOf("") }
+        viewModel!!.platformsFilter = remember { mutableStateListOf() }
     }
 
 }

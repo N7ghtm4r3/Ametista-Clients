@@ -7,12 +7,13 @@ import ametista.composeapp.generated.resources.confirm
 import ametista.composeapp.generated.resources.delete_application_text
 import ametista.composeapp.generated.resources.delete_application_title
 import ametista.composeapp.generated.resources.dismiss
+import ametista.composeapp.generated.resources.no_applications
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -22,25 +23,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametistacore.models.AmetistaApplication
+import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @NonRestartableComposable
 expect fun Applications(
-    paddingValues: PaddingValues,
     viewModel: ApplicationsScreenViewModel
 )
 
 @Composable
 @NonRestartableComposable
+fun NoApplications() {
+    EmptyListUI(
+        icon = Icons.Default.Cancel,
+        subText = string.no_applications,
+        textStyle = TextStyle(
+            fontFamily = displayFontFamily
+        )
+    )
+}
+
+@Composable
+@NonRestartableComposable
 expect fun ApplicationItem(
+    isTheFirst: Boolean = false,
     application: AmetistaApplication,
     viewModel: ApplicationsScreenViewModel
 )

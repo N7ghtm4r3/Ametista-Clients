@@ -5,7 +5,6 @@ package com.tecknobit.ametista.ui.screens.applications
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -50,14 +49,12 @@ import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyVerticalGrid
 @Composable
 @NonRestartableComposable
 actual fun Applications(
-    paddingValues: PaddingValues,
     viewModel: ApplicationsScreenViewModel
 ) {
     Column (
         modifier = Modifier
             .padding(
-                top = paddingValues.calculateTopPadding() + 16.dp,
-                bottom = paddingValues.calculateBottomPadding() + 16.dp
+                bottom = 16.dp
             )
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -79,14 +76,21 @@ actual fun Applications(
                 LinearProgressIndicator()
             }
         ) {
-            items(
-                items = listOf(AmetistaApplication("Space"), AmetistaApplication("ggg")), // TODO: USE THE REAL VALUES
-                key = { application -> application.id }
-            ) { application ->
-                ApplicationItem(
-                    application = application,
-                    viewModel = viewModel
-                )
+            val applications = viewModel.filterApplications()
+            if(applications.isEmpty()) {
+                item {
+                    NoApplications()
+                }
+            } else {
+                items(
+                    items = applications,
+                    key = { application -> application.id }
+                ) { application ->
+                    ApplicationItem(
+                        application = application,
+                        viewModel = viewModel
+                    )
+                }
             }
         }
     }
@@ -95,6 +99,7 @@ actual fun Applications(
 @Composable
 @NonRestartableComposable
 actual fun ApplicationItem(
+    isTheFirst: Boolean,
     application: AmetistaApplication,
     viewModel: ApplicationsScreenViewModel
 ) {
