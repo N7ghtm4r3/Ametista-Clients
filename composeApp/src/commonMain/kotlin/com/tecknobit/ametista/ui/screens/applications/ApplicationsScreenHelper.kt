@@ -8,12 +8,15 @@ import ametista.composeapp.generated.resources.delete_application_text
 import ametista.composeapp.generated.resources.delete_application_title
 import ametista.composeapp.generated.resources.dismiss
 import ametista.composeapp.generated.resources.no_applications
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -29,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
+import com.tecknobit.ametista.ui.icons.Boxes
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
@@ -42,14 +46,25 @@ expect fun Applications(
 
 @Composable
 @NonRestartableComposable
-fun NoApplications() {
-    EmptyListUI(
-        icon = Icons.Default.Cancel,
-        subText = string.no_applications,
-        textStyle = TextStyle(
-            fontFamily = displayFontFamily
+fun NoApplications(
+    noApplications: Boolean
+) {
+    AnimatedVisibility(
+        visible = noApplications,
+        enter = fadeIn(),
+        exit = fadeOut()
+    ) {
+        EmptyListUI(
+            imageModifier = Modifier
+                .size(150.dp),
+            icon = Boxes,
+            subText = string.no_applications,
+            textStyle = TextStyle(
+                fontFamily = displayFontFamily,
+                fontSize = 20.sp
+            )
         )
-    )
+    }
 }
 
 @Composable

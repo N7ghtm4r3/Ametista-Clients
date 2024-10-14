@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalPaginationApi::class)
+
 package com.tecknobit.ametista.ui.screens.applications
 
 import androidx.compose.material3.SnackbarHostState
@@ -7,6 +9,7 @@ import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
 import com.tecknobit.apimanager.annotations.Wrapper
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
+import io.github.ahmad_hamwi.compose.pagination.ExperimentalPaginationApi
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 
 class ApplicationsScreenViewModel: EquinoxViewModel(
@@ -23,6 +26,7 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
     lateinit var platformsFilter: SnapshotStateList<Platform>
 
     private fun getApplications() {
+        // TODO: MAKE THE REAL REQUEST (and use appendPageWithUpdates)
         paginationState.appendPage(
             items = listOf(AmetistaApplication("Space"), AmetistaApplication("Bello")),
             nextPageKey = 1
@@ -47,6 +51,11 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
             platformsFilter.add(platform)
         else
             platformsFilter.remove(platform)
+    }
+
+    fun clearFilters() {
+        filterQuery.value = ""
+        platformsFilter.clear()
     }
 
     fun filterApplications(): List<AmetistaApplication> {

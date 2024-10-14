@@ -6,7 +6,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -47,12 +46,12 @@ import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 actual fun Applications(
     viewModel: ApplicationsScreenViewModel,
 ) {
+    val applicationsIsEmpty = remember { mutableStateOf(false) }
     PaginatedLazyColumn(
         modifier = Modifier
             .padding(
                 bottom = 16.dp
-            )
-            .fillMaxHeight(),
+            ),
         paginationState = viewModel.paginationState,
         firstPageProgressIndicator = {
             CircularProgressIndicator()
@@ -60,19 +59,18 @@ actual fun Applications(
         newPageProgressIndicator = {
             LinearProgressIndicator()
         }
+        // TODO: TO SET
         /*firstPageErrorIndicator = { e -> // from setError
             ... e.message ...
             ... onRetry = { paginationState.retryLastFailedRequest() } ...
         },
+        // TODO: TO SET
         newPageErrorIndicator = { e -> ... },*/
         // The rest of LazyColumn params
     ) {
         val applications = viewModel.filterApplications()
-        if(applications.isEmpty()) {
-            item {
-                NoApplications()
-            }
-        } else {
+        applicationsIsEmpty.value = applications.isEmpty()
+        if(applications.isNotEmpty()) {
             itemsIndexed(
                 items = applications,
                 key = { _ , application -> application.id }
@@ -85,6 +83,9 @@ actual fun Applications(
             }
         }
     }
+    NoApplications(
+        noApplications = applicationsIsEmpty.value
+    )
 }
 
 @Composable

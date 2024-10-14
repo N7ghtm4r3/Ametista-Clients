@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.DesktopWindows
 import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.FilterListOff
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
@@ -138,7 +139,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
             ) {
                 SearchBar(
                     modifier = Modifier
-                        .weight(3f)
+                        .weight(2f)
                 )
                 PlatformsMenu(
                     modifier = Modifier
@@ -179,24 +180,40 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
     ) {
         var expanded by remember { mutableStateOf(false) }
         Column (
-            modifier = modifier,
+            modifier = modifier
+                .padding(
+                    start = 16.dp
+                ),
             horizontalAlignment = Alignment.End
         ) {
-            IconButton(
-                onClick = { expanded = true }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.FilterList,
-                    contentDescription = null
-                )
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
+            Row {
+                IconButton(
+                    onClick = {
+                        expanded = false
+                        viewModel!!.clearFilters()
+                    }
                 ) {
-                    Platform.entries.forEach { platform ->
-                        PlatformItem(
-                            platform = platform
-                        )
+                    Icon(
+                        imageVector = Icons.Default.FilterListOff,
+                        contentDescription = null
+                    )
+                }
+                IconButton(
+                    onClick = { expanded = true }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.FilterList,
+                        contentDescription = null
+                    )
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        Platform.entries.forEach { platform ->
+                            PlatformItem(
+                                platform = platform
+                            )
+                        }
                     }
                 }
             }

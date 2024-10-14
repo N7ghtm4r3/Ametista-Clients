@@ -5,7 +5,6 @@ package com.tecknobit.ametista.ui.screens.applications
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -59,12 +58,12 @@ actual fun Applications(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        val applicationsIsEmpty = remember { mutableStateOf(false) }
         PaginatedLazyVerticalGrid(
             modifier = Modifier
                 .widthIn(
                     max = 1200.dp
-                )
-                .fillMaxHeight(),
+                ),
             paginationState = viewModel.paginationState,
             columns = GridCells.Adaptive(
                 minSize = 400.dp
@@ -75,13 +74,18 @@ actual fun Applications(
             newPageProgressIndicator = {
                 LinearProgressIndicator()
             }
+            // TODO: TO SET
+            /*firstPageErrorIndicator = { e -> // from setError
+                ... e.message ...
+                ... onRetry = { paginationState.retryLastFailedRequest() } ...
+            },
+            // TODO: TO SET
+            newPageErrorIndicator = { e -> ... },*/
+            // The rest of LazyColumn params
         ) {
             val applications = viewModel.filterApplications()
-            if(applications.isEmpty()) {
-                item {
-                    NoApplications()
-                }
-            } else {
+            applicationsIsEmpty.value = applications.isEmpty()
+            if(applications.isNotEmpty()) {
                 items(
                     items = applications,
                     key = { application -> application.id }
@@ -93,6 +97,9 @@ actual fun Applications(
                 }
             }
         }
+        NoApplications(
+            noApplications = applicationsIsEmpty.value
+        )
     }
 }
 
