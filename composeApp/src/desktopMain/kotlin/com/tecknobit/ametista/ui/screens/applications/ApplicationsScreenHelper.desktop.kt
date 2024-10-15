@@ -129,7 +129,9 @@ actual fun ApplicationItem(
             )
             .combinedClickable(
                 onClick = {
-                    // TODO: NAV TO APPLICATION
+                    navToApplicationScreen(
+                        application = application
+                    )
                 },
                 onDoubleClick = { expandDescription.value = true },
                 onLongClick = { editApplication.value = true }

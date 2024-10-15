@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Android
-import androidx.compose.material.icons.filled.DesktopWindows
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.FilterListOff
 import androidx.compose.material.icons.filled.Search
@@ -34,7 +32,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
@@ -44,18 +41,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.tecknobit.ametista.ui.icons.Globe
-import com.tecknobit.ametista.ui.icons.Ios
+import com.tecknobit.ametista.helpers.icon
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.ANDROID
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.DESKTOP
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.IOS
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.WEB
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import org.jetbrains.compose.resources.stringResource
@@ -83,8 +74,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                             ),
                             title = {
                                 Text(
-                                    text = stringResource(Res.string.applications),
-                                    color = contentColorFor(MaterialTheme.colorScheme.primaryContainer)
+                                    text = stringResource(Res.string.applications)
                                 )
                             }
                         )
@@ -271,15 +261,6 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                 )
             }
         )
-    }
-
-    private fun Platform.icon() : ImageVector {
-        return when(this) {
-            ANDROID -> Icons.Default.Android
-            IOS -> Ios
-            DESKTOP -> Icons.Default.DesktopWindows
-            WEB -> Globe
-        }
     }
 
     /**

@@ -14,4 +14,5 @@
     <string name="wrong_app_name_field">Wrong app name</string>
     <string name="app_description">App description</string>
     <string name="wrong_app_description">Wrong app description</string>
+    <string name="no_connected_platforms">No connected platforms</string>
 </resources>

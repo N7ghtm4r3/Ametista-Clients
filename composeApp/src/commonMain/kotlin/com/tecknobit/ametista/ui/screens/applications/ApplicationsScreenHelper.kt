@@ -29,10 +29,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -69,16 +71,22 @@ import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.getAppIconPath
 import com.tecknobit.ametista.imageLoader
+import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.icons.Boxes
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppDescriptionValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppNameValid
 import com.tecknobit.ametistacore.models.AmetistaApplication
+import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_KEY
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -118,6 +126,16 @@ expect fun ApplicationItem(
     viewModel: ApplicationsScreenViewModel
 )
 
+fun navToApplicationScreen(
+    application: AmetistaApplication
+) {
+    MainScope().launch {
+        val entry = navigator.currentEntry.first()
+        entry?.stateHolder?.set(APPLICATION_KEY, application)
+    }
+    navigator.navigate(APPLICATION_SCREEN)
+}
+
 @Composable
 @NonRestartableComposable
 expect fun ApplicationIcon(
@@ -152,7 +170,8 @@ fun ExpandApplicationDescription(
                     modifier = Modifier
                         .padding(
                             horizontal = 16.dp
-                        ),
+                        )
+                        .verticalScroll(rememberScrollState()),
                     text = application.description,
                     textAlign = TextAlign.Justify,
                     fontFamily = bodyFontFamily,
@@ -261,7 +280,7 @@ private fun DialogTitle(
             onClick = closeDialog
         ) {
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
+                imageVector = Icons.Default.ArrowBackIosNew,
                 contentDescription = null
             )
         }

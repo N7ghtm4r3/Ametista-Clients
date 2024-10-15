@@ -17,6 +17,8 @@ abstract class AmetistaScreen<V : EquinoxViewModel>(
 
         const val APPLICATIONS_SCREEN = "ApplicationsScreen"
 
+        const val APPLICATION_SCREEN = "ApplicationScreen"
+
     }
 
 }

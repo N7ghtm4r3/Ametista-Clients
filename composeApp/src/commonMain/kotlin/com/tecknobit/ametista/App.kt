@@ -11,10 +11,14 @@ import coil3.compose.LocalPlatformContext
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
+import com.tecknobit.ametista.ui.screens.application.ApplicationScreen
 import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
+import com.tecknobit.ametistacore.models.AmetistaApplication
+import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_KEY
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
@@ -96,6 +100,15 @@ fun App() {
                     route = APPLICATIONS_SCREEN
                 ) {
                     ApplicationsScreen().ShowContent()
+                }
+                scene(
+                    route = APPLICATION_SCREEN
+                ) { backstackEntry ->
+                    val stateHolder = backstackEntry.stateHolder
+                    val application: AmetistaApplication = stateHolder[APPLICATION_KEY]!!
+                    ApplicationScreen(
+                        initialApplication = application
+                    ).ShowContent()
                 }
             }
         }
