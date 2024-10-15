@@ -98,6 +98,7 @@ actual fun ApplicationItem(
     application: AmetistaApplication,
     viewModel: ApplicationsScreenViewModel
 ) {
+    val editApplication = remember { mutableStateOf(false) }
     val expandDescription = remember { mutableStateOf(false) }
     val deleteApplication = remember { mutableStateOf(false) }
     if(isTheFirst)
@@ -109,7 +110,7 @@ actual fun ApplicationItem(
                     // TODO: NAV TO APPLICATION
                 },
                 onDoubleClick = { expandDescription.value = true },
-                onLongClick = { viewModel.workOnApplication.value = true }
+                onLongClick = { editApplication.value = true }
             ),
         leadingContent = {
             ApplicationIcon(
@@ -171,12 +172,11 @@ actual fun ApplicationItem(
         expand = expandDescription,
         application = application
     )
-    /*if(viewModel.workOnApplication.value) {
-        WorkOnApplication(
-            viewModel = viewModel,
-            application = application
-        )
-    }*/
+    WorkOnApplication(
+        show = editApplication,
+        viewModel = viewModel,
+        application = application
+    )
 }
 
 @NonRestartableComposable

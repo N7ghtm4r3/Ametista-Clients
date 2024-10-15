@@ -93,6 +93,7 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
     }
 
     fun workOnApplication(
+        onSuccess: () -> Unit,
         application: AmetistaApplication?
     ) {
         if (appIcon.value.isEmpty()) {
@@ -107,25 +108,31 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
             appDescriptionError.value = true
             return
         }
-        if (application == null)
-            addApplication()
-        else {
+        if (application == null) {
+            addApplication(
+                onSuccess = onSuccess
+            )
+        } else {
             editApplication(
-                application = application
+                application = application,
+                onSuccess = onSuccess
             )
         }
     }
 
-    private fun addApplication() {
+    private fun addApplication(
+        onSuccess: () -> Unit
+    ) {
         // TODO: MAKE THE REQUEST THEN
-        workOnApplication.value = false
+        onSuccess.invoke()
     }
 
     private fun editApplication(
-        application: AmetistaApplication
+        application: AmetistaApplication,
+        onSuccess: () -> Unit
     ) {
         // TODO: MAKE THE REQUEST THEN
-        workOnApplication.value = false
+        onSuccess.invoke()
     }
 
 }

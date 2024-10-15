@@ -57,6 +57,7 @@ import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.DESKTOP
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.IOS
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.WEB
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
+import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import org.jetbrains.compose.resources.stringResource
 
 class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
@@ -71,51 +72,54 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
     @Composable
     override fun ArrangeScreenContent() {
         CloseApplicationOnNavBack()
-        // TODO: WHEN IMPLEMENT THE REQUESTS USE MANAGEDCONTENT AS WRAPPER FOR THE DIFFERENT SCENARIOS 
-        Scaffold(
-            topBar = {
-                LargeTopAppBar(
-                    colors = TopAppBarDefaults.largeTopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    ),
-                    title = {
-                        Text(
-                            text = stringResource(Res.string.applications),
-                            color = contentColorFor(MaterialTheme.colorScheme.primaryContainer)
+        ManagedContent(
+            viewModel = viewModel!!,
+            content = {
+                Scaffold(
+                    topBar = {
+                        LargeTopAppBar(
+                            colors = TopAppBarDefaults.largeTopAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer
+                            ),
+                            title = {
+                                Text(
+                                    text = stringResource(Res.string.applications),
+                                    color = contentColorFor(MaterialTheme.colorScheme.primaryContainer)
+                                )
+                            }
+                        )
+                    },
+                    snackbarHost = {
+                        SnackbarHost(
+                            hostState = viewModel!!.snackbarHostState!!
+                        )
+                    },
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = { viewModel!!.workOnApplication.value = true }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = null
+                            )
+                        }
+                        WorkOnApplication(
+                            show = viewModel!!.workOnApplication,
+                            viewModel = viewModel!!
                         )
                     }
-                )
-            },
-            snackbarHost = {
-                SnackbarHost(
-                    hostState = viewModel!!.snackbarHostState!!
-                )
-            },
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = { viewModel!!.workOnApplication.value = true }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Add,
-                        contentDescription = null
-                    )
-                }
-                if (viewModel!!.workOnApplication.value) {
-                    WorkOnApplication(
-                        viewModel = viewModel!!
-                    )
+                ) { paddingValues ->
+                    Column {
+                        FiltersSection(
+                            paddingValues = paddingValues
+                        )
+                        Applications(
+                            viewModel = viewModel!!
+                        )
+                    }
                 }
             }
-        ) { paddingValues ->
-            Column {
-                FiltersSection(
-                    paddingValues = paddingValues
-                )
-                Applications(
-                    viewModel = viewModel!!
-                )
-            }
-        }
+        )
     }
 
     @Composable

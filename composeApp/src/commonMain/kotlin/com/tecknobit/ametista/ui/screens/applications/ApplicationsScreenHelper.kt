@@ -4,18 +4,23 @@ package com.tecknobit.ametista.ui.screens.applications
 
 import ametista.composeapp.generated.resources.Res.string
 import ametista.composeapp.generated.resources.add_application
+import ametista.composeapp.generated.resources.app_description
+import ametista.composeapp.generated.resources.app_name_field
 import ametista.composeapp.generated.resources.confirm
 import ametista.composeapp.generated.resources.delete_application_text
 import ametista.composeapp.generated.resources.delete_application_title
 import ametista.composeapp.generated.resources.dismiss
 import ametista.composeapp.generated.resources.edit_application
 import ametista.composeapp.generated.resources.no_applications
+import ametista.composeapp.generated.resources.wrong_app_description
+import ametista.composeapp.generated.resources.wrong_app_name_field
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,6 +34,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -47,6 +53,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -159,41 +166,167 @@ fun ExpandApplicationDescription(
 @Composable
 @NonRestartableComposable
 fun WorkOnApplication(
+    show: MutableState<Boolean>,
     viewModel: ApplicationsScreenViewModel,
     application: AmetistaApplication? = null,
 ) {
-    val isInEditMode = application != null
-    val closeDialog = {
-        viewModel.workOnApplication.value = false
+    if (show.value) {
+        val isInEditMode = application != null
+        val closeDialog = {
+            show.value = false
+        }
+        viewModel.appIcon = remember {
+            mutableStateOf(
+                if (isInEditMode)
+                    application!!.icon
+                else
+                    ""
+            )
+        }
+        val primaryContainer = MaterialTheme.colorScheme.primaryContainer
+        viewModel.appIconBorderColor = remember { mutableStateOf(primaryContainer) }
+        viewModel.appName = remember {
+            mutableStateOf(
+                if (isInEditMode)
+                    application!!.name
+                else
+                    ""
+            )
+        }
+        viewModel.appNameError = remember { mutableStateOf(false) }
+        viewModel.appDescription = remember {
+            mutableStateOf(
+                if (isInEditMode)
+                    application!!.description
+                else
+                    ""
+            )
+        }
+        viewModel.appDescriptionError = remember { mutableStateOf(false) }
+        Dialog(
+            onDismissRequest = closeDialog,
+            properties = DialogProperties(
+                dismissOnBackPress = true
+            )
+        ) {
+            Surface(
+                modifier = Modifier
+                    .width(400.dp)
+                    .heightIn(
+                        max = 550.dp
+                    ),
+                shape = RoundedCornerShape(
+                    size = 15.dp
+                )
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp
+                        )
+                        .padding(
+                            top = 16.dp,
+                            bottom = 10.dp
+                        )
+                ) {
+                    DialogTitle(
+                        closeDialog = closeDialog,
+                        isInEditMode = isInEditMode
+                    )
+                    DialogContent(
+                        viewModel = viewModel,
+                        primaryContainer = primaryContainer
+                    )
+                    DialogActions(
+                        closeDialog = closeDialog,
+                        viewModel = viewModel,
+                        application = application
+                    )
+                }
+            }
+        }
     }
-    viewModel.appIcon = remember {
-        mutableStateOf(
-            if (isInEditMode)
-                application!!.icon
-            else
-                ""
+}
+
+@Composable
+@NonRestartableComposable
+private fun DialogTitle(
+    closeDialog: () -> Unit,
+    isInEditMode: Boolean
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(
+            onClick = closeDialog
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
+                contentDescription = null
+            )
+        }
+        Text(
+            text = stringResource(
+                if (isInEditMode)
+                    string.edit_application
+                else
+                    string.add_application
+            ),
+            fontFamily = displayFontFamily,
+            fontSize = 20.sp
         )
     }
-    val primaryContainer = MaterialTheme.colorScheme.primaryContainer
-    viewModel.appIconBorderColor = remember { mutableStateOf(primaryContainer) }
-    viewModel.appName = remember {
-        mutableStateOf(
-            if (isInEditMode)
-                application!!.name
-            else
-                ""
+}
+
+@Composable
+@NonRestartableComposable
+private fun DialogContent(
+    viewModel: ApplicationsScreenViewModel,
+    primaryContainer: Color
+) {
+    Column(
+        modifier = Modifier
+            .padding(
+                horizontal = 16.dp
+            )
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        AppIconPicker(
+            viewModel = viewModel,
+            primaryContainer = primaryContainer
+        )
+        EquinoxOutlinedTextField(
+            outlinedTextFieldColors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer
+            ),
+            value = viewModel.appName,
+            isError = viewModel.appNameError,
+            placeholder = string.app_name_field,
+            errorText = string.wrong_app_name_field,
+            validator = { isAppNameValid(it) }
+        )
+        EquinoxOutlinedTextField(
+            outlinedTextFieldColors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer
+            ),
+            value = viewModel.appDescription,
+            isError = viewModel.appDescriptionError,
+            placeholder = string.app_description,
+            errorText = string.wrong_app_description,
+            maxLines = 6,
+            validator = { isAppDescriptionValid(it) }
         )
     }
-    viewModel.appNameError = remember { mutableStateOf(false) }
-    viewModel.appDescription = remember {
-        mutableStateOf(
-            if (isInEditMode)
-                application!!.description
-            else
-                ""
-        )
-    }
-    viewModel.appDescriptionError = remember { mutableStateOf(false) }
+}
+
+@Composable
+@NonRestartableComposable
+private fun AppIconPicker(
+    viewModel: ApplicationsScreenViewModel,
+    primaryContainer: Color
+) {
     val launcher = rememberFilePickerLauncher(
         type = PickerType.Image,
         mode = PickerMode.Single
@@ -206,132 +339,76 @@ fun WorkOnApplication(
             viewModel.appIconBorderColor.value = primaryContainer
         }
     }
-    Dialog(
-        onDismissRequest = closeDialog,
-        properties = DialogProperties(
-            dismissOnBackPress = true
-        )
+    Box(
+        contentAlignment = Alignment.Center
     ) {
-        Surface(
+        AsyncImage(
             modifier = Modifier
-                .width(400.dp)
-                .heightIn(
-                    max = 550.dp
-                ),
-            shape = RoundedCornerShape(
-                size = 15.dp
-            )
+                .size(125.dp)
+                .border(
+                    width = 1.5.dp,
+                    color = viewModel.appIconBorderColor.value,
+                    shape = CircleShape
+                )
+                .clip(CircleShape),
+            model = ImageRequest.Builder(LocalPlatformContext.current)
+                .data(viewModel.appIcon.value)
+                .crossfade(true)
+                .crossfade(500)
+                .build(),
+            imageLoader = imageLoader,
+            contentDescription = "Application icon",
+            contentScale = ContentScale.Crop
+            // TODO: TO SET ERROR
+        )
+        IconButton(
+            modifier = Modifier
+                .clip(CircleShape)
+                .background(Color(0xD0DFD8D8))
+                .size(35.dp)
+                .align(Alignment.BottomEnd),
+            onClick = { launcher.launch() }
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(
-                        horizontal = 16.dp
-                    )
-                    .padding(
-                        top = 16.dp,
-                        bottom = 10.dp
-                    )
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = null
+            )
+        }
+    }
+}
+
+@Composable
+@NonRestartableComposable
+private fun DialogActions(
+    closeDialog: () -> Unit,
+    viewModel: ApplicationsScreenViewModel,
+    application: AmetistaApplication?
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.End,
+        verticalArrangement = Arrangement.Bottom
+    ) {
+        Row {
+            TextButton(
+                onClick = closeDialog
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(
-                        onClick = closeDialog
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
-                            contentDescription = null
-                        )
-                    }
-                    Text(
-                        text = stringResource(
-                            if (isInEditMode)
-                                string.edit_application
-                            else
-                                string.add_application
-                        ),
-                        fontFamily = displayFontFamily,
-                        fontSize = 20.sp
+                Text(
+                    text = stringResource(string.dismiss)
+                )
+            }
+            TextButton(
+                onClick = {
+                    viewModel.workOnApplication(
+                        application = application,
+                        onSuccess = closeDialog
                     )
                 }
-                Column(
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 16.dp
-                        )
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    AsyncImage(
-                        modifier = Modifier
-                            .size(125.dp)
-                            .border(
-                                width = 1.5.dp,
-                                color = viewModel.appIconBorderColor.value,
-                                shape = CircleShape
-                            )
-                            .clip(CircleShape)
-                            .clickable { launcher.launch() },
-                        model = ImageRequest.Builder(LocalPlatformContext.current)
-                            .data(viewModel.appIcon.value)
-                            .crossfade(true)
-                            .crossfade(500)
-                            .build(),
-                        imageLoader = imageLoader,
-                        contentDescription = "Application icon",
-                        contentScale = ContentScale.Crop
-                        // TODO: TO SET ERROR
-                    )
-                    EquinoxOutlinedTextField(
-                        outlinedTextFieldColors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = MaterialTheme.colorScheme.primaryContainer
-                        ),
-                        value = viewModel.appName,
-                        isError = viewModel.appNameError,
-                        placeholder = "App name",
-                        errorText = "Wrong app name",
-                        validator = { isAppNameValid(it) }
-                    )
-                    EquinoxOutlinedTextField(
-                        outlinedTextFieldColors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = MaterialTheme.colorScheme.primaryContainer
-                        ),
-                        value = viewModel.appDescription,
-                        isError = viewModel.appDescriptionError,
-                        placeholder = "App description",
-                        errorText = "Wrong app description",
-                        maxLines = 6,
-                        validator = { isAppDescriptionValid(it) }
-                    )
-                }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalAlignment = Alignment.End,
-                    verticalArrangement = Arrangement.Bottom
-                ) {
-                    Row {
-                        TextButton(
-                            onClick = closeDialog
-                        ) {
-                            Text(
-                                text = stringResource(string.dismiss)
-                            )
-                        }
-                        TextButton(
-                            onClick = {
-                                viewModel.workOnApplication(
-                                    application = application
-                                )
-                            }
-                        ) {
-                            Text(
-                                text = stringResource(string.confirm)
-                            )
-                        }
-                    }
-                }
+            ) {
+                Text(
+                    text = stringResource(string.confirm)
+                )
             }
         }
     }

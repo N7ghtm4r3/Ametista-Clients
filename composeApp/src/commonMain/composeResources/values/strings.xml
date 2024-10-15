@@ -10,4 +10,8 @@
     <string name="no_applications">No applications</string>
     <string name="add_application">Add application</string>
     <string name="edit_application">Edit application</string>
+    <string name="app_name_field">App name</string>
+    <string name="wrong_app_name_field">Wrong app name</string>
+    <string name="app_description">App description</string>
+    <string name="wrong_app_description">Wrong app description</string>
 </resources>
