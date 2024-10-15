@@ -174,6 +174,8 @@ fun WorkOnApplication(
                 ""
         )
     }
+    val primaryContainer = MaterialTheme.colorScheme.primaryContainer
+    viewModel.appIconBorderColor = remember { mutableStateOf(primaryContainer) }
     viewModel.appName = remember {
         mutableStateOf(
             if (isInEditMode)
@@ -201,6 +203,7 @@ fun WorkOnApplication(
         )
         appIconPath?.let { path ->
             viewModel.appIcon.value = path
+            viewModel.appIconBorderColor.value = primaryContainer
         }
     }
     Dialog(
@@ -265,7 +268,7 @@ fun WorkOnApplication(
                             .size(125.dp)
                             .border(
                                 width = 1.5.dp,
-                                color = MaterialTheme.colorScheme.primaryContainer,
+                                color = viewModel.appIconBorderColor.value,
                                 shape = CircleShape
                             )
                             .clip(CircleShape)

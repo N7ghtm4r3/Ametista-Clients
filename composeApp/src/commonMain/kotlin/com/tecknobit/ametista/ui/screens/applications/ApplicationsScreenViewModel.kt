@@ -5,6 +5,10 @@ package com.tecknobit.ametista.ui.screens.applications
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.graphics.Color
+import com.tecknobit.ametista.ui.theme.errorDark
+import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppDescriptionValid
+import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppNameValid
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
 import com.tecknobit.apimanager.annotations.Wrapper
@@ -28,6 +32,8 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
     lateinit var workOnApplication: MutableState<Boolean>
 
     lateinit var appIcon: MutableState<String>
+
+    lateinit var appIconBorderColor: MutableState<Color>
 
     lateinit var appName: MutableState<String>
 
@@ -89,7 +95,18 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
     fun workOnApplication(
         application: AmetistaApplication?
     ) {
-
+        if (appIcon.value.isEmpty()) {
+            appIconBorderColor.value = errorDark
+            return
+        }
+        if (!isAppNameValid(appName.value)) {
+            appNameError.value = true
+            return
+        }
+        if (!isAppDescriptionValid(appDescription.value)) {
+            appDescriptionError.value = true
+            return
+        }
         if (application == null)
             addApplication()
         else {
