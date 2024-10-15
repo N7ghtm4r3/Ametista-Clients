@@ -2,6 +2,7 @@
 
 package com.tecknobit.ametista.ui.screens.applications
 
+import android.app.Activity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -40,6 +42,7 @@ import coil3.request.crossfade
 import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
+import moe.tlaster.precompose.navigation.BackHandler
 
 @Composable
 @NonRestartableComposable
@@ -106,9 +109,7 @@ actual fun ApplicationItem(
                     // TODO: NAV TO APPLICATION
                 },
                 onDoubleClick = { expandDescription.value = true },
-                onLongClick = {
-                    // TODO: TO EDIT
-                }
+                onLongClick = { viewModel.workOnApplication.value = true }
             ),
         leadingContent = {
             ApplicationIcon(
@@ -170,6 +171,12 @@ actual fun ApplicationItem(
         expand = expandDescription,
         application = application
     )
+    /*if(viewModel.workOnApplication.value) {
+        WorkOnApplication(
+            viewModel = viewModel,
+            application = application
+        )
+    }*/
 }
 
 @NonRestartableComposable
@@ -197,4 +204,18 @@ actual fun ApplicationIcon(
         contentScale = ContentScale.Crop
         // TODO: TO SET ERROR
     )
+}
+
+/**
+ * Function to manage correctly the back navigation from the current screen
+ *
+ * No-any params required
+ */
+@NonRestartableComposable
+@Composable
+actual fun CloseApplicationOnNavBack() {
+    val context = LocalContext.current as Activity
+    BackHandler {
+        context.finishAffinity()
+    }
 }

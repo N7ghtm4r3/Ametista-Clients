@@ -25,6 +25,18 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
 
     lateinit var platformsFilter: SnapshotStateList<Platform>
 
+    lateinit var workOnApplication: MutableState<Boolean>
+
+    lateinit var appIcon: MutableState<String>
+
+    lateinit var appName: MutableState<String>
+
+    lateinit var appNameError: MutableState<Boolean>
+
+    lateinit var appDescription: MutableState<String>
+
+    lateinit var appDescriptionError: MutableState<Boolean>
+
     private fun getApplications() {
         // TODO: MAKE THE REAL REQUEST (and use appendPageWithUpdates)
         paginationState.appendPage(
@@ -72,6 +84,31 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
     private fun AmetistaApplication.filtersMatch(): Boolean {
         val match = filterQuery.value.isEmpty() || this.name.lowercase().contains(filterQuery.value.lowercase())
         return match && this.platforms.containsAll(platformsFilter)
+    }
+
+    fun workOnApplication(
+        application: AmetistaApplication?
+    ) {
+
+        if (application == null)
+            addApplication()
+        else {
+            editApplication(
+                application = application
+            )
+        }
+    }
+
+    private fun addApplication() {
+        // TODO: MAKE THE REQUEST THEN
+        workOnApplication.value = false
+    }
+
+    private fun editApplication(
+        application: AmetistaApplication
+    ) {
+        // TODO: MAKE THE REQUEST THEN
+        workOnApplication.value = false
     }
 
 }

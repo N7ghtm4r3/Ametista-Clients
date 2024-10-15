@@ -8,4 +8,6 @@
     <string name="delete_application_text">If you confirm the application data will be deleted and no more recoverable, confirm?</string>
     <string name="search_placeholder">Search by name</string>
     <string name="no_applications">No applications</string>
+    <string name="add_application">Add application</string>
+    <string name="edit_application">Edit application</string>
 </resources>

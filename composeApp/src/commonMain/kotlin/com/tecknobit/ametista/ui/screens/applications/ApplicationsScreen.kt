@@ -70,6 +70,8 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
      */
     @Composable
     override fun ArrangeScreenContent() {
+        CloseApplicationOnNavBack()
+        // TODO: WHEN IMPLEMENT THE REQUESTS USE MANAGEDCONTENT AS WRAPPER FOR THE DIFFERENT SCENARIOS 
         Scaffold(
             topBar = {
                 LargeTopAppBar(
@@ -91,13 +93,16 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
             },
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = {
-
-                    }
+                    onClick = { viewModel!!.workOnApplication.value = true }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = null
+                    )
+                }
+                if (viewModel!!.workOnApplication.value) {
+                    WorkOnApplication(
+                        viewModel = viewModel!!
                     )
                 }
             }
@@ -168,7 +173,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                 )
             },
             keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Search
+                imeAction = ImeAction.Done
             )
         )
     }
@@ -282,6 +287,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
     override fun CollectStates() {
         viewModel!!.filterQuery = remember { mutableStateOf("") }
         viewModel!!.platformsFilter = remember { mutableStateListOf() }
+        viewModel!!.workOnApplication = remember { mutableStateOf(false) }
     }
 
 }

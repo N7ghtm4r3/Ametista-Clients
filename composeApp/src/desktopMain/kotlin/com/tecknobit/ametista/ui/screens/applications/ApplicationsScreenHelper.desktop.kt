@@ -131,9 +131,7 @@ actual fun ApplicationItem(
                     // TODO: NAV TO APPLICATION
                 },
                 onDoubleClick = { expandDescription.value = true },
-                onLongClick = {
-                    // TODO: TO EDIT
-                }
+                onLongClick = { viewModel.workOnApplication.value = true }
             ),
         shape = RoundedCornerShape(
             size = 15.dp
@@ -170,6 +168,12 @@ actual fun ApplicationItem(
         expand = expandDescription,
         application = application
     )
+    /*if(viewModel.workOnApplication.value) {
+        WorkOnApplication(
+            viewModel = viewModel,
+            application = application
+        )
+    }*/
 }
 
 @Composable
@@ -225,4 +229,14 @@ private fun ApplicationDetails(
     HorizontalDivider(
         color = MaterialTheme.colorScheme.primaryContainer
     )
+}
+
+/**
+ * Function to manage correctly the back navigation from the current screen
+ *
+ * No-any params required
+ */
+@NonRestartableComposable
+@Composable
+actual fun CloseApplicationOnNavBack() {
 }

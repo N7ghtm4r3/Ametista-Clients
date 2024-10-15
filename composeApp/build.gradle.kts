@@ -30,6 +30,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.ui.text.google.fonts)
+            implementation(libs.androidx.startup.runtime)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -49,6 +50,8 @@ kotlin {
             implementation(libs.apimanager)
             implementation(libs.lazyPaginationCompose)
             implementation(libs.ametistacore)
+            implementation(libs.filekit.core)
+            implementation(libs.filekit.compose)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -100,8 +103,18 @@ compose.desktop {
         nativeDistributions {
             targetFormats(Deb, Pkg, Exe)
             modules(
-                "java.compiler", "java.instrument", "java.management", "java.naming", "java.net.http", "java.prefs",
-                "java.rmi", "java.scripting", "java.security.jgss", "java.sql", "jdk.jfr", "jdk.unsupported"
+                "java.compiler",
+                "java.instrument",
+                "java.management",
+                "java.net.http",
+                "java.prefs",
+                "java.rmi",
+                "java.scripting",
+                "java.security.jgss",
+                "java.sql.rowset",
+                "jdk.jfr",
+                "jdk.unsupported",
+                "jdk.security.auth"
             )
             packageName = "Ametista"
             packageVersion = "1.0.0"
