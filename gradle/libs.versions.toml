@@ -14,13 +14,14 @@ androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 apimanager = "2.2.4"
 coil-kt-coilCompose = "3.0.0-alpha10"
-compose-plugin = "1.7.0-beta02"
+compose-plugin = "1.7.0"
 equinox = "1.0.4"
 equinox-compose = "1.0.2"
 filekitCore = "0.8.7"
 junit = "4.13.2"
 kotlin = "2.0.20"
 kotlinx-coroutines = "1.9.0"
+material3WindowSizeClass = "1.7.0"
 precompose = "1.7.0-alpha01"
 startupRuntime = "1.2.0"
 uiTextGoogleFonts = "1.7.3"
@@ -50,6 +51,7 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
+material3-window-size = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
 lazyPaginationCompose = { module = "io.github.ahmad-hamwi:lazy-pagination-compose", version.ref = "lazy-pagination-compose" }
 

@@ -1,10 +1,11 @@
-package com.tecknobit.ametista.ui.theme
+package com.tecknobit.ametista.ui.theme.platforms.android
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.tecknobit.ametista.ui.theme.AppTypography
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -235,13 +236,13 @@ private val highContrastDarkColorScheme = darkColorScheme(
 )
 
 @Composable
-fun AmetistaTheme(
+fun AndroidPlatformTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {
     val colorScheme = when {
-      darkTheme -> darkScheme
-      else -> lightScheme
+        darkTheme -> darkScheme
+        else -> lightScheme
     }
     MaterialTheme(
         colorScheme = colorScheme,

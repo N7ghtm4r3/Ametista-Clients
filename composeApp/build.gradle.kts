@@ -52,6 +52,7 @@ kotlin {
             implementation(libs.ametistacore)
             implementation(libs.filekit.core)
             implementation(libs.filekit.compose)
+            implementation(libs.material3.window.size)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

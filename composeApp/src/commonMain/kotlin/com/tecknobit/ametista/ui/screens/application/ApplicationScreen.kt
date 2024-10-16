@@ -4,14 +4,10 @@ package com.tecknobit.ametista.ui.screens.application
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.no_connected_platforms
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.sizeIn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Link
@@ -30,15 +26,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.tecknobit.ametista.helpers.icon
+import com.tecknobit.ametista.helpers.PlatformsCustomGrid
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametistacore.models.AmetistaApplication
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
+import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.entries
 import com.tecknobit.equinoxcompose.components.EmptyListUI
-import com.tecknobit.equinoxcompose.components.Tile
 import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 
@@ -91,19 +83,27 @@ class ApplicationScreen(
                         )
                     },
                     floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = {
-                                // TODO: TO DO
-                            }
+                        AnimatedVisibility(
+                            visible = application.value.platforms.size != entries.size,
+                            enter = fadeIn(),
+                            exit = fadeOut()
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.Link,
-                                contentDescription = null
-                            )
+                            FloatingActionButton(
+                                onClick = {
+                                    // TODO: TO DO
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Link,
+                                    contentDescription = null
+                                )
+                            }
                         }
                     }
                 ) { paddingValues ->
-                    PlatformsSections()
+                    PlatformsSections(
+                        paddingValues = paddingValues
+                    )
                 }
             }
         )
@@ -111,42 +111,15 @@ class ApplicationScreen(
 
     @Composable
     @NonRestartableComposable
-    private fun PlatformsSections() {
-        val platforms = Platform.entries//application.value.platforms
+    private fun PlatformsSections(
+        paddingValues: PaddingValues
+    ) {
+        val platforms = application.value.platforms
         if (platforms.isNotEmpty()) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                LazyVerticalGrid(
-                    modifier = Modifier
-                        .sizeIn(
-                            maxHeight = 600.dp,
-                            maxWidth = 500.dp
-                        ),
-                    columns = GridCells.Fixed(2),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    contentPadding = PaddingValues(
-                        all = 16.dp
-                    )
-                ) {
-                    items(
-                        items = platforms,
-                        key = { platform -> platform.name }
-                    ) { platform ->
-                        Tile(
-                            icon = platform.icon(),
-                            text = platform.name,
-                            onClick = {
-
-                            }
-                        )
-                    }
-                }
-            }
+            PlatformsCustomGrid(
+                paddingValues = paddingValues,
+                applicationPlatforms = platforms
+            )
         } else {
             EmptyListUI(
                 icon = Icons.Default.LinkOff,

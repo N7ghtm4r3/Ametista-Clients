@@ -6,7 +6,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.graphics.Color
-import com.tecknobit.ametista.ui.theme.errorDark
+import com.tecknobit.ametista.ui.theme.platforms.android.errorDark
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppDescriptionValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppNameValid
 import com.tecknobit.ametistacore.models.AmetistaApplication
