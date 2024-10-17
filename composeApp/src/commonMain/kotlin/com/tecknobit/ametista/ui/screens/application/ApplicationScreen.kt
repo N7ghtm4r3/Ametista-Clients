@@ -140,11 +140,12 @@ class ApplicationScreen(
         paddingValues: PaddingValues
     ) {
         var expanded by remember { mutableStateOf(false) }
+        var expandable by remember { mutableStateOf(false) }
         Column(
             modifier = Modifier
                 .padding(
                     top = paddingValues.calculateTopPadding() + 16.dp,
-                    bottom = 12.dp
+                    bottom = 16.dp
                 )
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -171,31 +172,37 @@ class ApplicationScreen(
                 if (!expanded) {
                     Text(
                         modifier = Modifier
+                            .fillMaxWidth()
                             .padding(
                                 horizontal = 16.dp
                             ),
                         text = application.value.description,
                         textAlign = TextAlign.Justify,
+                        onTextLayout = { textLayoutResult ->
+                            expandable = textLayoutResult.lineCount >= 5
+                        },
                         maxLines = 5,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
-                    HorizontalDivider()
-                    IconButton(
-                        onClick = { expanded = !expanded }
+                if (expandable) {
+                    Box(
+                        contentAlignment = Alignment.Center
                     ) {
-                        Icon(
-                            modifier = Modifier
-                                .size(30.dp),
-                            imageVector = if (expanded)
-                                Outlined.ArrowCircleUp
-                            else
-                                Outlined.ArrowCircleDown,
-                            contentDescription = null
-                        )
+                        HorizontalDivider()
+                        IconButton(
+                            onClick = { expanded = !expanded }
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .size(30.dp),
+                                imageVector = if (expanded)
+                                    Outlined.ArrowCircleUp
+                                else
+                                    Outlined.ArrowCircleDown,
+                                contentDescription = null
+                            )
+                        }
                     }
                 }
             }

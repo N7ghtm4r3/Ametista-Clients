@@ -148,7 +148,7 @@ private fun DrawTiles(
             }
         } else {
             val stroke = Stroke(
-                width = 4f,
+                width = 5f,
                 pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f), 0f)
             )
             val color = MaterialTheme.colorScheme.primary
@@ -163,6 +163,7 @@ private fun DrawTiles(
                     },
                 size = size,
                 containerColor = Color.Transparent,
+                elevation = 0.dp,
                 contentColor = color,
                 icon = platform.icon(),
                 text = platform.name,
