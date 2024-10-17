@@ -42,6 +42,8 @@ import coil3.request.crossfade
 import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.imageLoader
+import com.tecknobit.ametista.ui.components.DeleteApplication
+import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyVerticalGrid
 

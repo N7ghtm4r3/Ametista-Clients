@@ -17,11 +17,17 @@ kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_18)
+            jvmTarget.set(JvmTarget.JVM_21)
         }
     }
-    
-    jvm("desktop")
+
+    jvm("desktop") {
+        kotlin {
+            jvmToolchain {
+                languageVersion.set(JavaLanguageVersion.of(21))
+            }
+        }
+    }
     
     sourceSets {
         val desktopMain by getting
@@ -53,6 +59,8 @@ kotlin {
             implementation(libs.filekit.core)
             implementation(libs.filekit.compose)
             implementation(libs.material3.window.size)
+            implementation(libs.jetlime)
+            implementation(libs.richeditor.compose)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -87,8 +95,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_18
-        targetCompatibility = JavaVersion.VERSION_18
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     buildFeatures {
         compose = true

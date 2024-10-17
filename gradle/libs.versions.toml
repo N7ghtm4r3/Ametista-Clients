@@ -18,11 +18,13 @@ compose-plugin = "1.7.0"
 equinox = "1.0.4"
 equinox-compose = "1.0.2"
 filekitCore = "0.8.7"
+jetlime = "3.0.1"
 junit = "4.13.2"
 kotlin = "2.0.20"
 kotlinx-coroutines = "1.9.0"
 material3WindowSizeClass = "1.7.0"
 precompose = "1.7.0-alpha01"
+richeditorCompose = "1.0.0-rc09"
 startupRuntime = "1.2.0"
 uiTextGoogleFonts = "1.7.3"
 lazy-pagination-compose = "1.3.7"
@@ -37,6 +39,7 @@ equinox = { module = "io.github.n7ghtm4r3:Equinox", version.ref = "equinox" }
 equinox-compose = { module = "io.github.n7ghtm4r3:Equinox-Compose", version.ref = "equinox-compose" }
 filekit-compose = { module = "io.github.vinceglb:filekit-compose", version.ref = "filekitCore" }
 filekit-core = { module = "io.github.vinceglb:filekit-core", version.ref = "filekitCore" }
+jetlime = { module = "io.github.pushpalroy:jetlime", version.ref = "jetlime" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -54,6 +57,7 @@ androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text
 material3-window-size = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
 lazyPaginationCompose = { module = "io.github.ahmad-hamwi:lazy-pagination-compose", version.ref = "lazy-pagination-compose" }
+richeditor-compose = { module = "com.mohamedrejeb.richeditor:richeditor-compose", version.ref = "richeditorCompose" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

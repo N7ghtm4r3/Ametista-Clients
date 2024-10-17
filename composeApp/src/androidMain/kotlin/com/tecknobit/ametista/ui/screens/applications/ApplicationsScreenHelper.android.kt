@@ -158,7 +158,9 @@ actual fun ApplicationItem(
                 )
                 IconButton(
                     onClick = {
-                        // TODO: NAV TO APPLICATION
+                        navToApplicationScreen(
+                            application = application
+                        )
                     }
                 ) {
                     Icon(

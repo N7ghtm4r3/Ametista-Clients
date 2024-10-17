@@ -1,8 +1,16 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalRichTextApi::class)
 
 package com.tecknobit.ametista.ui.screens.application
 
 import ametista.composeapp.generated.resources.Res
+import ametista.composeapp.generated.resources.check_connection_result
+import ametista.composeapp.generated.resources.check_connection_result_text
+import ametista.composeapp.generated.resources.connect_platform
+import ametista.composeapp.generated.resources.got_it
+import ametista.composeapp.generated.resources.implement_the_engine
+import ametista.composeapp.generated.resources.implement_the_engine_text
+import ametista.composeapp.generated.resources.invoke_connect_method
+import ametista.composeapp.generated.resources.invoke_connect_method_text
 import ametista.composeapp.generated.resources.no_connected_platforms
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -32,11 +40,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -47,9 +59,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.mohamedrejeb.richeditor.annotation.ExperimentalRichTextApi
+import com.mohamedrejeb.richeditor.model.rememberRichTextState
+import com.mohamedrejeb.richeditor.ui.material3.RichText
+import com.pushpal.jetlime.EventPosition
+import com.pushpal.jetlime.ItemsList
+import com.pushpal.jetlime.JetLimeColumn
+import com.pushpal.jetlime.JetLimeEvent
+import com.pushpal.jetlime.JetLimeEventDefaults
+import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.PlatformsCustomGrid
+import com.tecknobit.ametista.model.ConnectionProcedureStep
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.WorkOnApplication
@@ -58,6 +82,7 @@ import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.entries
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
+import org.jetbrains.compose.resources.stringResource
 
 class ApplicationScreen(
     initialApplication: AmetistaApplication
@@ -68,6 +93,8 @@ class ApplicationScreen(
 ) {
 
     private lateinit var application: State<AmetistaApplication>
+
+    private lateinit var showConnectionProcedure: MutableState<Boolean>
 
     /**
      * Function to arrange the content of the screen to display
@@ -144,9 +171,7 @@ class ApplicationScreen(
                             exit = fadeOut()
                         ) {
                             FloatingActionButton(
-                                onClick = {
-                                    // TODO: TO DO
-                                }
+                                onClick = { showConnectionProcedure.value = true }
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Link,
@@ -161,6 +186,7 @@ class ApplicationScreen(
                             paddingValues = paddingValues
                         )
                         PlatformsSections()
+                        ConnectionProcedure()
                     }
                 }
             }
@@ -260,6 +286,116 @@ class ApplicationScreen(
         }
     }
 
+    @Composable
+    @NonRestartableComposable
+    private fun ConnectionProcedure() {
+        if (showConnectionProcedure.value) {
+            ModalBottomSheet(
+                sheetState = rememberModalBottomSheetState(
+                    skipPartiallyExpanded = true
+                ),
+                onDismissRequest = { showConnectionProcedure.value = false }
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            start = 16.dp,
+                            bottom = 16.dp
+                        ),
+                    text = stringResource(Res.string.connect_platform),
+                    fontFamily = displayFontFamily,
+                    fontSize = 22.sp
+                )
+                HorizontalDivider()
+                ConnectionSteps()
+                TextButton(
+                    modifier = Modifier
+                        .padding(
+                            end = 10.dp
+                        )
+                        .align(Alignment.End),
+                    onClick = { showConnectionProcedure.value = false }
+                ) {
+                    Text(
+                        text = stringResource(Res.string.got_it)
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun ConnectionSteps() {
+        val steps = listOf(
+            ConnectionProcedureStep(
+                title = stringResource(Res.string.implement_the_engine),
+                description = stringResource(Res.string.implement_the_engine_text)
+            ),
+            ConnectionProcedureStep(
+                title = stringResource(Res.string.invoke_connect_method),
+                description = stringResource(Res.string.invoke_connect_method_text)
+            ),
+            ConnectionProcedureStep(
+                title = stringResource(Res.string.check_connection_result),
+                description = stringResource(Res.string.check_connection_result_text)
+            )
+        )
+        JetLimeColumn(
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                top = 16.dp,
+                end = 16.dp,
+                bottom = 10.dp
+            ),
+            itemsList = ItemsList(
+                items = steps
+            ),
+            key = { _, step -> step.title }
+        ) { _, step, position ->
+            ConnectionStep(
+                position = position,
+                step = step
+            )
+        }
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun ConnectionStep(
+        position: EventPosition,
+        step: ConnectionProcedureStep
+    ) {
+        JetLimeEvent(
+            style = JetLimeEventDefaults.eventStyle(
+                position = position
+            ),
+        ) {
+            Column {
+                val title = rememberRichTextState()
+                title.setMarkdown(
+                    markdown = step.title
+                )
+                RichText(
+                    state = title,
+                    fontSize = 20.sp,
+                    textAlign = TextAlign.Justify
+                )
+                val description = rememberRichTextState()
+                description.setMarkdown(
+                    markdown = step.description
+                )
+                description.config.linkColor = MaterialTheme.colorScheme.primary
+                description.config.linkTextDecoration = TextDecoration.None
+                RichText(
+                    state = description,
+                    fontSize = 14.sp,
+                    textAlign = TextAlign.Justify
+                )
+            }
+        }
+    }
+
     /**
      * Function invoked when the [ShowContent] composable has been started
      *
@@ -279,6 +415,7 @@ class ApplicationScreen(
     override fun CollectStates() {
         application = viewModel!!.application.collectAsState()
         viewModel!!.workOnApplication = remember { mutableStateOf(false) }
+        showConnectionProcedure = remember { mutableStateOf(false) }
     }
 
 }
