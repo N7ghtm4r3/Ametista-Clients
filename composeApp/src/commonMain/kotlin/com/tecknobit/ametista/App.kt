@@ -12,13 +12,17 @@ import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.PLATFORM_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
 import com.tecknobit.ametista.ui.screens.application.ApplicationScreen
 import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
+import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_KEY
+import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORM_KEY
+import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
@@ -108,6 +112,17 @@ fun App() {
                     val application: AmetistaApplication = stateHolder[APPLICATION_KEY]!!
                     ApplicationScreen(
                         initialApplication = application
+                    ).ShowContent()
+                }
+                scene(
+                    route = PLATFORM_SCREEN
+                ) { backstackEntry ->
+                    val stateHolder = backstackEntry.stateHolder
+                    val application: AmetistaApplication = stateHolder[APPLICATION_KEY]!!
+                    val platform: Platform = stateHolder[PLATFORM_KEY]!!
+                    PlatformScreen(
+                        initialApplication = application,
+                        platform = platform
                     ).ShowContent()
                 }
             }

@@ -26,7 +26,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Outlined
-import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Link
@@ -77,16 +76,16 @@ import com.tecknobit.ametista.model.ConnectionProcedureStep
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.WorkOnApplication
+import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.entries
 import com.tecknobit.equinoxcompose.components.EmptyListUI
-import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import org.jetbrains.compose.resources.stringResource
 
 class ApplicationScreen(
     initialApplication: AmetistaApplication
-) : EquinoxScreen<ApplicationScreenViewModel>(
+) : AmetistaScreen<ApplicationScreenViewModel>(
     viewModel = ApplicationScreenViewModel(
         initialApplication = initialApplication
     )
@@ -112,16 +111,7 @@ class ApplicationScreen(
                             colors = TopAppBarDefaults.largeTopAppBarColors(
                                 containerColor = MaterialTheme.colorScheme.primaryContainer
                             ),
-                            navigationIcon = {
-                                IconButton(
-                                    onClick = { navigator.goBack() }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.ArrowBackIosNew,
-                                        contentDescription = null
-                                    )
-                                }
-                            },
+                            navigationIcon = { NavButton() },
                             title = {
                                 Text(
                                     text = application.value.name
@@ -403,7 +393,7 @@ class ApplicationScreen(
      */
     override fun onStart() {
         super.onStart()
-        viewModel!!.getApplication()
+        viewModel!!.refreshApplication()
     }
 
     /**

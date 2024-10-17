@@ -1,5 +1,12 @@
 package com.tecknobit.ametista.ui.screens
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.NonRestartableComposable
+import com.tecknobit.ametista.navigator
 import com.tecknobit.apimanager.annotations.Structure
 import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
@@ -19,6 +26,21 @@ abstract class AmetistaScreen<V : EquinoxViewModel>(
 
         const val APPLICATION_SCREEN = "ApplicationScreen"
 
+        const val PLATFORM_SCREEN = "PlatformScreen"
+
+    }
+
+    @Composable
+    @NonRestartableComposable
+    protected fun NavButton() {
+        IconButton(
+            onClick = { navigator.goBack() }
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBackIosNew,
+                contentDescription = null
+            )
+        }
     }
 
 }

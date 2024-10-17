@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalPaginationApi::class)
-
 package com.tecknobit.ametista.ui.screens.applications
 
 import androidx.compose.runtime.MutableState
@@ -8,7 +6,6 @@ import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
 import com.tecknobit.apimanager.annotations.Wrapper
-import io.github.ahmad_hamwi.compose.pagination.ExperimentalPaginationApi
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 
 class ApplicationsScreenViewModel : ApplicationViewModel() {

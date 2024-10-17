@@ -5,7 +5,7 @@ import com.tecknobit.ametistacore.models.AmetistaApplication
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class ApplicationScreenViewModel(
+open class ApplicationScreenViewModel(
     initialApplication: AmetistaApplication
 ) : ApplicationViewModel() {
 
@@ -14,7 +14,7 @@ class ApplicationScreenViewModel(
     )
     val application: StateFlow<AmetistaApplication> = _application
 
-    fun getApplication() {
+    fun refreshApplication() {
         // TODO: MAKE THE REQUEST THEN
     }
 

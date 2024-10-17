@@ -29,19 +29,25 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
+import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.icons.Globe
 import com.tecknobit.ametista.ui.icons.Ios
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.PLATFORM_SCREEN
 import com.tecknobit.ametista.ui.screens.application.ApplicationScreenViewModel
 import com.tecknobit.ametista.ui.theme.platforms.android.AndroidPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.desktop.DesktopPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.ios.IosPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.web.WebPlatformTheme
+import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_KEY
+import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORM_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.ANDROID
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.DESKTOP
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.IOS
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.WEB
 import com.tecknobit.equinoxcompose.components.Tile
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
@@ -142,7 +148,13 @@ private fun DrawTiles(
                     icon = platform.icon(),
                     text = platform.name,
                     onClick = {
-                        // TODO: NAV TO PLATFORM PAGE
+                        MainScope().launch {
+                            val currentEntry = navigator.currentEntry.first()
+                            val stateHolder = currentEntry?.stateHolder
+                            stateHolder?.set(APPLICATION_KEY, viewModel.application.value)
+                            stateHolder?.set(PLATFORM_KEY, platform)
+                        }
+                        navigator.navigate(PLATFORM_SCREEN)
                     }
                 )
             }
