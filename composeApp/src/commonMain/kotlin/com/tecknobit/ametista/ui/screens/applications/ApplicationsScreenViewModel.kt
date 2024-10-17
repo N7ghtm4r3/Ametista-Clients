@@ -2,23 +2,16 @@
 
 package com.tecknobit.ametista.ui.screens.applications
 
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.ui.graphics.Color
-import com.tecknobit.ametista.ui.theme.platforms.android.errorDark
-import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppDescriptionValid
-import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppNameValid
+import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
 import com.tecknobit.apimanager.annotations.Wrapper
-import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import io.github.ahmad_hamwi.compose.pagination.ExperimentalPaginationApi
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 
-class ApplicationsScreenViewModel: EquinoxViewModel(
-    snackbarHostState = SnackbarHostState()
-) {
+class ApplicationsScreenViewModel : ApplicationViewModel() {
 
     val paginationState = PaginationState<Int, AmetistaApplication>(
         initialPageKey = 1,
@@ -28,20 +21,6 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
     lateinit var filterQuery: MutableState<String>
 
     lateinit var platformsFilter: SnapshotStateList<Platform>
-
-    lateinit var workOnApplication: MutableState<Boolean>
-
-    lateinit var appIcon: MutableState<String>
-
-    lateinit var appIconBorderColor: MutableState<Color>
-
-    lateinit var appName: MutableState<String>
-
-    lateinit var appNameError: MutableState<Boolean>
-
-    lateinit var appDescription: MutableState<String>
-
-    lateinit var appDescriptionError: MutableState<Boolean>
 
     private fun getApplications() {
         // TODO: MAKE THE REAL REQUEST (and use appendPageWithUpdates)
@@ -96,18 +75,6 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
         onSuccess: () -> Unit,
         application: AmetistaApplication?
     ) {
-        if (appIcon.value.isEmpty()) {
-            appIconBorderColor.value = errorDark
-            return
-        }
-        if (!isAppNameValid(appName.value)) {
-            appNameError.value = true
-            return
-        }
-        if (!isAppDescriptionValid(appDescription.value)) {
-            appDescriptionError.value = true
-            return
-        }
         if (application == null) {
             addApplication(
                 onSuccess = onSuccess
@@ -123,14 +90,8 @@ class ApplicationsScreenViewModel: EquinoxViewModel(
     private fun addApplication(
         onSuccess: () -> Unit
     ) {
-        // TODO: MAKE THE REQUEST THEN
-        onSuccess.invoke()
-    }
-
-    private fun editApplication(
-        application: AmetistaApplication,
-        onSuccess: () -> Unit
-    ) {
+        if (!validForm())
+            return
         // TODO: MAKE THE REQUEST THEN
         onSuccess.invoke()
     }

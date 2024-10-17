@@ -1,16 +1,13 @@
 package com.tecknobit.ametista.ui.screens.application
 
-import androidx.compose.material3.SnackbarHostState
+import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
 import com.tecknobit.ametistacore.models.AmetistaApplication
-import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class ApplicationScreenViewModel(
     initialApplication: AmetistaApplication
-) : EquinoxViewModel(
-    snackbarHostState = SnackbarHostState()
-) {
+) : ApplicationViewModel() {
 
     private val _application = MutableStateFlow(
         value = initialApplication

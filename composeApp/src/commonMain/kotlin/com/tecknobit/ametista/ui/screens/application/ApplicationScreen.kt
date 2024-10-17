@@ -19,6 +19,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Outlined
 import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.LinkOff
 import androidx.compose.material.icons.outlined.ArrowCircleDown
@@ -49,6 +51,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.helpers.PlatformsCustomGrid
 import com.tecknobit.ametista.navigator
+import com.tecknobit.ametista.ui.components.DeleteApplication
+import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.entries
 import com.tecknobit.equinoxcompose.components.EmptyListUI
@@ -94,6 +98,36 @@ class ApplicationScreen(
                             title = {
                                 Text(
                                     text = application.value.name
+                                )
+                            },
+                            actions = {
+                                IconButton(
+                                    onClick = { viewModel!!.workOnApplication.value = true }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Edit,
+                                        contentDescription = null
+                                    )
+                                }
+                                WorkOnApplication(
+                                    show = viewModel!!.workOnApplication,
+                                    viewModel = viewModel!!,
+                                    application = application.value
+                                )
+                                val deleteApplication = remember { mutableStateOf(false) }
+                                IconButton(
+                                    onClick = { deleteApplication.value = true }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Delete,
+                                        contentDescription = null
+                                    )
+                                }
+                                DeleteApplication(
+                                    show = deleteApplication,
+                                    application = application.value,
+                                    viewModel = viewModel!!,
+                                    onDelete = { navigator.goBack() }
                                 )
                             }
                         )
@@ -244,6 +278,7 @@ class ApplicationScreen(
     @Composable
     override fun CollectStates() {
         application = viewModel!!.application.collectAsState()
+        viewModel!!.workOnApplication = remember { mutableStateOf(false) }
     }
 
 }

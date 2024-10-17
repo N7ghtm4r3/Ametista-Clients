@@ -45,6 +45,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.helpers.icon
+import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
