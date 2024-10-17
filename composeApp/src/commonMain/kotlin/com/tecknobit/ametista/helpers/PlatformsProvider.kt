@@ -1,8 +1,9 @@
 package com.tecknobit.ametista.helpers
 
+import ametista.composeapp.generated.resources.Res
+import ametista.composeapp.generated.resources.no_connected_platform
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,8 +28,10 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import com.tecknobit.ametista.ui.icons.Globe
 import com.tecknobit.ametista.ui.icons.Ios
+import com.tecknobit.ametista.ui.screens.application.ApplicationScreenViewModel
 import com.tecknobit.ametista.ui.theme.platforms.android.AndroidPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.desktop.DesktopPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.ios.IosPlatformTheme
@@ -39,6 +42,8 @@ import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.DESKTOP
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.IOS
 import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.WEB
 import com.tecknobit.equinoxcompose.components.Tile
+import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.getString
 
 fun Platform.icon(): ImageVector {
     return when (this) {
@@ -52,7 +57,7 @@ fun Platform.icon(): ImageVector {
 @Composable
 @NonRestartableComposable
 fun PlatformsCustomGrid(
-    paddingValues: PaddingValues,
+    viewModel: ApplicationScreenViewModel,
     applicationPlatforms: Set<Platform>
 ) {
     val tileDimension = tileDimension()
@@ -60,20 +65,20 @@ fun PlatformsCustomGrid(
         modifier = Modifier
             .fillMaxSize()
             .padding(
-                top = paddingValues.calculateTopPadding() + 16.dp,
-                bottom = paddingValues.calculateBottomPadding() + 16.dp
+                bottom = 16.dp
             )
             .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         PlatformsRow(
+            viewModel = viewModel,
             applicationPlatforms = applicationPlatforms,
             platforms = listOf(ANDROID, IOS),
             size = tileDimension
         )
         Spacer(Modifier.height(10.dp))
         PlatformsRow(
+            viewModel = viewModel,
             applicationPlatforms = applicationPlatforms,
             platforms = listOf(DESKTOP, WEB),
             size = tileDimension
@@ -86,6 +91,7 @@ expect fun tileDimension(): Dp
 @Composable
 @NonRestartableComposable
 private fun PlatformsRow(
+    viewModel: ApplicationScreenViewModel,
     applicationPlatforms: Set<Platform>,
     platforms: List<Platform>,
     size: Dp
@@ -97,6 +103,7 @@ private fun PlatformsRow(
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 DrawTiles(
+                    viewModel = viewModel,
                     applicationPlatforms = applicationPlatforms,
                     platforms = platforms,
                     size = size
@@ -109,6 +116,7 @@ private fun PlatformsRow(
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 DrawTiles(
+                    viewModel = viewModel,
                     applicationPlatforms = applicationPlatforms,
                     platforms = platforms,
                     size = size
@@ -121,6 +129,7 @@ private fun PlatformsRow(
 @Composable
 @NonRestartableComposable
 private fun DrawTiles(
+    viewModel: ApplicationScreenViewModel,
     applicationPlatforms: Set<Platform>,
     platforms: List<Platform>,
     size: Dp
@@ -158,7 +167,11 @@ private fun DrawTiles(
                 icon = platform.icon(),
                 text = platform.name,
                 onClick = {
-                    // TODO: WARN OF THE NOT CONNECTED YET  
+                    viewModel.viewModelScope.launch {
+                        viewModel.snackbarHostState!!.showSnackbar(
+                            message = getString(Res.string.no_connected_platform)
+                        )
+                    }
                 }
             )
         }
