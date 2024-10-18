@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-actual fun tileDimension(): Dp {
+actual fun tileSize(): Dp {
     return 150.dp
 }
 

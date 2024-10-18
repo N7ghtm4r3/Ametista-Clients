@@ -66,7 +66,7 @@ fun PlatformsCustomGrid(
     viewModel: ApplicationScreenViewModel,
     applicationPlatforms: Set<Platform>
 ) {
-    val tileDimension = tileDimension()
+    val tileDimension = tileSize()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -92,7 +92,7 @@ fun PlatformsCustomGrid(
     }
 }
 
-expect fun tileDimension(): Dp
+expect fun tileSize(): Dp
 
 @Composable
 @NonRestartableComposable
