@@ -78,7 +78,7 @@ import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametistacore.models.AmetistaApplication
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.entries
+import com.tecknobit.ametistacore.models.Platform.entries
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import org.jetbrains.compose.resources.stringResource

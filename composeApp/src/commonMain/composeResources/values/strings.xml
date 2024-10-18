@@ -25,4 +25,14 @@
     <string name="check_connection_result">Check connection result</string>
     <string name="check_connection_result_text">Check whether the platform related tile has been coloured</string>
     <string name="got_it">Got it!</string>
+    <string name="no_issues">No issues reported!</string>
+    <string name="no_performance_events">No performance events collected</string>
+    <string name="date">Date</string>
+    <string name="version">Version</string>
+    <string name="show_device_data">Show device data</string>
+    <string name="hide_device_data">Hide device data</string>
+    <string name="name">Name</string>
+    <string name="brand">Brand</string>
+    <string name="model">Model</string>
+    <string name="os_version">OS version</string>
 </resources>

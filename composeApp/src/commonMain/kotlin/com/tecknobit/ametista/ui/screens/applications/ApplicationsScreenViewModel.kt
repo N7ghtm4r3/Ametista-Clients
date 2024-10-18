@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
 import com.tecknobit.ametistacore.models.AmetistaApplication
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
+import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.apimanager.annotations.Wrapper
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 

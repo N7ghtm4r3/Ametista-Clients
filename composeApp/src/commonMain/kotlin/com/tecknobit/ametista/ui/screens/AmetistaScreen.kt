@@ -6,6 +6,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
+import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.navigator
 import com.tecknobit.apimanager.annotations.Structure
 import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
@@ -27,6 +28,9 @@ abstract class AmetistaScreen<V : EquinoxViewModel>(
         const val APPLICATION_SCREEN = "ApplicationScreen"
 
         const val PLATFORM_SCREEN = "PlatformScreen"
+
+        @JvmStatic
+        protected val CONTAINER_MAX_WIDTH = 800.dp
 
     }
 

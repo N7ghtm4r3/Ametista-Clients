@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.helpers.icon
 import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
+import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import org.jetbrains.compose.resources.stringResource
@@ -132,7 +132,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                         all = 16.dp
                     )
                     .widthIn(
-                        max = 800.dp
+                        max = CONTAINER_MAX_WIDTH
                     ),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center

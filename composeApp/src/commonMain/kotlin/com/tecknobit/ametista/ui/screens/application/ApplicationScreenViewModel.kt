@@ -9,7 +9,7 @@ open class ApplicationScreenViewModel(
     initialApplication: AmetistaApplication
 ) : ApplicationViewModel() {
 
-    private val _application = MutableStateFlow(
+    protected val _application = MutableStateFlow(
         value = initialApplication
     )
     val application: StateFlow<AmetistaApplication> = _application

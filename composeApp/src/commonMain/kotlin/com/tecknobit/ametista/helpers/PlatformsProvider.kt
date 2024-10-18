@@ -40,11 +40,11 @@ import com.tecknobit.ametista.ui.theme.platforms.ios.IosPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.web.WebPlatformTheme
 import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORM_KEY
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.ANDROID
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.DESKTOP
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.IOS
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform.WEB
+import com.tecknobit.ametistacore.models.Platform
+import com.tecknobit.ametistacore.models.Platform.ANDROID
+import com.tecknobit.ametistacore.models.Platform.DESKTOP
+import com.tecknobit.ametistacore.models.Platform.IOS
+import com.tecknobit.ametistacore.models.Platform.WEB
 import com.tecknobit.equinoxcompose.components.Tile
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.first

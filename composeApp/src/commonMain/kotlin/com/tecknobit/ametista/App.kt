@@ -22,7 +22,7 @@ import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORM_KEY
-import com.tecknobit.ametistacore.models.AmetistaApplication.Platform
+import com.tecknobit.ametistacore.models.Platform
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
