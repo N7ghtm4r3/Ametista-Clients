@@ -29,10 +29,15 @@
     <string name="no_performance_events">No performance events</string>
     <string name="date">Date</string>
     <string name="version">Version</string>
+    <string name="browser">Browser</string>
+    <string name="browser_version">Browser version</string>
     <string name="show_device_data">Show device data</string>
     <string name="hide_device_data">Hide device data</string>
     <string name="name">Name</string>
     <string name="brand">Brand</string>
     <string name="model">Model</string>
     <string name="os_version">OS version</string>
+    <string name="filter_issues">Filter issues</string>
+    <string name="filter_supporting_text">Filter by values visible in the issue cards</string>
+    <string name="filter">Filter</string>
 </resources>

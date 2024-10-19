@@ -85,7 +85,7 @@ actual fun Applications(
             newPageErrorIndicator = { e -> ... },*/
             // The rest of LazyColumn params
         ) {
-            val applications = viewModel.filterApplications()
+            val applications = viewModel.paginationState.allItems!!
             applicationsIsEmpty.value = applications.isEmpty()
             if(applications.isNotEmpty()) {
                 items(

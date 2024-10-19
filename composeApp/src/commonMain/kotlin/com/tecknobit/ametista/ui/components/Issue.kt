@@ -4,6 +4,8 @@ package com.tecknobit.ametista.ui.components
 
 import ametista.composeapp.generated.resources.Res.string
 import ametista.composeapp.generated.resources.brand
+import ametista.composeapp.generated.resources.browser
+import ametista.composeapp.generated.resources.browser_version
 import ametista.composeapp.generated.resources.date
 import ametista.composeapp.generated.resources.hide_device_data
 import ametista.composeapp.generated.resources.model
@@ -46,8 +48,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.helpers.getCurrentWidthSizeClass
 import com.tecknobit.ametista.ui.screens.platform.PlatformScreenViewModel
+import com.tecknobit.ametistacore.models.Platform.WEB
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AmetistaDevice
-import com.tecknobit.ametistacore.models.analytics.IssueAnalytic
+import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic
+import com.tecknobit.ametistacore.models.analytics.issues.WebIssueAnalytic
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -195,6 +199,43 @@ private fun IssueVisibleData(
                 .fillMaxWidth(),
             header = string.version,
             data = issue.appVersion
+        )
+    }
+    if (issue.platform == WEB) {
+        WebIssueBrowserInfo(
+            issue = issue as WebIssueAnalytic
+        )
+    }
+}
+
+@Composable
+@NonRestartableComposable
+private fun WebIssueBrowserInfo(
+    issue: WebIssueAnalytic
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                top = 16.dp,
+            )
+            .padding(
+                horizontal = 16.dp
+            ),
+    ) {
+        IssueSection(
+            modifier = Modifier
+                .weight(2f)
+                .fillMaxWidth(),
+            header = string.browser,
+            data = issue.browser
+        )
+        IssueSection(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            header = string.browser_version,
+            data = issue.browserVersion
         )
     }
 }

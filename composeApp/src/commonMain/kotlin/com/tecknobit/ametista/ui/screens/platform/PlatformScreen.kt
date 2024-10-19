@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.FilterListOff
 import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -33,6 +35,7 @@ import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -47,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.Theme
+import com.tecknobit.ametista.ui.components.FilterDialog
 import com.tecknobit.ametista.ui.components.Issue
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametistacore.models.AmetistaApplication
@@ -55,7 +59,7 @@ import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType.ISSUE
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType.PERFORMANCE
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType.entries
-import com.tecknobit.ametistacore.models.analytics.IssueAnalytic
+import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic
 import com.tecknobit.apimanager.annotations.Wrapper
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
@@ -72,6 +76,10 @@ class PlatformScreen(
 ) {
 
     private lateinit var application: State<AmetistaApplication>
+
+    private lateinit var filtersSet: State<Boolean>
+
+    private lateinit var filterList: MutableState<Boolean>
 
     /**
      * Function to arrange the content of the screen to display
@@ -106,18 +114,7 @@ class PlatformScreen(
                                 }
                             )
                         },
-                        floatingActionButton = {
-                            FloatingActionButton(
-                                onClick = {
-
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.FilterList,
-                                    contentDescription = null
-                                )
-                            }
-                        }
+                        floatingActionButton = { FilterButton() }
                     ) { paddingValues ->
                         Column(
                             modifier = Modifier
@@ -137,6 +134,34 @@ class PlatformScreen(
                     }
                 }
             )
+        }
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun FilterButton() {
+        if (!filtersSet.value) {
+            FloatingActionButton(
+                onClick = { filterList.value = true }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.FilterList,
+                    contentDescription = null
+                )
+            }
+            FilterDialog(
+                show = filterList,
+                viewModel = viewModel!!
+            )
+        } else {
+            FloatingActionButton(
+                onClick = { viewModel!!.clearFilters() }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.FilterListOff,
+                    contentDescription = null
+                )
+            }
         }
     }
 
@@ -222,7 +247,10 @@ class PlatformScreen(
             newPageProgressIndicator = {
                 LinearProgressIndicator()
             },
-            verticalArrangement = Arrangement.spacedBy(10.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            contentPadding = PaddingValues(
+                bottom = 16.dp
+            )
             // TODO: TO SET
             /*firstPageErrorIndicator = { e -> // from setError
                 ... e.message ...
@@ -312,7 +340,9 @@ class PlatformScreen(
 
     override fun onStart() {
         super.onStart()
-        viewModel!!.refreshApplication()
+        viewModel!!.refreshApplication(
+            platform = platform
+        )
     }
 
     /**
@@ -323,6 +353,8 @@ class PlatformScreen(
     @Composable
     override fun CollectStates() {
         application = viewModel!!.application.collectAsState()
+        filtersSet = viewModel!!.filtersSet.collectAsState()
+        filterList = remember { mutableStateOf(false) }
         viewModel!!.analyticType = remember { mutableStateOf(ISSUE) }
     }
 

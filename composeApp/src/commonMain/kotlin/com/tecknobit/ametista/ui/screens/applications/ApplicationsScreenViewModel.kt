@@ -52,7 +52,8 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
         platformsFilter.clear()
     }
 
-    fun filterApplications(): List<AmetistaApplication> {
+    // TODO: EXECUTING FILTERS BY BACKEND 
+    /*fun filterApplications(): List<AmetistaApplication> {
         val applications = arrayListOf<AmetistaApplication>()
         paginationState.allItems?.let { items ->
             if(filterQuery.value.isEmpty() && platformsFilter.isEmpty())
@@ -66,7 +67,7 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
     private fun AmetistaApplication.filtersMatch(): Boolean {
         val match = filterQuery.value.isEmpty() || this.name.lowercase().contains(filterQuery.value.lowercase())
         return match && this.platforms.containsAll(platformsFilter)
-    }
+    }*/
 
     fun workOnApplication(
         onSuccess: () -> Unit,
