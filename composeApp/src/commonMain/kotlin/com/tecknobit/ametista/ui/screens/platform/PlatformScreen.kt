@@ -4,7 +4,6 @@ package com.tecknobit.ametista.ui.screens.platform
 
 import ametista.composeapp.generated.resources.Res.string
 import ametista.composeapp.generated.resources.no_issues
-import ametista.composeapp.generated.resources.no_performance_events
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -52,6 +51,7 @@ import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.Theme
 import com.tecknobit.ametista.ui.components.FilterDialog
 import com.tecknobit.ametista.ui.components.Issue
+import com.tecknobit.ametista.ui.components.MultiLineChart
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform
@@ -60,11 +60,9 @@ import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType.PERFORMANCE
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType.entries
 import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic
-import com.tecknobit.apimanager.annotations.Wrapper
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
-import org.jetbrains.compose.resources.StringResource
 
 class PlatformScreen(
     initialApplication: AmetistaApplication,
@@ -282,54 +280,32 @@ class PlatformScreen(
     @Composable
     @NonRestartableComposable
     private fun Performance() {
-        NoPerformanceEvents(
-            noEvents = true
+        FirstLaunch()
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun FirstLaunch() {
+        MultiLineChart(
+            title = "First launch"
         )
     }
 
-    @Wrapper
     @Composable
     @NonRestartableComposable
     private fun NoIssues(
-        noIssues: Boolean
-    ) {
-        NoAnalytics(
-            noAnalytics = noIssues,
-            icon = Icons.Default.BugReport,
-            subText = string.no_issues
-        )
-    }
-
-    @Wrapper
-    @Composable
-    @NonRestartableComposable
-    private fun NoPerformanceEvents(
-        noEvents: Boolean
-    ) {
-        NoAnalytics(
-            noAnalytics = noEvents,
-            icon = Icons.Default.Speed,
-            subText = string.no_performance_events
-        )
-    }
-
-    @Composable
-    @NonRestartableComposable
-    private fun NoAnalytics(
-        noAnalytics: Boolean,
-        icon: ImageVector,
-        subText: StringResource
+        noIssues: Boolean,
     ) {
         AnimatedVisibility(
-            visible = noAnalytics,
+            visible = noIssues,
             enter = fadeIn(),
             exit = fadeOut()
         ) {
             EmptyListUI(
                 imageModifier = Modifier
                     .size(150.dp),
-                icon = icon,
-                subText = subText,
+                icon = Icons.Default.BugReport,
+                subText = string.no_issues,
                 textStyle = TextStyle(
                     fontFamily = displayFontFamily,
                     fontSize = 20.sp

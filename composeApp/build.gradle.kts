@@ -61,7 +61,8 @@ kotlin {
             implementation(libs.material3.window.size)
             implementation(libs.jetlime)
             implementation(libs.richeditor.compose)
-            implementation("io.github.dokar3:chiptextfield-m3:0.7.0-alpha05")
+            implementation(libs.chiptextfield.m3)
+            implementation("io.github.ehsannarmani:compose-charts:0.0.14")
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
