@@ -40,4 +40,9 @@
     <string name="filter_issues">Filter issues</string>
     <string name="filter_supporting_text">Filter by values visible in the issue cards</string>
     <string name="filter">Filter</string>
+    <string name="launch_time">Launch time</string>
+    <string name="network_requests">Network requests</string>
+    <string name="network_requests_popup">requests</string>
+    <string name="issues_number">Issues number</string>
+    <string name="issues_percent">Issues for 100 sessions</string>
 </resources>

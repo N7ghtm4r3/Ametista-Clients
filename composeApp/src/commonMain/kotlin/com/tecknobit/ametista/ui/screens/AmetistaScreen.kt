@@ -30,7 +30,7 @@ abstract class AmetistaScreen<V : EquinoxViewModel>(
         const val PLATFORM_SCREEN = "PlatformScreen"
 
         @JvmStatic
-        protected val CONTAINER_MAX_WIDTH = 800.dp
+        val CONTAINER_MAX_WIDTH = 1200.dp
 
     }
 

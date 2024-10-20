@@ -44,6 +44,7 @@ import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.WorkOnApplication
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyVerticalGrid
 
@@ -64,7 +65,7 @@ actual fun Applications(
         PaginatedLazyVerticalGrid(
             modifier = Modifier
                 .widthIn(
-                    max = 1200.dp
+                    max = CONTAINER_MAX_WIDTH
                 ),
             paginationState = viewModel.paginationState,
             columns = GridCells.Adaptive(

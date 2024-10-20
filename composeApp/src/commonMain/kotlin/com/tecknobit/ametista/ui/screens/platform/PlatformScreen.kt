@@ -11,9 +11,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,6 +37,7 @@ import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
@@ -49,9 +54,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.Theme
+import com.tecknobit.ametista.helpers.getCurrentWidthSizeClass
 import com.tecknobit.ametista.ui.components.FilterDialog
 import com.tecknobit.ametista.ui.components.Issue
-import com.tecknobit.ametista.ui.components.MultiLineChart
+import com.tecknobit.ametista.ui.components.IssuesNumber
+import com.tecknobit.ametista.ui.components.IssuesPerSessionsNumber
+import com.tecknobit.ametista.ui.components.LaunchTime
+import com.tecknobit.ametista.ui.components.NetworkRequests
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform
@@ -116,7 +125,7 @@ class PlatformScreen(
                     ) { paddingValues ->
                         Column(
                             modifier = Modifier
-                                .fillMaxSize()
+                                .fillMaxWidth()
                                 .padding(
                                     top = paddingValues.calculateTopPadding() - 5.dp,
                                     bottom = 16.dp
@@ -280,15 +289,76 @@ class PlatformScreen(
     @Composable
     @NonRestartableComposable
     private fun Performance() {
-        FirstLaunch()
+        val windowWithSize = getCurrentWidthSizeClass()
+        when (windowWithSize) {
+            WindowWidthSizeClass.Expanded -> {
+                PerformanceGrid()
+            }
+
+            else -> {
+                PerformanceColumn()
+            }
+        }
     }
 
     @Composable
     @NonRestartableComposable
-    private fun FirstLaunch() {
-        MultiLineChart(
-            title = "First launch"
-        )
+    private fun PerformanceGrid() {
+        val cardHeight = 350.dp
+        Column(
+            modifier = Modifier
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                item {
+                    LaunchTime(
+                        cardHeight = cardHeight
+                    )
+                }
+                item {
+                    NetworkRequests(
+                        cardHeight = cardHeight
+                    )
+                }
+                item {
+                    IssuesNumber(
+                        cardHeight = cardHeight
+                    )
+                }
+                item {
+                    IssuesPerSessionsNumber(
+                        cardHeight = cardHeight
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun PerformanceColumn() {
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            item {
+                LaunchTime()
+            }
+            item {
+                NetworkRequests()
+            }
+            item {
+                IssuesNumber()
+            }
+            item {
+                IssuesPerSessionsNumber()
+            }
+        }
     }
 
     @Composable
