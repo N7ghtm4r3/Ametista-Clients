@@ -26,7 +26,6 @@
     <string name="check_connection_result_text">Check whether the platform related tile has been coloured</string>
     <string name="got_it">Got it!</string>
     <string name="no_issues">No issues reported!</string>
-    <string name="no_performance_events">No performance events</string>
     <string name="date">Date</string>
     <string name="version">Version</string>
     <string name="browser">Browser</string>
@@ -45,4 +44,5 @@
     <string name="network_requests_popup">requests</string>
     <string name="issues_number">Issues number</string>
     <string name="issues_per_session">Issues per session</string>
+    <string name="no_events">No events</string>
 </resources>

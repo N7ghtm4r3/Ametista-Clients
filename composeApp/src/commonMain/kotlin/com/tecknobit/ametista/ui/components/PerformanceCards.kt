@@ -5,6 +5,7 @@ import ametista.composeapp.generated.resources.issues_number
 import ametista.composeapp.generated.resources.issues_per_session
 import ametista.composeapp.generated.resources.launch_time
 import ametista.composeapp.generated.resources.network_requests
+import ametista.composeapp.generated.resources.no_events
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,7 +20,9 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.BugReport
+import androidx.compose.material.icons.filled.Report
+import androidx.compose.material.icons.filled.RocketLaunch
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -36,6 +39,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
+import com.tecknobit.ametista.ui.icons.ChartNetwork
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
 import com.tecknobit.ametistacore.models.AmetistaApplication.MAX_VERSION_SAMPLES
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
@@ -69,8 +73,7 @@ fun LaunchTime(
         NoChartData(
             title = string.launch_time,
             cardHeight = cardHeight,
-            icon = Icons.Default.Person,
-            infoText = string.network_requests
+            icon = Icons.Default.RocketLaunch
         )
     } else {
         PerformanceCard(
@@ -99,8 +102,7 @@ fun NetworkRequests(
         NoChartData(
             title = string.network_requests,
             cardHeight = cardHeight,
-            icon = Icons.Default.Person,
-            infoText = string.network_requests
+            icon = ChartNetwork
         )
     } else {
         PerformanceCard(
@@ -121,8 +123,7 @@ fun IssuesNumber(
         NoChartData(
             title = string.issues_number,
             cardHeight = cardHeight,
-            icon = Icons.Default.Person,
-            infoText = string.network_requests
+            icon = Icons.Default.BugReport
         )
     } else {
         PerformanceCard(
@@ -143,8 +144,7 @@ fun IssuesPerSessionsNumber(
         NoChartData(
             title = string.issues_per_session,
             cardHeight = cardHeight,
-            icon = Icons.Default.Person,
-            infoText = string.network_requests
+            icon = Icons.Default.Report
         )
     } else {
         PerformanceCard(
@@ -160,8 +160,7 @@ fun IssuesPerSessionsNumber(
 private fun NoChartData(
     title: StringResource,
     cardHeight: Dp,
-    icon: ImageVector,
-    infoText: StringResource,
+    icon: ImageVector
 ) {
     Card(
         modifier = Modifier
@@ -182,7 +181,7 @@ private fun NoChartData(
         )
         EmptyListUI(
             icon = icon,
-            subText = stringResource(infoText)
+            subText = stringResource(string.no_events)
         )
     }
 }
