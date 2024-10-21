@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.Theme
 import com.tecknobit.ametista.helpers.getCurrentWidthSizeClass
+import com.tecknobit.ametista.model.PerformanceData
 import com.tecknobit.ametista.ui.components.FilterDialog
 import com.tecknobit.ametista.ui.components.Issue
 import com.tecknobit.ametista.ui.components.IssuesNumber
@@ -78,13 +79,16 @@ class PlatformScreen(
     private val platform: Platform
 ) : AmetistaScreen<PlatformScreenViewModel>(
     viewModel = PlatformScreenViewModel(
-        applicationId = applicationId
+        applicationId = applicationId,
+        platform = platform
     )
 ) {
 
     private lateinit var filtersSet: State<Boolean>
 
     private lateinit var filterList: MutableState<Boolean>
+
+    private lateinit var launchTimes: State<PerformanceData?>
 
     /**
      * Function to arrange the content of the screen to display
@@ -392,6 +396,7 @@ class PlatformScreen(
         filtersSet = viewModel!!.filtersSet.collectAsState()
         filterList = remember { mutableStateOf(false) }
         viewModel!!.analyticType = remember { mutableStateOf(ISSUE) }
+        launchTimes = viewModel!!.launchTimes.collectAsState()
     }
 
 }

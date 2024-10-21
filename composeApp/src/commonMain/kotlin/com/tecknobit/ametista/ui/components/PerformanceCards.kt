@@ -27,17 +27,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
+import com.tecknobit.ametista.model.PerformanceData
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
 import com.tecknobit.ametistacore.models.AmetistaApplication.MAX_VERSION_SAMPLES
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.models.DividerProperties
-import ir.ehsannarmani.compose_charts.models.DrawStyle
 import ir.ehsannarmani.compose_charts.models.GridProperties
 import ir.ehsannarmani.compose_charts.models.HorizontalIndicatorProperties
 import ir.ehsannarmani.compose_charts.models.LabelHelperProperties
@@ -131,7 +130,7 @@ fun IssuesPerSessionsNumber(
 private fun PerformanceCard(
     title: StringResource,
     cardHeight: Dp,
-    data: Map<String, List<Double>>,
+    data: PerformanceData,
     popupProperties: PopupProperties? = null
 ) {
     Card(
@@ -152,7 +151,7 @@ private fun PerformanceCard(
             fontSize = 20.sp
         )
         ChartLegend(
-            samples = data.keys
+            samples = data.versionSamples
         )
         LineChart(
             modifier = Modifier
@@ -185,7 +184,7 @@ private fun PerformanceCard(
 @Composable
 @NonRestartableComposable
 private fun ChartLegend(
-    samples: Set<String>
+    samples: List<String>
 ) {
     LazyVerticalGrid(
         modifier = Modifier
@@ -237,11 +236,11 @@ private fun LegendItem(
 @Composable
 @NonRestartableComposable
 private fun loadChartData(
-    data: Map<String, List<Double>>,
+    data: PerformanceData,
     popupProperties: PopupProperties?
 ): List<Line> {
     val chartData = arrayListOf<Line>()
-    data.entries.forEachIndexed { index, entry ->
+    /*data.entries.forEachIndexed { index, entry ->
         val values = entry.value
         val lineColor = getLineColor(
             index = index
@@ -257,7 +256,7 @@ private fun loadChartData(
                 popupProperties = popupProperties
             )
         )
-    }
+    }*/
     return chartData
 }
 

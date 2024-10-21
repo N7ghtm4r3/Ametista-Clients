@@ -2,9 +2,12 @@ package com.tecknobit.ametista.ui.screens.platform
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.dokar.chiptextfield.Chip
 import com.dokar.chiptextfield.ChipTextFieldState
+import com.tecknobit.ametista.model.PerformanceData
 import com.tecknobit.ametistacore.models.AmetistaApplication
+import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
@@ -13,7 +16,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 class PlatformScreenViewModel(
-    applicationId: String
+    applicationId: String,
+    platform: Platform
 ) : EquinoxViewModel(
     snackbarHostState = SnackbarHostState()
 ) {
@@ -40,6 +44,13 @@ class PlatformScreenViewModel(
     )
     val filtersSet: StateFlow<Boolean> = _filtersSet
 
+    val versionSamplesFilters = SnapshotStateList<String>()
+
+    private val _launchTimes = MutableStateFlow<PerformanceData?>(
+        value = null
+    )
+    val launchTimes: StateFlow<PerformanceData?> = _launchTimes
+
     private fun loadIssues() {
         // TODO: MAKE THE REAL REQUEST THEN ALSO WITH _filters
         val items = AmetistaApplication("Space").issues
@@ -65,7 +76,14 @@ class PlatformScreenViewModel(
     }
 
     fun getPerformanceAnalytics() {
-        // TODO: MAKE THE REAL REQUEST
+        // TODO: MAKE THE REAL REQUEST THEN
+        // TODO: LOAD FILTERS 
+        /*versionSamplesFilters.clear() 
+        versionSamplesFilters.add("from request response")*/
+        _launchTimes.value = PerformanceData(
+            versionSamples = versionSamplesFilters,
+            values = AmetistaApplication("Space").launchTimeAnalytics // TODO: FETCH FROM THE REQUEST RESPONSE
+        )
     }
 
 }
