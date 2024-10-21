@@ -18,7 +18,10 @@ import org.jetbrains.annotations.TestOnly
 
 @Composable
 @TestOnly
-// TODO: MORE CUSTOMIZATION AND CLOSE ICON IF ICON NOT NULL
+@Deprecated(
+    "JUST FOR TESTING WILL BE INTEGRATED IN THE OFFICIAL EQUINOX-COMPOSE LIBRARY",
+    ReplaceWith("The official component")
+)
 fun EquinoxDialog(
     show: MutableState<Boolean>,
     viewModel: EquinoxViewModel? = null,

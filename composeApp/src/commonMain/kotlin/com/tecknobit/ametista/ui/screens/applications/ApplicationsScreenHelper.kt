@@ -31,11 +31,7 @@ import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.icons.Boxes
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
 import com.tecknobit.ametistacore.models.AmetistaApplication
-import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_KEY
 import com.tecknobit.equinoxcompose.components.EmptyListUI
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 
 @Composable
 @NonRestartableComposable
@@ -77,11 +73,7 @@ expect fun ApplicationItem(
 fun navToApplicationScreen(
     application: AmetistaApplication
 ) {
-    MainScope().launch {
-        val entry = navigator.currentEntry.first()
-        entry?.stateHolder?.set(APPLICATION_KEY, application)
-    }
-    navigator.navigate(APPLICATION_SCREEN)
+    navigator.navigate("$APPLICATION_SCREEN/${application.id}")
 }
 
 @Composable

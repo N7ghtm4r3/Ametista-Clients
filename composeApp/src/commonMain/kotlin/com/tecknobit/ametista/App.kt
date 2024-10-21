@@ -19,13 +19,14 @@ import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
 import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
-import com.tecknobit.ametistacore.models.AmetistaApplication
-import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_KEY
+import com.tecknobit.ametistacore.models.AmetistaApplication.IDENTIFIER_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORM_KEY
 import com.tecknobit.ametistacore.models.Platform
+import com.tecknobit.equinox.environment.records.EquinoxUser.NAME_KEY
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
+import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
 import okhttp3.OkHttpClient
 import org.jetbrains.compose.resources.Font
@@ -106,23 +107,23 @@ fun App() {
                     ApplicationsScreen().ShowContent()
                 }
                 scene(
-                    route = APPLICATION_SCREEN
+                    route = "$APPLICATION_SCREEN/{$IDENTIFIER_KEY}"
                 ) { backstackEntry ->
-                    val stateHolder = backstackEntry.stateHolder
-                    val application: AmetistaApplication = stateHolder[APPLICATION_KEY]!!
+                    val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
                     ApplicationScreen(
-                        initialApplication = application
+                        applicationId = applicationId
                     ).ShowContent()
                 }
                 scene(
-                    route = PLATFORM_SCREEN
+                    route = "$PLATFORM_SCREEN/{$IDENTIFIER_KEY}/{$NAME_KEY}/{$PLATFORM_KEY}"
                 ) { backstackEntry ->
-                    val stateHolder = backstackEntry.stateHolder
-                    val application: AmetistaApplication = stateHolder[APPLICATION_KEY]!!
-                    val platform: Platform = stateHolder[PLATFORM_KEY]!!
+                    val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
+                    val applicationName = backstackEntry.path<String>(NAME_KEY)!!
+                    val platform = backstackEntry.path<String>(PLATFORM_KEY)!!
                     PlatformScreen(
-                        initialApplication = application,
-                        platform = platform
+                        applicationId = applicationId,
+                        applicationName = applicationName,
+                        platform = Platform.valueOf(platform)
                     ).ShowContent()
                 }
             }

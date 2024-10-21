@@ -38,16 +38,12 @@ import com.tecknobit.ametista.ui.theme.platforms.android.AndroidPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.desktop.DesktopPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.ios.IosPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.web.WebPlatformTheme
-import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_KEY
-import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORM_KEY
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.Platform.ANDROID
 import com.tecknobit.ametistacore.models.Platform.DESKTOP
 import com.tecknobit.ametistacore.models.Platform.IOS
 import com.tecknobit.ametistacore.models.Platform.WEB
 import com.tecknobit.equinoxcompose.components.Tile
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
@@ -148,13 +144,10 @@ private fun DrawTiles(
                     icon = platform.icon(),
                     text = platform.name,
                     onClick = {
-                        MainScope().launch {
-                            val currentEntry = navigator.currentEntry.first()
-                            val stateHolder = currentEntry?.stateHolder
-                            stateHolder?.set(APPLICATION_KEY, viewModel.application.value)
-                            stateHolder?.set(PLATFORM_KEY, platform)
-                        }
-                        navigator.navigate(PLATFORM_SCREEN)
+                        val applicationId = viewModel.application.value!!.id
+                        val applicationName = viewModel.application.value!!.name
+                        val route = "$PLATFORM_SCREEN/$applicationId/$applicationName/$platform"
+                        navigator.navigate(route)
                     }
                 )
             }

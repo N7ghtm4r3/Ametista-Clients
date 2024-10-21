@@ -84,14 +84,14 @@ import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import org.jetbrains.compose.resources.stringResource
 
 class ApplicationScreen(
-    initialApplication: AmetistaApplication
+    private val applicationId: String
 ) : AmetistaScreen<ApplicationScreenViewModel>(
     viewModel = ApplicationScreenViewModel(
-        initialApplication = initialApplication
+        applicationId = applicationId
     )
 ) {
 
-    private lateinit var application: State<AmetistaApplication>
+    private lateinit var application: State<AmetistaApplication?>
 
     private lateinit var showConnectionProcedure: MutableState<Boolean>
 
@@ -102,85 +102,92 @@ class ApplicationScreen(
      */
     @Composable
     override fun ArrangeScreenContent() {
-        ManagedContent(
-            viewModel = viewModel!!,
-            content = {
-                Scaffold(
-                    topBar = {
-                        LargeTopAppBar(
-                            colors = TopAppBarDefaults.largeTopAppBarColors(
-                                containerColor = MaterialTheme.colorScheme.primaryContainer
-                            ),
-                            navigationIcon = { NavButton() },
-                            title = {
-                                Text(
-                                    text = application.value.name
-                                )
-                            },
-                            actions = {
-                                IconButton(
-                                    onClick = { viewModel!!.workOnApplication.value = true }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Edit,
-                                        contentDescription = null
+        The official component
+        AnimatedVisibility(
+            visible = application.value != null,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            ManagedContent(
+                viewModel = viewModel!!,
+                content = {
+                    Scaffold(
+                        topBar = {
+                            LargeTopAppBar(
+                                colors = TopAppBarDefaults.largeTopAppBarColors(
+                                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                                ),
+                                navigationIcon = { NavButton() },
+                                title = {
+                                    Text(
+                                        text = application.value!!.name
+                                    )
+                                },
+                                actions = {
+                                    IconButton(
+                                        onClick = { viewModel!!.workOnApplication.value = true }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Edit,
+                                            contentDescription = null
+                                        )
+                                    }
+                                    WorkOnApplication(
+                                        show = viewModel!!.workOnApplication,
+                                        viewModel = viewModel!!,
+                                        application = application.value
+                                    )
+                                    val deleteApplication = remember { mutableStateOf(false) }
+                                    IconButton(
+                                        onClick = { deleteApplication.value = true }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Delete,
+                                            contentDescription = null
+                                        )
+                                    }
+                                    DeleteApplication(
+                                        show = deleteApplication,
+                                        application = application.value!!,
+                                        viewModel = viewModel!!,
+                                        onDelete = { navigator.goBack() }
                                     )
                                 }
-                                WorkOnApplication(
-                                    show = viewModel!!.workOnApplication,
-                                    viewModel = viewModel!!,
-                                    application = application.value
-                                )
-                                val deleteApplication = remember { mutableStateOf(false) }
-                                IconButton(
-                                    onClick = { deleteApplication.value = true }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Delete,
-                                        contentDescription = null
-                                    )
-                                }
-                                DeleteApplication(
-                                    show = deleteApplication,
-                                    application = application.value,
-                                    viewModel = viewModel!!,
-                                    onDelete = { navigator.goBack() }
-                                )
-                            }
-                        )
-                    },
-                    snackbarHost = {
-                        SnackbarHost(
-                            hostState = viewModel!!.snackbarHostState!!
-                        )
-                    },
-                    floatingActionButton = {
-                        AnimatedVisibility(
-                            visible = application.value.platforms.size != entries.size,
-                            enter = fadeIn(),
-                            exit = fadeOut()
-                        ) {
-                            FloatingActionButton(
-                                onClick = { showConnectionProcedure.value = true }
+                            )
+                        },
+                        snackbarHost = {
+                            SnackbarHost(
+                                hostState = viewModel!!.snackbarHostState!!
+                            )
+                        },
+                        floatingActionButton = {
+                            AnimatedVisibility(
+                                visible = application.value!!.platforms.size != entries.size,
+                                enter = fadeIn(),
+                                exit = fadeOut()
                             ) {
-                                Icon(
-                                    imageVector = Icons.Default.Link,
-                                    contentDescription = null
-                                )
+                                FloatingActionButton(
+                                    onClick = { showConnectionProcedure.value = true }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Link,
+                                        contentDescription = null
+                                    )
+                                }
                             }
                         }
-                    }
-                ) { paddingValues ->
-                    Column {
-                        ExpandableText(
-                            paddingValues = paddingValues
-                        )
-                        PlatformsSections()
-                        ConnectionProcedure()
+                    ) { paddingValues ->
+                        Column {
+                            ExpandableText(
+                                paddingValues = paddingValues
+                            )
+                            PlatformsSections()
+                            ConnectionProcedure()
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
     }
 
     @Composable
@@ -215,7 +222,7 @@ class ApplicationScreen(
                             .padding(
                                 horizontal = 16.dp
                             ),
-                        text = application.value.description,
+                        text = application.value!!.description,
                         textAlign = TextAlign.Justify,
                     )
                 }
@@ -226,7 +233,7 @@ class ApplicationScreen(
                             .padding(
                                 horizontal = 16.dp
                             ),
-                        text = application.value.description,
+                        text = application.value!!.description,
                         textAlign = TextAlign.Justify,
                         onTextLayout = { textLayoutResult ->
                             expandable = textLayoutResult.lineCount >= 5
@@ -262,7 +269,7 @@ class ApplicationScreen(
     @Composable
     @NonRestartableComposable
     private fun PlatformsSections() {
-        val platforms = application.value.platforms
+        val platforms = application.value!!.platforms
         if (platforms.isNotEmpty()) {
             PlatformsCustomGrid(
                 viewModel = viewModel!!,

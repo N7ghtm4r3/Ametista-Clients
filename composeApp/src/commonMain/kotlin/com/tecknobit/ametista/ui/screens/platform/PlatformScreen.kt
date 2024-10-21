@@ -62,7 +62,6 @@ import com.tecknobit.ametista.ui.components.IssuesPerSessionsNumber
 import com.tecknobit.ametista.ui.components.LaunchTime
 import com.tecknobit.ametista.ui.components.NetworkRequests
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
-import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType.ISSUE
@@ -74,15 +73,14 @@ import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 
 class PlatformScreen(
-    initialApplication: AmetistaApplication,
+    applicationId: String,
+    private val applicationName: String,
     private val platform: Platform
 ) : AmetistaScreen<PlatformScreenViewModel>(
     viewModel = PlatformScreenViewModel(
-        initialApplication = initialApplication
+        applicationId = applicationId
     )
 ) {
-
-    private lateinit var application: State<AmetistaApplication>
 
     private lateinit var filtersSet: State<Boolean>
 
@@ -115,7 +113,7 @@ class PlatformScreen(
                                             fontWeight = FontWeight.Bold
                                         )
                                         Text(
-                                            text = application.value.name
+                                            text = applicationName
                                         )
                                     }
                                 }
@@ -386,9 +384,7 @@ class PlatformScreen(
 
     override fun onStart() {
         super.onStart()
-        viewModel!!.refreshApplication(
-            platform = platform
-        )
+        viewModel!!.getAnalytics()
     }
 
     /**
@@ -398,7 +394,6 @@ class PlatformScreen(
      */
     @Composable
     override fun CollectStates() {
-        application = viewModel!!.application.collectAsState()
         filtersSet = viewModel!!.filtersSet.collectAsState()
         filterList = remember { mutableStateOf(false) }
         viewModel!!.analyticType = remember { mutableStateOf(ISSUE) }
