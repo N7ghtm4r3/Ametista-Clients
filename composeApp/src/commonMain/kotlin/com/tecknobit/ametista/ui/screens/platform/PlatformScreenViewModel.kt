@@ -5,15 +5,17 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.dokar.chiptextfield.Chip
 import com.dokar.chiptextfield.ChipTextFieldState
-import com.tecknobit.ametista.model.PerformanceData
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
+import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic
+import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlin.random.Random
 
 class PlatformScreenViewModel(
     applicationId: String,
@@ -46,10 +48,10 @@ class PlatformScreenViewModel(
 
     val versionSamplesFilters = SnapshotStateList<String>()
 
-    private val _launchTimes = MutableStateFlow<PerformanceData?>(
+    private val _performanceData = MutableStateFlow<PerformanceData?>(
         value = null
     )
-    val launchTimes: StateFlow<PerformanceData?> = _launchTimes
+    val performanceData: StateFlow<PerformanceData?> = _performanceData
 
     private fun loadIssues() {
         // TODO: MAKE THE REAL REQUEST THEN ALSO WITH _filters
@@ -80,10 +82,63 @@ class PlatformScreenViewModel(
         // TODO: LOAD FILTERS 
         /*versionSamplesFilters.clear() 
         versionSamplesFilters.add("from request response")*/
-        _launchTimes.value = PerformanceData(
-            versionSamples = versionSamplesFilters,
-            values = AmetistaApplication("Space").launchTimeAnalytics // TODO: FETCH FROM THE REQUEST RESPONSE
-        )
+        if (true) {
+            _performanceData.value = PerformanceData(
+                "gaga",
+                PerformanceData.PerformanceDataItem(
+                    mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
+                        put(
+                            "1.0,0",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                        put(
+                            "1.0,1",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                        put(
+                            "1.0,2",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    }
+                ),
+                PerformanceData.PerformanceDataItem(
+                    mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
+                        put(
+                            "1.0,0",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                        put(
+                            "1.0,1",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                        put(
+                            "1.0,2",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    }
+                ),
+                PerformanceData.PerformanceDataItem(
+                    mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
+                        put(
+                            "1.0,0",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                        put(
+                            "1.0,1",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                        put(
+                            "1.0,2",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    }
+                ),
+                PerformanceData.PerformanceDataItem(
+                    mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
+                        put(
+                            "1.0,0",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                        put(
+                            "1.0,1",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                        put(
+                            "1.0,2",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    }
+                )
+            )
+        }
     }
 
 }

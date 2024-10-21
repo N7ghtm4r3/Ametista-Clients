@@ -55,7 +55,6 @@ import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.Theme
 import com.tecknobit.ametista.helpers.getCurrentWidthSizeClass
-import com.tecknobit.ametista.model.PerformanceData
 import com.tecknobit.ametista.ui.components.FilterDialog
 import com.tecknobit.ametista.ui.components.Issue
 import com.tecknobit.ametista.ui.components.IssuesNumber
@@ -69,6 +68,7 @@ import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType.PERFORMANCE
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType.entries
 import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic
+import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
@@ -88,7 +88,7 @@ class PlatformScreen(
 
     private lateinit var filterList: MutableState<Boolean>
 
-    private lateinit var launchTimes: State<PerformanceData?>
+    private lateinit var performanceData: State<PerformanceData?>
 
     /**
      * Function to arrange the content of the screen to display
@@ -320,22 +320,26 @@ class PlatformScreen(
             ) {
                 item {
                     LaunchTime(
-                        cardHeight = cardHeight
+                        cardHeight = cardHeight,
+                        performanceData = performanceData.value
                     )
                 }
                 item {
                     NetworkRequests(
-                        cardHeight = cardHeight
+                        cardHeight = cardHeight,
+                        performanceData = performanceData.value
                     )
                 }
                 item {
                     IssuesNumber(
-                        cardHeight = cardHeight
+                        cardHeight = cardHeight,
+                        performanceData = performanceData.value
                     )
                 }
                 item {
                     IssuesPerSessionsNumber(
-                        cardHeight = cardHeight
+                        cardHeight = cardHeight,
+                        performanceData = performanceData.value
                     )
                 }
             }
@@ -349,16 +353,24 @@ class PlatformScreen(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             item {
-                LaunchTime()
+                LaunchTime(
+                    performanceData = performanceData.value
+                )
             }
             item {
-                NetworkRequests()
+                NetworkRequests(
+                    performanceData = performanceData.value
+                )
             }
             item {
-                IssuesNumber()
+                IssuesNumber(
+                    performanceData = performanceData.value
+                )
             }
             item {
-                IssuesPerSessionsNumber()
+                IssuesPerSessionsNumber(
+                    performanceData = performanceData.value
+                )
             }
         }
     }
@@ -386,6 +398,11 @@ class PlatformScreen(
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel!!.getPerformanceAnalytics()
+    }
+
     /**
      * Function to collect or instantiate the states of the screen
      *
@@ -396,7 +413,7 @@ class PlatformScreen(
         filtersSet = viewModel!!.filtersSet.collectAsState()
         filterList = remember { mutableStateOf(false) }
         viewModel!!.analyticType = remember { mutableStateOf(ISSUE) }
-        launchTimes = viewModel!!.launchTimes.collectAsState()
+        performanceData = viewModel!!.performanceData.collectAsState()
     }
 
 }

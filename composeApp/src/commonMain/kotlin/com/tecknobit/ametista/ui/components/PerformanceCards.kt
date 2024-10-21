@@ -1,6 +1,6 @@
 package com.tecknobit.ametista.ui.components
 
-import ametista.composeapp.generated.resources.Res
+import ametista.composeapp.generated.resources.Res.string
 import ametista.composeapp.generated.resources.issues_number
 import ametista.composeapp.generated.resources.issues_per_session
 import ametista.composeapp.generated.resources.launch_time
@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,16 +29,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
-import com.tecknobit.ametista.model.PerformanceData
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
 import com.tecknobit.ametistacore.models.AmetistaApplication.MAX_VERSION_SAMPLES
+import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
+import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData.PerformanceDataItem
+import com.tecknobit.equinoxcompose.components.EmptyListUI
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.models.DividerProperties
+import ir.ehsannarmani.compose_charts.models.DrawStyle
 import ir.ehsannarmani.compose_charts.models.GridProperties
 import ir.ehsannarmani.compose_charts.models.HorizontalIndicatorProperties
 import ir.ehsannarmani.compose_charts.models.LabelHelperProperties
@@ -45,7 +52,6 @@ import ir.ehsannarmani.compose_charts.models.LineProperties
 import ir.ehsannarmani.compose_charts.models.PopupProperties
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
-import kotlin.random.Random
 
 private val axisProperties = GridProperties.AxisProperties(
     enabled = false
@@ -56,73 +62,129 @@ private val axisProperties = GridProperties.AxisProperties(
 @Composable
 @NonRestartableComposable
 fun LaunchTime(
-    cardHeight: Dp = 200.dp
+    cardHeight: Dp = 200.dp,
+    performanceData: PerformanceData?
 ) {
-    PerformanceCard(
-        title = Res.string.launch_time,
-        cardHeight = cardHeight,
-        data = mutableMapOf<String, List<Double>>().apply {
-            put("1.0.0", List(10) { Random.Default.nextDouble() })
-            put("1.0.1", List(10) { Random.Default.nextDouble() })
-            put("1.0.2", List(10) { Random.Default.nextDouble() })
-        },
-        popupProperties = PopupProperties(
-            textStyle = TextStyle(
-                color = Color.White
-            ),
-            contentBuilder = { value ->
-                "%.2f".format(value) + " ms"
-            }
+    if (performanceData == null) {
+        NoChartData(
+            title = string.launch_time,
+            cardHeight = cardHeight,
+            icon = Icons.Default.Person,
+            infoText = string.network_requests
         )
-    )
+    } else {
+        PerformanceCard(
+            title = string.launch_time,
+            cardHeight = cardHeight,
+            data = performanceData.launchTimes,
+            popupProperties = PopupProperties(
+                textStyle = TextStyle(
+                    color = Color.White
+                ),
+                contentBuilder = { value ->
+                    "%.2f".format(value) + " ms"
+                }
+            )
+        )
+    }
 }
 
 @Composable
 @NonRestartableComposable
 fun NetworkRequests(
-    cardHeight: Dp = 200.dp
+    cardHeight: Dp = 200.dp,
+    performanceData: PerformanceData?
 ) {
-    PerformanceCard(
-        title = Res.string.network_requests,
-        cardHeight = cardHeight,
-        data = mutableMapOf<String, List<Double>>().apply {
-            put("1.0.0", List(10) { Random.Default.nextDouble() })
-            put("1.0.1", List(10) { Random.Default.nextDouble() })
-            put("1.0.2", List(10) { Random.Default.nextDouble() })
-        }
-    )
+    if (performanceData == null) {
+        NoChartData(
+            title = string.network_requests,
+            cardHeight = cardHeight,
+            icon = Icons.Default.Person,
+            infoText = string.network_requests
+        )
+    } else {
+        PerformanceCard(
+            title = string.network_requests,
+            cardHeight = cardHeight,
+            data = performanceData.networkRequests
+        )
+    }
 }
 
 @Composable
 @NonRestartableComposable
 fun IssuesNumber(
-    cardHeight: Dp = 200.dp
+    cardHeight: Dp = 200.dp,
+    performanceData: PerformanceData?
 ) {
-    PerformanceCard(
-        title = Res.string.issues_number,
-        cardHeight = cardHeight,
-        data = mutableMapOf<String, List<Double>>().apply {
-            put("1.0.0", List(10) { Random.Default.nextDouble() })
-            put("1.0.1", List(10) { Random.Default.nextDouble() })
-            put("1.0.2", List(10) { Random.Default.nextDouble() })
-        }
-    )
+    if (performanceData == null) {
+        NoChartData(
+            title = string.issues_number,
+            cardHeight = cardHeight,
+            icon = Icons.Default.Person,
+            infoText = string.network_requests
+        )
+    } else {
+        PerformanceCard(
+            title = string.issues_number,
+            cardHeight = cardHeight,
+            data = performanceData.totalIssues
+        )
+    }
 }
 
 @Composable
 @NonRestartableComposable
 fun IssuesPerSessionsNumber(
-    cardHeight: Dp = 200.dp
+    cardHeight: Dp = 200.dp,
+    performanceData: PerformanceData?
 ) {
-    PerformanceCard(
-        title = Res.string.issues_per_session,
-        cardHeight = cardHeight,
-        data = mutableMapOf<String, List<Double>>().apply {
-            put("1.0.0", List(10) { Random.Default.nextDouble() })
-            put("1.0.1", List(10) { Random.Default.nextDouble() })
-            put("1.0.2", List(10) { Random.Default.nextDouble() })
-        }
-    )
+    if (performanceData == null) {
+        NoChartData(
+            title = string.issues_per_session,
+            cardHeight = cardHeight,
+            icon = Icons.Default.Person,
+            infoText = string.network_requests
+        )
+    } else {
+        PerformanceCard(
+            title = string.issues_per_session,
+            cardHeight = cardHeight,
+            data = performanceData.issuesPerSession
+        )
+    }
+}
+
+@Composable
+@NonRestartableComposable
+private fun NoChartData(
+    title: StringResource,
+    cardHeight: Dp,
+    icon: ImageVector,
+    infoText: StringResource,
+) {
+    Card(
+        modifier = Modifier
+            .height(cardHeight)
+    ) {
+        Text(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                    start = 16.dp
+                )
+                .widthIn(
+                    max = CONTAINER_MAX_WIDTH
+                ),
+            text = stringResource(title),
+            fontFamily = displayFontFamily,
+            fontSize = 20.sp
+        )
+        EmptyListUI(
+            icon = icon,
+            subText = stringResource(infoText)
+        )
+    }
 }
 
 @Composable
@@ -130,7 +192,7 @@ fun IssuesPerSessionsNumber(
 private fun PerformanceCard(
     title: StringResource,
     cardHeight: Dp,
-    data: PerformanceData,
+    data: PerformanceDataItem,
     popupProperties: PopupProperties? = null
 ) {
     Card(
@@ -151,7 +213,7 @@ private fun PerformanceCard(
             fontSize = 20.sp
         )
         ChartLegend(
-            samples = data.versionSamples
+            sampleVersions = data.sampleVersions()
         )
         LineChart(
             modifier = Modifier
@@ -184,7 +246,7 @@ private fun PerformanceCard(
 @Composable
 @NonRestartableComposable
 private fun ChartLegend(
-    samples: List<String>
+    sampleVersions: Set<String>
 ) {
     LazyVerticalGrid(
         modifier = Modifier
@@ -194,7 +256,7 @@ private fun ChartLegend(
         columns = GridCells.Fixed(MAX_VERSION_SAMPLES)
     ) {
         itemsIndexed(
-            items = samples.toList()
+            items = sampleVersions.toList()
         ) { index, sample ->
             LegendItem(
                 index = index,
@@ -236,19 +298,18 @@ private fun LegendItem(
 @Composable
 @NonRestartableComposable
 private fun loadChartData(
-    data: PerformanceData,
+    data: PerformanceDataItem,
     popupProperties: PopupProperties?
 ): List<Line> {
     val chartData = arrayListOf<Line>()
-    /*data.entries.forEachIndexed { index, entry ->
-        val values = entry.value
+    data.data.entries.forEachIndexed { index, entry ->
         val lineColor = getLineColor(
             index = index
         )
         chartData.add(
             Line(
                 label = entry.key,
-                values = values,
+                values = entry.value.map { analytic -> analytic.value },
                 color = SolidColor(lineColor),
                 firstGradientFillColor = lineColor.copy(alpha = .5f),
                 secondGradientFillColor = Color.Transparent,
@@ -256,7 +317,7 @@ private fun loadChartData(
                 popupProperties = popupProperties
             )
         )
-    }*/
+    }
     return chartData
 }
 
