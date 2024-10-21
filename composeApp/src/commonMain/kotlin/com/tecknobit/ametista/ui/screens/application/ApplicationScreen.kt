@@ -102,7 +102,6 @@ class ApplicationScreen(
      */
     @Composable
     override fun ArrangeScreenContent() {
-        The official component
         AnimatedVisibility(
             visible = application.value != null,
             enter = fadeIn(),

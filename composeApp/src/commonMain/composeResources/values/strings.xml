@@ -44,5 +44,5 @@
     <string name="network_requests">Network requests</string>
     <string name="network_requests_popup">requests</string>
     <string name="issues_number">Issues number</string>
-    <string name="issues_percent">Issues for 100 sessions</string>
+    <string name="issues_per_session">Issues per session</string>
 </resources>

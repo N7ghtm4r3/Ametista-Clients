@@ -382,11 +382,6 @@ class PlatformScreen(
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel!!.getAnalytics()
-    }
-
     /**
      * Function to collect or instantiate the states of the screen
      *

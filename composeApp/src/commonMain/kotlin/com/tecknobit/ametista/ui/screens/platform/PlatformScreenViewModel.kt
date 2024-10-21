@@ -4,9 +4,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import com.dokar.chiptextfield.Chip
 import com.dokar.chiptextfield.ChipTextFieldState
+import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
-import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType.ISSUE
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +24,15 @@ class PlatformScreenViewModel(
 
     }
 
+    val paginationState = PaginationState<Int, AmetistaAnalytic>(
+        initialPageKey = 1,
+        onRequestPage = { loadIssues() }
+    )
+
+    lateinit var analyticType: MutableState<AnalyticType>
+
+    lateinit var filtersState: ChipTextFieldState<Chip>
+
     private var _filters = HashSet<String>()
 
     private val _filtersSet = MutableStateFlow(
@@ -31,28 +40,10 @@ class PlatformScreenViewModel(
     )
     val filtersSet: StateFlow<Boolean> = _filtersSet
 
-    lateinit var analyticType: MutableState<AnalyticType>
-
-    lateinit var filtersState: ChipTextFieldState<Chip>
-
-    val paginationState = PaginationState<Int, AmetistaAnalytic>(
-        initialPageKey = 1,
-        onRequestPage = { loadItems() }
-    )
-
-    fun getAnalytics(
-
-    ) {
-        // TODO: TO USE _filters
-    }
-
-    private fun loadItems() {
+    private fun loadIssues() {
+        // TODO: MAKE THE REAL REQUEST THEN ALSO WITH _filters
+        val items = AmetistaApplication("Space").issues
         // TODO: TO LOAD NEXT PAGE
-        val items = if (analyticType.value == ISSUE)
-            emptyList<AmetistaAnalytic>()
-        else
-        //_application.value.performance
-            emptyList<AmetistaAnalytic>()
         paginationState.appendPage(
             items = items,
             nextPageKey = 1,
@@ -71,6 +62,10 @@ class PlatformScreenViewModel(
     fun clearFilters() {
         _filters.clear()
         _filtersSet.value = false
+    }
+
+    fun getPerformanceAnalytics() {
+        // TODO: MAKE THE REAL REQUEST
     }
 
 }

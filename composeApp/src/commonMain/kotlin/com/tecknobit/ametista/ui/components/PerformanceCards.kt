@@ -2,7 +2,7 @@ package com.tecknobit.ametista.ui.components
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.issues_number
-import ametista.composeapp.generated.resources.issues_percent
+import ametista.composeapp.generated.resources.issues_per_session
 import ametista.composeapp.generated.resources.launch_time
 import ametista.composeapp.generated.resources.network_requests
 import androidx.compose.foundation.background
@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
+import com.tecknobit.ametistacore.models.AmetistaApplication.MAX_VERSION_SAMPLES
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.models.DividerProperties
 import ir.ehsannarmani.compose_charts.models.DrawStyle
@@ -115,7 +116,7 @@ fun IssuesPerSessionsNumber(
     cardHeight: Dp = 200.dp
 ) {
     PerformanceCard(
-        title = Res.string.issues_percent,
+        title = Res.string.issues_per_session,
         cardHeight = cardHeight,
         data = mutableMapOf<String, List<Double>>().apply {
             put("1.0.0", List(10) { Random.Default.nextDouble() })
@@ -191,7 +192,7 @@ private fun ChartLegend(
             .padding(
                 vertical = 5.dp
             ),
-        columns = GridCells.Fixed(3)
+        columns = GridCells.Fixed(MAX_VERSION_SAMPLES)
     ) {
         itemsIndexed(
             items = samples.toList()
