@@ -22,7 +22,6 @@ import ametista.composeapp.generated.resources.versions
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -85,29 +84,31 @@ fun FilterDialog(
         show.value = false
         viewModel.suspendRefresher()
     }
-
-    fun ColumnScope.() {
-        viewModel.filtersState = rememberChipTextFieldState()
-        Text(
-            text = stringResource(string.filter_issues),
-            fontFamily = displayFontFamily,
-            fontSize = 20.sp
-        )
-        FiltersInput(
-            viewModel = viewModel
-        )
-        ActionButtons(
-            modifier = Modifier
-                .fillMaxWidth(),
-            closeModal = closeDialog,
-            onConfirm = {
-                viewModel.filterIssues(
-                    onSuccess = closeDialog
-                )
-            }
-        )
-    }
-    The official component
+    EquinoxDialog(
+        show = show,
+        viewModel = viewModel,
+        content = {
+            viewModel.filtersState = rememberChipTextFieldState()
+            Text(
+                text = stringResource(string.filter_issues),
+                fontFamily = displayFontFamily,
+                fontSize = 20.sp
+            )
+            FiltersInput(
+                viewModel = viewModel
+            )
+            ActionButtons(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                closeModal = closeDialog,
+                onConfirm = {
+                    viewModel.filterIssues(
+                        onSuccess = closeDialog
+                    )
+                }
+            )
+        }
+    )
 }
 
 @Composable
