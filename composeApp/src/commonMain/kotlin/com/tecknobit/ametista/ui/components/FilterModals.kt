@@ -11,6 +11,7 @@ import ametista.composeapp.generated.resources.filter_issues_per_session
 import ametista.composeapp.generated.resources.filter_launch_time
 import ametista.composeapp.generated.resources.filter_network_requests
 import ametista.composeapp.generated.resources.filter_supporting_text
+import ametista.composeapp.generated.resources.invalid_temporal_range
 import ametista.composeapp.generated.resources.issues_number
 import ametista.composeapp.generated.resources.launch_time
 import ametista.composeapp.generated.resources.max_three_sets_at_a_time
@@ -37,6 +38,7 @@ import androidx.compose.material3.DateRangePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDateRangePickerState
@@ -60,6 +62,7 @@ import com.dokar.chiptextfield.rememberChipTextFieldState
 import com.dokar.sonner.Toast
 import com.dokar.sonner.ToastType
 import com.dokar.sonner.Toaster
+import com.dokar.sonner.ToasterState
 import com.dokar.sonner.rememberToasterState
 import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
@@ -67,6 +70,7 @@ import com.tecknobit.ametista.ui.screens.platform.PlatformScreenViewModel
 import com.tecknobit.ametista.ui.screens.platform.PlatformScreenViewModel.Companion.MAX_CHIPS_FILTERS
 import com.tecknobit.ametistacore.models.AmetistaApplication.MAX_VERSION_SAMPLES
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData.PerformanceDataItem
+import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData.PerformanceDataItem.MAX_TEMPORAL_RANGE
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
@@ -149,12 +153,23 @@ fun FilterChartData(
             show.value = false
             viewModel.restartRefresher()
         }
+        val invalidTemporalRange = stringResource(string.invalid_temporal_range)
+        val state = rememberDateRangePickerState(
+            initialSelectedStartDateMillis = data.startTemporalRangeDate,
+            initialSelectedEndDateMillis = data.endTemporalRangeDate,
+            selectableDates = object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return utcTimeMillis <= System.currentTimeMillis()
+                }
+            }
+        )
         ModalBottomSheet(
             sheetState = rememberModalBottomSheetState(
                 skipPartiallyExpanded = true
             ),
             onDismissRequest = closeModal
         ) {
+            val toaster = rememberToasterState()
             Column {
                 Text(
                     modifier = Modifier
@@ -171,8 +186,7 @@ fun FilterChartData(
                 TemporalRangeSelector(
                     modifier = Modifier
                         .weight(1.2f),
-                    viewModel = viewModel,
-                    data = data
+                    state = state
                 )
                 VersionsSelector(
                     modifier = Modifier
@@ -188,13 +202,25 @@ fun FilterChartData(
                         ),
                     closeModal = closeModal,
                     onConfirm = {
-                        viewModel.filterPerformance(
-                            data = data,
-                            onFilter = closeModal
-                        )
+                        if ((state.selectedEndDateMillis!! - state.selectedStartDateMillis!!) > MAX_TEMPORAL_RANGE) {
+                            showErrorToast(
+                                toaster = toaster,
+                                errorMessage = invalidTemporalRange
+                            )
+                        } else {
+                            viewModel.filterPerformance(
+                                data = data,
+                                state = state,
+                                onFilter = closeModal
+                            )
+                        }
                     }
                 )
             }
+            Toaster(
+                darkTheme = !isSystemInDarkTheme(),
+                state = toaster
+            )
         }
     }
 }
@@ -203,15 +229,10 @@ fun FilterChartData(
 @NonRestartableComposable
 private fun TemporalRangeSelector(
     modifier: Modifier,
-    viewModel: PlatformScreenViewModel,
-    data: PerformanceDataItem
+    state: DateRangePickerState
 ) {
     FilterSectionHeader(
         text = string.temporal_range
-    )
-    val state = rememberDateRangePickerState(
-        initialSelectedStartDateMillis = 2,
-        initialSelectedEndDateMillis = 3
     )
     DateRangePicker(
         modifier = modifier,
@@ -314,11 +335,9 @@ private fun VersionsSelector(
                         val currentFilters = viewModel.newVersionFilters.size
                         if (selected) {
                             if (currentFilters >= MAX_VERSION_SAMPLES) {
-                                toaster.show(
-                                    Toast(
-                                        message = tooManySets,
-                                        type = ToastType.Error
-                                    )
+                                showErrorToast(
+                                    toaster = toaster,
+                                    errorMessage = tooManySets
                                 )
                             } else {
                                 viewModel.newVersionFilters.add(version)
@@ -329,11 +348,9 @@ private fun VersionsSelector(
                                 viewModel.newVersionFilters.remove(version)
                                 checked = false
                             } else {
-                                toaster.show(
-                                    Toast(
-                                        message = oneSetRequired,
-                                        type = ToastType.Error
-                                    )
+                                showErrorToast(
+                                    toaster = toaster,
+                                    errorMessage = oneSetRequired
                                 )
                             }
                         }
@@ -405,4 +422,16 @@ private fun ActionButtons(
             )
         }
     }
+}
+
+private fun showErrorToast(
+    toaster: ToasterState,
+    errorMessage: String
+) {
+    toaster.show(
+        Toast(
+            message = errorMessage,
+            type = ToastType.Error
+        )
+    )
 }

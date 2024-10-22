@@ -1,5 +1,7 @@
 package com.tecknobit.ametista.ui.screens.platform
 
+import androidx.compose.material3.DateRangePickerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
@@ -151,8 +153,10 @@ class PlatformScreenViewModel(
         return mutableStateListOf("1.0.0", "1.0.1", "1.0.2", "1.0.3", "1.0.4", "1.0.5", "1.1.0")
     }
 
+    @OptIn(ExperimentalMaterial3Api::class)
     fun filterPerformance(
         data: PerformanceData.PerformanceDataItem,
+        state: DateRangePickerState,
         onFilter: () -> Unit
     ) {
         // TODO: MAKE THE REQUEST THEN 

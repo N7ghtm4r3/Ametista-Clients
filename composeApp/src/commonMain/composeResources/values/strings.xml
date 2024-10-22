@@ -51,6 +51,7 @@
     <string name="filter_issues_per_session">Filter issues per session</string>
     <string name="temporal_range">Temporal range</string>
     <string name="versions">Versions</string>
+    <string name="invalid_temporal_range">The valid temporal range is maximum 90 days</string>
     <string name="max_three_sets_at_a_time">Max three sets at a time</string>
     <string name="one_set_required">One set is required</string>
 </resources>
