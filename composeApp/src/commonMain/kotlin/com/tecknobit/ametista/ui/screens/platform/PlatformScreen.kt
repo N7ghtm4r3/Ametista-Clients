@@ -149,27 +149,33 @@ class PlatformScreen(
     @Composable
     @NonRestartableComposable
     private fun FilterButton() {
-        if (!filtersSet.value) {
-            FloatingActionButton(
-                onClick = { filterList.value = true }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.FilterList,
-                    contentDescription = null
+        AnimatedVisibility(
+            visible = viewModel!!.analyticType.value == ISSUE,
+            enter = fadeIn(),
+            exit = fadeOut()
+        ) {
+            if (!filtersSet.value) {
+                FloatingActionButton(
+                    onClick = { filterList.value = true }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.FilterList,
+                        contentDescription = null
+                    )
+                }
+                FilterDialog(
+                    show = filterList,
+                    viewModel = viewModel!!
                 )
-            }
-            FilterDialog(
-                show = filterList,
-                viewModel = viewModel!!
-            )
-        } else {
-            FloatingActionButton(
-                onClick = { viewModel!!.clearFilters() }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.FilterListOff,
-                    contentDescription = null
-                )
+            } else {
+                FloatingActionButton(
+                    onClick = { viewModel!!.clearFilters() }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.FilterListOff,
+                        contentDescription = null
+                    )
+                }
             }
         }
     }
@@ -320,24 +326,28 @@ class PlatformScreen(
             ) {
                 item {
                     LaunchTime(
+                        viewModel = viewModel!!,
                         cardHeight = cardHeight,
                         performanceData = performanceData.value
                     )
                 }
                 item {
                     NetworkRequests(
+                        viewModel = viewModel!!,
                         cardHeight = cardHeight,
                         performanceData = performanceData.value
                     )
                 }
                 item {
                     IssuesNumber(
+                        viewModel = viewModel!!,
                         cardHeight = cardHeight,
                         performanceData = performanceData.value
                     )
                 }
                 item {
                     IssuesPerSessionsNumber(
+                        viewModel = viewModel!!,
                         cardHeight = cardHeight,
                         performanceData = performanceData.value
                     )
@@ -354,21 +364,25 @@ class PlatformScreen(
         ) {
             item {
                 LaunchTime(
+                    viewModel = viewModel!!,
                     performanceData = performanceData.value
                 )
             }
             item {
                 NetworkRequests(
+                    viewModel = viewModel!!,
                     performanceData = performanceData.value
                 )
             }
             item {
                 IssuesNumber(
+                    viewModel = viewModel!!,
                     performanceData = performanceData.value
                 )
             }
             item {
                 IssuesPerSessionsNumber(
+                    viewModel = viewModel!!,
                     performanceData = performanceData.value
                 )
             }

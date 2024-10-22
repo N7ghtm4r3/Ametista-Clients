@@ -82,7 +82,7 @@ class PlatformScreenViewModel(
         // TODO: LOAD FILTERS 
         /*versionSamplesFilters.clear() 
         versionSamplesFilters.add("from request response")*/
-        if (Random.Default.nextBoolean()) {
+        if (Random.Default.nextBoolean() || true) {
             _performanceData.value = PerformanceData(
                 "gaga",
                 PerformanceData.PerformanceDataItem(
@@ -139,6 +139,12 @@ class PlatformScreenViewModel(
                 )
             )
         }
+    }
+
+    fun filterPerformance(
+        onFilter: () -> Unit
+    ) {
+        onFilter.invoke()
     }
 
 }

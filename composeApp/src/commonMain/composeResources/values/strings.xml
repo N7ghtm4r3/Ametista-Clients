@@ -45,4 +45,9 @@
     <string name="issues_number">Issues number</string>
     <string name="issues_per_session">Issues per session</string>
     <string name="no_events">No events</string>
+    <string name="filter_launch_time">Filter launch time</string>
+    <string name="filter_network_requests">Filter network requests</string>
+    <string name="filter_issues_number">Filter issues number</string>
+    <string name="filter_issues_per_session">Filter issues per session</string>
+    <string name="versions">Versions</string>
 </resources>
