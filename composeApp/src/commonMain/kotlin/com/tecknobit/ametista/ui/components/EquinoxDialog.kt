@@ -14,10 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
-import org.jetbrains.annotations.TestOnly
 
 @Composable
-@TestOnly
 @Deprecated(
     "JUST FOR TESTING WILL BE INTEGRATED IN THE OFFICIAL EQUINOX-COMPOSE LIBRARY",
     ReplaceWith("The official component")

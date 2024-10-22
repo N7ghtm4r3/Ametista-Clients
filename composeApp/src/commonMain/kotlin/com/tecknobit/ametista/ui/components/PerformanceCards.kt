@@ -3,10 +3,15 @@
 package com.tecknobit.ametista.ui.components
 
 import ametista.composeapp.generated.resources.Res.string
+import ametista.composeapp.generated.resources.got_it
 import ametista.composeapp.generated.resources.issues_number
+import ametista.composeapp.generated.resources.issues_number_info
 import ametista.composeapp.generated.resources.issues_per_session
+import ametista.composeapp.generated.resources.issues_per_session_info
 import ametista.composeapp.generated.resources.launch_time
+import ametista.composeapp.generated.resources.launch_time_info
 import ametista.composeapp.generated.resources.network_requests
+import ametista.composeapp.generated.resources.network_requests_info
 import ametista.composeapp.generated.resources.no_events
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +27,9 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.FilterList
@@ -31,11 +38,15 @@ import androidx.compose.material.icons.filled.Report
 import androidx.compose.material.icons.filled.RocketLaunch
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +57,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -288,15 +300,20 @@ private fun CardActions(
         horizontalAlignment = Alignment.End
     ) {
         Row {
+            val showAnalyticInfo = remember { mutableStateOf(false) }
             IconButton(
-                onClick = { // TODO: DISPLAY THE INFO
-                }
+                onClick = { showAnalyticInfo.value = true }
             ) {
                 Icon(
                     imageVector = Icons.Default.Info,
                     contentDescription = null
                 )
             }
+            AnalyticInfo(
+                show = showAnalyticInfo,
+                title = title,
+                viewModel = viewModel
+            )
             val filter = remember { mutableStateOf(false) }
             IconButton(
                 onClick = { filter.value = true }
@@ -312,6 +329,62 @@ private fun CardActions(
                 title = title,
                 data = data
             )
+        }
+    }
+}
+
+@Composable
+@NonRestartableComposable
+private fun AnalyticInfo(
+    show: MutableState<Boolean>,
+    title: StringResource,
+    viewModel: PlatformScreenViewModel
+) {
+    if (show.value) {
+        viewModel.suspendRefresher()
+        val closeModal = {
+            show.value = false
+            viewModel.restartRefresher()
+        }
+        ModalBottomSheet(
+            onDismissRequest = closeModal
+        ) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = stringResource(title),
+                textAlign = TextAlign.Center,
+                fontFamily = displayFontFamily,
+                fontSize = 20.sp
+            )
+            val analyticInfo = when (title) {
+                string.launch_time -> string.launch_time_info
+                string.network_requests -> string.network_requests_info
+                string.issues_number -> string.issues_number_info
+                else -> string.issues_per_session_info
+            }
+            HorizontalDivider()
+            Text(
+                modifier = Modifier
+                    .padding(
+                        all = 16.dp
+                    )
+                    .verticalScroll(rememberScrollState()),
+                text = stringResource(analyticInfo),
+                textAlign = TextAlign.Justify
+            )
+            TextButton(
+                modifier = Modifier
+                    .padding(
+                        end = 10.dp
+                    )
+                    .align(Alignment.End),
+                onClick = closeModal
+            ) {
+                Text(
+                    text = stringResource(string.got_it)
+                )
+            }
         }
     }
 }

@@ -54,4 +54,8 @@
     <string name="invalid_temporal_range">The valid temporal range is maximum 90 days</string>
     <string name="max_three_sets_at_a_time">Max three sets at a time</string>
     <string name="one_set_required">One set is required</string>
+    <string name="launch_time_info">Inherent measurement of application startup time. Each value in the chart represents a daily average of the samples recorded on that day</string>
+    <string name="network_requests_info">Inherent measure of the number of HTTP requests executed by each application daily. Each value on graph represents the number of HTTP requests executed on that day</string>
+    <string name="issues_number_info">Inherent measurement of the number of crashes or problems encountered while using the application. Each value on the graph represents the number of crashes or issues that occurred over a period of time equal to one day</string>
+    <string name="issues_per_session_info">Inherent measurement of the average number of crashes or issues encountered while using the application for a single session. Each value on the graph represents the average of such crashes or issues that occurred in daily sessions</string>
 </resources>
