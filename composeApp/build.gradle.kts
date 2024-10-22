@@ -63,6 +63,7 @@ kotlin {
             implementation(libs.richeditor.compose)
             implementation(libs.chiptextfield.m3)
             implementation(libs.compose.charts)
+            implementation("io.github.dokar3:sonner:0.3.8")
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

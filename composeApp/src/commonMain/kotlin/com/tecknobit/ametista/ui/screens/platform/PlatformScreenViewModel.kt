@@ -2,6 +2,7 @@ package com.tecknobit.ametista.ui.screens.platform
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.dokar.chiptextfield.Chip
 import com.dokar.chiptextfield.ChipTextFieldState
@@ -53,6 +54,8 @@ class PlatformScreenViewModel(
     )
     val performanceData: StateFlow<PerformanceData?> = _performanceData
 
+    lateinit var newVersionFilters: MutableList<String>
+
     private fun loadIssues() {
         // TODO: MAKE THE REAL REQUEST THEN ALSO WITH _filters
         val items = AmetistaApplication("Space").issues
@@ -88,52 +91,52 @@ class PlatformScreenViewModel(
                 PerformanceData.PerformanceDataItem(
                     mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
                         put(
-                            "1.0,0",
+                            "1.0.0",
                             MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
                         put(
-                            "1.0,1",
+                            "1.0.1",
                             MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
                         put(
-                            "1.0,2",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    }
-                ),
-                PerformanceData.PerformanceDataItem(
-                    mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
-                        put(
-                            "1.0,0",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                        put(
-                            "1.0,1",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                        put(
-                            "1.0,2",
+                            "1.0.2",
                             MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
                     }
                 ),
                 PerformanceData.PerformanceDataItem(
                     mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
                         put(
-                            "1.0,0",
+                            "1.0.0",
                             MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
                         put(
-                            "1.0,1",
+                            "1.0.1",
                             MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
                         put(
-                            "1.0,2",
+                            "1.0.2",
                             MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
                     }
                 ),
                 PerformanceData.PerformanceDataItem(
                     mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
                         put(
-                            "1.0,0",
+                            "1.0.0",
                             MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
                         put(
-                            "1.0,1",
+                            "1.0.1",
                             MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
                         put(
-                            "1.0,2",
+                            "1.0.2",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    }
+                ),
+                PerformanceData.PerformanceDataItem(
+                    mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
+                        put(
+                            "1.0.0",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                        put(
+                            "1.0.1",
+                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                        put(
+                            "1.0.2",
                             MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
                     }
                 )
@@ -141,9 +144,18 @@ class PlatformScreenViewModel(
         }
     }
 
+    fun getAvailableVersionsForPerformanceItem(
+        data: PerformanceData.PerformanceDataItem
+    ): SnapshotStateList<String> {
+        // TODO: MAKE THE REQUEST THEN
+        return mutableStateListOf("1.0.0", "1.0.1", "1.0.2", "1.0.3", "1.0.4", "1.0.5", "1.1.0")
+    }
+
     fun filterPerformance(
+        data: PerformanceData.PerformanceDataItem,
         onFilter: () -> Unit
     ) {
+        // TODO: MAKE THE REQUEST THEN 
         onFilter.invoke()
     }
 
