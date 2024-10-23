@@ -2,7 +2,6 @@
 
 package com.tecknobit.ametista.ui.screens.applications
 
-import android.app.Activity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
@@ -31,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -44,7 +42,6 @@ import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
-import moe.tlaster.precompose.navigation.BackHandler
 
 @Composable
 @NonRestartableComposable
@@ -210,18 +207,4 @@ actual fun ApplicationIcon(
         contentScale = ContentScale.Crop
         // TODO: TO SET ERROR
     )
-}
-
-/**
- * Function to manage correctly the back navigation from the current screen
- *
- * No-any params required
- */
-@NonRestartableComposable
-@Composable
-actual fun CloseApplicationOnNavBack() {
-    val context = LocalContext.current as Activity
-    BackHandler {
-        context.finishAffinity()
-    }
 }

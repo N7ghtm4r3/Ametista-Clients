@@ -46,7 +46,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.tecknobit.ametista.helpers.getCurrentWidthSizeClass
+import com.tecknobit.ametista.getCurrentWidthSizeClass
 import com.tecknobit.ametista.ui.screens.platform.PlatformScreenViewModel
 import com.tecknobit.ametistacore.models.Platform.WEB
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AmetistaDevice

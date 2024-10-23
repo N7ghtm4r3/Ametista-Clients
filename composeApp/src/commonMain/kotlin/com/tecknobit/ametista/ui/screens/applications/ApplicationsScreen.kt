@@ -5,13 +5,17 @@ package com.tecknobit.ametista.ui.screens.applications
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.applications
 import ametista.composeapp.generated.resources.search_placeholder
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -31,6 +35,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
@@ -40,11 +45,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import com.tecknobit.ametista.CloseApplicationOnNavBack
+import com.tecknobit.ametista.getCurrentWidthSizeClass
 import com.tecknobit.ametista.helpers.icon
+import com.tecknobit.ametista.imageLoader
+import com.tecknobit.ametista.localUser
+import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametistacore.models.Platform
@@ -77,6 +93,32 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                             title = {
                                 Text(
                                     text = stringResource(Res.string.applications)
+                                )
+                            },
+                            actions = {
+                                val size = when (getCurrentWidthSizeClass()) {
+                                    WindowWidthSizeClass.Expanded -> 55.dp
+                                    else -> 65.dp
+                                }
+                                AsyncImage(
+                                    modifier = Modifier
+                                        .border(
+                                            width = 1.dp,
+                                            color = Color.White,
+                                            shape = CircleShape
+                                        )
+                                        .size(size)
+                                        .clip(CircleShape)
+                                        .clickable { navigator.navigate(ACCOUNT_SCREEN) },
+                                    model = ImageRequest.Builder(LocalPlatformContext.current)
+                                        .data(localUser.profilePic)
+                                        .crossfade(true)
+                                        .crossfade(500)
+                                        .build(),
+                                    imageLoader = imageLoader,
+                                    contentDescription = "Application icon",
+                                    contentScale = ContentScale.Crop
+                                    // TODO: TO SET ERROR
                                 )
                             }
                         )

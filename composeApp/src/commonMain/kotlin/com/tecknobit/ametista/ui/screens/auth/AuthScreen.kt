@@ -66,6 +66,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tecknobit.ametista.CloseApplicationOnNavBack
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
 import com.tecknobit.equinox.inputs.InputValidator.isHostValid
@@ -89,6 +90,7 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
      */
     @Composable
     override fun ArrangeScreenContent() {
+        CloseApplicationOnNavBack()
         Scaffold(
             snackbarHost = { SnackbarHost(hostState = viewModel!!.snackbarHostState!!) },
         ) {

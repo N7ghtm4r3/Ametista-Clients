@@ -30,4 +30,19 @@ class AmetistaLocalUser : EquinoxLocalUser() {
     override fun clear() {
     }
 
+    // TODO: TO REMOVE
+    override fun getCompleteName(): String {
+        return "John Doe"
+    }
+
+    // TODO: TO REMOVE
+    override fun getProfilePic(): String {
+        return "https://d.newsweek.com/en/full/2316078/astronaut-space-laptop.jpg"
+    }
+
+    // TODO: TO REMOVE 
+    override fun getEmail(): String {
+        return "john_doe@email.com"
+    }
+
 }

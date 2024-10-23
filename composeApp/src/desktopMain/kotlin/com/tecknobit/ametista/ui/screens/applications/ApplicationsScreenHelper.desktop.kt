@@ -235,13 +235,3 @@ private fun ApplicationDetails(
         color = MaterialTheme.colorScheme.primary
     )
 }
-
-/**
- * Function to manage correctly the back navigation from the current screen
- *
- * No-any params required
- */
-@NonRestartableComposable
-@Composable
-actual fun CloseApplicationOnNavBack() {
-}

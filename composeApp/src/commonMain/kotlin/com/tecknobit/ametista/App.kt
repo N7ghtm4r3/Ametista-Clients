@@ -3,18 +3,23 @@ package com.tecknobit.ametista
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.dm_sans
 import ametista.composeapp.generated.resources.kanit
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.text.font.FontFamily
 import coil3.ImageLoader
 import coil3.addLastModifiedToFileCacheKey
 import coil3.compose.LocalPlatformContext
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
+import com.tecknobit.ametista.helpers.AmetistaLocalUser
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.ACCOUNT_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.AUTH_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.PLATFORM_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
+import com.tecknobit.ametista.ui.screens.account.AccountScreen
 import com.tecknobit.ametista.ui.screens.application.ApplicationScreen
 import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
 import com.tecknobit.ametista.ui.screens.auth.AuthScreen
@@ -66,6 +71,9 @@ private val sslContext = SSLContext.getInstance("TLS")
  */
 lateinit var imageLoader: ImageLoader
 
+// TODO: TO INIT CORRECTLY
+val localUser = AmetistaLocalUser()
+
 @Composable
 @Preview
 fun App() {
@@ -107,6 +115,11 @@ fun App() {
                     route = AUTH_SCREEN
                 ) {
                     AuthScreen().ShowContent()
+                }
+                scene(
+                    route = ACCOUNT_SCREEN
+                ) {
+                    AccountScreen().ShowContent()
                 }
                 scene(
                     route = APPLICATIONS_SCREEN
@@ -156,3 +169,15 @@ private fun validateSelfSignedCertificate(): Array<TrustManager> {
         override fun checkServerTrusted(certs: Array<X509Certificate>, authType: String) {}
     })
 }
+
+/**
+ * Function to manage correctly the back navigation from the current screen
+ *
+ * No-any params required
+ */
+@Composable
+@NonRestartableComposable
+expect fun CloseApplicationOnNavBack()
+
+@Composable
+expect fun getCurrentWidthSizeClass(): WindowWidthSizeClass

@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
+import com.tecknobit.ametista.getCurrentWidthSizeClass
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.icons.Globe
 import com.tecknobit.ametista.ui.icons.Ios
@@ -183,9 +184,6 @@ private fun DrawTiles(
         }
     }
 }
-
-@Composable
-expect fun getCurrentWidthSizeClass(): WindowWidthSizeClass
 
 @Composable
 fun Platform.Theme(

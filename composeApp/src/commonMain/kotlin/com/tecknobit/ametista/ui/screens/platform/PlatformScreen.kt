@@ -53,8 +53,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
+import com.tecknobit.ametista.getCurrentWidthSizeClass
 import com.tecknobit.ametista.helpers.Theme
-import com.tecknobit.ametista.helpers.getCurrentWidthSizeClass
 import com.tecknobit.ametista.ui.components.FilterDialog
 import com.tecknobit.ametista.ui.components.Issue
 import com.tecknobit.ametista.ui.components.IssuesNumber

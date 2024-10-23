@@ -121,12 +121,3 @@ fun ExpandApplicationDescription(
         }
     }
 }
-
-/**
- * Function to manage correctly the back navigation from the current screen
- *
- * No-any params required
- */
-@Composable
-@NonRestartableComposable
-expect fun CloseApplicationOnNavBack()
