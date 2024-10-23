@@ -1,19 +1,32 @@
 package com.tecknobit.ametista.ui.screens.auth
 
 import ametista.composeapp.generated.resources.Res
+import ametista.composeapp.generated.resources.admin_code
 import ametista.composeapp.generated.resources.app_version
+import ametista.composeapp.generated.resources.are_you_new_to_ametista
 import ametista.composeapp.generated.resources.email
 import ametista.composeapp.generated.resources.github
+import ametista.composeapp.generated.resources.have_an_account
 import ametista.composeapp.generated.resources.hello
 import ametista.composeapp.generated.resources.host
+import ametista.composeapp.generated.resources.i_am_an_admin
 import ametista.composeapp.generated.resources.login
+import ametista.composeapp.generated.resources.name
 import ametista.composeapp.generated.resources.password
 import ametista.composeapp.generated.resources.server_secret
+import ametista.composeapp.generated.resources.sign_in
+import ametista.composeapp.generated.resources.sign_up
+import ametista.composeapp.generated.resources.surname
+import ametista.composeapp.generated.resources.wrong_admin_code
 import ametista.composeapp.generated.resources.wrong_email
 import ametista.composeapp.generated.resources.wrong_host_address
+import ametista.composeapp.generated.resources.wrong_name
 import ametista.composeapp.generated.resources.wrong_password
 import ametista.composeapp.generated.resources.wrong_server_secret
+import ametista.composeapp.generated.resources.wrong_surname
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,6 +48,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
@@ -55,8 +69,10 @@ import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
 import com.tecknobit.equinox.inputs.InputValidator.isHostValid
+import com.tecknobit.equinox.inputs.InputValidator.isNameValid
 import com.tecknobit.equinox.inputs.InputValidator.isPasswordValid
 import com.tecknobit.equinox.inputs.InputValidator.isServerSecretValid
+import com.tecknobit.equinox.inputs.InputValidator.isSurnameValid
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import org.jetbrains.compose.resources.painterResource
@@ -168,7 +184,7 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            //CustomerSelector()
+            AdminSelector()
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState()),
@@ -188,12 +204,46 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
                 )
                 EquinoxOutlinedTextField(
                     value = viewModel!!.serverSecret,
-                    label = stringResource(Res.string.server_secret),
+                    label = stringResource(
+                        if (viewModel!!.isAdmin.value) {
+                            Res.string.admin_code
+                        } else
+                            Res.string.server_secret
+                    ),
                     keyboardOptions = keyboardOptions,
-                    errorText = stringResource(Res.string.wrong_server_secret),
+                    errorText = stringResource(
+                        if (viewModel!!.isAdmin.value) {
+                            Res.string.wrong_admin_code
+                        } else
+                            Res.string.wrong_server_secret
+                    ),
                     isError = viewModel!!.serverSecretError,
                     validator = { isServerSecretValid(it) }
                 )
+                AnimatedVisibility(
+                    visible = viewModel!!.isAdminSignUp.value
+                ) {
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        EquinoxOutlinedTextField(
+                            value = viewModel!!.name,
+                            label = stringResource(Res.string.name),
+                            keyboardOptions = keyboardOptions,
+                            errorText = stringResource(Res.string.wrong_name),
+                            isError = viewModel!!.nameError,
+                            validator = { isNameValid(it) }
+                        )
+                        EquinoxOutlinedTextField(
+                            value = viewModel!!.surname,
+                            label = stringResource(Res.string.surname),
+                            keyboardOptions = keyboardOptions,
+                            errorText = stringResource(Res.string.wrong_surname),
+                            isError = viewModel!!.surnameError,
+                            validator = { isSurnameValid(it) }
+                        )
+                    }
+                }
                 EquinoxOutlinedTextField(
                     value = viewModel!!.email,
                     label = stringResource(Res.string.email),
@@ -249,44 +299,72 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
                         text = stringResource(Res.string.login)
                     )
                 }
+                LoginMode()
             }
         }
     }
 
-    /*
-     * Function to select and to adapt the [FormSection] if the user whether the user is a [NovaUser.Role.Customer]
-     * or is a [NovaUser.Role.Vendor]
-     *
-     * No-any params required
-     *
     @Composable
     @NonRestartableComposable
-    private fun CustomerSelector() {
-        AnimatedVisibility(
-            visible = viewModel!!.isSignUp.value
+    private fun AdminSelector() {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Row (
+            Text(
+                text = stringResource(Res.string.i_am_an_admin)
+            )
+            Switch(
+                checked = viewModel!!.isAdmin.value,
+                onCheckedChange = { isAdmin ->
+                    viewModel!!.isAdmin.value = isAdmin
+                    viewModel!!.isAdminSignUp.value = false
+                    viewModel!!.serverSecret.value = ""
+                    viewModel!!.serverSecretError.value = false
+                }
+            )
+        }
+    }
+
+    @Composable
+    @NonRestartableComposable
+    private fun LoginMode() {
+        AnimatedVisibility(
+            visible = viewModel!!.isAdmin.value
+        ) {
+            Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = stringResource(Res.string.i_am_a_customer)
+                    text = stringResource(
+                        if (viewModel!!.isAdminSignUp.value)
+                            Res.string.have_an_account
+                        else
+                            Res.string.are_you_new_to_ametista
+                    ),
+                    fontSize = 14.sp
                 )
-                Switch(
-                    checked = viewModel!!.isCustomerAuth.value,
-                    onCheckedChange = { isCustomerAuth ->
-                        viewModel!!.isCustomerAuth.value = isCustomerAuth
-                        if(isCustomerAuth) {
-                            viewModel!!.host.value = ""
-                            viewModel!!.hostError.value = false
-                            viewModel!!.serverSecret.value = ""
-                            viewModel!!.serverSecretError.value = false
-                        }
-                    }
+                Text(
+                    modifier = Modifier
+                        .padding(
+                            start = 5.dp
+                        )
+                        .clickable {
+                            viewModel!!.isAdminSignUp.value = !viewModel!!.isAdminSignUp.value
+                        },
+                    text = stringResource(
+                        if (viewModel!!.isAdminSignUp.value)
+                            Res.string.sign_in
+                        else
+                            Res.string.sign_up
+                    ),
+                    color = MaterialTheme.colorScheme.primary,
+                    fontSize = 14.sp
                 )
             }
         }
-    }*/
+    }
 
     /**
      * Function to collect or instantiate the states of the screen
@@ -295,10 +373,16 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
      */
     @Composable
     override fun CollectStates() {
+        viewModel!!.isAdmin = remember { mutableStateOf(false) }
+        viewModel!!.isAdminSignUp = remember { mutableStateOf(false) }
         viewModel!!.host = remember { mutableStateOf("") }
         viewModel!!.hostError = remember { mutableStateOf(false) }
         viewModel!!.serverSecret = remember { mutableStateOf("") }
         viewModel!!.serverSecretError = remember { mutableStateOf(false) }
+        viewModel!!.name = remember { mutableStateOf("") }
+        viewModel!!.nameError = remember { mutableStateOf(false) }
+        viewModel!!.surname = remember { mutableStateOf("") }
+        viewModel!!.surnameError = remember { mutableStateOf(false) }
         viewModel!!.email = remember { mutableStateOf("") }
         viewModel!!.emailError = remember { mutableStateOf(false) }
         viewModel!!.password = remember { mutableStateOf("") }

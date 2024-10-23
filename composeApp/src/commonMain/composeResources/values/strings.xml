@@ -60,6 +60,10 @@
     <string name="issues_per_session_info">Inherent measurement of the average number of crashes or issues encountered while using the application for a single session. Each value on the graph represents the average of such crashes or issues that occurred in daily sessions</string>
     <string name="hello">Hello</string>
     <string name="login">Login</string>
+    <string name="i_am_an_admin">I am an admin</string>
+    <string name="wrong_name">Name is not valid</string>
+    <string name="surname">Surname</string>
+    <string name="wrong_surname">Surname is not valid</string>
     <string name="email">Email</string>
     <string name="wrong_email">Email is not valid</string>
     <string name="password">Password</string>
@@ -68,4 +72,10 @@
     <string name="wrong_host_address">The host address is not valid</string>
     <string name="server_secret">Server secret</string>
     <string name="wrong_server_secret">The server secret is not valid</string>
+    <string name="admin_code">Admin code</string>
+    <string name="wrong_admin_code">The admin code is not valid</string>
+    <string name="have_an_account">Have an account?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="are_you_new_to_ametista">Are you new to Ametista?</string>
+    <string name="sign_up">Sign up</string>
 </resources>
