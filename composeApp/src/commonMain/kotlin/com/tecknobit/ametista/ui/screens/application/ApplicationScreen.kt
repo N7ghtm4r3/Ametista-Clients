@@ -57,6 +57,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -114,7 +115,9 @@ class ApplicationScreen(
                         topBar = {
                             LargeTopAppBar(
                                 colors = TopAppBarDefaults.largeTopAppBarColors(
-                                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    titleContentColor = Color.White,
+                                    actionIconContentColor = Color.White
                                 ),
                                 navigationIcon = { NavButton() },
                                 title = {

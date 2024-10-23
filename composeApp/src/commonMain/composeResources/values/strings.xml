@@ -58,4 +58,14 @@
     <string name="network_requests_info">Inherent measure of the number of HTTP requests executed by each application daily. Each value on graph represents the number of HTTP requests executed on that day</string>
     <string name="issues_number_info">Inherent measurement of the number of crashes or problems encountered while using the application. Each value on the graph represents the number of crashes or issues that occurred over a period of time equal to one day</string>
     <string name="issues_per_session_info">Inherent measurement of the average number of crashes or issues encountered while using the application for a single session. Each value on the graph represents the average of such crashes or issues that occurred in daily sessions</string>
+    <string name="hello">Hello</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="wrong_email">Email is not valid</string>
+    <string name="password">Password</string>
+    <string name="wrong_password">Password is not valid</string>
+    <string name="host">Host</string>
+    <string name="wrong_host_address">The host address is not valid</string>
+    <string name="server_secret">Server secret</string>
+    <string name="wrong_server_secret">The server secret is not valid</string>
 </resources>

@@ -32,7 +32,6 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -89,8 +88,8 @@ fun WorkOnApplication(
                     ""
             )
         }
-        val primaryContainer = MaterialTheme.colorScheme.primaryContainer
-        viewModel.appIconBorderColor = remember { mutableStateOf(primaryContainer) }
+        val primary = MaterialTheme.colorScheme.primary
+        viewModel.appIconBorderColor = remember { mutableStateOf(primary) }
         viewModel.appName = remember {
             mutableStateOf(
                 if (isInEditMode)
@@ -142,7 +141,7 @@ fun WorkOnApplication(
                     )
                     DialogContent(
                         viewModel = viewModel,
-                        primaryContainer = primaryContainer
+                        borderColor = primary
                     )
                     DialogActions(
                         closeDialog = closeDialog,
@@ -189,7 +188,7 @@ private fun DialogTitle(
 @NonRestartableComposable
 private fun DialogContent(
     viewModel: ApplicationViewModel,
-    primaryContainer: Color
+    borderColor: Color
 ) {
     Column(
         modifier = Modifier
@@ -202,12 +201,9 @@ private fun DialogContent(
     ) {
         AppIconPicker(
             viewModel = viewModel,
-            primaryContainer = primaryContainer
+            borderColor = borderColor
         )
         EquinoxOutlinedTextField(
-            outlinedTextFieldColors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer
-            ),
             value = viewModel.appName,
             isError = viewModel.appNameError,
             placeholder = string.app_name_field,
@@ -215,9 +211,6 @@ private fun DialogContent(
             validator = { isAppNameValid(it) }
         )
         EquinoxOutlinedTextField(
-            outlinedTextFieldColors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primaryContainer
-            ),
             value = viewModel.appDescription,
             isError = viewModel.appDescriptionError,
             placeholder = string.app_description,
@@ -232,7 +225,7 @@ private fun DialogContent(
 @NonRestartableComposable
 private fun AppIconPicker(
     viewModel: ApplicationViewModel,
-    primaryContainer: Color
+    borderColor: Color
 ) {
     val launcher = rememberFilePickerLauncher(
         type = PickerType.Image,
@@ -243,7 +236,7 @@ private fun AppIconPicker(
         )
         appIconPath?.let { path ->
             viewModel.appIcon.value = path
-            viewModel.appIconBorderColor.value = primaryContainer
+            viewModel.appIconBorderColor.value = borderColor
         }
     }
     Box(
@@ -253,7 +246,7 @@ private fun AppIconPicker(
             modifier = Modifier
                 .size(125.dp)
                 .border(
-                    width = 1.5.dp,
+                    width = 1.dp,
                     color = viewModel.appIconBorderColor.value,
                     shape = CircleShape
                 )

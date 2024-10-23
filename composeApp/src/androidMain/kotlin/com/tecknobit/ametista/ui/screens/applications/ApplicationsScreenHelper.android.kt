@@ -195,8 +195,8 @@ actual fun ApplicationIcon(
         modifier = modifier
             .size(95.dp)
             .border(
-                width = 1.5.dp,
-                color = MaterialTheme.colorScheme.primaryContainer,
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
             )
             .clip(CircleShape),

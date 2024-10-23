@@ -12,10 +12,12 @@ import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.AUTH_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.PLATFORM_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
 import com.tecknobit.ametista.ui.screens.application.ApplicationScreen
 import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
+import com.tecknobit.ametista.ui.screens.auth.AuthScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
 import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
@@ -100,6 +102,11 @@ fun App() {
                     route = SPLASHSCREEN
                 ) {
                     Splashscreen().ShowContent()
+                }
+                scene(
+                    route = AUTH_SCREEN
+                ) {
+                    AuthScreen().ShowContent()
                 }
                 scene(
                     route = APPLICATIONS_SCREEN

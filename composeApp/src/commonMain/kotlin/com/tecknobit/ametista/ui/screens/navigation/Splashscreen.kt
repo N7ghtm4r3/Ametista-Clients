@@ -30,7 +30,7 @@ class Splashscreen: AmetistaScreen<EquinoxViewModel>() {
             modifier = Modifier
                 .fillMaxSize()
                 .background(
-                    color = MaterialTheme.colorScheme.inversePrimary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 .padding(
                     bottom = 16.dp
@@ -66,7 +66,8 @@ class Splashscreen: AmetistaScreen<EquinoxViewModel>() {
         // TODO: TO REMOVE
         LaunchedEffect(true) {
             delay(250)
-            navigator.navigate(APPLICATIONS_SCREEN)
+            // TODO: MAKE THE REAL NAVIGATION
+            navigator.navigate(AUTH_SCREEN)
         }
     }
 

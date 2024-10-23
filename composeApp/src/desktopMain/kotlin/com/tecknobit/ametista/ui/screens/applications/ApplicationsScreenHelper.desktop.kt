@@ -201,7 +201,7 @@ actual fun ApplicationIcon(
         // TODO: TO SET ERROR
     )
     HorizontalDivider(
-        color = MaterialTheme.colorScheme.primaryContainer
+        color = MaterialTheme.colorScheme.primary
     )
 }
 
@@ -232,7 +232,7 @@ private fun ApplicationDetails(
         )
     }
     HorizontalDivider(
-        color = MaterialTheme.colorScheme.primaryContainer
+        color = MaterialTheme.colorScheme.primary
     )
 }
 

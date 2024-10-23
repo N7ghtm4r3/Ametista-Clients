@@ -11,6 +11,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.navigator
 import com.tecknobit.apimanager.annotations.Structure
@@ -29,6 +30,8 @@ abstract class AmetistaScreen<V : EquinoxViewModel>(
     companion object {
 
         const val SPLASHSCREEN = "Splashscreen"
+
+        const val AUTH_SCREEN = "AuthScreen"
 
         const val APPLICATIONS_SCREEN = "ApplicationsScreen"
 
@@ -49,7 +52,8 @@ abstract class AmetistaScreen<V : EquinoxViewModel>(
         ) {
             Icon(
                 imageVector = Icons.Default.ArrowBackIosNew,
-                contentDescription = null
+                contentDescription = null,
+                tint = Color.White
             )
         }
     }
