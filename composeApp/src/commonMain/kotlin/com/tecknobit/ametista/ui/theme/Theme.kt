@@ -5,6 +5,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.tecknobit.ametista.localUser
+import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Auto
+import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Dark
+import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Light
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -236,7 +240,15 @@ private val highContrastDarkColorScheme = darkColorScheme(
 
 @Composable
 fun AmetistaTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = if (localUser == null)
+        isSystemInDarkTheme()
+    else {
+        when (localUser.theme) {
+            Auto -> isSystemInDarkTheme()
+            Light -> false
+            Dark -> true
+        }
+    },
     content: @Composable() () -> Unit
 ) {
     val colorScheme = when {

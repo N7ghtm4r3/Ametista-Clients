@@ -81,4 +81,12 @@
     <string name="session">Session</string>
     <string name="language">Language</string>
     <string name="theme">Theme</string>
+    <string name="change_email">Change email</string>
+    <string name="new_email">New email</string>
+    <string name="change_password">Change password</string>
+    <string name="new_password">New password</string>
+    <string name="logout">Logout</string>
+    <string name="logout_message">If you confirm you will be disconnected from this device</string>
+    <string name="delete_account">Delete account</string>
+    <string name="delete_message">If you confirm your account will be permanently deleted and your data will not be more recoverable</string>
 </resources>

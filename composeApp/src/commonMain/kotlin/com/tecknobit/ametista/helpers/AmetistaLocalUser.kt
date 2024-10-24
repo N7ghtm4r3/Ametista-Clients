@@ -1,5 +1,6 @@
 package com.tecknobit.ametista.helpers
 
+import com.tecknobit.ametistacore.models.AmetistaUser.Role
 import com.tecknobit.equinox.environment.records.EquinoxLocalUser
 import com.tecknobit.equinox.environment.records.EquinoxUser
 
@@ -48,7 +49,7 @@ class AmetistaLocalUser : EquinoxLocalUser() {
 
     // TODO: TO REMOVE
     override fun getLanguage(): String {
-        return "English"
+        return "en"
     }
 
     // TODO: TO REMOVE
@@ -56,4 +57,11 @@ class AmetistaLocalUser : EquinoxLocalUser() {
         return EquinoxUser.ApplicationTheme.Auto
     }
 
+    /* TODO: TO USE CORRECTLY */
+    fun getRole(): Role {
+        return Role.VIEWER
+    }
+
+    // TODO: IMPLEMENT THE IS_ADMIN OR IS_VIEWER METHODS 
+    
 }
