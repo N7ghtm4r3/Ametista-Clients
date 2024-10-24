@@ -1,6 +1,7 @@
 package com.tecknobit.ametista.helpers
 
 import com.tecknobit.equinox.environment.records.EquinoxLocalUser
+import com.tecknobit.equinox.environment.records.EquinoxUser
 
 class AmetistaLocalUser : EquinoxLocalUser() {
 
@@ -43,6 +44,16 @@ class AmetistaLocalUser : EquinoxLocalUser() {
     // TODO: TO REMOVE 
     override fun getEmail(): String {
         return "john_doe@email.com"
+    }
+
+    // TODO: TO REMOVE
+    override fun getLanguage(): String {
+        return "English"
+    }
+
+    // TODO: TO REMOVE
+    override fun getTheme(): EquinoxUser.ApplicationTheme {
+        return EquinoxUser.ApplicationTheme.Auto
     }
 
 }

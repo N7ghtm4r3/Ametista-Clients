@@ -15,7 +15,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Android
 import androidx.compose.material.icons.filled.DesktopWindows
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Alignment
@@ -29,7 +28,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewModelScope
-import com.tecknobit.ametista.getCurrentWidthSizeClass
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.icons.Globe
 import com.tecknobit.ametista.ui.icons.Ios
@@ -99,33 +97,15 @@ private fun PlatformsRow(
     platforms: List<Platform>,
     size: Dp
 ) {
-    val width = getCurrentWidthSizeClass()
-    when (width) {
-        WindowWidthSizeClass.Compact -> {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                DrawTiles(
-                    viewModel = viewModel,
-                    applicationPlatforms = applicationPlatforms,
-                    platforms = platforms,
-                    size = size
-                )
-            }
-        }
-
-        else -> {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                DrawTiles(
-                    viewModel = viewModel,
-                    applicationPlatforms = applicationPlatforms,
-                    platforms = platforms,
-                    size = size
-                )
-            }
-        }
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
+        DrawTiles(
+            viewModel = viewModel,
+            applicationPlatforms = applicationPlatforms,
+            platforms = platforms,
+            size = size
+        )
     }
 }
 

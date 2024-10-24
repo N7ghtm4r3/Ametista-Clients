@@ -78,4 +78,7 @@
     <string name="sign_in">Sign In</string>
     <string name="are_you_new_to_ametista">Are you new to Ametista?</string>
     <string name="sign_up">Sign up</string>
+    <string name="session">Session</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
 </resources>

@@ -54,7 +54,7 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.tecknobit.ametista.displayFontFamily
-import com.tecknobit.ametista.helpers.getAppIconPath
+import com.tecknobit.ametista.getImagePath
 import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreenViewModel
 import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
@@ -231,8 +231,8 @@ private fun AppIconPicker(
         type = PickerType.Image,
         mode = PickerMode.Single
     ) { appIcon ->
-        val appIconPath = getAppIconPath(
-            appIcon = appIcon
+        val appIconPath = getImagePath(
+            imagePic = appIcon
         )
         appIconPath?.let { path ->
             viewModel.appIcon.value = path

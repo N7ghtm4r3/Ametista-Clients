@@ -109,7 +109,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                                         )
                                         .size(size)
                                         .clip(CircleShape)
-                                        .clickable { navigator.navigate(ACCOUNT_SCREEN) },
+                                        .clickable { navigator.navigate(SESSION_SCREEN) },
                                     model = ImageRequest.Builder(LocalPlatformContext.current)
                                         .data(localUser.profilePic)
                                         .crossfade(true)

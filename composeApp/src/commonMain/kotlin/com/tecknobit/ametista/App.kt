@@ -13,13 +13,13 @@ import coil3.compose.LocalPlatformContext
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
 import com.tecknobit.ametista.helpers.AmetistaLocalUser
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.ACCOUNT_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.AUTH_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.PLATFORM_SCREEN
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SESSION_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
-import com.tecknobit.ametista.ui.screens.account.AccountScreen
+import com.tecknobit.ametista.ui.screens.account.SessionScreen
 import com.tecknobit.ametista.ui.screens.application.ApplicationScreen
 import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
 import com.tecknobit.ametista.ui.screens.auth.AuthScreen
@@ -30,6 +30,7 @@ import com.tecknobit.ametistacore.models.AmetistaApplication.IDENTIFIER_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORM_KEY
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.equinox.environment.records.EquinoxUser.NAME_KEY
+import io.github.vinceglb.filekit.core.PlatformFile
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
@@ -117,9 +118,9 @@ fun App() {
                     AuthScreen().ShowContent()
                 }
                 scene(
-                    route = ACCOUNT_SCREEN
+                    route = SESSION_SCREEN
                 ) {
-                    AccountScreen().ShowContent()
+                    SessionScreen().ShowContent()
                 }
                 scene(
                     route = APPLICATIONS_SCREEN
@@ -181,3 +182,7 @@ expect fun CloseApplicationOnNavBack()
 
 @Composable
 expect fun getCurrentWidthSizeClass(): WindowWidthSizeClass
+
+expect fun getImagePath(
+    imagePic: PlatformFile?
+): String?

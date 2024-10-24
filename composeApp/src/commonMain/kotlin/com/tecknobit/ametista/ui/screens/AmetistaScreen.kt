@@ -33,7 +33,7 @@ abstract class AmetistaScreen<V : EquinoxViewModel>(
 
         const val AUTH_SCREEN = "AuthScreen"
 
-        const val ACCOUNT_SCREEN = "AccountScreen"
+        const val SESSION_SCREEN = "SessionScreen"
 
         const val APPLICATIONS_SCREEN = "ApplicationsScreen"
 
