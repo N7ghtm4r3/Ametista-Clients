@@ -62,6 +62,9 @@ class AmetistaLocalUser : EquinoxLocalUser() {
         return Role.VIEWER
     }
 
-    // TODO: IMPLEMENT THE IS_ADMIN OR IS_VIEWER METHODS 
-    
+    // TODO: IMPLEMENT THE IS_ADMIN OR IS_VIEWER METHODS CORRECTLY
+    fun isAdmin(): Boolean {
+        return true
+    }
+
 }
