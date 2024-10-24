@@ -92,4 +92,7 @@
     <string name="logout_message">If you confirm you will be disconnected from this device</string>
     <string name="delete_account">Delete account</string>
     <string name="delete_message">If you confirm your account will be permanently deleted and your data will not be more recoverable</string>
+    <string name="add_viewer">Add viewer</string>
+    <string name="add_viewer_info">This operation allows you to create a new Viewer who can access this session. You will need to share credentials to that user who will need to, on first login, change the preset password</string>
+    <string name="add">Add</string>
 </resources>

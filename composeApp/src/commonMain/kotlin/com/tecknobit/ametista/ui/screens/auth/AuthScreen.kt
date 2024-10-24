@@ -250,7 +250,11 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
                     value = viewModel!!.email,
                     label = stringResource(Res.string.email),
                     mustBeInLowerCase = true,
-                    keyboardOptions = keyboardOptions,
+                    allowsBlankSpaces = false,
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Next,
+                        keyboardType = KeyboardType.Email
+                    ),
                     errorText = stringResource(Res.string.wrong_email),
                     isError = viewModel!!.emailError,
                     validator = { isEmailValid(it) }
@@ -259,6 +263,7 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
                 EquinoxOutlinedTextField(
                     value = viewModel!!.password,
                     label = stringResource(Res.string.password),
+                    allowsBlankSpaces = false,
                     trailingIcon = {
                         IconButton(
                             onClick = { hiddenPassword = !hiddenPassword }
