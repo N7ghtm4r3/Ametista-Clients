@@ -35,6 +35,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -123,6 +124,7 @@ class PlatformScreen(
                                 }
                             )
                         },
+                        snackbarHost = { SnackbarHost(viewModel!!.snackbarHostState!!) },
                         floatingActionButton = { FilterButton() }
                     ) { paddingValues ->
                         Column(

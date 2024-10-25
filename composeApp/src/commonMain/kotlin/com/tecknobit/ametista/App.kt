@@ -16,6 +16,7 @@ import com.tecknobit.ametista.helpers.AmetistaLocalUser
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.AUTH_SCREEN
+import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CHANGE_VIEWER_PASSWORD_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.PLATFORM_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SESSION_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
@@ -23,6 +24,7 @@ import com.tecknobit.ametista.ui.screens.account.SessionScreen
 import com.tecknobit.ametista.ui.screens.application.ApplicationScreen
 import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
 import com.tecknobit.ametista.ui.screens.auth.AuthScreen
+import com.tecknobit.ametista.ui.screens.changeviewerpassword.ChangeViewerPasswordScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
 import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
@@ -116,6 +118,11 @@ fun App() {
                     route = AUTH_SCREEN
                 ) {
                     AuthScreen().ShowContent()
+                }
+                scene(
+                    route = CHANGE_VIEWER_PASSWORD_SCREEN
+                ) {
+                    ChangeViewerPasswordScreen().ShowContent()
                 }
                 scene(
                     route = SESSION_SCREEN

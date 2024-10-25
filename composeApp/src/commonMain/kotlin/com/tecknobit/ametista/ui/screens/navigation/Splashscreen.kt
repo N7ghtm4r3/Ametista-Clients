@@ -16,8 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametistacore.models.AmetistaUser.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import kotlinx.coroutines.delay
 import org.jetbrains.compose.resources.stringResource
@@ -66,8 +68,14 @@ class Splashscreen: AmetistaScreen<EquinoxViewModel>() {
         // TODO: TO REMOVE
         LaunchedEffect(true) {
             delay(250)
-            // TODO: MAKE THE REAL NAVIGATION
-            navigator.navigate(AUTH_SCREEN)
+            // TODO: MAKE THE REAL NAVIGATION (INCLUDE THE ROUTE TO CHANGE THE VIEWER PASSWORD ALSO)
+            val route = if (localUser.userId == null)
+                AUTH_SCREEN
+            else if (localUser.password == DEFAULT_VIEWER_PASSWORD)
+                CHANGE_VIEWER_PASSWORD_SCREEN
+            else
+                APPLICATIONS_SCREEN
+            navigator.navigate(route)
         }
     }
 

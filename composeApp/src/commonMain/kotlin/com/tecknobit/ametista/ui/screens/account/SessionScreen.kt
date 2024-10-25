@@ -41,6 +41,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -115,7 +116,8 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
                     }
                     AddViewer()
                 }
-            }
+            },
+            snackbarHost = { SnackbarHost(viewModel!!.snackbarHostState!!) }
         ) { paddingValues ->
             Column(
                 modifier = Modifier

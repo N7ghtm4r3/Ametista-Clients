@@ -86,12 +86,12 @@ import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.RoleBadge
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
+import com.tecknobit.ametistacore.helpers.AmetistaValidator.isNewPasswordValid
 import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme
 import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Dark
 import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Light
 import com.tecknobit.equinox.inputs.InputValidator.LANGUAGES_SUPPORTED
 import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
-import com.tecknobit.equinox.inputs.InputValidator.isPasswordValid
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
@@ -283,7 +283,7 @@ private fun PasswordSection() {
                 ),
                 errorText = Res.string.wrong_password,
                 isError = viewModel.newPasswordError,
-                validator = { isPasswordValid(it) }
+                validator = { isNewPasswordValid(it) }
             )
         },
         confirmAction = {

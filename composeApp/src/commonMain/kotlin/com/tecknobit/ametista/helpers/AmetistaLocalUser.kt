@@ -1,5 +1,6 @@
 package com.tecknobit.ametista.helpers
 
+import com.tecknobit.ametistacore.models.AmetistaUser
 import com.tecknobit.ametistacore.models.AmetistaUser.Role
 import com.tecknobit.equinox.environment.records.EquinoxLocalUser
 import com.tecknobit.equinox.environment.records.EquinoxUser
@@ -33,6 +34,11 @@ class AmetistaLocalUser : EquinoxLocalUser() {
     }
 
     // TODO: TO REMOVE
+    override fun getUserId(): String {
+        return "gagaga"
+    }
+
+    // TODO: TO REMOVE
     override fun getCompleteName(): String {
         return "John Doe"
     }
@@ -45,6 +51,11 @@ class AmetistaLocalUser : EquinoxLocalUser() {
     // TODO: TO REMOVE 
     override fun getEmail(): String {
         return "john_doe@email.com"
+    }
+
+    // TODO: TO REMOVE
+    override fun getPassword(): String {
+        return AmetistaUser.DEFAULT_VIEWER_PASSWORD
     }
 
     // TODO: TO REMOVE
