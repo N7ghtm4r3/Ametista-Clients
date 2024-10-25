@@ -79,6 +79,7 @@ fun WorkOnApplication(
         val isInEditMode = application != null
         val closeDialog = {
             show.value = false
+            viewModel.restartRefresher()
         }
         viewModel.appIcon = remember {
             mutableStateOf(
@@ -303,12 +304,20 @@ private fun DialogActions(
                     if (viewModel is ApplicationsScreenViewModel) {
                         viewModel.workOnApplication(
                             application = application,
-                            onSuccess = closeDialog
+                            onSuccess = {
+                                reviewApp(
+                                    flowAction = closeDialog
+                                )
+                            }
                         )
                     } else {
                         viewModel.editApplication(
                             application = application!!,
-                            onSuccess = closeDialog
+                            onSuccess = {
+                                reviewApp(
+                                    flowAction = closeDialog
+                                )
+                            }
                         )
                     }
                 }
@@ -320,6 +329,10 @@ private fun DialogActions(
         }
     }
 }
+
+expect fun reviewApp(
+    flowAction: () -> Unit
+)
 
 @Composable
 @NonRestartableComposable
