@@ -37,6 +37,10 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.ui.text.google.fonts)
             implementation(libs.androidx.startup.runtime)
+            implementation(libs.app.update)
+            implementation(libs.app.update.ktx)
+            implementation(libs.review)
+            implementation(libs.review.ktx)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -63,11 +67,12 @@ kotlin {
             implementation(libs.richeditor.compose)
             implementation(libs.chiptextfield.m3)
             implementation(libs.compose.charts)
-            implementation("io.github.dokar3:sonner:0.3.8")
+            implementation(libs.sonner)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.octocatkdu)
         }
     }
 }
@@ -160,4 +165,8 @@ compose.desktop {
 
 configurations.all {
     exclude("commons-logging", "commons-logging")
+    // TODO: TO REMOVE IN THE NEXT VERSION (DEPRECATED TRIGGER SEARCH)
+    resolutionStrategy {
+        force("com.github.N7ghtm4r3:GitHubManager:1.0.1")
+    }
 }

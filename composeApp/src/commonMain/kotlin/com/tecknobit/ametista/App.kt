@@ -30,9 +30,13 @@ import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.AmetistaApplication.IDENTIFIER_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORM_KEY
+import com.tecknobit.ametistacore.models.AmetistaUser.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.equinox.environment.records.EquinoxUser.NAME_KEY
 import io.github.vinceglb.filekit.core.PlatformFile
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
@@ -176,6 +180,24 @@ private fun validateSelfSignedCertificate(): Array<TrustManager> {
         override fun checkClientTrusted(certs: Array<X509Certificate>, authType: String) {}
         override fun checkServerTrusted(certs: Array<X509Certificate>, authType: String) {}
     })
+}
+
+@Composable
+@NonRestartableComposable
+expect fun CheckForUpdatesAndLaunch()
+
+fun startSession() {
+    MainScope().launch { // TODO: TO REMOVE 
+        delay(250)
+        // TODO: MAKE THE REAL INIT OF THE USER AND REQUESTER
+        val route = if (localUser.userId == null)
+            AUTH_SCREEN
+        else if (localUser.password == DEFAULT_VIEWER_PASSWORD)
+            CHANGE_VIEWER_PASSWORD_SCREEN
+        else
+            APPLICATIONS_SCREEN
+        navigator.navigate(route)
+    }
 }
 
 /**
