@@ -21,7 +21,7 @@
     <!-- TODO: CHANGE THE DOCU LINK -->
     <string name="implement_the_engine_text">Implement the [Ametista Engine](https://www.github.com) on the platform to connect</string>
     <string name="invoke_connect_method">Connection method</string>
-    <string name="invoke_connect_method_text">Invoke the _connectThisPlatform_ method to throw an exception that your Ametista system can detect, confirming that the platform connection is effective</string>
+    <string name="invoke_connect_method_text">Invoke the _connectThisPlatform_ method to connect the application on the specific platform version</string>
     <string name="check_connection_result">Check connection result</string>
     <string name="check_connection_result_text">Check whether the platform related tile has been coloured</string>
     <string name="got_it">Got it!</string>

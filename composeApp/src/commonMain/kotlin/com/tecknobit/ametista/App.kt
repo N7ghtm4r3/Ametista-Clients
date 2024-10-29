@@ -29,9 +29,9 @@ import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
 import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.AmetistaApplication.IDENTIFIER_KEY
-import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORM_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.ametistacore.models.Platform
+import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.PLATFORM_KEY
 import com.tecknobit.equinox.environment.records.EquinoxUser.NAME_KEY
 import io.github.vinceglb.filekit.core.PlatformFile
 import kotlinx.coroutines.MainScope
