@@ -10,7 +10,13 @@ import com.tecknobit.equinox.environment.records.EquinoxLocalUser
 
 class AmetistaLocalUser : EquinoxLocalUser() {
 
-    private val kmpPrefs = KMPrefs("Ametista")
+    companion object {
+
+        private const val PREF_NAME = "Ametista"
+
+    }
+
+    private val kmpPrefs = KMPrefs(PREF_NAME)
 
     private var role: Role?
 

@@ -8,8 +8,10 @@ import com.tecknobit.ametista.requester
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CHANGE_VIEWER_PASSWORD_SCREEN
 import com.tecknobit.ametistacore.models.AmetistaUser.DEFAULT_VIEWER_PASSWORD
+import com.tecknobit.ametistacore.models.AmetistaUser.LANGUAGE_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.ROLE_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.Role.ADMIN
+import com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER
 import com.tecknobit.apimanager.formatters.JsonHelper
 import com.tecknobit.equinox.annotations.CustomParametersOrder
 import com.tecknobit.equinox.environment.records.EquinoxUser.getValidUserLanguage
@@ -83,13 +85,55 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
 
     private fun adminsSignIn() {
         if (signInFormIsValid()) {
-
+            requester.changeHost(
+                host = host.value
+            )
+            requester.sendRequest(
+                request = {
+                    requester.adminSignIn(
+                        adminCode = serverSecret.value,
+                        email = email.value,
+                        password = password.value
+                    )
+                },
+                onSuccess = { response ->
+                    launchApp(
+                        response = response,
+                        name = name.value,
+                        surname = surname.value,
+                        language = response.getString(LANGUAGE_KEY),
+                        custom = arrayOf(ADMIN)
+                    )
+                },
+                onFailure = { showSnackbarMessage(it) }
+            )
         }
     }
 
     private fun viewerSignIn() {
         if (signInFormIsValid()) {
-
+            requester.changeHost(
+                host = host.value
+            )
+            requester.sendRequest(
+                request = {
+                    requester.viewerSignIn(
+                        serverSecret = serverSecret.value,
+                        email = email.value,
+                        password = password.value
+                    )
+                },
+                onSuccess = { response ->
+                    launchApp(
+                        response = response,
+                        name = name.value,
+                        surname = surname.value,
+                        language = response.getString(LANGUAGE_KEY),
+                        custom = arrayOf(VIEWER)
+                    )
+                },
+                onFailure = { showSnackbarMessage(it) }
+            )
         }
     }
 
