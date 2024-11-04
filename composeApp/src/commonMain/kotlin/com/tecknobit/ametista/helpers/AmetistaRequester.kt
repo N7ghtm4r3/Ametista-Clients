@@ -1,5 +1,6 @@
 package com.tecknobit.ametista.helpers
 
+import com.tecknobit.ametistacore.helpers.AmetistaEndpointsSet.CHANGE_PRESET_PASSWORD_ENDPOINT
 import com.tecknobit.ametistacore.models.AmetistaUser.ADMIN_CODE_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.EMAIL_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.LANGUAGE_KEY
@@ -81,5 +82,17 @@ class AmetistaRequester(
         )
     }
 
+    fun changeViewerPresetPassword(
+        password: String
+    ): JSONObject {
+        val payload = Params()
+        payload.addParam(PASSWORD_KEY, password)
+        return execPatch(
+            endpoint = assembleUsersEndpointPath(
+                endpoint = CHANGE_PRESET_PASSWORD_ENDPOINT
+            ),
+            payload = payload
+        )
+    }
 
 }
