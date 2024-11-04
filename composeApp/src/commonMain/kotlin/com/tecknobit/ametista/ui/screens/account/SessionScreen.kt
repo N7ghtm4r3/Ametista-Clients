@@ -65,6 +65,7 @@ import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametista.ui.screens.account.SessionScreenViewModel.SessionScreenSection
 import com.tecknobit.ametista.ui.screens.account.SessionScreenViewModel.SessionScreenSection.ABOUT_ME
 import com.tecknobit.ametista.ui.screens.account.SessionScreenViewModel.SessionScreenSection.MEMBERS
+import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
 import com.tecknobit.equinox.inputs.InputValidator.isNameValid
 import com.tecknobit.equinox.inputs.InputValidator.isSurnameValid
@@ -85,51 +86,53 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
      */
     @Composable
     override fun ArrangeScreenContent() {
-        Scaffold(
-            topBar = {
-                LargeTopAppBar(
-                    colors = TopAppBarDefaults.largeTopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = Color.White
-                    ),
-                    navigationIcon = { NavButton() },
-                    title = {
-                        Text(
-                            text = stringResource(string.session)
-                        )
-                    }
-                )
-            },
-            floatingActionButton = {
-                AnimatedVisibility(
-                    visible = viewModel!!.sessionScreenSection.value == MEMBERS && localUser.isAdmin(),
-                    enter = fadeIn(),
-                    exit = fadeOut()
-                ) {
-                    FloatingActionButton(
-                        onClick = { addViewer.value = true }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.PersonAdd,
-                            contentDescription = null
-                        )
-                    }
-                    AddViewer()
-                }
-            },
-            snackbarHost = { SnackbarHost(viewModel!!.snackbarHostState!!) }
-        ) { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .padding(
-                        top = paddingValues.calculateTopPadding() - 5.dp,
-                        bottom = paddingValues.calculateBottomPadding() + 16.dp
+        AmetistaTheme {
+            Scaffold(
+                topBar = {
+                    LargeTopAppBar(
+                        colors = TopAppBarDefaults.largeTopAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            titleContentColor = Color.White
+                        ),
+                        navigationIcon = { NavButton() },
+                        title = {
+                            Text(
+                                text = stringResource(string.session)
+                            )
+                        }
                     )
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                SectionSelector()
-                DisplaySection()
+                },
+                floatingActionButton = {
+                    AnimatedVisibility(
+                        visible = viewModel!!.sessionScreenSection.value == MEMBERS && localUser.isAdmin(),
+                        enter = fadeIn(),
+                        exit = fadeOut()
+                    ) {
+                        FloatingActionButton(
+                            onClick = { addViewer.value = true }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.PersonAdd,
+                                contentDescription = null
+                            )
+                        }
+                        AddViewer()
+                    }
+                },
+                snackbarHost = { SnackbarHost(viewModel!!.snackbarHostState!!) }
+            ) { paddingValues ->
+                Column(
+                    modifier = Modifier
+                        .padding(
+                            top = paddingValues.calculateTopPadding() - 5.dp,
+                            bottom = paddingValues.calculateBottomPadding() + 16.dp
+                        )
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    SectionSelector()
+                    DisplaySection()
+                }
             }
         }
     }

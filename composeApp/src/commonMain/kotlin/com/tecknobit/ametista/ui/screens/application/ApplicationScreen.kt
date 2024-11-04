@@ -78,6 +78,7 @@ import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform.entries
 import com.tecknobit.equinoxcompose.components.EmptyListUI
@@ -103,92 +104,94 @@ class ApplicationScreen(
      */
     @Composable
     override fun ArrangeScreenContent() {
-        AnimatedVisibility(
-            visible = application.value != null,
-            enter = fadeIn(),
-            exit = fadeOut()
-        ) {
-            ManagedContent(
-                viewModel = viewModel!!,
-                content = {
-                    Scaffold(
-                        topBar = {
-                            LargeTopAppBar(
-                                colors = TopAppBarDefaults.largeTopAppBarColors(
-                                    containerColor = MaterialTheme.colorScheme.primary,
-                                    titleContentColor = Color.White,
-                                    actionIconContentColor = Color.White
-                                ),
-                                navigationIcon = { NavButton() },
-                                title = {
-                                    Text(
-                                        text = application.value!!.name
-                                    )
-                                },
-                                actions = {
-                                    IconButton(
-                                        onClick = { viewModel!!.workOnApplication.value = true }
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Edit,
-                                            contentDescription = null
+        AmetistaTheme {
+            AnimatedVisibility(
+                visible = application.value != null,
+                enter = fadeIn(),
+                exit = fadeOut()
+            ) {
+                ManagedContent(
+                    viewModel = viewModel!!,
+                    content = {
+                        Scaffold(
+                            topBar = {
+                                LargeTopAppBar(
+                                    colors = TopAppBarDefaults.largeTopAppBarColors(
+                                        containerColor = MaterialTheme.colorScheme.primary,
+                                        titleContentColor = Color.White,
+                                        actionIconContentColor = Color.White
+                                    ),
+                                    navigationIcon = { NavButton() },
+                                    title = {
+                                        Text(
+                                            text = application.value!!.name
+                                        )
+                                    },
+                                    actions = {
+                                        IconButton(
+                                            onClick = { viewModel!!.workOnApplication.value = true }
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Edit,
+                                                contentDescription = null
+                                            )
+                                        }
+                                        WorkOnApplication(
+                                            show = viewModel!!.workOnApplication,
+                                            viewModel = viewModel!!,
+                                            application = application.value
+                                        )
+                                        val deleteApplication = remember { mutableStateOf(false) }
+                                        IconButton(
+                                            onClick = { deleteApplication.value = true }
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.Delete,
+                                                contentDescription = null
+                                            )
+                                        }
+                                        DeleteApplication(
+                                            show = deleteApplication,
+                                            application = application.value!!,
+                                            viewModel = viewModel!!,
+                                            onDelete = { navigator.goBack() }
                                         )
                                     }
-                                    WorkOnApplication(
-                                        show = viewModel!!.workOnApplication,
-                                        viewModel = viewModel!!,
-                                        application = application.value
-                                    )
-                                    val deleteApplication = remember { mutableStateOf(false) }
-                                    IconButton(
-                                        onClick = { deleteApplication.value = true }
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Delete,
-                                            contentDescription = null
-                                        )
-                                    }
-                                    DeleteApplication(
-                                        show = deleteApplication,
-                                        application = application.value!!,
-                                        viewModel = viewModel!!,
-                                        onDelete = { navigator.goBack() }
-                                    )
-                                }
-                            )
-                        },
-                        snackbarHost = {
-                            SnackbarHost(
-                                hostState = viewModel!!.snackbarHostState!!
-                            )
-                        },
-                        floatingActionButton = {
-                            AnimatedVisibility(
-                                visible = application.value!!.platforms.size != entries.size,
-                                enter = fadeIn(),
-                                exit = fadeOut()
-                            ) {
-                                FloatingActionButton(
-                                    onClick = { showConnectionProcedure.value = true }
+                                )
+                            },
+                            snackbarHost = {
+                                SnackbarHost(
+                                    hostState = viewModel!!.snackbarHostState!!
+                                )
+                            },
+                            floatingActionButton = {
+                                AnimatedVisibility(
+                                    visible = application.value!!.platforms.size != entries.size,
+                                    enter = fadeIn(),
+                                    exit = fadeOut()
                                 ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Link,
-                                        contentDescription = null
-                                    )
+                                    FloatingActionButton(
+                                        onClick = { showConnectionProcedure.value = true }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Link,
+                                            contentDescription = null
+                                        )
+                                    }
                                 }
                             }
-                        }
-                    ) { paddingValues ->
-                        Column {
-                            ExpandableText(
-                                paddingValues = paddingValues
-                            )
-                            PlatformsSections()
-                            ConnectionProcedure()
+                        ) { paddingValues ->
+                            Column {
+                                ExpandableText(
+                                    paddingValues = paddingValues
+                                )
+                                PlatformsSections()
+                                ConnectionProcedure()
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
         }
     }
 

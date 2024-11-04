@@ -28,7 +28,6 @@ import com.tecknobit.ametista.ui.screens.auth.AuthScreen
 import com.tecknobit.ametista.ui.screens.changeviewerpassword.ChangeViewerPasswordScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
 import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
-import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.AmetistaApplication.IDENTIFIER_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.ametistacore.models.Platform
@@ -110,56 +109,54 @@ fun App() {
         .build()
     PreComposeApp {
         navigator = rememberNavigator()
-        AmetistaTheme {
-            NavHost(
-                navigator = navigator,
-                initialRoute = SPLASHSCREEN
+        NavHost(
+            navigator = navigator,
+            initialRoute = SPLASHSCREEN
+        ) {
+            scene(
+                route = SPLASHSCREEN
             ) {
-                scene(
-                    route = SPLASHSCREEN
-                ) {
-                    Splashscreen().ShowContent()
-                }
-                scene(
-                    route = AUTH_SCREEN
-                ) {
-                    AuthScreen().ShowContent()
-                }
-                scene(
-                    route = CHANGE_VIEWER_PASSWORD_SCREEN
-                ) {
-                    ChangeViewerPasswordScreen().ShowContent()
-                }
-                scene(
-                    route = SESSION_SCREEN
-                ) {
-                    SessionScreen().ShowContent()
-                }
-                scene(
-                    route = APPLICATIONS_SCREEN
-                ) {
-                    ApplicationsScreen().ShowContent()
-                }
-                scene(
-                    route = "$APPLICATION_SCREEN/{$IDENTIFIER_KEY}"
-                ) { backstackEntry ->
-                    val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
-                    ApplicationScreen(
-                        applicationId = applicationId
-                    ).ShowContent()
-                }
-                scene(
-                    route = "$PLATFORM_SCREEN/{$IDENTIFIER_KEY}/{$NAME_KEY}/{$PLATFORM_KEY}"
-                ) { backstackEntry ->
-                    val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
-                    val applicationName = backstackEntry.path<String>(NAME_KEY)!!
-                    val platform = backstackEntry.path<String>(PLATFORM_KEY)!!
-                    PlatformScreen(
-                        applicationId = applicationId,
-                        applicationName = applicationName,
-                        platform = Platform.valueOf(platform)
-                    ).ShowContent()
-                }
+                Splashscreen().ShowContent()
+            }
+            scene(
+                route = AUTH_SCREEN
+            ) {
+                AuthScreen().ShowContent()
+            }
+            scene(
+                route = CHANGE_VIEWER_PASSWORD_SCREEN
+            ) {
+                ChangeViewerPasswordScreen().ShowContent()
+            }
+            scene(
+                route = SESSION_SCREEN
+            ) {
+                SessionScreen().ShowContent()
+            }
+            scene(
+                route = APPLICATIONS_SCREEN
+            ) {
+                ApplicationsScreen().ShowContent()
+            }
+            scene(
+                route = "$APPLICATION_SCREEN/{$IDENTIFIER_KEY}"
+            ) { backstackEntry ->
+                val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
+                ApplicationScreen(
+                    applicationId = applicationId
+                ).ShowContent()
+            }
+            scene(
+                route = "$PLATFORM_SCREEN/{$IDENTIFIER_KEY}/{$NAME_KEY}/{$PLATFORM_KEY}"
+            ) { backstackEntry ->
+                val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
+                val applicationName = backstackEntry.path<String>(NAME_KEY)!!
+                val platform = backstackEntry.path<String>(PLATFORM_KEY)!!
+                PlatformScreen(
+                    applicationId = applicationId,
+                    applicationName = applicationName,
+                    platform = Platform.valueOf(platform)
+                ).ShowContent()
             }
         }
     }

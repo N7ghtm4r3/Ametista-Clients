@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.CheckForUpdatesAndLaunch
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import org.jetbrains.compose.resources.stringResource
 
@@ -24,43 +25,45 @@ class Splashscreen: AmetistaScreen<EquinoxViewModel>() {
 
     @Composable
     override fun ArrangeScreenContent() {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    color = MaterialTheme.colorScheme.primary
-                )
-                .padding(
-                    bottom = 16.dp
-                )
-        ) {
+        AmetistaTheme {
             Column(
                 modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Bottom
+                    .fillMaxSize()
+                    .background(
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    .padding(
+                        bottom = 16.dp
+                    )
             ) {
-                Text(
-                    text = stringResource(Res.string.app_name),
-                    fontSize = 40.sp,
-                    color = Color.White
-                )
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Bottom
+                ) {
+                    Text(
+                        text = stringResource(Res.string.app_name),
+                        fontSize = 40.sp,
+                        color = Color.White
+                    )
+                }
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Bottom
+                ) {
+                    Text(
+                        text = "by Tecknobit",
+                        color = Color.White
+                    )
+                }
             }
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Bottom
-            ) {
-                Text(
-                    text = "by Tecknobit",
-                    color = Color.White
-                )
-            }
+            CheckForUpdatesAndLaunch()
         }
-        CheckForUpdatesAndLaunch()
     }
 
     /**

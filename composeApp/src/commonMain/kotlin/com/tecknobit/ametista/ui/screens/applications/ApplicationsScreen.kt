@@ -63,6 +63,7 @@ import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
@@ -79,81 +80,83 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
      */
     @Composable
     override fun ArrangeScreenContent() {
-        CloseApplicationOnNavBack()
-        ManagedContent(
-            viewModel = viewModel!!,
-            content = {
-                Scaffold(
-                    topBar = {
-                        LargeTopAppBar(
-                            colors = TopAppBarDefaults.largeTopAppBarColors(
-                                containerColor = MaterialTheme.colorScheme.primary,
-                                titleContentColor = Color.White
-                            ),
-                            title = {
-                                Text(
-                                    text = stringResource(Res.string.applications)
-                                )
-                            },
-                            actions = {
-                                val size = when (getCurrentWidthSizeClass()) {
-                                    WindowWidthSizeClass.Expanded -> 55.dp
-                                    else -> 65.dp
+        AmetistaTheme {
+            CloseApplicationOnNavBack()
+            ManagedContent(
+                viewModel = viewModel!!,
+                content = {
+                    Scaffold(
+                        topBar = {
+                            LargeTopAppBar(
+                                colors = TopAppBarDefaults.largeTopAppBarColors(
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    titleContentColor = Color.White
+                                ),
+                                title = {
+                                    Text(
+                                        text = stringResource(Res.string.applications)
+                                    )
+                                },
+                                actions = {
+                                    val size = when (getCurrentWidthSizeClass()) {
+                                        WindowWidthSizeClass.Expanded -> 55.dp
+                                        else -> 65.dp
+                                    }
+                                    AsyncImage(
+                                        modifier = Modifier
+                                            .border(
+                                                width = 1.dp,
+                                                color = Color.White,
+                                                shape = CircleShape
+                                            )
+                                            .size(size)
+                                            .clip(CircleShape)
+                                            .clickable { navigator.navigate(SESSION_SCREEN) },
+                                        model = ImageRequest.Builder(LocalPlatformContext.current)
+                                            .data(localUser.profilePic)
+                                            .crossfade(true)
+                                            .crossfade(500)
+                                            .build(),
+                                        imageLoader = imageLoader,
+                                        contentDescription = "Application icon",
+                                        contentScale = ContentScale.Crop
+                                        // TODO: TO SET ERROR
+                                    )
                                 }
-                                AsyncImage(
-                                    modifier = Modifier
-                                        .border(
-                                            width = 1.dp,
-                                            color = Color.White,
-                                            shape = CircleShape
-                                        )
-                                        .size(size)
-                                        .clip(CircleShape)
-                                        .clickable { navigator.navigate(SESSION_SCREEN) },
-                                    model = ImageRequest.Builder(LocalPlatformContext.current)
-                                        .data(localUser.profilePic)
-                                        .crossfade(true)
-                                        .crossfade(500)
-                                        .build(),
-                                    imageLoader = imageLoader,
-                                    contentDescription = "Application icon",
-                                    contentScale = ContentScale.Crop
-                                    // TODO: TO SET ERROR
+                            )
+                        },
+                        snackbarHost = {
+                            SnackbarHost(
+                                hostState = viewModel!!.snackbarHostState!!
+                            )
+                        },
+                        floatingActionButton = {
+                            FloatingActionButton(
+                                onClick = { viewModel!!.workOnApplication.value = true }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Add,
+                                    contentDescription = null
                                 )
                             }
-                        )
-                    },
-                    snackbarHost = {
-                        SnackbarHost(
-                            hostState = viewModel!!.snackbarHostState!!
-                        )
-                    },
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            onClick = { viewModel!!.workOnApplication.value = true }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = null
+                            WorkOnApplication(
+                                show = viewModel!!.workOnApplication,
+                                viewModel = viewModel!!
                             )
                         }
-                        WorkOnApplication(
-                            show = viewModel!!.workOnApplication,
-                            viewModel = viewModel!!
-                        )
-                    }
-                ) { paddingValues ->
-                    Column {
-                        FiltersSection(
-                            paddingValues = paddingValues
-                        )
-                        Applications(
-                            viewModel = viewModel!!
-                        )
+                    ) { paddingValues ->
+                        Column {
+                            FiltersSection(
+                                paddingValues = paddingValues
+                            )
+                            Applications(
+                                viewModel = viewModel!!
+                            )
+                        }
                     }
                 }
-            }
-        )
+            )
+        }
     }
 
     @Composable

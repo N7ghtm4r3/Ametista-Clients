@@ -18,11 +18,15 @@ class AmetistaLocalUser : EquinoxLocalUser() {
 
     private val kmpPrefs = KMPrefs(PREF_NAME)
 
-    private var role: Role?
+    private var role: Role? = null
 
     init {
-        role = getRole()
         initLocalUser()
+    }
+
+    override fun initLocalUser() {
+        super.initLocalUser()
+        role = getRole()
     }
 
     @CustomParametersOrder(order = [ROLE_KEY])
@@ -87,6 +91,7 @@ class AmetistaLocalUser : EquinoxLocalUser() {
      */
     override fun clear() {
         kmpPrefs.clearAll()
+        initLocalUser()
     }
 
     fun setRole(

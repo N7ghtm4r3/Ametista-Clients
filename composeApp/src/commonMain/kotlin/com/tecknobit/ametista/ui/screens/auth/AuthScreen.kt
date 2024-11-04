@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.CloseApplicationOnNavBack
 import com.tecknobit.ametista.displayFontFamily
+import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
 import com.tecknobit.equinox.inputs.InputValidator.isHostValid
 import com.tecknobit.equinox.inputs.InputValidator.isNameValid
@@ -90,16 +91,18 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
      */
     @Composable
     override fun ArrangeScreenContent() {
-        CloseApplicationOnNavBack()
-        Scaffold(
-            snackbarHost = { SnackbarHost(hostState = viewModel!!.snackbarHostState!!) },
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
+        AmetistaTheme {
+            CloseApplicationOnNavBack()
+            Scaffold(
+                snackbarHost = { SnackbarHost(hostState = viewModel!!.snackbarHostState!!) },
             ) {
-                HeaderSection()
-                FormSection()
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    HeaderSection()
+                    FormSection()
+                }
             }
         }
     }

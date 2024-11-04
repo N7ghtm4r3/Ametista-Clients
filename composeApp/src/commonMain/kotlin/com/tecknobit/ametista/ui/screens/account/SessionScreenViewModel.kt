@@ -80,8 +80,13 @@ class SessionScreenViewModel : EquinoxProfileViewModel(
     fun logout(
         onLogout: () -> Unit
     ) {
-        // TODO: MAKE THE REAL PROCEDURE THEN
-        onLogout.invoke()
+        clearSession {
+            requester.setUserCredentials(
+                userId = null,
+                userToken = null
+            )
+            onLogout.invoke()
+        }
     }
 
 }

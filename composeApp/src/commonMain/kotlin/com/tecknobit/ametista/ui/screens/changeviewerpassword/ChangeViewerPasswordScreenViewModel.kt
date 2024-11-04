@@ -2,6 +2,7 @@ package com.tecknobit.ametista.ui.screens.changeviewerpassword
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
+import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.requester
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
@@ -27,7 +28,10 @@ class ChangeViewerPasswordScreenViewModel : EquinoxViewModel(
                     password = password.value
                 )
             },
-            onSuccess = { navigator.navigate(APPLICATIONS_SCREEN) },
+            onSuccess = {
+                localUser.password = password.value
+                navigator.navigate(APPLICATIONS_SCREEN)
+            },
             onFailure = { showSnackbarMessage(it) }
         )
     }

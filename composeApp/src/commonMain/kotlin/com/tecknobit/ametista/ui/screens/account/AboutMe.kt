@@ -199,7 +199,7 @@ private fun EmailSection() {
     }
     UserData(
         header = Res.string.email,
-        data = localUser.email,
+        data = userEmail,
         editAction = { changeEmail.value = true }
     )
     EquinoxAlertDialog(

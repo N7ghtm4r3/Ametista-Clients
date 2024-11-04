@@ -44,6 +44,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.CloseApplicationOnNavBack
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isNewPasswordValid
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import org.jetbrains.compose.resources.stringResource
@@ -59,85 +60,87 @@ class ChangeViewerPasswordScreen : AmetistaScreen<ChangeViewerPasswordScreenView
      */
     @Composable
     override fun ArrangeScreenContent() {
-        CloseApplicationOnNavBack()
-        Scaffold(
-            topBar = {
-                LargeTopAppBar(
-                    colors = TopAppBarDefaults.largeTopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        titleContentColor = Color.White
-                    ),
-                    title = {
-                        Text(
-                            text = stringResource(Res.string.change_preset_password)
-                        )
-                    }
-                )
-            },
-            snackbarHost = { SnackbarHost(viewModel!!.snackbarHostState!!) }
-        ) { paddingValues ->
-            Column(
-                modifier = Modifier
-                    .padding(
-                        top = paddingValues.calculateTopPadding()
-                    )
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .width(300.dp),
-                        text = stringResource(Res.string.change_preset_password_info),
-                        textAlign = TextAlign.Justify
-                    )
-                    var hiddenPassword by remember { mutableStateOf(true) }
-                    EquinoxOutlinedTextField(
-                        value = viewModel!!.password,
-                        label = stringResource(Res.string.password),
-                        allowsBlankSpaces = false,
-                        trailingIcon = {
-                            IconButton(
-                                onClick = { hiddenPassword = !hiddenPassword }
-                            ) {
-                                Icon(
-                                    imageVector = if (hiddenPassword)
-                                        Icons.Default.Visibility
-                                    else
-                                        Icons.Default.VisibilityOff,
-                                    contentDescription = null
-                                )
-                            }
-                        },
-                        visualTransformation = if (hiddenPassword)
-                            PasswordVisualTransformation()
-                        else
-                            VisualTransformation.None,
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password
+        AmetistaTheme {
+            CloseApplicationOnNavBack()
+            Scaffold(
+                topBar = {
+                    LargeTopAppBar(
+                        colors = TopAppBarDefaults.largeTopAppBarColors(
+                            containerColor = MaterialTheme.colorScheme.primary,
+                            titleContentColor = Color.White
                         ),
-                        errorText = stringResource(Res.string.wrong_password),
-                        isError = viewModel!!.passwordError,
-                        validator = { isNewPasswordValid(it) }
-                    )
-                    Button(
-                        modifier = Modifier
-                            .height(
-                                60.dp
+                        title = {
+                            Text(
+                                text = stringResource(Res.string.change_preset_password)
                             )
-                            .width(300.dp),
-                        shape = RoundedCornerShape(
-                            size = 10.dp
-                        ),
-                        onClick = { viewModel!!.changeViewerPassword() }
+                        }
+                    )
+                },
+                snackbarHost = { SnackbarHost(viewModel!!.snackbarHostState!!) }
+            ) { paddingValues ->
+                Column(
+                    modifier = Modifier
+                        .padding(
+                            top = paddingValues.calculateTopPadding()
+                        )
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         Text(
-                            text = stringResource(Res.string.confirm)
+                            modifier = Modifier
+                                .width(300.dp),
+                            text = stringResource(Res.string.change_preset_password_info),
+                            textAlign = TextAlign.Justify
                         )
+                        var hiddenPassword by remember { mutableStateOf(true) }
+                        EquinoxOutlinedTextField(
+                            value = viewModel!!.password,
+                            label = stringResource(Res.string.password),
+                            allowsBlankSpaces = false,
+                            trailingIcon = {
+                                IconButton(
+                                    onClick = { hiddenPassword = !hiddenPassword }
+                                ) {
+                                    Icon(
+                                        imageVector = if (hiddenPassword)
+                                            Icons.Default.Visibility
+                                        else
+                                            Icons.Default.VisibilityOff,
+                                        contentDescription = null
+                                    )
+                                }
+                            },
+                            visualTransformation = if (hiddenPassword)
+                                PasswordVisualTransformation()
+                            else
+                                VisualTransformation.None,
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Password
+                            ),
+                            errorText = stringResource(Res.string.wrong_password),
+                            isError = viewModel!!.passwordError,
+                            validator = { isNewPasswordValid(it) }
+                        )
+                        Button(
+                            modifier = Modifier
+                                .height(
+                                    60.dp
+                                )
+                                .width(300.dp),
+                            shape = RoundedCornerShape(
+                                size = 10.dp
+                            ),
+                            onClick = { viewModel!!.changeViewerPassword() }
+                        ) {
+                            Text(
+                                text = stringResource(Res.string.confirm)
+                            )
+                        }
                     }
                 }
             }
