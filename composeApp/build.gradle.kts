@@ -68,6 +68,7 @@ kotlin {
             implementation(libs.chiptextfield.m3)
             implementation(libs.compose.charts)
             implementation(libs.sonner)
+            implementation(libs.json)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

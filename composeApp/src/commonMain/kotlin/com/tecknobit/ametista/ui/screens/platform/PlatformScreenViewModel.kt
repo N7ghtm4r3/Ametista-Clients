@@ -12,13 +12,11 @@ import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
-import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlin.random.Random
 
 class PlatformScreenViewModel(
     applicationId: String,
@@ -87,7 +85,7 @@ class PlatformScreenViewModel(
         // TODO: LOAD FILTERS 
         /*versionSamplesFilters.clear() 
         versionSamplesFilters.add("from request response")*/
-        if (Random.Default.nextBoolean() || true) {
+        /*if (Random.Default.nextBoolean() || true) {
             _performanceData.value = PerformanceData(
                 "gaga",
                 PerformanceData.PerformanceDataItem(
@@ -143,7 +141,7 @@ class PlatformScreenViewModel(
                     }
                 )
             )
-        }
+        }*/
     }
 
     fun getAvailableVersionsForPerformanceItem(

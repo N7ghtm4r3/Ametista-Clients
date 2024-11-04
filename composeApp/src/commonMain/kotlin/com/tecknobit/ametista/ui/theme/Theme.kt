@@ -240,10 +240,10 @@ private val highContrastDarkColorScheme = darkColorScheme(
 
 @Composable
 fun AmetistaTheme(
-    darkTheme: Boolean = if (localUser == null)
+    darkTheme: Boolean = if (localUser.userId == null)
         isSystemInDarkTheme()
     else {
-        when (localUser.theme) {
+        when (localUser.theme!!) {
             Auto -> isSystemInDarkTheme()
             Light -> false
             Dark -> true

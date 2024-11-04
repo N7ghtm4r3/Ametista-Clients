@@ -13,6 +13,7 @@ import coil3.compose.LocalPlatformContext
 import coil3.network.okhttp.OkHttpNetworkFetcherFactory
 import coil3.request.CachePolicy
 import com.tecknobit.ametista.helpers.AmetistaLocalUser
+import com.tecknobit.ametista.helpers.AmetistaRequester
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.AUTH_SCREEN
@@ -78,8 +79,9 @@ private val sslContext = SSLContext.getInstance("TLS")
  */
 lateinit var imageLoader: ImageLoader
 
-// TODO: TO INIT CORRECTLY
 val localUser = AmetistaLocalUser()
+
+lateinit var requester: AmetistaRequester
 
 @Composable
 @Preview
@@ -189,7 +191,11 @@ expect fun CheckForUpdatesAndLaunch()
 fun startSession() {
     MainScope().launch { // TODO: TO REMOVE 
         delay(250)
-        // TODO: MAKE THE REAL INIT OF THE USER AND REQUESTER
+        requester = AmetistaRequester(
+            host = localUser.hostAddress,
+            userId = localUser.userId,
+            userToken = localUser.userToken
+        )
         val route = if (localUser.userId == null)
             AUTH_SCREEN
         else if (localUser.password == DEFAULT_VIEWER_PASSWORD)

@@ -126,7 +126,7 @@ fun AboutMe(
                 text = localUser.completeName
             )
             RoleBadge(
-                role = localUser.getRole()
+                role = localUser.getRole()!!
             )
         }
         HorizontalDivider(

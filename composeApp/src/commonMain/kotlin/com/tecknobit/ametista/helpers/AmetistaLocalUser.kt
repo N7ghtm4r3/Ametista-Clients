@@ -1,11 +1,49 @@
 package com.tecknobit.ametista.helpers
 
-import com.tecknobit.ametistacore.models.AmetistaUser
+import com.tecknobit.ametistacore.models.AmetistaUser.ROLE_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.Role
+import com.tecknobit.ametistacore.models.AmetistaUser.Role.ADMIN
+import com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER
+import com.tecknobit.apimanager.formatters.JsonHelper
+import com.tecknobit.equinox.annotations.CustomParametersOrder
 import com.tecknobit.equinox.environment.records.EquinoxLocalUser
-import com.tecknobit.equinox.environment.records.EquinoxUser
 
 class AmetistaLocalUser : EquinoxLocalUser() {
+
+    private val kmpPrefs = KMPrefs("Ametista")
+
+    private var role: Role?
+
+    init {
+        role = getRole()
+        initLocalUser()
+    }
+
+    @CustomParametersOrder(order = [ROLE_KEY])
+    override fun insertNewUser(
+        hostAddress: String?,
+        name: String?,
+        surname: String?,
+        email: String?,
+        password: String?,
+        language: String?,
+        hResponse: JsonHelper?,
+        vararg custom: Any?
+    ) {
+        setRole(
+            role = (custom[0] as Array<Any>)[0] as Role
+        )
+        super.insertNewUser(
+            hostAddress,
+            name,
+            surname,
+            email,
+            password,
+            language,
+            hResponse,
+            *custom
+        )
+    }
 
     /**
      * Method to store and set a preference
@@ -13,7 +51,14 @@ class AmetistaLocalUser : EquinoxLocalUser() {
      * @param key   :   the key of the preference
      * @param value : the value of the preference
      */
-    override fun setPreference(key: String, value: String) {
+    override fun setPreference(
+        key: String,
+        value: String
+    ) {
+        kmpPrefs.storeString(
+            key = key,
+            value = value
+        )
     }
 
     /**
@@ -22,8 +67,12 @@ class AmetistaLocalUser : EquinoxLocalUser() {
      * @param key : the key of the preference to get
      * @return the preference stored as [String]
      */
-    override fun getPreference(key: String): String {
-        return ""
+    override fun getPreference(
+        key: String
+    ): String? {
+        return kmpPrefs.fetchString(
+            key = key
+        )
     }
 
     /**
@@ -31,51 +80,37 @@ class AmetistaLocalUser : EquinoxLocalUser() {
      * No-any params required
      */
     override fun clear() {
+        kmpPrefs.clearAll()
     }
 
-    // TODO: TO REMOVE
-    override fun getUserId(): String {
-        return "gagaga"
+    fun setRole(
+        role: Role
+    ) {
+        kmpPrefs.storeString(
+            key = ROLE_KEY,
+            value = role.name
+        )
     }
 
-    // TODO: TO REMOVE
-    override fun getCompleteName(): String {
-        return "John Doe"
+    fun getRole(): Role? {
+        val value = kmpPrefs.fetchString(
+            key = ROLE_KEY
+        )
+        return if (value == null)
+            null
+        else {
+            Role.valueOf(
+                value = value
+            )
+        }
     }
 
-    // TODO: TO REMOVE
-    override fun getProfilePic(): String {
-        return "https://d.newsweek.com/en/full/2316078/astronaut-space-laptop.jpg"
-    }
-
-    // TODO: TO REMOVE 
-    override fun getEmail(): String {
-        return "john_doe@email.com"
-    }
-
-    // TODO: TO REMOVE
-    override fun getPassword(): String {
-        return AmetistaUser.DEFAULT_VIEWER_PASSWORD
-    }
-
-    // TODO: TO REMOVE
-    override fun getLanguage(): String {
-        return "en"
-    }
-
-    // TODO: TO REMOVE
-    override fun getTheme(): EquinoxUser.ApplicationTheme {
-        return EquinoxUser.ApplicationTheme.Auto
-    }
-
-    /* TODO: TO USE CORRECTLY */
-    fun getRole(): Role {
-        return Role.VIEWER
-    }
-
-    // TODO: IMPLEMENT THE IS_ADMIN OR IS_VIEWER METHODS CORRECTLY
     fun isAdmin(): Boolean {
-        return true
+        return role == ADMIN
+    }
+
+    fun isViewer(): Boolean {
+        return role == VIEWER
     }
 
 }

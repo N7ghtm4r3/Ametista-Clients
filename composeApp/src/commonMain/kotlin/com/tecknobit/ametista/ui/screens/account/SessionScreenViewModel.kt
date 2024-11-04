@@ -2,8 +2,8 @@ package com.tecknobit.ametista.ui.screens.account
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
-import com.tecknobit.ametista.helpers.AmetistaLocalUser
-import com.tecknobit.ametista.helpers.AmetistaRequester
+import com.tecknobit.ametista.localUser
+import com.tecknobit.ametista.requester
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isEmailValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isNameValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isSurnameValid
@@ -13,8 +13,8 @@ import io.github.ahmad_hamwi.compose.pagination.PaginationState
 
 class SessionScreenViewModel : EquinoxProfileViewModel(
     snackbarHostState = SnackbarHostState(),
-    requester = AmetistaRequester(""), // TODO: USE THE REAL ONE
-    localUser = AmetistaLocalUser()// TODO: USE THE REAL ONE
+    requester = requester,
+    localUser = localUser
 ) {
 
     enum class SessionScreenSection {
