@@ -2,14 +2,19 @@ package com.tecknobit.ametista.ui.screens.account
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
+import androidx.lifecycle.viewModelScope
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.requester
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isEmailValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isNameValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isSurnameValid
-import com.tecknobit.ametistacore.models.AmetistaUser
+import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
+import com.tecknobit.ametistacore.models.AmetistaMember
+import com.tecknobit.equinoxcompose.helpers.session.setHasBeenDisconnectedValue
+import com.tecknobit.equinoxcompose.helpers.session.setServerOfflineValue
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxProfileViewModel
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
+import kotlinx.coroutines.launch
 
 class SessionScreenViewModel : EquinoxProfileViewModel(
     snackbarHostState = SnackbarHostState(),
@@ -39,18 +44,31 @@ class SessionScreenViewModel : EquinoxProfileViewModel(
 
     lateinit var viewerEmailError: MutableState<Boolean>
 
-    val paginationState = PaginationState<Int, AmetistaUser>(
-        initialPageKey = 1,
-        onRequestPage = { loadMembers() }
+    val paginationState = PaginationState(
+        initialPageKey = DEFAULT_PAGE,
+        onRequestPage = { pageNumber ->
+            viewModelScope.launch {
+                requester.sendPaginatedRequest(
+                    request = {
+                        requester.getSessionMembers(
+                            page = pageNumber
+                        )
+                    },
+                    supplier = { jMember -> AmetistaMember(jMember) },
+                    onSuccess = { page ->
+                        setServerOfflineValue(false)
+                        appendPage(
+                            items = page.data,
+                            nextPageKey = page.nextPage,
+                            isLastPage = page.isLastPage
+                        )
+                    },
+                    onFailure = { setHasBeenDisconnectedValue(true) },
+                    onConnectionError = { setServerOfflineValue(true) }
+                )
+            }
+        }
     )
-
-    private fun loadMembers() {
-        paginationState.appendPage(
-            items = listOf(AmetistaUser("don_joe@gmail.com"), AmetistaUser("prova@gmail.com")),
-            nextPageKey = 1,
-            isLastPage = true
-        )
-    }
 
     fun addViewer(
         onSuccess: () -> Unit
@@ -67,14 +85,34 @@ class SessionScreenViewModel : EquinoxProfileViewModel(
             viewerEmailError.value = true
             return
         }
-        // TODO: MAKE THE REQUEST THEN
-        onSuccess.invoke()
+        requester.sendRequest(
+            request = {
+                requester.addViewer(
+                    name = viewerName.value,
+                    surname = viewerSurname.value,
+                    email = viewerEmail.value,
+                )
+            },
+            onSuccess = {
+                paginationState.refresh()
+                onSuccess.invoke()
+            },
+            onFailure = { showSnackbarMessage(it) }
+        )
     }
 
     fun removeMember(
-        member: AmetistaUser
+        member: AmetistaMember
     ) {
-        // TODO MAKE THE REAL REQUEST THEN
+        requester.sendRequest(
+            request = {
+                requester.removeMember(
+                    member = member
+                )
+            },
+            onSuccess = { paginationState.refresh() },
+            onFailure = { showSnackbarMessage(it) }
+        )
     }
 
     fun logout(

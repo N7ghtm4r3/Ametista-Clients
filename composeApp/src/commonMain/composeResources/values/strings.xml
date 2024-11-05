@@ -98,4 +98,5 @@
     <string name="add">Add</string>
     <string name="change_preset_password">Change preset password</string>
     <string name="change_preset_password_info">Change the preset password with one only you know and keep it safe</string>
+    <string name="retrieving_data">Retrieving data</string>
 </resources>

@@ -17,10 +17,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Groups3
 import androidx.compose.material.icons.filled.PersonRemove
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -42,10 +40,13 @@ import coil3.request.crossfade
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.localUser
+import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
+import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
 import com.tecknobit.ametista.ui.components.RoleBadge
 import com.tecknobit.ametista.ui.components.SectionDivider
-import com.tecknobit.ametistacore.models.AmetistaUser
+import com.tecknobit.ametistacore.models.AmetistaMember
 import com.tecknobit.equinoxcompose.components.EmptyListUI
+import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 
 private lateinit var viewModel: SessionScreenViewModel
@@ -55,61 +56,54 @@ private lateinit var viewModel: SessionScreenViewModel
 fun SessionMembers(
     screenViewModel: SessionScreenViewModel
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        val membersIsEmpty = remember { mutableStateOf(false) }
-        viewModel = screenViewModel
-        PaginatedLazyColumn(
-            modifier = Modifier
-                .widthIn(
-                    max = 800.dp
-                ),
-            paginationState = viewModel.paginationState,
-            firstPageProgressIndicator = {
-                CircularProgressIndicator()
-            },
-            newPageProgressIndicator = {
-                LinearProgressIndicator()
-            },
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            contentPadding = PaddingValues(
-                bottom = 16.dp
-            )
-            // TODO: TO SET
-            /*firstPageErrorIndicator = { e -> // from setError
-                ... e.message ...
-                ... onRetry = { paginationState.retryLastFailedRequest() } ...
-            },
-            // TODO: TO SET
-            newPageErrorIndicator = { e -> ... },*/
-            // The rest of LazyColumn params
-        ) {
-            val members = viewModel.paginationState.allItems!!
-            membersIsEmpty.value = members.isEmpty()
-            if (members.isNotEmpty()) {
-                items(
-                    items = members,
-                    key = { issue -> issue.id }
-                ) { member ->
-                    Member(
-                        member = member
+    ManagedContent(
+        viewModel = screenViewModel,
+        content = {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                val membersIsEmpty = remember { mutableStateOf(false) }
+                viewModel = screenViewModel
+                PaginatedLazyColumn(
+                    modifier = Modifier
+                        .widthIn(
+                            max = 800.dp
+                        ),
+                    paginationState = viewModel.paginationState,
+                    firstPageProgressIndicator = { FirstPageProgressIndicator() },
+                    newPageProgressIndicator = { NewPageProgressIndicator() },
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    contentPadding = PaddingValues(
+                        bottom = 16.dp
                     )
+                ) {
+                    val members = viewModel.paginationState.allItems!!
+                    membersIsEmpty.value = members.isEmpty()
+                    if (members.isNotEmpty()) {
+                        items(
+                            items = members,
+                            key = { issue -> issue.id }
+                        ) { member ->
+                            Member(
+                                member = member
+                            )
+                        }
+                    }
                 }
+                NoMembers(
+                    noMembers = membersIsEmpty.value
+                )
             }
         }
-        NoMembers(
-            noMembers = membersIsEmpty.value
-        )
-    }
+    )
 }
 
 @Composable
 @NonRestartableComposable
 private fun Member(
-    member: AmetistaUser
+    member: AmetistaMember
 ) {
     ListItem(
         leadingContent = {
@@ -123,7 +117,7 @@ private fun Member(
                     )
                     .clip(CircleShape),
                 model = ImageRequest.Builder(LocalPlatformContext.current)
-                    .data(member.profilePic)
+                    .data(localUser.hostAddress + "/" + member.profilePic)
                     .crossfade(true)
                     .crossfade(500)
                     .build(),
