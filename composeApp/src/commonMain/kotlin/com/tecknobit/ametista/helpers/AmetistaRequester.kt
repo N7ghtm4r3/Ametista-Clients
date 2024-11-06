@@ -256,6 +256,16 @@ class AmetistaRequester(
         return payload.build()
     }
 
+    fun getApplication(
+        applicationId: String
+    ): JSONObject {
+        return execGet(
+            endpoint = assembleApplicationsEndpoint(
+                subEndpoint = applicationId
+            )
+        )
+    }
+
     fun deleteApplication(
         application: AmetistaApplication
     ): JSONObject {

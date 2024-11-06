@@ -73,6 +73,7 @@ import com.pushpal.jetlime.JetLimeEvent
 import com.pushpal.jetlime.JetLimeEventDefaults
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.PlatformsCustomGrid
+import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.model.ConnectionProcedureStep
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.DeleteApplication
@@ -110,6 +111,7 @@ class ApplicationScreen(
                 enter = fadeIn(),
                 exit = fadeOut()
             ) {
+                val isAdmin = localUser.isAdmin()
                 ManagedContent(
                     viewModel = viewModel!!,
                     content = {
@@ -128,34 +130,39 @@ class ApplicationScreen(
                                         )
                                     },
                                     actions = {
-                                        IconButton(
-                                            onClick = { viewModel!!.workOnApplication.value = true }
-                                        ) {
-                                            Icon(
-                                                imageVector = Icons.Default.Edit,
-                                                contentDescription = null
+                                        if (isAdmin) {
+                                            IconButton(
+                                                onClick = {
+                                                    viewModel!!.workOnApplication.value = true
+                                                }
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Edit,
+                                                    contentDescription = null
+                                                )
+                                            }
+                                            WorkOnApplication(
+                                                show = viewModel!!.workOnApplication,
+                                                viewModel = viewModel!!,
+                                                application = application.value
+                                            )
+                                            val deleteApplication =
+                                                remember { mutableStateOf(false) }
+                                            IconButton(
+                                                onClick = { deleteApplication.value = true }
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Delete,
+                                                    contentDescription = null
+                                                )
+                                            }
+                                            DeleteApplication(
+                                                show = deleteApplication,
+                                                application = application.value!!,
+                                                viewModel = viewModel!!,
+                                                onDelete = { navigator.goBack() }
                                             )
                                         }
-                                        WorkOnApplication(
-                                            show = viewModel!!.workOnApplication,
-                                            viewModel = viewModel!!,
-                                            application = application.value
-                                        )
-                                        val deleteApplication = remember { mutableStateOf(false) }
-                                        IconButton(
-                                            onClick = { deleteApplication.value = true }
-                                        ) {
-                                            Icon(
-                                                imageVector = Icons.Default.Delete,
-                                                contentDescription = null
-                                            )
-                                        }
-                                        DeleteApplication(
-                                            show = deleteApplication,
-                                            application = application.value!!,
-                                            viewModel = viewModel!!,
-                                            onDelete = { navigator.goBack() }
-                                        )
                                     }
                                 )
                             },
@@ -166,7 +173,7 @@ class ApplicationScreen(
                             },
                             floatingActionButton = {
                                 AnimatedVisibility(
-                                    visible = application.value!!.platforms.size != entries.size,
+                                    visible = application.value!!.platforms.size != entries.size && isAdmin,
                                     enter = fadeIn(),
                                     exit = fadeOut()
                                 ) {

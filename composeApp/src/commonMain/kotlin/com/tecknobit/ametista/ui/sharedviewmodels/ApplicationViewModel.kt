@@ -66,7 +66,7 @@ abstract class ApplicationViewModel : EquinoxViewModel(
         return true
     }
 
-    fun deleteApplication(
+    open fun deleteApplication(
         application: AmetistaApplication,
         onDelete: () -> Unit
     ) {
