@@ -6,6 +6,8 @@ import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion
 import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE_SIZE
 import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.PAGE_KEY
 import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
+import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATIONS_KEY
+import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORMS_KEY
 import com.tecknobit.ametistacore.models.AmetistaMember
 import com.tecknobit.ametistacore.models.AmetistaUser.ADMIN_CODE_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.EMAIL_KEY
@@ -17,6 +19,7 @@ import com.tecknobit.ametistacore.models.AmetistaUser.ROLE_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.Role.ADMIN
 import com.tecknobit.ametistacore.models.AmetistaUser.SESSION_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.SURNAME_KEY
+import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.apimanager.apis.APIRequest.Params
 import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
 import com.tecknobit.apimanager.formatters.JsonHelper
@@ -95,12 +98,13 @@ class AmetistaRequester(
         page: Int = DEFAULT_PAGE,
         pageSize: Int = DEFAULT_PAGE_SIZE
     ): JSONObject {
+        val query = createPaginationQuery(
+            page = page,
+            pageSize = pageSize
+        )
         return execGet(
             endpoint = assembleSessionEndpoint(
-                query = createPaginationQuery(
-                    page = page,
-                    pageSize = pageSize
-                )
+                query = query.createQueryString()
             )
         )
     }
@@ -130,17 +134,6 @@ class AmetistaRequester(
         )
     }
 
-    private fun assembleSessionEndpoint(
-        subEndpoint: String = "",
-        query: String = ""
-    ): String {
-        return assembleCustomEndpointPath(
-            customEndpoint = "/$SESSION_KEY/$MEMBERS_KEY",
-            subEndpoint = subEndpoint,
-            query = query
-        )
-    }
-
     fun changeViewerPresetPassword(
         password: String
     ): JSONObject {
@@ -154,15 +147,63 @@ class AmetistaRequester(
         )
     }
 
+    private fun assembleSessionEndpoint(
+        subEndpoint: String = "",
+        query: String = ""
+    ): String {
+        return assembleCustomEndpointPath(
+            customEndpoint = "/$SESSION_KEY/$MEMBERS_KEY",
+            subEndpoint = subEndpoint,
+            query = query
+        )
+    }
+
+    fun getApplications(
+        page: Int = DEFAULT_PAGE,
+        pageSize: Int = DEFAULT_PAGE_SIZE,
+        name: String = "",
+        platforms: List<Platform> = emptyList()
+    ): JSONObject {
+        val platformsFormatter = StringBuilder()
+        if (platforms.isNotEmpty()) {
+            platforms.forEach { platform: Platform ->
+                platformsFormatter.append(platform.name).append(",")
+            }
+            platformsFormatter.deleteAt(platformsFormatter.lastIndex)
+        }
+        val query = createPaginationQuery(
+            page = page,
+            pageSize = pageSize
+        )
+        query.addParam(NAME_KEY, name)
+        query.addParam(PLATFORMS_KEY, platformsFormatter.toString())
+        return execGet(
+            endpoint = assembleApplicationsEndpoint(
+                query = query.createQueryString()
+            )
+        )
+    }
+
+    private fun assembleApplicationsEndpoint(
+        subEndpoint: String = "",
+        query: String = ""
+    ): String {
+        return assembleCustomEndpointPath(
+            customEndpoint = "/$APPLICATIONS_KEY",
+            subEndpoint = subEndpoint,
+            query = query
+        )
+    }
+
     fun <T> sendPaginatedRequest(
-        request: () -> JSONObject,
+        request: AmetistaRequester.() -> JSONObject,
         supplier: (JSONObject) -> T,
         onSuccess: (PaginatedResponse<T>) -> Unit,
         onFailure: (JsonHelper) -> Unit,
         onConnectionError: ((JsonHelper) -> Unit)? = null
     ) {
         sendRequest(
-            request = request,
+            request = { request.invoke(this) },
             onSuccess = { responsePage ->
                 onSuccess.invoke(
                     PaginatedResponse(
@@ -179,11 +220,11 @@ class AmetistaRequester(
     protected fun createPaginationQuery(
         page: Int,
         pageSize: Int,
-    ): String {
+    ): Params {
         val query = Params()
         query.addParam(PAGE_KEY, page.toString())
         query.addParam(PAGE_SIZE_KEY, pageSize.toString())
-        return query.createQueryString()
+        return query
     }
 
 }

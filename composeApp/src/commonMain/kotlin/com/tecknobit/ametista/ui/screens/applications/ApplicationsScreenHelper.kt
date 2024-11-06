@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
+import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.icons.Boxes
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
@@ -69,6 +70,12 @@ expect fun ApplicationItem(
     application: AmetistaApplication,
     viewModel: ApplicationsScreenViewModel
 )
+
+fun getApplicationIconCompleteUrl(
+    application: AmetistaApplication
+): String {
+    return localUser.hostAddress + "/" + application.icon
+}
 
 fun navToApplicationScreen(
     application: AmetistaApplication

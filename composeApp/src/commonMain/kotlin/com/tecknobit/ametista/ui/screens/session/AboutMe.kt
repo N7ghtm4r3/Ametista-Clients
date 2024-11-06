@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.tecknobit.ametista.ui.screens.account
+package com.tecknobit.ametista.ui.screens.session
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.change_email

@@ -39,10 +39,10 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -131,18 +131,20 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                             )
                         },
                         floatingActionButton = {
-                            FloatingActionButton(
-                                onClick = { viewModel!!.workOnApplication.value = true }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Add,
-                                    contentDescription = null
+                            if (localUser.isAdmin()) {
+                                FloatingActionButton(
+                                    onClick = { viewModel!!.workOnApplication.value = true }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Add,
+                                        contentDescription = null
+                                    )
+                                }
+                                WorkOnApplication(
+                                    show = viewModel!!.workOnApplication,
+                                    viewModel = viewModel!!
                                 )
                             }
-                            WorkOnApplication(
-                                show = viewModel!!.workOnApplication,
-                                viewModel = viewModel!!
-                            )
                         }
                     ) { paddingValues ->
                         Column {
@@ -203,6 +205,10 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
         EquinoxOutlinedTextField(
             modifier = modifier,
             value = viewModel!!.filterQuery,
+            onValueChange = { query ->
+                viewModel!!.filterQuery.value = query
+                viewModel!!.paginationState.refresh()
+            },
             placeholder = Res.string.search_placeholder,
             trailingIcon = {
                 Icon(
@@ -315,7 +321,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
     @Composable
     override fun CollectStates() {
         viewModel!!.filterQuery = remember { mutableStateOf("") }
-        viewModel!!.platformsFilter = remember { Platform.entries.toMutableStateList() }
+        viewModel!!.platformsFilter = remember { mutableStateListOf() }
         viewModel!!.workOnApplication = remember { mutableStateOf(false) }
     }
 

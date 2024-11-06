@@ -16,11 +16,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +41,8 @@ import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.ui.components.DeleteApplication
+import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
+import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
 import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
 import com.tecknobit.ametistacore.models.AmetistaApplication
@@ -71,20 +71,8 @@ actual fun Applications(
             columns = GridCells.Adaptive(
                 minSize = 400.dp
             ),
-            firstPageProgressIndicator = {
-                CircularProgressIndicator()
-            },
-            newPageProgressIndicator = {
-                LinearProgressIndicator()
-            }
-            // TODO: TO SET
-            /*firstPageErrorIndicator = { e -> // from setError
-                ... e.message ...
-                ... onRetry = { paginationState.retryLastFailedRequest() } ...
-            },
-            // TODO: TO SET
-            newPageErrorIndicator = { e -> ... },*/
-            // The rest of LazyColumn params
+            firstPageProgressIndicator = { FirstPageProgressIndicator() },
+            newPageProgressIndicator = { NewPageProgressIndicator() }
         ) {
             val applications = viewModel.paginationState.allItems!!
             applicationsIsEmpty.value = applications.isEmpty()
@@ -191,7 +179,11 @@ actual fun ApplicationIcon(
         modifier = modifier
             .fillMaxWidth(),
         model = ImageRequest.Builder(LocalPlatformContext.current)
-            .data(application.icon)
+            .data(
+                data = getApplicationIconCompleteUrl(
+                    application = application
+                )
+            )
             .crossfade(true)
             .crossfade(500)
             .build(),

@@ -2,29 +2,58 @@ package com.tecknobit.ametista.ui.screens.applications
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.viewModelScope
+import com.tecknobit.ametista.requester
 import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
+import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.apimanager.annotations.Wrapper
+import com.tecknobit.equinoxcompose.helpers.session.setHasBeenDisconnectedValue
+import com.tecknobit.equinoxcompose.helpers.session.setServerOfflineValue
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
+import kotlinx.coroutines.launch
 
 class ApplicationsScreenViewModel : ApplicationViewModel() {
 
     val paginationState = PaginationState<Int, AmetistaApplication>(
-        initialPageKey = 1,
-        onRequestPage = { getApplications() }
+        initialPageKey = DEFAULT_PAGE,
+        onRequestPage = { pageNumber ->
+            loadApplications(
+                pageNumber = pageNumber
+            )
+        }
     )
 
     lateinit var filterQuery: MutableState<String>
 
     lateinit var platformsFilter: SnapshotStateList<Platform>
 
-    private fun getApplications() {
-        // TODO: MAKE THE REAL REQUEST (and use appendPageWithUpdates)
-        paginationState.appendPage(
-            items = listOf(AmetistaApplication("Space"), AmetistaApplication("Bello")),
-            nextPageKey = 1
-        )
+    private fun loadApplications(
+        pageNumber: Int
+    ) {
+        viewModelScope.launch {
+            requester.sendPaginatedRequest(
+                request = {
+                    getApplications(
+                        page = pageNumber,
+                        name = filterQuery.value,
+                        platforms = platformsFilter
+                    )
+                },
+                supplier = { jApplication -> AmetistaApplication(jApplication) },
+                onSuccess = { page ->
+                    setServerOfflineValue(false)
+                    paginationState.appendPage(
+                        items = page.data,
+                        nextPageKey = page.nextPage,
+                        isLastPage = page.isLastPage
+                    )
+                },
+                onFailure = { setHasBeenDisconnectedValue(true) },
+                onConnectionError = { setServerOfflineValue(true) }
+            )
+        }
     }
 
     @Wrapper
@@ -45,29 +74,18 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
             platformsFilter.add(platform)
         else
             platformsFilter.remove(platform)
+        paginationState.refresh()
     }
 
     fun clearFilters() {
-        filterQuery.value = ""
-        platformsFilter.clear()
-    }
-
-    // TODO: EXECUTING FILTERS BY BACKEND 
-    /*fun filterApplications(): List<AmetistaApplication> {
-        val applications = arrayListOf<AmetistaApplication>()
-        paginationState.allItems?.let { items ->
-            if(filterQuery.value.isEmpty() && platformsFilter.isEmpty())
-                applications.addAll(items)
-            else
-                applications.addAll(items.filter { application -> application.filtersMatch() })
+        val platformsFilterChanged = platformsFilter.isNotEmpty()
+        if (platformsFilterChanged)
+            platformsFilter.clear()
+        if (filterQuery.value.isNotEmpty() || platformsFilterChanged) {
+            filterQuery.value = ""
+            paginationState.refresh()
         }
-        return applications
     }
-
-    private fun AmetistaApplication.filtersMatch(): Boolean {
-        val match = filterQuery.value.isEmpty() || this.name.lowercase().contains(filterQuery.value.lowercase())
-        return match && this.platforms.containsAll(platformsFilter)
-    }*/
 
     fun workOnApplication(
         onSuccess: () -> Unit,

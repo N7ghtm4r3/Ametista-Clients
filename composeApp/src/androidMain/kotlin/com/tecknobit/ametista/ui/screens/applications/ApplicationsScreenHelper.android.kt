@@ -14,11 +14,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,6 +37,8 @@ import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.ui.components.DeleteApplication
+import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
+import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
 import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
@@ -55,20 +55,8 @@ actual fun Applications(
                 bottom = 16.dp
             ),
         paginationState = viewModel.paginationState,
-        firstPageProgressIndicator = {
-            CircularProgressIndicator()
-        },
-        newPageProgressIndicator = {
-            LinearProgressIndicator()
-        }
-        // TODO: TO SET
-        /*firstPageErrorIndicator = { e -> // from setError
-            ... e.message ...
-            ... onRetry = { paginationState.retryLastFailedRequest() } ...
-        },
-        // TODO: TO SET
-        newPageErrorIndicator = { e -> ... },*/
-        // The rest of LazyColumn params
+        firstPageProgressIndicator = { FirstPageProgressIndicator() },
+        newPageProgressIndicator = { NewPageProgressIndicator() }
     ) {
         val applications = viewModel.paginationState.allItems!!
         applicationsIsEmpty.value = applications.isEmpty()
@@ -198,7 +186,11 @@ actual fun ApplicationIcon(
             )
             .clip(CircleShape),
         model = ImageRequest.Builder(LocalPlatformContext.current)
-            .data(application.icon)
+            .data(
+                data = getApplicationIconCompleteUrl(
+                    application = application
+                )
+            )
             .crossfade(true)
             .crossfade(500)
             .build(),

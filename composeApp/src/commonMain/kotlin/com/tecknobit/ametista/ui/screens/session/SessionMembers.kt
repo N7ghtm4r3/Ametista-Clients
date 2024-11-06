@@ -1,4 +1,4 @@
-package com.tecknobit.ametista.ui.screens.account
+package com.tecknobit.ametista.ui.screens.session
 
 import ametista.composeapp.generated.resources.Res.string
 import ametista.composeapp.generated.resources.no_members

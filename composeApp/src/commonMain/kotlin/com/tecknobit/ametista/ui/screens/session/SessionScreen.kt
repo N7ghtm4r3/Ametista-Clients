@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.tecknobit.ametista.ui.screens.account
+package com.tecknobit.ametista.ui.screens.session
 
 import ametista.composeapp.generated.resources.Res.string
 import ametista.composeapp.generated.resources.about_me
@@ -62,9 +62,9 @@ import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
-import com.tecknobit.ametista.ui.screens.account.SessionScreenViewModel.SessionScreenSection
-import com.tecknobit.ametista.ui.screens.account.SessionScreenViewModel.SessionScreenSection.ABOUT_ME
-import com.tecknobit.ametista.ui.screens.account.SessionScreenViewModel.SessionScreenSection.MEMBERS
+import com.tecknobit.ametista.ui.screens.session.SessionScreenViewModel.SessionScreenSection
+import com.tecknobit.ametista.ui.screens.session.SessionScreenViewModel.SessionScreenSection.ABOUT_ME
+import com.tecknobit.ametista.ui.screens.session.SessionScreenViewModel.SessionScreenSection.MEMBERS
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
 import com.tecknobit.equinox.inputs.InputValidator.isNameValid

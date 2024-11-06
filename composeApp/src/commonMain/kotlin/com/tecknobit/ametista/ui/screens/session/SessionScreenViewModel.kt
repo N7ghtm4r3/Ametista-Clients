@@ -1,4 +1,4 @@
-package com.tecknobit.ametista.ui.screens.account
+package com.tecknobit.ametista.ui.screens.session
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
@@ -44,31 +44,39 @@ class SessionScreenViewModel : EquinoxProfileViewModel(
 
     lateinit var viewerEmailError: MutableState<Boolean>
 
-    val paginationState = PaginationState(
+    val paginationState = PaginationState<Int, AmetistaMember>(
         initialPageKey = DEFAULT_PAGE,
         onRequestPage = { pageNumber ->
-            viewModelScope.launch {
-                requester.sendPaginatedRequest(
-                    request = {
-                        requester.getSessionMembers(
-                            page = pageNumber
-                        )
-                    },
-                    supplier = { jMember -> AmetistaMember(jMember) },
-                    onSuccess = { page ->
-                        setServerOfflineValue(false)
-                        appendPage(
-                            items = page.data,
-                            nextPageKey = page.nextPage,
-                            isLastPage = page.isLastPage
-                        )
-                    },
-                    onFailure = { setHasBeenDisconnectedValue(true) },
-                    onConnectionError = { setServerOfflineValue(true) }
-                )
-            }
+            loadMembers(
+                pageNumber = pageNumber
+            )
         }
     )
+
+    private fun loadMembers(
+        pageNumber: Int
+    ) {
+        viewModelScope.launch {
+            requester.sendPaginatedRequest(
+                request = {
+                    getSessionMembers(
+                        page = pageNumber
+                    )
+                },
+                supplier = { jMember -> AmetistaMember(jMember) },
+                onSuccess = { page ->
+                    setServerOfflineValue(false)
+                    paginationState.appendPage(
+                        items = page.data,
+                        nextPageKey = page.nextPage,
+                        isLastPage = page.isLastPage
+                    )
+                },
+                onFailure = { setHasBeenDisconnectedValue(true) },
+                onConnectionError = { setServerOfflineValue(true) }
+            )
+        }
+    }
 
     fun addViewer(
         onSuccess: () -> Unit

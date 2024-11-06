@@ -21,13 +21,13 @@ import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CHANGE_VIEWER_
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.PLATFORM_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SESSION_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
-import com.tecknobit.ametista.ui.screens.account.SessionScreen
 import com.tecknobit.ametista.ui.screens.application.ApplicationScreen
 import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
 import com.tecknobit.ametista.ui.screens.auth.AuthScreen
 import com.tecknobit.ametista.ui.screens.changeviewerpassword.ChangeViewerPasswordScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
 import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
+import com.tecknobit.ametista.ui.screens.session.SessionScreen
 import com.tecknobit.ametistacore.models.AmetistaApplication.IDENTIFIER_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.ametistacore.models.Platform
