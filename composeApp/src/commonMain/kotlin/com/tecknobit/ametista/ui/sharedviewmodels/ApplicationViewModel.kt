@@ -3,6 +3,7 @@ package com.tecknobit.ametista.ui.sharedviewmodels
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
+import com.tecknobit.ametista.requester
 import com.tecknobit.ametista.ui.theme.platforms.android.errorDark
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppDescriptionValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppNameValid
@@ -59,8 +60,17 @@ abstract class ApplicationViewModel : EquinoxViewModel(
         application: AmetistaApplication,
         onDelete: () -> Unit
     ) {
-        // TODO: MAKE THE REQUEST THEN
-        onDelete.invoke()
+        requester.sendRequest(
+            request = {
+                requester.deleteApplication(
+                    application = application
+                )
+            },
+            onSuccess = {
+                onDelete.invoke()
+            },
+            onFailure = { showSnackbarMessage(it) }
+        )
     }
 
 }

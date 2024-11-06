@@ -40,6 +40,7 @@ import coil3.request.crossfade
 import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.imageLoader
+import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
 import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
@@ -101,6 +102,7 @@ actual fun ApplicationItem(
     application: AmetistaApplication,
     viewModel: ApplicationsScreenViewModel
 ) {
+    val isAdmin = localUser.isAdmin()
     val editApplication = remember { mutableStateOf(false) }
     val expandDescription = remember { mutableStateOf(false) }
     val deleteApplication = remember { mutableStateOf(false) }
@@ -124,8 +126,18 @@ actual fun ApplicationItem(
                         application = application
                     )
                 },
-                onDoubleClick = { expandDescription.value = true },
-                onLongClick = { editApplication.value = true }
+                onDoubleClick = if (isAdmin) {
+                    {
+                        expandDescription.value = true
+                    }
+                } else
+                    null,
+                onLongClick = if (isAdmin) {
+                    {
+                        editApplication.value = true
+                    }
+                } else
+                    null
             ),
         shape = RoundedCornerShape(
             size = 15.dp
@@ -141,32 +153,40 @@ actual fun ApplicationItem(
                 .weight(1f),
             application = application
         )
-        IconButton(
-            modifier = Modifier
-                .align(Alignment.End),
-            onClick = { deleteApplication.value = true }
-        ) {
-            Icon(
-                imageVector = Icons.Default.Delete,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.error
+        if (isAdmin) {
+            HorizontalDivider(
+                color = MaterialTheme.colorScheme.primary
+            )
+            IconButton(
+                modifier = Modifier
+                    .align(Alignment.End),
+                onClick = { deleteApplication.value = true }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.error
+                )
+            }
+            DeleteApplication(
+                show = deleteApplication,
+                viewModel = viewModel,
+                application = application,
+                onDelete = { viewModel.paginationState.refresh() }
             )
         }
-        DeleteApplication(
-            show = deleteApplication,
-            viewModel = viewModel,
-            application = application
-        )
     }
     ExpandApplicationDescription(
         expand = expandDescription,
         application = application
     )
-    WorkOnApplication(
-        show = editApplication,
-        viewModel = viewModel,
-        application = application
-    )
+    if (isAdmin) {
+        WorkOnApplication(
+            show = editApplication,
+            viewModel = viewModel,
+            application = application
+        )
+    }
 }
 
 @Composable
@@ -223,7 +243,4 @@ private fun ApplicationDetails(
             fontSize = 14.sp
         )
     }
-    HorizontalDivider(
-        color = MaterialTheme.colorScheme.primary
-    )
 }

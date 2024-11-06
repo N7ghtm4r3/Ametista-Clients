@@ -6,6 +6,7 @@ import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion
 import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE_SIZE
 import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.PAGE_KEY
 import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
+import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATIONS_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORMS_KEY
 import com.tecknobit.ametistacore.models.AmetistaMember
@@ -180,6 +181,16 @@ class AmetistaRequester(
         return execGet(
             endpoint = assembleApplicationsEndpoint(
                 query = query.createQueryString()
+            )
+        )
+    }
+
+    fun deleteApplication(
+        application: AmetistaApplication
+    ): JSONObject {
+        return execDelete(
+            endpoint = assembleApplicationsEndpoint(
+                subEndpoint = application.id
             )
         )
     }

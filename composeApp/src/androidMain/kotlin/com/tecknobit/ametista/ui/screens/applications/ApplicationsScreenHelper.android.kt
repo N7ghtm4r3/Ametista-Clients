@@ -5,7 +5,9 @@ package com.tecknobit.ametista.ui.screens.applications
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -36,6 +38,7 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.tecknobit.ametista.imageLoader
+import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
 import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
@@ -85,6 +88,7 @@ actual fun ApplicationItem(
     application: AmetistaApplication,
     viewModel: ApplicationsScreenViewModel
 ) {
+    val isAdmin = localUser.isAdmin()
     val editApplication = remember { mutableStateOf(false) }
     val expandDescription = remember { mutableStateOf(false) }
     val deleteApplication = remember { mutableStateOf(false) }
@@ -98,8 +102,18 @@ actual fun ApplicationItem(
                         application = application
                     )
                 },
-                onDoubleClick = { expandDescription.value = true },
-                onLongClick = { editApplication.value = true }
+                onDoubleClick = if (isAdmin) {
+                    {
+                        expandDescription.value = true
+                    }
+                } else
+                    null,
+                onLongClick = if (isAdmin) {
+                    {
+                        editApplication.value = true
+                    }
+                } else
+                    null
             ),
         leadingContent = {
             ApplicationIcon(
@@ -120,37 +134,52 @@ actual fun ApplicationItem(
             )
         },
         trailingContent = {
-            Column(
-                modifier = Modifier
-                    .height(110.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                IconButton(
-                    onClick = { deleteApplication.value = true }
+            if (isAdmin) {
+                Column(
+                    modifier = Modifier
+                        .height(110.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(
-                        modifier = Modifier
-                            .weight(1f),
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.error
-                    )
-                }
-                DeleteApplication(
-                    show = deleteApplication,
-                    application = application,
-                    viewModel = viewModel
-                )
-                IconButton(
-                    onClick = {
-                        navToApplicationScreen(
-                            application = application
+                    IconButton(
+                        onClick = { deleteApplication.value = true }
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .weight(1f),
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.error
                         )
                     }
+                    DeleteApplication(
+                        show = deleteApplication,
+                        application = application,
+                        viewModel = viewModel,
+                        onDelete = { viewModel.paginationState.refresh() }
+                    )
+                    IconButton(
+                        onClick = {
+                            navToApplicationScreen(
+                                application = application
+                            )
+                        }
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .weight(1f),
+                            imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                            contentDescription = null
+                        )
+                    }
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
                     Icon(
-                        modifier = Modifier
-                            .weight(1f),
                         imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                         contentDescription = null
                     )
@@ -163,11 +192,13 @@ actual fun ApplicationItem(
         expand = expandDescription,
         application = application
     )
-    WorkOnApplication(
-        show = editApplication,
-        viewModel = viewModel,
-        application = application
-    )
+    if (isAdmin) {
+        WorkOnApplication(
+            show = editApplication,
+            viewModel = viewModel,
+            application = application
+        )
+    }
 }
 
 @NonRestartableComposable

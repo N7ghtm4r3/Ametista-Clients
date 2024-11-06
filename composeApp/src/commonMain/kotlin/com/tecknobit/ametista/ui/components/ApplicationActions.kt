@@ -340,7 +340,7 @@ fun DeleteApplication(
     show: MutableState<Boolean>,
     application: AmetistaApplication,
     viewModel: ApplicationViewModel,
-    onDelete: (() -> Unit)? = null
+    onDelete: () -> Unit
 ) {
     EquinoxAlertDialog(
         modifier = Modifier
@@ -359,7 +359,7 @@ fun DeleteApplication(
                 application = application,
                 onDelete = {
                     show.value = false
-                    onDelete?.invoke()
+                    onDelete.invoke()
                 }
             )
         }
