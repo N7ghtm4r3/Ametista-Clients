@@ -186,7 +186,7 @@ private fun validateSelfSignedCertificate(): Array<TrustManager> {
 expect fun CheckForUpdatesAndLaunch()
 
 fun startSession() {
-    MainScope().launch { // TODO: TO REMOVE 
+    MainScope().launch { // TODO: TO REMOVE AND SET THE USER LANGUAGE CORRECLTY
         delay(250)
         requester = AmetistaRequester(
             host = localUser.hostAddress,
