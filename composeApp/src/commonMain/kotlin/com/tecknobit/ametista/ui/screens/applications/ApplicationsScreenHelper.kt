@@ -32,7 +32,10 @@ import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.icons.Boxes
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
 import com.tecknobit.ametistacore.models.AmetistaApplication
+import com.tecknobit.apimanager.annotations.Wrapper
 import com.tecknobit.equinoxcompose.components.EmptyListUI
+
+private const val ICONS_REGEX = "icons"
 
 @Composable
 @NonRestartableComposable
@@ -71,10 +74,21 @@ expect fun ApplicationItem(
     viewModel: ApplicationsScreenViewModel
 )
 
+@Wrapper
 fun getApplicationIconCompleteUrl(
     application: AmetistaApplication
 ): String {
-    return localUser.hostAddress + "/" + application.icon
+    return getApplicationIconCompleteUrl(
+        url = application.icon
+    )
+}
+
+fun getApplicationIconCompleteUrl(
+    url: String
+): String {
+    if (!url.startsWith(ICONS_REGEX))
+        return url
+    return localUser.hostAddress + "/" + url
 }
 
 fun navToApplicationScreen(

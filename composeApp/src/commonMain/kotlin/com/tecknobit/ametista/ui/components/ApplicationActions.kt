@@ -57,6 +57,7 @@ import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.getImagePath
 import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreenViewModel
+import com.tecknobit.ametista.ui.screens.applications.getApplicationIconCompleteUrl
 import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppDescriptionValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppNameValid
@@ -253,7 +254,11 @@ private fun AppIconPicker(
                 )
                 .clip(CircleShape),
             model = ImageRequest.Builder(LocalPlatformContext.current)
-                .data(viewModel.appIcon.value)
+                .data(
+                    data = getApplicationIconCompleteUrl(
+                        url = viewModel.appIcon.value
+                    )
+                )
                 .crossfade(true)
                 .crossfade(500)
                 .build(),

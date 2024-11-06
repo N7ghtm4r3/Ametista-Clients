@@ -97,7 +97,7 @@ fun App() {
                             validateSelfSignedCertificate()[0] as X509TrustManager
                         )
                         .hostnameVerifier { _: String?, _: SSLSession? -> true }
-                        .connectTimeout(5, TimeUnit.SECONDS)
+                        .connectTimeout(2, TimeUnit.SECONDS)
                         .build()
                 }
             )

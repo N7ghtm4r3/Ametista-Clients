@@ -93,12 +93,18 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
     ) {
         if (application == null) {
             addApplication(
-                onSuccess = onSuccess
+                onSuccess = {
+                    onSuccess.invoke()
+                    paginationState.refresh()
+                }
             )
         } else {
             editApplication(
                 application = application,
-                onSuccess = onSuccess
+                onSuccess = {
+                    onSuccess.invoke()
+                    paginationState.refresh()
+                }
             )
         }
     }
@@ -108,8 +114,17 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
     ) {
         if (!validForm())
             return
-        // TODO: MAKE THE REQUEST THEN
-        onSuccess.invoke()
+        requester.sendRequest(
+            request = {
+                requester.addApplication(
+                    icon = appIcon.value,
+                    name = appName.value,
+                    description = appDescription.value
+                )
+            },
+            onSuccess = { onSuccess.invoke() },
+            onFailure = { showSnackbarMessage(it) }
+        )
     }
 
 }

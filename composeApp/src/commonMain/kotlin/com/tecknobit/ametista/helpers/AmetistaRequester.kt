@@ -8,6 +8,8 @@ import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion
 import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATIONS_KEY
+import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_ICON_KEY
+import com.tecknobit.ametistacore.models.AmetistaApplication.DESCRIPTION_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORMS_KEY
 import com.tecknobit.ametistacore.models.AmetistaMember
 import com.tecknobit.ametistacore.models.AmetistaUser.ADMIN_CODE_KEY
@@ -27,7 +29,11 @@ import com.tecknobit.apimanager.formatters.JsonHelper
 import com.tecknobit.equinox.environment.helpers.EquinoxBaseEndpointsSet.SIGN_IN_ENDPOINT
 import com.tecknobit.equinox.environment.helpers.EquinoxBaseEndpointsSet.SIGN_UP_ENDPOINT
 import com.tecknobit.equinox.environment.helpers.EquinoxRequester
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
+import java.io.File
 
 class AmetistaRequester(
     host: String,
@@ -183,6 +189,71 @@ class AmetistaRequester(
                 query = query.createQueryString()
             )
         )
+    }
+
+    fun addApplication(
+        icon: String,
+        name: String,
+        description: String
+    ): JSONObject {
+        val body = createApplicationPayload(
+            icon = icon,
+            name = name,
+            description = description
+        )
+        return execMultipartRequest(
+            endpoint = assembleApplicationsEndpoint(),
+            body = body
+        )
+    }
+
+    fun editApplication(
+        application: AmetistaApplication,
+        icon: String,
+        name: String,
+        description: String
+    ): JSONObject {
+        println(icon)
+        println(application.icon)
+        val body = createApplicationPayload(
+            icon = if (icon != application.icon)
+                icon
+            else
+                null,
+            name = name,
+            description = description
+        )
+        return execMultipartRequest(
+            endpoint = assembleApplicationsEndpoint(
+                subEndpoint = application.id
+            ),
+            body = body
+        )
+    }
+
+    private fun createApplicationPayload(
+        icon: String?,
+        name: String,
+        description: String
+    ): MultipartBody {
+        val payload = MultipartBody.Builder()
+        if (icon != null) {
+            val iconFile = File(icon)
+            payload.addFormDataPart(
+                name = APPLICATION_ICON_KEY,
+                filename = iconFile.name,
+                body = iconFile.readBytes().toRequestBody("*/*".toMediaType())
+            )
+        }
+        payload.addFormDataPart(
+            name = NAME_KEY,
+            value = name
+        )
+        payload.addFormDataPart(
+            name = DESCRIPTION_KEY,
+            value = description
+        )
+        return payload.build()
     }
 
     fun deleteApplication(

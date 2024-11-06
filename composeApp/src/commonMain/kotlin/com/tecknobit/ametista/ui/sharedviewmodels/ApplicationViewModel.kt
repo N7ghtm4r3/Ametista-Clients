@@ -36,8 +36,18 @@ abstract class ApplicationViewModel : EquinoxViewModel(
     ) {
         if (!validForm())
             return
-        // TODO: MAKE THE REQUEST THEN
-        onSuccess.invoke()
+        requester.sendRequest(
+            request = {
+                requester.editApplication(
+                    application = application,
+                    icon = appIcon.value,
+                    name = appName.value,
+                    description = appDescription.value
+                )
+            },
+            onSuccess = { onSuccess.invoke() },
+            onFailure = { showSnackbarMessage(it) }
+        )
     }
 
     protected fun validForm(): Boolean {
@@ -66,9 +76,7 @@ abstract class ApplicationViewModel : EquinoxViewModel(
                     application = application
                 )
             },
-            onSuccess = {
-                onDelete.invoke()
-            },
+            onSuccess = { onDelete.invoke() },
             onFailure = { showSnackbarMessage(it) }
         )
     }

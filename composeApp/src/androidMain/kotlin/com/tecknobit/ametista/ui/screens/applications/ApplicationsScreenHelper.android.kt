@@ -102,12 +102,7 @@ actual fun ApplicationItem(
                         application = application
                     )
                 },
-                onDoubleClick = if (isAdmin) {
-                    {
-                        expandDescription.value = true
-                    }
-                } else
-                    null,
+                onDoubleClick = { expandDescription.value = true },
                 onLongClick = if (isAdmin) {
                     {
                         editApplication.value = true
