@@ -318,7 +318,7 @@ private fun VersionsSelector(
     )
     LazyVerticalGrid(
         modifier = modifier,
-        columns = GridCells.Fixed(2)
+        columns = GridCells.Fixed(MAX_VERSION_SAMPLES)
     ) {
         items(
             items = viewModel.getAvailableVersionsSamples(
@@ -327,7 +327,8 @@ private fun VersionsSelector(
         ) { version ->
             var checked by remember { mutableStateOf(currentVersionFilters.contains(version)) }
             Row(
-                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Checkbox(
