@@ -17,7 +17,6 @@ import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
 import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic
 import com.tecknobit.ametistacore.models.analytics.issues.WebIssueAnalytic
-import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
 import com.tecknobit.equinox.Requester.Companion.responseData
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
@@ -26,7 +25,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.json.JSONArray
-import kotlin.random.Random
 
 class PlatformScreenViewModel(
     val applicationId: String,
@@ -115,125 +113,18 @@ class PlatformScreenViewModel(
     }
 
     fun getPerformanceAnalytics() {
-        // TODO: MAKE THE REAL REQUEST THEN
-        // TODO: LOAD FILTERS
-        _performanceData.value = PerformanceData(
-            PerformanceData.PerformanceDataItem(
-                mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
-                    put(
-                        "1.0.0",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    put(
-                        "1.0.1",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    put(
-                        "1.0.2",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                },
-                PerformanceAnalytic.PerformanceAnalyticType.LAUNCH_TIME
-            ),
-            PerformanceData.PerformanceDataItem(
-                mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
-                    put(
-                        "1.0.0",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    put(
-                        "1.0.1",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    put(
-                        "1.0.2",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                },
-                PerformanceAnalytic.PerformanceAnalyticType.LAUNCH_TIME
-            ),
-            PerformanceData.PerformanceDataItem(
-                mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
-                    put(
-                        "1.0.0",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    put(
-                        "1.0.1",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    put(
-                        "1.0.2",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                },
-                PerformanceAnalytic.PerformanceAnalyticType.LAUNCH_TIME
-            ),
-            PerformanceData.PerformanceDataItem(
-                mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
-                    put(
-                        "1.0.0",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    put(
-                        "1.0.1",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    put(
-                        "1.0.2",
-                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                },
-                PerformanceAnalytic.PerformanceAnalyticType.LAUNCH_TIME
-            )
-        )
-        /*versionSamplesFilters.clear() 
-        versionSamplesFilters.add("from request response")*/
-        /*if (Random.Default.nextBoolean() || true) {
-            _performanceData.value = PerformanceData(
-                "gaga",
-                PerformanceData.PerformanceDataItem(
-                    mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
-                        put(
-                            "1.0.0",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                        put(
-                            "1.0.1",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                        put(
-                            "1.0.2",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    }
-                ),
-                PerformanceData.PerformanceDataItem(
-                    mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
-                        put(
-                            "1.0.0",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                        put(
-                            "1.0.1",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                        put(
-                            "1.0.2",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    }
-                ),
-                PerformanceData.PerformanceDataItem(
-                    mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
-                        put(
-                            "1.0.0",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                        put(
-                            "1.0.1",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                        put(
-                            "1.0.2",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    }
-                ),
-                PerformanceData.PerformanceDataItem(
-                    mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
-                        put(
-                            "1.0.0",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                        put(
-                            "1.0.1",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                        put(
-                            "1.0.2",
-                            MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
-                    }
+        requester.sendRequest(
+            request = {
+                requester.getPerformanceData(
+                    applicationId = applicationId,
+                    platform = platform
                 )
-            )
-        }*/
+            },
+            onSuccess = { response ->
+                _performanceData.value = PerformanceData(response.responseData())
+            },
+            onFailure = { showSnackbarMessage(it) }
+        )
     }
 
     fun getAvailableVersionsSamples(
