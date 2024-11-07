@@ -25,12 +25,10 @@ import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.FilterListOff
 import androidx.compose.material.icons.filled.Speed
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SegmentedButton
@@ -48,6 +46,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -57,11 +56,13 @@ import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.getCurrentWidthSizeClass
 import com.tecknobit.ametista.helpers.Theme
 import com.tecknobit.ametista.ui.components.FilterDialog
+import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
 import com.tecknobit.ametista.ui.components.Issue
 import com.tecknobit.ametista.ui.components.IssuesNumber
 import com.tecknobit.ametista.ui.components.IssuesPerSessionsNumber
 import com.tecknobit.ametista.ui.components.LaunchTime
 import com.tecknobit.ametista.ui.components.NetworkRequests
+import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
@@ -106,7 +107,8 @@ class PlatformScreen(
                         topBar = {
                             LargeTopAppBar(
                                 colors = TopAppBarDefaults.largeTopAppBarColors(
-                                    containerColor = MaterialTheme.colorScheme.primary
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    titleContentColor = Color.White
                                 ),
                                 navigationIcon = { NavButton() },
                                 title = {
@@ -258,24 +260,12 @@ class PlatformScreen(
             modifier = Modifier
                 .fillMaxSize(),
             paginationState = viewModel!!.paginationState,
-            firstPageProgressIndicator = {
-                CircularProgressIndicator()
-            },
-            newPageProgressIndicator = {
-                LinearProgressIndicator()
-            },
+            firstPageProgressIndicator = { FirstPageProgressIndicator() },
+            newPageProgressIndicator = { NewPageProgressIndicator() },
             verticalArrangement = Arrangement.spacedBy(10.dp),
             contentPadding = PaddingValues(
                 bottom = 16.dp
             )
-            // TODO: TO SET
-            /*firstPageErrorIndicator = { e -> // from setError
-                ... e.message ...
-                ... onRetry = { paginationState.retryLastFailedRequest() } ...
-            },
-            // TODO: TO SET
-            newPageErrorIndicator = { e -> ... },*/
-            // The rest of LazyColumn params
         ) {
             val issues = viewModel!!.paginationState.allItems!!
             issuesIsEmpty.value = issues.isEmpty()

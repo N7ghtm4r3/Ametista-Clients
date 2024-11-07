@@ -10,6 +10,7 @@ import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATIONS_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_ICON_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.DESCRIPTION_KEY
+import com.tecknobit.ametistacore.models.AmetistaApplication.FILTERS_KEY
 import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORMS_KEY
 import com.tecknobit.ametistacore.models.AmetistaMember
 import com.tecknobit.ametistacore.models.AmetistaUser.ADMIN_CODE_KEY
@@ -23,6 +24,8 @@ import com.tecknobit.ametistacore.models.AmetistaUser.Role.ADMIN
 import com.tecknobit.ametistacore.models.AmetistaUser.SESSION_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.SURNAME_KEY
 import com.tecknobit.ametistacore.models.Platform
+import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.PLATFORM_KEY
+import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic.ISSUES_KEY
 import com.tecknobit.apimanager.apis.APIRequest.Params
 import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
 import com.tecknobit.apimanager.formatters.JsonHelper
@@ -213,8 +216,6 @@ class AmetistaRequester(
         name: String,
         description: String
     ): JSONObject {
-        println(icon)
-        println(application.icon)
         val body = createApplicationPayload(
             icon = if (icon != application.icon)
                 icon
@@ -262,6 +263,34 @@ class AmetistaRequester(
         return execGet(
             endpoint = assembleApplicationsEndpoint(
                 subEndpoint = applicationId
+            )
+        )
+    }
+
+    fun getIssues(
+        applicationId: String,
+        platform: Platform,
+        page: Int = DEFAULT_PAGE,
+        pageSize: Int = DEFAULT_PAGE_SIZE,
+        filters: HashSet<String> = HashSet()
+    ): JSONObject {
+        val filtersFormatter = StringBuilder()
+        if (filters.isNotEmpty()) {
+            filters.forEach { filter: String ->
+                filtersFormatter.append(filter).append(",")
+            }
+            filtersFormatter.deleteAt(filtersFormatter.lastIndex)
+        }
+        val query = createPaginationQuery(
+            page = page,
+            pageSize = pageSize
+        )
+        query.addParam(PLATFORM_KEY, platform.name)
+        query.addParam(FILTERS_KEY, filtersFormatter.toString())
+        return execGet(
+            endpoint = assembleApplicationsEndpoint(
+                subEndpoint = "$applicationId/$ISSUES_KEY",
+                query = query.createQueryString()
             )
         )
     }

@@ -6,21 +6,27 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.lifecycle.viewModelScope
 import com.dokar.chiptextfield.Chip
 import com.dokar.chiptextfield.ChipTextFieldState
-import com.tecknobit.ametistacore.models.AmetistaApplication
+import com.tecknobit.ametista.requester
+import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
 import com.tecknobit.ametistacore.models.Platform
+import com.tecknobit.ametistacore.models.Platform.WEB
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
+import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic
+import com.tecknobit.ametistacore.models.analytics.issues.WebIssueAnalytic
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class PlatformScreenViewModel(
-    applicationId: String,
-    platform: Platform
+    val applicationId: String,
+    val platform: Platform
 ) : EquinoxViewModel(
     snackbarHostState = SnackbarHostState()
 ) {
@@ -32,8 +38,12 @@ class PlatformScreenViewModel(
     }
 
     val paginationState = PaginationState<Int, AmetistaAnalytic>(
-        initialPageKey = 1,
-        onRequestPage = { loadIssues() }
+        initialPageKey = DEFAULT_PAGE,
+        onRequestPage = { pageNumber ->
+            loadIssues(
+                pageNumber = pageNumber
+            )
+        }
     )
 
     lateinit var analyticType: MutableState<AnalyticType>
@@ -47,8 +57,6 @@ class PlatformScreenViewModel(
     )
     val filtersSet: StateFlow<Boolean> = _filtersSet
 
-    val versionSamplesFilters = SnapshotStateList<String>()
-
     private val _performanceData = MutableStateFlow<PerformanceData?>(
         value = null
     )
@@ -56,15 +64,35 @@ class PlatformScreenViewModel(
 
     lateinit var newVersionFilters: MutableList<String>
 
-    private fun loadIssues() {
-        // TODO: MAKE THE REAL REQUEST THEN ALSO WITH _filters
-        val items = AmetistaApplication("Space").issues
-        // TODO: TO LOAD NEXT PAGE
-        paginationState.appendPage(
-            items = items,
-            nextPageKey = 1,
-            isLastPage = true
-        )
+    private fun loadIssues(
+        pageNumber: Int
+    ) {
+        viewModelScope.launch {
+            requester.sendPaginatedRequest(
+                request = {
+                    getIssues(
+                        applicationId = applicationId,
+                        platform = platform,
+                        page = pageNumber,
+                        filters = _filters
+                    )
+                },
+                supplier = { jIssue ->
+                    if (platform == WEB)
+                        WebIssueAnalytic(jIssue)
+                    else
+                        IssueAnalytic(jIssue)
+                },
+                onSuccess = { page ->
+                    paginationState.appendPage(
+                        items = page.data,
+                        nextPageKey = page.nextPage,
+                        isLastPage = page.isLastPage
+                    )
+                },
+                onFailure = { showSnackbarMessage(it) }
+            )
+        }
     }
 
     fun filterIssues(
@@ -72,12 +100,14 @@ class PlatformScreenViewModel(
     ) {
         _filters = filtersState.chips.map { chip -> chip.text }.toHashSet()
         _filtersSet.value = _filters.isNotEmpty()
+        paginationState.refresh()
         onSuccess.invoke()
     }
 
     fun clearFilters() {
         _filters.clear()
         _filtersSet.value = false
+        paginationState.refresh()
     }
 
     fun getPerformanceAnalytics() {
