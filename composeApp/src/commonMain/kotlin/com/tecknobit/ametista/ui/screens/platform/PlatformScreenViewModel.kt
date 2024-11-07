@@ -4,8 +4,8 @@ import androidx.compose.material3.DateRangePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
 import com.dokar.chiptextfield.Chip
 import com.dokar.chiptextfield.ChipTextFieldState
@@ -17,12 +17,16 @@ import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
 import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic
 import com.tecknobit.ametistacore.models.analytics.issues.WebIssueAnalytic
+import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
+import com.tecknobit.equinox.Requester.Companion.responseData
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.json.JSONArray
+import kotlin.random.Random
 
 class PlatformScreenViewModel(
     val applicationId: String,
@@ -112,7 +116,65 @@ class PlatformScreenViewModel(
 
     fun getPerformanceAnalytics() {
         // TODO: MAKE THE REAL REQUEST THEN
-        // TODO: LOAD FILTERS 
+        // TODO: LOAD FILTERS
+        _performanceData.value = PerformanceData(
+            PerformanceData.PerformanceDataItem(
+                mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
+                    put(
+                        "1.0.0",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    put(
+                        "1.0.1",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    put(
+                        "1.0.2",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                },
+                PerformanceAnalytic.PerformanceAnalyticType.LAUNCH_TIME
+            ),
+            PerformanceData.PerformanceDataItem(
+                mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
+                    put(
+                        "1.0.0",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    put(
+                        "1.0.1",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    put(
+                        "1.0.2",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                },
+                PerformanceAnalytic.PerformanceAnalyticType.LAUNCH_TIME
+            ),
+            PerformanceData.PerformanceDataItem(
+                mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
+                    put(
+                        "1.0.0",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    put(
+                        "1.0.1",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    put(
+                        "1.0.2",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                },
+                PerformanceAnalytic.PerformanceAnalyticType.LAUNCH_TIME
+            ),
+            PerformanceData.PerformanceDataItem(
+                mutableMapOf<String?, MutableList<PerformanceAnalytic>?>().apply {
+                    put(
+                        "1.0.0",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    put(
+                        "1.0.1",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                    put(
+                        "1.0.2",
+                        MutableList(10) { PerformanceAnalytic(Random.Default.nextDouble()) })
+                },
+                PerformanceAnalytic.PerformanceAnalyticType.LAUNCH_TIME
+            )
+        )
         /*versionSamplesFilters.clear() 
         versionSamplesFilters.add("from request response")*/
         /*if (Random.Default.nextBoolean() || true) {
@@ -174,11 +236,26 @@ class PlatformScreenViewModel(
         }*/
     }
 
-    fun getAvailableVersionsForPerformanceItem(
+    fun getAvailableVersionsSamples(
         data: PerformanceData.PerformanceDataItem
     ): SnapshotStateList<String> {
-        // TODO: MAKE THE REQUEST THEN
-        return mutableStateListOf("1.0.0", "1.0.1", "1.0.2", "1.0.3", "1.0.4", "1.0.5", "1.1.0")
+        val sampleVersions = HashSet<String>()
+        requester.sendRequest(
+            request = {
+                requester.getVersionSamples(
+                    applicationId = applicationId,
+                    platform = platform,
+                    analyticType = data.analyticType
+                )
+            },
+            onSuccess = { response ->
+                val jSampleVersions = response.responseData<JSONArray>()
+                for (j in 0 until jSampleVersions.length())
+                    sampleVersions.add(jSampleVersions.getString(j))
+            },
+            onFailure = { sampleVersions.addAll(data.sampleVersions()) }
+        )
+        return sampleVersions.toMutableStateList()
     }
 
     @OptIn(ExperimentalMaterial3Api::class)

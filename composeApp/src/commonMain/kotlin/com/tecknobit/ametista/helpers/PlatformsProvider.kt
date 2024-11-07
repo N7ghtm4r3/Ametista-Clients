@@ -69,7 +69,8 @@ fun PlatformsCustomGrid(
                 bottom = 16.dp
             )
             .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         PlatformsRow(
             viewModel = viewModel,

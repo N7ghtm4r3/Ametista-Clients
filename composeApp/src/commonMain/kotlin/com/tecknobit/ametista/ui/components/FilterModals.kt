@@ -318,10 +318,10 @@ private fun VersionsSelector(
     )
     LazyVerticalGrid(
         modifier = modifier,
-        columns = GridCells.Fixed(3)
+        columns = GridCells.Fixed(2)
     ) {
         items(
-            items = viewModel.getAvailableVersionsForPerformanceItem(
+            items = viewModel.getAvailableVersionsSamples(
                 data = data
             )
         ) { version ->
