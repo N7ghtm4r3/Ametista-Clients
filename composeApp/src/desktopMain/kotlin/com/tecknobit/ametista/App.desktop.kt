@@ -56,3 +56,8 @@ actual fun getImagePath(
 ): String? {
     return imagePic?.path
 }
+
+actual fun setUserLanguage() {
+    val tag = localUser.language
+    Locale.setDefault(Locale.forLanguageTag(tag))
+}

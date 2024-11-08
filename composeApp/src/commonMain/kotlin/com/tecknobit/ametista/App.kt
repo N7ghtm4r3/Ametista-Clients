@@ -194,8 +194,11 @@ fun startSession() {
         CHANGE_VIEWER_PASSWORD_SCREEN
     else
         APPLICATIONS_SCREEN
+    setUserLanguage()
     navigator.navigate(route)
 }
+
+expect fun setUserLanguage()
 
 /**
  * Function to manage correctly the back navigation from the current screen

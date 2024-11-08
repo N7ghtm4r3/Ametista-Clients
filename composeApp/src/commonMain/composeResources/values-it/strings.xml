@@ -79,7 +79,7 @@
     <string name="sign_in">Accedi</string>
     <string name="are_you_new_to_ametista">Sei nuov su Ametista?</string>
     <string name="sign_up">Iscriviti</string>
-    <string name="session">Session</string>
+    <string name="session">Sessione</string>
     <string name="about_me">About</string>
     <string name="session_members">Membri</string>
     <string name="no_members">Nessun membro</string>
@@ -91,7 +91,7 @@
     <string name="new_password">Nuova password</string>
     <string name="logout">Logout</string>
     <string name="logout_message">Confermando, si viene disconnessi da questo dispositivo.</string>
-    <string name="delete_account">Cancellare l'account</string>
+    <string name="delete_account">Elimina account</string>
     <string name="delete_message">Confermando, il tuo account sarà definitivamente cancellato e i tuoi dati non saranno più recuperabili.</string>
     <string name="add_viewer">Aggiungi Viewer</string>
     <string name="add_viewer_info">Questa operazione consente di creare un nuovo Viewer che può accedere a questa sessione. È necessario condividere le credenziali con questo/a utente che, al primo accesso, dovrà cambiare la password preimpostata (\"changeme\").</string>

@@ -22,6 +22,7 @@ import moe.tlaster.precompose.navigation.BackHandler
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import java.util.Locale
 import kotlin.math.min
 
 @Composable
@@ -118,4 +119,14 @@ private fun getFilePath(
         returnCursor.close()
     }
     return file.path
+}
+
+actual fun setUserLanguage() {
+    val tag = localUser.language
+    val locale = Locale(tag)
+    Locale.setDefault(locale)
+    val context = AppContext.get()
+    val config = context.resources.configuration
+    config.setLocale(locale)
+    context.createConfigurationContext(config)
 }
