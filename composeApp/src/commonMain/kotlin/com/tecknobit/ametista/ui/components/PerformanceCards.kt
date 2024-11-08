@@ -218,6 +218,20 @@ private fun PerformanceCard(
             data = data
         )
     } else {
+        val lineColors = listOf(
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.secondary,
+            MaterialTheme.colorScheme.tertiary
+        )
+        val chartData = remember(
+            key1 = data
+        ) {
+            loadChartData(
+                lineColors = lineColors,
+                data = data,
+                popupProperties = popupProperties
+            )
+        }
         Card(
             modifier = Modifier
                 .height(cardHeight)
@@ -251,10 +265,7 @@ private fun PerformanceCard(
                 labelHelperProperties = LabelHelperProperties(
                     enabled = false
                 ),
-                data = loadChartData(
-                    data = data,
-                    popupProperties = popupProperties
-                )
+                data = chartData
             )
         }
     }
@@ -466,6 +477,17 @@ private fun LegendItem(
 }
 
 @Composable
+private fun getLineColor(
+    index: Int
+): Color {
+    return when (index) {
+        0 -> MaterialTheme.colorScheme.primary
+        1 -> MaterialTheme.colorScheme.secondary
+        else -> MaterialTheme.colorScheme.tertiary
+    }
+}
+
+@Composable
 @NonRestartableComposable
 private fun NoChartData(
     viewModel: PlatformScreenViewModel,
@@ -504,17 +526,14 @@ private fun TitleText(
     )
 }
 
-@Composable
-@NonRestartableComposable
 private fun loadChartData(
+    lineColors: List<Color>,
     data: PerformanceDataItem,
     popupProperties: PopupProperties?
 ): List<Line> {
     val chartData = arrayListOf<Line>()
     data.data.entries.forEachIndexed { index, entry ->
-        val lineColor = getLineColor(
-            index = index
-        )
+        val lineColor = lineColors[index]
         chartData.add(
             Line(
                 label = entry.key,
@@ -528,15 +547,4 @@ private fun loadChartData(
         )
     }
     return chartData
-}
-
-@Composable
-private fun getLineColor(
-    index: Int
-): Color {
-    return when (index) {
-        0 -> MaterialTheme.colorScheme.primary
-        1 -> MaterialTheme.colorScheme.secondary
-        else -> MaterialTheme.colorScheme.tertiary
-    }
 }

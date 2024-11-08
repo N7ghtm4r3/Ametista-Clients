@@ -69,7 +69,7 @@
     <string name="wrong_email">L'e-mail non è valida</string>
     <string name="password">Password</string>
     <string name="wrong_password">La password non è valida</string>
-    <string name="host">Ospite</string>
+    <string name="host">Host</string>
     <string name="wrong_host_address">L'indirizzo host non è valido</string>
     <string name="server_secret">Server secret</string>
     <string name="wrong_server_secret">Il segreto del server non è valido</string>

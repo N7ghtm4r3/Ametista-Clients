@@ -34,9 +34,6 @@ import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.PLATFORM_KEY
 import com.tecknobit.equinox.environment.records.EquinoxUser.NAME_KEY
 import io.github.vinceglb.filekit.core.PlatformFile
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
@@ -186,21 +183,18 @@ private fun validateSelfSignedCertificate(): Array<TrustManager> {
 expect fun CheckForUpdatesAndLaunch()
 
 fun startSession() {
-    MainScope().launch { // TODO: TO REMOVE AND SET THE USER LANGUAGE CORRECLTY
-        delay(250)
-        requester = AmetistaRequester(
-            host = localUser.hostAddress,
-            userId = localUser.userId,
-            userToken = localUser.userToken
-        )
-        val route = if (localUser.userId == null)
-            AUTH_SCREEN
-        else if (localUser.password == DEFAULT_VIEWER_PASSWORD)
-            CHANGE_VIEWER_PASSWORD_SCREEN
-        else
-            APPLICATIONS_SCREEN
-        navigator.navigate(route)
-    }
+    requester = AmetistaRequester(
+        host = localUser.hostAddress,
+        userId = localUser.userId,
+        userToken = localUser.userToken
+    )
+    val route = if (localUser.userId == null)
+        AUTH_SCREEN
+    else if (localUser.password == DEFAULT_VIEWER_PASSWORD)
+        CHANGE_VIEWER_PASSWORD_SCREEN
+    else
+        APPLICATIONS_SCREEN
+    navigator.navigate(route)
 }
 
 /**
