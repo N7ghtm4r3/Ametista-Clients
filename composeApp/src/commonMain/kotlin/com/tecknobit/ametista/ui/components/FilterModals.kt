@@ -43,6 +43,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
@@ -312,7 +313,10 @@ private fun VersionsSelector(
     val currentVersionFilters = data.sampleVersions()
     val tooManySets = stringResource(string.max_three_sets_at_a_time)
     val oneSetRequired = stringResource(string.one_set_required)
-    viewModel.newVersionFilters = remember { ArrayList(currentVersionFilters) }
+    viewModel.newVersionFilters = remember { ArrayList() }
+    LaunchedEffect(currentVersionFilters) {
+        viewModel.newVersionFilters.addAll(currentVersionFilters)
+    }
     FilterSectionHeader(
         text = string.versions
     )
