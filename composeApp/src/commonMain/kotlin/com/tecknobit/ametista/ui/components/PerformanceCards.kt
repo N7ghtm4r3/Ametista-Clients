@@ -33,6 +33,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.FilterListOff
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Report
 import androidx.compose.material.icons.filled.RocketLaunch
@@ -48,7 +49,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -97,6 +97,7 @@ fun LaunchTime(
 ) {
     if (performanceData == null) {
         NoChartData(
+            viewModel = viewModel,
             title = string.launch_time,
             cardHeight = cardHeight,
             icon = Icons.Default.RocketLaunch
@@ -130,6 +131,7 @@ fun NetworkRequests(
 ) {
     if (performanceData == null) {
         NoChartData(
+            viewModel = viewModel,
             title = string.network_requests,
             cardHeight = cardHeight,
             icon = ChartNetwork
@@ -155,6 +157,7 @@ fun IssuesNumber(
 ) {
     if (performanceData == null) {
         NoChartData(
+            viewModel = viewModel,
             title = string.issues_number,
             cardHeight = cardHeight,
             icon = Icons.Default.BugReport
@@ -180,6 +183,7 @@ fun IssuesPerSessionsNumber(
 ) {
     if (performanceData == null) {
         NoChartData(
+            viewModel = viewModel,
             title = string.issues_per_session,
             cardHeight = cardHeight,
             icon = Icons.Default.Report
@@ -207,9 +211,11 @@ private fun PerformanceCard(
 ) {
     if (data.noDataAvailable()) {
         NoChartData(
+            viewModel = viewModel,
             title = title,
             cardHeight = cardHeight,
-            icon = noDataIcon
+            icon = noDataIcon,
+            data = data
         )
     } else {
         Card(
@@ -222,15 +228,6 @@ private fun PerformanceCard(
                 title = title,
                 data = data
             )
-            val chartData = remember { mutableStateListOf<Line>() }
-            if (chartData.isEmpty()) {
-                chartData.addAll(
-                    loadChartData(
-                        data = data,
-                        popupProperties = popupProperties
-                    )
-                )
-            }
             ChartLegend(
                 sampleVersions = data.sampleVersions()
             )
@@ -254,7 +251,10 @@ private fun PerformanceCard(
                 labelHelperProperties = LabelHelperProperties(
                     enabled = false
                 ),
-                data = chartData
+                data = loadChartData(
+                    data = data,
+                    popupProperties = popupProperties
+                )
             )
         }
     }
@@ -300,7 +300,7 @@ private fun CardActions(
     modifier: Modifier,
     viewModel: PlatformScreenViewModel,
     title: StringResource,
-    data: PerformanceDataItem,
+    data: PerformanceDataItem
 ) {
     Column(
         modifier = modifier,
@@ -321,21 +321,38 @@ private fun CardActions(
                 title = title,
                 viewModel = viewModel
             )
-            val filter = remember { mutableStateOf(false) }
-            IconButton(
-                onClick = { filter.value = true }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.FilterList,
-                    contentDescription = null
+            if (data.noDataAvailable()) {
+                if (data.isCustomFiltered) {
+                    IconButton(
+                        onClick = {
+                            viewModel.clearPerformanceFilter(
+                                data = data
+                            )
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.FilterListOff,
+                            contentDescription = null
+                        )
+                    }
+                }
+            } else {
+                val filter = remember { mutableStateOf(false) }
+                IconButton(
+                    onClick = { filter.value = true }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.FilterList,
+                        contentDescription = null
+                    )
+                }
+                FilterChartData(
+                    show = filter,
+                    viewModel = viewModel,
+                    title = title,
+                    data = data
                 )
             }
-            FilterChartData(
-                show = filter,
-                viewModel = viewModel,
-                title = title,
-                data = data
-            )
         }
     }
 }
@@ -451,24 +468,20 @@ private fun LegendItem(
 @Composable
 @NonRestartableComposable
 private fun NoChartData(
+    viewModel: PlatformScreenViewModel,
     title: StringResource,
     cardHeight: Dp,
-    icon: ImageVector
+    icon: ImageVector,
+    data: PerformanceDataItem = PerformanceDataItem()
 ) {
     Card(
         modifier = Modifier
             .height(cardHeight)
     ) {
-        TitleText(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                    start = 16.dp
-                )
-                .widthIn(
-                    max = CONTAINER_MAX_WIDTH
-                ),
-            title = title
+        CardHeader(
+            viewModel = viewModel,
+            title = title,
+            data = data
         )
         EmptyListUI(
             icon = icon,

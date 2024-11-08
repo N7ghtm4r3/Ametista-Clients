@@ -30,6 +30,7 @@ import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic.VERSION_
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic.PERFORMANCES_KEY
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic.PERFORMANCE_ANALYTIC_TYPE_KEY
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic.PerformanceAnalyticType
+import com.tecknobit.ametistacore.models.analytics.performance.PerformanceDataFilters
 import com.tecknobit.apimanager.apis.APIRequest.Params
 import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
 import com.tecknobit.apimanager.formatters.JsonHelper
@@ -301,15 +302,19 @@ class AmetistaRequester(
 
     fun getPerformanceData(
         applicationId: String,
-        platform: Platform
+        platform: Platform,
+        performanceDataFilters: PerformanceDataFilters
     ): JSONObject {
         val query = Params()
         query.addParam(PLATFORM_KEY, platform.name)
+        val payload = Params()
+        payload.addParam(FILTERS_KEY, performanceDataFilters.toPayload())
         return execPost(
             endpoint = assembleApplicationsEndpoint(
                 subEndpoint = "$applicationId/$PERFORMANCES_KEY",
                 query = query.createQueryString()
-            )
+            ),
+            payload = payload
         )
     }
 

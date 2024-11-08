@@ -18,6 +18,8 @@ import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
 import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic
 import com.tecknobit.ametistacore.models.analytics.issues.WebIssueAnalytic
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
+import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData.PerformanceDataItem
+import com.tecknobit.ametistacore.models.analytics.performance.PerformanceDataFilters
 import com.tecknobit.equinox.Requester.Companion.responseData
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
@@ -65,6 +67,8 @@ class PlatformScreenViewModel(
     val performanceData: StateFlow<PerformanceData?> = _performanceData
 
     lateinit var newVersionFilters: MutableList<String>
+
+    private val performanceDataFilters = PerformanceDataFilters()
 
     private fun loadIssues(
         pageNumber: Int
@@ -117,7 +121,8 @@ class PlatformScreenViewModel(
             request = {
                 requester.getPerformanceData(
                     applicationId = applicationId,
-                    platform = platform
+                    platform = platform,
+                    performanceDataFilters = performanceDataFilters
                 )
             },
             onSuccess = { response ->
@@ -128,7 +133,7 @@ class PlatformScreenViewModel(
     }
 
     fun getAvailableVersionsSamples(
-        data: PerformanceData.PerformanceDataItem
+        data: PerformanceDataItem
     ): SnapshotStateList<String> {
         val sampleVersions = HashSet<String>()
         requester.sendRequest(
@@ -151,12 +156,30 @@ class PlatformScreenViewModel(
 
     @OptIn(ExperimentalMaterial3Api::class)
     fun filterPerformance(
-        data: PerformanceData.PerformanceDataItem,
+        data: PerformanceDataItem,
         state: DateRangePickerState,
         onFilter: () -> Unit
     ) {
-        // TODO: MAKE THE REQUEST THEN 
+        performanceDataFilters.setFilter(
+            data.analyticType,
+            PerformanceDataFilters.PerformanceFilter(
+                state.selectedStartDateMillis!!,
+                state.selectedEndDateMillis!!,
+                newVersionFilters
+            )
+        )
         onFilter.invoke()
+        getPerformanceAnalytics()
+    }
+
+    fun clearPerformanceFilter(
+        data: PerformanceDataItem
+    ) {
+        performanceDataFilters.setFilter(
+            data.analyticType,
+            null
+        )
+        getPerformanceAnalytics()
     }
 
 }
