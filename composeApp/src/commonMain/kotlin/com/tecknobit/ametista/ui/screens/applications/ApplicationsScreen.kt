@@ -4,6 +4,7 @@ package com.tecknobit.ametista.ui.screens.applications
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.applications
+import ametista.composeapp.generated.resources.logo
 import ametista.composeapp.generated.resources.search_placeholder
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -67,6 +68,7 @@ import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
@@ -119,8 +121,8 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                                             .build(),
                                         imageLoader = imageLoader,
                                         contentDescription = "Application icon",
-                                        contentScale = ContentScale.Crop
-                                        // TODO: TO SET ERROR
+                                        contentScale = ContentScale.Crop,
+                                        error = painterResource(Res.drawable.logo)
                                     )
                                 }
                             )

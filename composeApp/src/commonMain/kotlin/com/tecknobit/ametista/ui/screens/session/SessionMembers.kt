@@ -1,6 +1,8 @@
 package com.tecknobit.ametista.ui.screens.session
 
+import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.Res.string
+import ametista.composeapp.generated.resources.logo
 import ametista.composeapp.generated.resources.no_members
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -48,6 +50,7 @@ import com.tecknobit.ametistacore.models.AmetistaMember
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
+import org.jetbrains.compose.resources.painterResource
 
 private lateinit var viewModel: SessionScreenViewModel
 
@@ -123,8 +126,8 @@ private fun Member(
                     .build(),
                 imageLoader = imageLoader,
                 contentDescription = "Member profile picture",
-                contentScale = ContentScale.Crop
-                // TODO: TO SET ERROR
+                contentScale = ContentScale.Crop,
+                error = painterResource(Res.drawable.logo)
             )
         },
         overlineContent = {

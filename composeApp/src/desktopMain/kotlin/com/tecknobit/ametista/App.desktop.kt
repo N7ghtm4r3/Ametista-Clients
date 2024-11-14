@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.tecknobit.ametistacore.helpers.AmetistaValidator
 import io.github.vinceglb.filekit.core.PlatformFile
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
@@ -58,6 +59,8 @@ actual fun getImagePath(
 }
 
 actual fun setUserLanguage() {
-    val tag = localUser.language
+    var tag = localUser.language
+    if (tag == null)
+        tag = AmetistaValidator.DEFAULT_LANGUAGE
     Locale.setDefault(Locale.forLanguageTag(tag))
 }

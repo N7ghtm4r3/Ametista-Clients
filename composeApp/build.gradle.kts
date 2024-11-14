@@ -139,7 +139,7 @@ compose.desktop {
             description = "" // TODO: "TO SET"
             copyright = "© 2024 Tecknobit"
             vendor = "Tecknobit"
-            licenseFile.set(project.file("LICENSE"))
+            licenseFile.set(project.file("src/desktopMain/resources/LICENSE"))
             macOS {
                 bundleID = "com.tecknobit.ametista"
                 iconFile.set(project.file("src/desktopMain/resources/logo.icns"))
@@ -158,7 +158,7 @@ compose.desktop {
             }
         }
         buildTypes.release.proguard {
-            configurationFiles.from(project.file("compose-desktop.pro"))
+            configurationFiles.from(project.file("src/desktopMain/resources/compose-desktop.pro"))
             obfuscate.set(true)
         }
     }

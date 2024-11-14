@@ -16,6 +16,7 @@ import com.google.android.play.core.install.model.UpdateAvailability.UPDATE_AVAI
 import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import com.tecknobit.ametista.MainActivity.Companion.appUpdateManager
 import com.tecknobit.ametista.MainActivity.Companion.launcher
+import com.tecknobit.ametistacore.helpers.AmetistaValidator
 import com.tecknobit.equinoxcompose.helpers.utils.AppContext
 import io.github.vinceglb.filekit.core.PlatformFile
 import moe.tlaster.precompose.navigation.BackHandler
@@ -122,7 +123,9 @@ private fun getFilePath(
 }
 
 actual fun setUserLanguage() {
-    val tag = localUser.language
+    var tag = localUser.language
+    if (tag == null)
+        tag = AmetistaValidator.DEFAULT_LANGUAGE
     val locale = Locale(tag)
     Locale.setDefault(locale)
     val context = AppContext.get()

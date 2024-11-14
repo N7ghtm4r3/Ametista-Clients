@@ -2,6 +2,8 @@
 
 package com.tecknobit.ametista.ui.screens.applications
 
+import ametista.composeapp.generated.resources.Res
+import ametista.composeapp.generated.resources.logo
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
@@ -45,6 +47,7 @@ import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
 import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 @NonRestartableComposable
@@ -222,7 +225,7 @@ actual fun ApplicationIcon(
             .build(),
         imageLoader = imageLoader,
         contentDescription = "Application icon",
-        contentScale = ContentScale.Crop
-        // TODO: TO SET ERROR
+        contentScale = ContentScale.Crop,
+        error = painterResource(Res.drawable.logo)
     )
 }

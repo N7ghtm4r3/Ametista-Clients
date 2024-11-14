@@ -11,6 +11,7 @@ import ametista.composeapp.generated.resources.delete_message
 import ametista.composeapp.generated.resources.dismiss
 import ametista.composeapp.generated.resources.email
 import ametista.composeapp.generated.resources.language
+import ametista.composeapp.generated.resources.logo
 import ametista.composeapp.generated.resources.logout
 import ametista.composeapp.generated.resources.logout_message
 import ametista.composeapp.generated.resources.new_email
@@ -98,6 +99,7 @@ import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 private lateinit var viewModel: SessionScreenViewModel
@@ -175,8 +177,8 @@ private fun ProfilePicPicker() {
             .build(),
         imageLoader = imageLoader,
         contentDescription = "User profile picture",
-        contentScale = ContentScale.Crop
-        // TODO: TO SET ERROR
+        contentScale = ContentScale.Crop,
+        error = painterResource(Res.drawable.logo)
     )
 }
 

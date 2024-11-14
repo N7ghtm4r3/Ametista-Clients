@@ -2,6 +2,8 @@
 
 package com.tecknobit.ametista.ui.screens.applications
 
+import ametista.composeapp.generated.resources.Res
+import ametista.composeapp.generated.resources.logo
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
@@ -48,6 +50,7 @@ import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyVerticalGrid
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 @NonRestartableComposable
@@ -204,8 +207,8 @@ actual fun ApplicationIcon(
             .build(),
         imageLoader = imageLoader,
         contentDescription = "Application icon",
-        contentScale = ContentScale.Crop
-        // TODO: TO SET ERROR
+        contentScale = ContentScale.Crop,
+        error = painterResource(Res.drawable.logo)
     )
     HorizontalDivider(
         color = MaterialTheme.colorScheme.primary

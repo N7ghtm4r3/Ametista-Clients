@@ -1,5 +1,6 @@
 package com.tecknobit.ametista.ui.components
 
+import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.Res.string
 import ametista.composeapp.generated.resources.add_application
 import ametista.composeapp.generated.resources.app_description
@@ -9,6 +10,7 @@ import ametista.composeapp.generated.resources.delete_application_text
 import ametista.composeapp.generated.resources.delete_application_title
 import ametista.composeapp.generated.resources.dismiss
 import ametista.composeapp.generated.resources.edit_application
+import ametista.composeapp.generated.resources.logo
 import ametista.composeapp.generated.resources.wrong_app_description
 import ametista.composeapp.generated.resources.wrong_app_name_field
 import androidx.compose.foundation.background
@@ -67,6 +69,7 @@ import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -264,8 +267,8 @@ private fun AppIconPicker(
                 .build(),
             imageLoader = imageLoader,
             contentDescription = "Application icon",
-            contentScale = ContentScale.Crop
-            // TODO: TO SET ERROR
+            contentScale = ContentScale.Crop,
+            error = painterResource(Res.drawable.logo)
         )
         IconButton(
             modifier = Modifier
