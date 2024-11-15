@@ -39,8 +39,8 @@ steps:
 
 ### Backend
 
-- <a href="https://github.com/N7ghtm4r3/Ametista/releases/tag/1.0.0">Backend service "
-  out-of-the-box"</a>
+- <a href="https://github.com/N7ghtm4r3/Ametista/releases/tag/1.0.0">Backend service
+  "out-of-the-box"</a>
 
 ## Usages
 
