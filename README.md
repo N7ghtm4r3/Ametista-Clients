@@ -22,8 +22,7 @@ open a ticket or contact us to talk about, thanks and good use!
 
 ### Engine
 
-The [engine](https://github.com/N7ghtm4r3/Ametista-Engine#readme) is the core component of *
-*Ametista**. It collects performance data and tracks issues to send to your backend instance for
+The [engine](https://github.com/N7ghtm4r3/Ametista-Engine#readme) is the core component of **Ametista**. It collects performance data and tracks issues to send to your backend instance for
 analysis.
 
 ### Clients
