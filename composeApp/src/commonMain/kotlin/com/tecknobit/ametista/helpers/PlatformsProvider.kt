@@ -196,3 +196,7 @@ fun Platform.Theme(
         }
     }
 }
+
+expect fun copyToClipboard(
+    content: String
+)

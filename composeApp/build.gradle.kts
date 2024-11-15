@@ -136,7 +136,8 @@ compose.desktop {
             )
             packageName = "Ametista"
             packageVersion = "1.0.0"
-            description = "" // TODO: "TO SET"
+            description =
+                "Self-hosted issues tracker and performance stats collector about Compose Multiplatform applications"
             copyright = "© 2024 Tecknobit"
             vendor = "Tecknobit"
             licenseFile.set(project.file("src/desktopMain/resources/LICENSE"))

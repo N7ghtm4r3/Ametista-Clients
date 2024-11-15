@@ -18,11 +18,13 @@
     <string name="no_connected_platform">Questa piattaforma non è collegata</string>
     <string name="connect_platform">Collega piattaforma</string>
     <string name="implement_the_engine">Implementa l'engine</string>
-    <!-- TODO: CHANGE THE DOCU LINK -->
-    <string name="implement_the_engine_text">Implementare l'[Ametista Engine](https://www.github.com) sulla piattaforma per connettersi</string>
+    <string name="implement_the_engine_text">Implementa [Ametista Engine](https://github.com/N7ghtm4r3/Ametista-Engine) sulla piattaforma per connettersi</string>
+    <string name="create_config_file">Creare il file di configurazione</string>
+    <string name="create_config_file_text">Devi creare, se non è già stato creato, il file di configurazione come [this](https://github.com/N7ghtm4r3/Ametista-Engine\?tab=readme-ov-file#configuration-file) e usare come **application_id** l'identificatore sottostante</string>
+    <string name="application_id_title">Id dell'applicazione</string>
+    <string name="application_id_text">Fare clic qui per copiare l'**application_id**</string>
     <string name="invoke_connect_method">Metodo di connessione</string>
-    <!-- TODO: CHANGE THE invoke_connect_method_text WITH A COMPLETE ONE -->
-    <string name="invoke_connect_method_text">TODO: CAMBIARE IL TESTO DELL'INVOCAZIONE DEL METODO CON UN TESTO COMPLETO Invocare il metodo _connectThisPlatform_ per connettere l'applicazione sulla versione specifica della piattaforma. Sarà necessario utilizzare il codice dell'amministratore per autenticarsi e convalidare la connessione</string>
+    <string name="invoke_connect_method_text">Invoca il metodo _connectPlatform_ per connettere l'applicazione sulla versione specifica della piattaforma</string>
     <string name="check_connection_result">Controlla il risultato della connessione</string>
     <string name="check_connection_result_text">Controlla se la tile relativa alla piattaforma è stata colorata.</string>
     <string name="got_it">Capito!</string>

@@ -54,7 +54,7 @@ class AmetistaRequester(
     connectionTimeout = 2000,
     enableCertificatesValidation = true,
     debugMode = true,
-    connectionErrorMessage = "No connection" // TODO: TO SET 
+    connectionErrorMessage = "No internet connection"
 ) {
 
     fun adminSignUp(

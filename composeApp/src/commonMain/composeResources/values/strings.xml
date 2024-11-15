@@ -18,11 +18,13 @@
     <string name="no_connected_platform">This platform is not connected</string>
     <string name="connect_platform">Connect platform</string>
     <string name="implement_the_engine">Implement the engine</string>
-    <!-- TODO: CHANGE THE DOCU LINK -->
-    <string name="implement_the_engine_text">Implement the [Ametista Engine](https://www.github.com) on the platform to connect</string>
+    <string name="implement_the_engine_text">Implement the [Ametista Engine](https://github.com/N7ghtm4r3/Ametista-Engine) on the platform to connect</string>
+    <string name="create_config_file">Create the configuration file</string>
+    <string name="create_config_file_text">You have to create, if not already created, the configuration file like [this](https://github.com/N7ghtm4r3/Ametista-Engine?tab=readme-ov-file#configuration-file) and use as **application_id** the identifier below</string>
+    <string name="application_id_title">Application identifier</string>
+    <string name="application_id_text">Click here to copy the **application_id**</string>
     <string name="invoke_connect_method">Connection method</string>
-    <!-- TODO: CHANGE THE invoke_connect_method_text WITH A COMPLETE ONE -->
-    <string name="invoke_connect_method_text">TODO: CHANGE THE invoke_connect_method_text WITH A COMPLETE ONE Invoke the _connectThisPlatform_ method to connect the application on the specific platform version. You will need to use the admin code to authenticate you and validate the connection</string>
+    <string name="invoke_connect_method_text">Invoke the _connectPlatform_ method to connect the application on the specific platform version</string>
     <string name="check_connection_result">Check connection result</string>
     <string name="check_connection_result_text">Check whether the platform related tile has been coloured</string>
     <string name="got_it">Got it!</string>

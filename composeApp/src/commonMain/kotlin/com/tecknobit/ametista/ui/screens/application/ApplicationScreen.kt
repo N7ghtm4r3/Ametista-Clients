@@ -3,9 +3,13 @@
 package com.tecknobit.ametista.ui.screens.application
 
 import ametista.composeapp.generated.resources.Res
+import ametista.composeapp.generated.resources.application_id_text
+import ametista.composeapp.generated.resources.application_id_title
 import ametista.composeapp.generated.resources.check_connection_result
 import ametista.composeapp.generated.resources.check_connection_result_text
 import ametista.composeapp.generated.resources.connect_platform
+import ametista.composeapp.generated.resources.create_config_file
+import ametista.composeapp.generated.resources.create_config_file_text
 import ametista.composeapp.generated.resources.got_it
 import ametista.composeapp.generated.resources.implement_the_engine
 import ametista.composeapp.generated.resources.implement_the_engine_text
@@ -15,6 +19,7 @@ import ametista.composeapp.generated.resources.no_connected_platforms
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -73,6 +78,7 @@ import com.pushpal.jetlime.JetLimeEvent
 import com.pushpal.jetlime.JetLimeEventDefaults
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.PlatformsCustomGrid
+import com.tecknobit.ametista.helpers.copyToClipboard
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.model.ConnectionProcedureStep
 import com.tecknobit.ametista.navigator
@@ -342,6 +348,19 @@ class ApplicationScreen(
                 description = stringResource(Res.string.implement_the_engine_text)
             ),
             ConnectionProcedureStep(
+                title = stringResource(Res.string.create_config_file),
+                description = stringResource(Res.string.create_config_file_text)
+            ),
+            ConnectionProcedureStep(
+                title = stringResource(Res.string.application_id_title),
+                description = stringResource(Res.string.application_id_text),
+                onClick = {
+                    copyToClipboard(
+                        content = applicationId
+                    )
+                }
+            ),
+            ConnectionProcedureStep(
                 title = stringResource(Res.string.invoke_connect_method),
                 description = stringResource(Res.string.invoke_connect_method_text)
             ),
@@ -397,6 +416,13 @@ class ApplicationScreen(
                 description.config.linkColor = MaterialTheme.colorScheme.primary
                 description.config.linkTextDecoration = TextDecoration.None
                 RichText(
+                    modifier = Modifier
+                        .clickable(
+                            enabled = step.onClick != null,
+                            onClick = {
+                                step.onClick?.invoke()
+                            }
+                        ),
                     state = description,
                     fontSize = 14.sp,
                     textAlign = TextAlign.Justify
