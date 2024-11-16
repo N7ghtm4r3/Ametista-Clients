@@ -102,8 +102,16 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * **viewModel** -> The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.SessionScreen]
+ */
 private lateinit var viewModel: SessionScreenViewModel
 
+/**
+ * Section with the account details of the current [localUser]
+ *
+ * @param screenViewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.SessionScreen]
+ */
 @Composable
 @NonRestartableComposable
 fun AboutMe(
@@ -142,6 +150,9 @@ fun AboutMe(
     }
 }
 
+/**
+ * Picker to chose the profile picture to use
+ */
 @Composable
 @NonRestartableComposable
 private fun ProfilePicPicker() {
@@ -183,7 +194,7 @@ private fun ProfilePicPicker() {
 }
 
 /**
- * Function to display the section of the user's email and allowing the user to change it
+ * Method to display the section of the user's email and allowing the user to change it
  *
  */
 @Composable
@@ -232,7 +243,7 @@ private fun EmailSection() {
 }
 
 /**
- * Function to display the section of the user's password and allowing the user to change it
+ * Method to display the section of the user's password and allowing the user to change it
  *
  */
 @Composable
@@ -296,6 +307,10 @@ private fun PasswordSection() {
     )
 }
 
+/**
+ * Method to display the section of the user's language and allowing the user to change it
+ *
+ */
 @Composable
 @NonRestartableComposable
 private fun LanguageSection() {
@@ -310,6 +325,10 @@ private fun LanguageSection() {
     )
 }
 
+/**
+ * Method to display the section of the user's theme and allowing the user to change it
+ *
+ */
 @Composable
 @NonRestartableComposable
 private fun ThemeSection() {
@@ -324,6 +343,13 @@ private fun ThemeSection() {
     )
 }
 
+/**
+ * Component to display the user data
+ *
+ * @param header The representative header text
+ * @param data The data to display
+ * @param editAction The action to execute when the user request to edit that [data]
+ */
 @Composable
 @NonRestartableComposable
 private fun UserData(
@@ -373,7 +399,7 @@ private fun UserData(
 }
 
 /**
- * Function to allow the user to change the current language setting
+ * Method to allow the user to change the current language setting
  *
  * @param changeLanguage: the state whether display this section
  */
@@ -423,7 +449,7 @@ private fun ChangeLanguage(
 }
 
 /**
- * Function to allow the user to change the current theme setting
+ * Method to allow the user to change the current theme setting
  *
  * @param changeTheme: the state whether display this section
  */
@@ -477,7 +503,7 @@ private fun ChangeTheme(
 }
 
 /**
- * Function to allow the user to change a current setting
+ * Method to allow the user to change a current setting
  *
  * @param showModal: the state whether display the [ModalBottomSheet]
  * @param sheetState: the state to apply to the [ModalBottomSheet]
@@ -504,6 +530,9 @@ private fun ChangeInfo(
     }
 }
 
+/**
+ * Section to allow the user to logout or delete the account
+ */
 @Composable
 @NonRestartableComposable
 private fun UserActions() {
@@ -520,6 +549,9 @@ private fun UserActions() {
     }
 }
 
+/**
+ * The section allows the user to disconnect from the current session
+ */
 @Composable
 @NonRestartableComposable
 private fun LogoutSection() {
@@ -549,6 +581,9 @@ private fun LogoutSection() {
     )
 }
 
+/**
+ * The section allows the user to delete account
+ */
 @Composable
 @NonRestartableComposable
 private fun DeleteAccountSection() {
@@ -589,6 +624,9 @@ private fun DeleteAccountSection() {
     )
 }
 
+/**
+ * Method to navigate to the [com.tecknobit.ametista.ui.screens.navigation.Splashscreen]
+ */
 private fun navToSplash() {
     navigator.navigate(SPLASHSCREEN)
 }

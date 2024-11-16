@@ -47,16 +47,23 @@ import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isNewPasswordValid
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
+import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The [ChangeViewerPasswordScreen] class is used to allow a [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER]
+ * to change the default preset password
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxScreen
+ * @see AmetistaScreen
+ */
 class ChangeViewerPasswordScreen : AmetistaScreen<ChangeViewerPasswordScreenViewModel>(
     viewModel = ChangeViewerPasswordScreenViewModel()
 ) {
 
     /**
-     * Function to arrange the content of the screen to display
-     *
-     * No-any params required
+     * Method to arrange the content of the screen to display
      */
     @Composable
     override fun ArrangeScreenContent() {
@@ -148,9 +155,7 @@ class ChangeViewerPasswordScreen : AmetistaScreen<ChangeViewerPasswordScreenView
     }
 
     /**
-     * Function to collect or instantiate the states of the screen
-     *
-     * No-any params required
+     * Method to collect or instantiate the states of the screen
      */
     @Composable
     override fun CollectStates() {

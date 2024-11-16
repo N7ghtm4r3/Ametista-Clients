@@ -20,6 +20,16 @@ import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 
+/**
+ * The [AmetistaScreen] class is useful to provides the basic behavior of a Ametista's UI screen
+ *
+ * @param viewModel The support viewmodel for the screen
+ *
+ * @property V generic type of the viewmodel of the screen
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxScreen
+ */
 @Structure
 abstract class AmetistaScreen<V : EquinoxViewModel>(
     viewModel: V? = null
@@ -29,25 +39,52 @@ abstract class AmetistaScreen<V : EquinoxViewModel>(
 
     companion object {
 
+        /**
+         * **SPLASH_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.navigation.Splashscreen]
+         */
         const val SPLASHSCREEN = "Splashscreen"
 
+        /**
+         * **AUTH_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.auth.AuthScreen]
+         */
         const val AUTH_SCREEN = "AuthScreen"
 
+        /**
+         * **CHANGE_VIEWER_PASSWORD_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.changeviewerpassword.ChangeViewerPasswordScreen]
+         */
         const val CHANGE_VIEWER_PASSWORD_SCREEN = "ChangeViewerPasswordScreen"
 
+        /**
+         * **SESSION_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.session.SessionScreen]
+         */
         const val SESSION_SCREEN = "SessionScreen"
 
+        /**
+         * **APPLICATIONS_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen]
+         */
         const val APPLICATIONS_SCREEN = "ApplicationsScreen"
 
+        /**
+         * **APPLICATION_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+         */
         const val APPLICATION_SCREEN = "ApplicationScreen"
 
+        /**
+         * **PLATFORM_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen]
+         */
         const val PLATFORM_SCREEN = "PlatformScreen"
 
+        /**
+         * **CONTAINER_MAX_WIDTH** -> max value of the width for the container
+         */
         @JvmStatic
         val CONTAINER_MAX_WIDTH = 1200.dp
 
     }
 
+    /**
+     * Back navigation button
+     */
     @Composable
     @NonRestartableComposable
     protected fun NavButton() {
@@ -62,6 +99,11 @@ abstract class AmetistaScreen<V : EquinoxViewModel>(
         }
     }
 
+    /**
+     * Loading layout component to show when the data are loading
+     *
+     * @param data The data to wait the load
+     */
     @Composable
     @NonRestartableComposable
     @Deprecated(
@@ -84,6 +126,5 @@ abstract class AmetistaScreen<V : EquinoxViewModel>(
             }
         }
     }
-
 
 }

@@ -89,9 +89,19 @@ import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform.entries
 import com.tecknobit.equinoxcompose.components.EmptyListUI
+import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The [ApplicationScreen] class is used to display the [AmetistaApplication] details and work on it
+ *
+ * @param applicationId The identifier of the application displayed
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxScreen
+ * @see AmetistaScreen
+ */
 class ApplicationScreen(
     private val applicationId: String
 ) : AmetistaScreen<ApplicationScreenViewModel>(
@@ -100,14 +110,18 @@ class ApplicationScreen(
     )
 ) {
 
+    /**
+     * **application** -> the application state container
+     */
     private lateinit var application: State<AmetistaApplication?>
 
+    /**
+     * **showConnectionProcedure** -> whether display the connection procedure
+     */
     private lateinit var showConnectionProcedure: MutableState<Boolean>
 
     /**
-     * Function to arrange the content of the screen to display
-     *
-     * No-any params required
+     * Method to arrange the content of the screen to display
      */
     @Composable
     override fun ArrangeScreenContent() {
@@ -284,6 +298,9 @@ class ApplicationScreen(
         }
     }
 
+    /**
+     * Section related to the [com.tecknobit.ametistacore.models.Platform] connected of the [application]
+     */
     @Composable
     @NonRestartableComposable
     private fun PlatformsSections() {
@@ -301,6 +318,10 @@ class ApplicationScreen(
         }
     }
 
+    /**
+     * Section to allow the use to read about the connection procedure to connect a new [com.tecknobit.ametistacore.models.Platform]
+     * to the [application]
+     */
     @Composable
     @NonRestartableComposable
     private fun ConnectionProcedure() {
@@ -339,6 +360,9 @@ class ApplicationScreen(
         }
     }
 
+    /**
+     * Steps list of the [ConnectionProcedure] component
+     */
     @Composable
     @NonRestartableComposable
     private fun ConnectionSteps() {
@@ -388,6 +412,12 @@ class ApplicationScreen(
         }
     }
 
+    /**
+     * Dedicated component to display a [ConnectionProcedureStep]
+     *
+     * @param position The number of the step
+     * @param step The step to represent
+     */
     @Composable
     @NonRestartableComposable
     private fun ConnectionStep(
@@ -432,9 +462,7 @@ class ApplicationScreen(
     }
 
     /**
-     * Function invoked when the [ShowContent] composable has been started
-     *
-     * No-any params required
+     * Method invoked when the [ShowContent] composable has been started
      */
     override fun onStart() {
         super.onStart()
@@ -442,9 +470,7 @@ class ApplicationScreen(
     }
 
     /**
-     * Function to collect or instantiate the states of the screen
-     *
-     * No-any params required
+     * Method to collect or instantiate the states of the screen
      */
     @Composable
     override fun CollectStates() {

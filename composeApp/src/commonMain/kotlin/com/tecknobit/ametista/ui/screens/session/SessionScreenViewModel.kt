@@ -13,37 +13,81 @@ import com.tecknobit.ametistacore.models.AmetistaMember
 import com.tecknobit.equinoxcompose.helpers.session.setHasBeenDisconnectedValue
 import com.tecknobit.equinoxcompose.helpers.session.setServerOfflineValue
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxProfileViewModel
+import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.launch
 
+/**
+ * The **SessionScreenViewModel** class is the support class used to execute the requests related
+ * to the [SessionScreen]
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxProfileViewModel
+ * @see EquinoxViewModel
+ * @see ViewModel
+ * @see FetcherManagerWrapper
+ */
 class SessionScreenViewModel : EquinoxProfileViewModel(
     snackbarHostState = SnackbarHostState(),
     requester = requester,
     localUser = localUser
 ) {
 
+    /**
+     * **SessionScreenSection** -> session sections available
+     */
     enum class SessionScreenSection {
 
+        /**
+         * **ABOUT_ME** -> section with the [localUser] details
+         */
         ABOUT_ME,
 
+        /**
+         * **MEMBERS** -> section with the current members registered in the system
+         */
         MEMBERS
 
     }
 
+    /**
+     * **sessionScreenSection** -> the container state to display the specific session section
+     */
     lateinit var sessionScreenSection: MutableState<SessionScreenSection>
 
+    /**
+     * **viewerName** -> the value of the name of the viewer
+     */
     lateinit var viewerName: MutableState<String>
 
+    /**
+     * **viewerNameError** -> whether the [viewerName] field is not valid
+     */
     lateinit var viewerNameError: MutableState<Boolean>
 
+    /**
+     * **viewerSurname** -> the value of the surname of the viewer
+     */
     lateinit var viewerSurname: MutableState<String>
 
+    /**
+     * **viewerSurnameError** -> whether the [viewerSurname] field is not valid
+     */
     lateinit var viewerSurnameError: MutableState<Boolean>
 
+    /**
+     * **viewerEmail** -> the value of the email of the viewer
+     */
     lateinit var viewerEmail: MutableState<String>
 
+    /**
+     * **viewerEmailError** -> whether the [viewerEmail] field is not valid
+     */
     lateinit var viewerEmailError: MutableState<Boolean>
 
+    /**
+     * **paginationState** -> the state used to manage the pagination for the [loadMembers] method
+     */
     val paginationState = PaginationState<Int, AmetistaMember>(
         initialPageKey = DEFAULT_PAGE,
         onRequestPage = { pageNumber ->
@@ -53,6 +97,11 @@ class SessionScreenViewModel : EquinoxProfileViewModel(
         }
     )
 
+    /**
+     * Method to load members
+     *
+     * @param pageNumber The number of the page to request to the server
+     */
     private fun loadMembers(
         pageNumber: Int
     ) {
@@ -78,6 +127,11 @@ class SessionScreenViewModel : EquinoxProfileViewModel(
         }
     }
 
+    /**
+     * Method to add a new [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER] in the system
+     *
+     * @param onSuccess The action to execute when the user has been added
+     */
     fun addViewer(
         onSuccess: () -> Unit
     ) {
@@ -109,6 +163,11 @@ class SessionScreenViewModel : EquinoxProfileViewModel(
         )
     }
 
+    /**
+     * Method to remove a member from the system
+     *
+     * @param member The member to remove
+     */
     fun removeMember(
         member: AmetistaMember
     ) {
@@ -123,6 +182,11 @@ class SessionScreenViewModel : EquinoxProfileViewModel(
         )
     }
 
+    /**
+     * Method to logout from the current session
+     *
+     * @param onLogout The action to execute when the logout has been executed
+     */
     fun logout(
         onLogout: () -> Unit
     ) {

@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.CloseApplicationOnNavBack
 import com.tecknobit.ametista.displayFontFamily
+import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
 import com.tecknobit.equinox.inputs.InputValidator.isHostValid
@@ -80,14 +81,19 @@ import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
+/**
+ * The [AuthScreen] class is used to execute the authentication by the user
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxScreen
+ * @see AmetistaScreen
+ */
+class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
     viewModel = AuthScreenViewModel()
 ) {
 
     /**
-     * Function to arrange the content of the screen to display
-     *
-     * No-any params required
+     * Method to arrange the content of the screen to display
      */
     @Composable
     override fun ArrangeScreenContent() {
@@ -108,9 +114,7 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
     }
 
     /**
-     * Function to create the header section of the activity
-     *
-     * No-any params required
+     * Method to create the header section of the activity
      */
     @Composable
     private fun HeaderSection() {
@@ -176,9 +180,7 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
     }
 
     /**
-     * Function to create the form where the user can fill it with his credentials
-     *
-     * No-any params required
+     * Method to create the form where the user can fill it with his credentials
      */
     @Composable
     @NonRestartableComposable
@@ -314,6 +316,10 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
         }
     }
 
+    /**
+     * Selector for the [com.tecknobit.ametistacore.models.AmetistaUser.Role.ADMIN] role to enable
+     * the admin auth form
+     */
     @Composable
     @NonRestartableComposable
     private fun AdminSelector() {
@@ -336,6 +342,9 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
         }
     }
 
+    /**
+     * Dynamic layout to display the correct form based on the role selected by the user
+     */
     @Composable
     @NonRestartableComposable
     private fun LoginMode() {
@@ -377,7 +386,7 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
     }
 
     /**
-     * Function to collect or instantiate the states of the screen
+     * Method to collect or instantiate the states of the screen
      *
      * No-any params required
      */

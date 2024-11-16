@@ -70,19 +70,28 @@ import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
 import com.tecknobit.equinox.inputs.InputValidator.isNameValid
 import com.tecknobit.equinox.inputs.InputValidator.isSurnameValid
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
+import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The [SessionScreen] class is used to display the details about the current session
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxScreen
+ * @see AmetistaScreen
+ */
 class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
     viewModel = SessionScreenViewModel()
 ) {
 
+    /**
+     * **addViewer** -> Whether the user requested to add a new user in the system
+     */
     private lateinit var addViewer: MutableState<Boolean>
 
     /**
-     * Function to arrange the content of the screen to display
-     *
-     * No-any params required
+     * Method to arrange the content of the screen to display
      */
     @Composable
     override fun ArrangeScreenContent() {
@@ -137,6 +146,9 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
         }
     }
 
+    /**
+     * The selector used to display the specific session section
+     */
     @Composable
     @NonRestartableComposable
     private fun SectionSelector() {
@@ -178,6 +190,11 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
         }
     }
 
+    /**
+     * Method to get the representative icon for the session section
+     *
+     * @return the representative icon as [ImageVector]
+     */
     private fun SessionScreenSection.icon(): ImageVector {
         return when (this) {
             ABOUT_ME -> Icons.Default.AssignmentInd
@@ -185,6 +202,11 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
         }
     }
 
+    /**
+     * Method to get the representative title for the session section
+     *
+     * @return the representative title as [ImageVector]
+     */
     private fun SessionScreenSection.tabTitle(): StringResource {
         return when (this) {
             ABOUT_ME -> string.about_me
@@ -192,6 +214,9 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
         }
     }
 
+    /**
+     * Wrapper method to display the specific session section
+     */
     @Composable
     @NonRestartableComposable
     private fun DisplaySection() {
@@ -211,6 +236,9 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
         }
     }
 
+    /**
+     * Layout to add a new [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER] in the system
+     */
     @Composable
     @NonRestartableComposable
     private fun AddViewer() {
@@ -266,6 +294,9 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
         }
     }
 
+    /**
+     * The form to fill with the [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER] information
+     */
     @Composable
     @NonRestartableComposable
     private fun ViewerForm() {
@@ -349,9 +380,7 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
     }
 
     /**
-     * Function to collect or instantiate the states of the screen
-     *
-     * No-any params required
+     * Method to collect or instantiate the states of the screen
      */
     @Composable
     override fun CollectStates() {

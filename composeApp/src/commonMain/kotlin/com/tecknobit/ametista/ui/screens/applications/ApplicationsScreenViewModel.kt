@@ -11,11 +11,25 @@ import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.apimanager.annotations.Wrapper
 import com.tecknobit.equinoxcompose.helpers.session.setHasBeenDisconnectedValue
 import com.tecknobit.equinoxcompose.helpers.session.setServerOfflineValue
+import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.launch
 
+/**
+ * The **ApplicationsScreenViewModel** class is the support class used to execute the requests related
+ * to the [ApplicationsScreen]
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see ApplicationViewModel
+ * @see EquinoxViewModel
+ * @see ViewModel
+ * @see FetcherManagerWrapper
+ */
 class ApplicationsScreenViewModel : ApplicationViewModel() {
 
+    /**
+     * **paginationState** -> the state used to manage the pagination for the [loadApplications] method
+     */
     val paginationState = PaginationState<Int, AmetistaApplication>(
         initialPageKey = DEFAULT_PAGE,
         onRequestPage = { pageNumber ->
@@ -25,10 +39,21 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
         }
     )
 
+    /**
+     * **filterQuery** -> the query filter typed
+     */
     lateinit var filterQuery: MutableState<String>
 
+    /**
+     * **platformsFilter** -> the list of platforms to use as filter
+     */
     lateinit var platformsFilter: SnapshotStateList<Platform>
 
+    /**
+     * Method to load applications
+     *
+     * @param pageNumber The number of the page to request to the server
+     */
     private fun loadApplications(
         pageNumber: Int
     ) {
@@ -56,6 +81,11 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
         }
     }
 
+    /**
+     * Method to remove or add a platform to the [platformsFilter] list
+     *
+     * @param platform The platform to add or remove
+     */
     @Wrapper
     fun managePlatforms(
         platform: Platform
@@ -66,6 +96,12 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
         )
     }
 
+    /**
+     * Method to remove or add a platform to the [platformsFilter] list
+     *
+     * @param checked The state from add or delete the platform
+     * @param platform The platform to add or remove
+     */
     fun managePlatforms(
         checked: Boolean,
         platform: Platform
@@ -77,6 +113,9 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
         paginationState.refresh()
     }
 
+    /**
+     * Method to clear the current filters selected by the user
+     */
     fun clearFilters() {
         val platformsFilterChanged = platformsFilter.isNotEmpty()
         if (platformsFilterChanged)
@@ -87,9 +126,15 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
         }
     }
 
+    /**
+     * Method to work on an application
+     *
+     * @param application The application to work on
+     * @param onSuccess The action to execute when the operation on the application has been executed
+     */
     fun workOnApplication(
-        onSuccess: () -> Unit,
-        application: AmetistaApplication?
+        application: AmetistaApplication?,
+        onSuccess: () -> Unit
     ) {
         if (application == null) {
             addApplication(
@@ -109,6 +154,11 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
         }
     }
 
+    /**
+     * Method to add a new application on the system
+     *
+     * @param onSuccess The action to execute when the operation on the application has been executed
+     */
     private fun addApplication(
         onSuccess: () -> Unit
     ) {

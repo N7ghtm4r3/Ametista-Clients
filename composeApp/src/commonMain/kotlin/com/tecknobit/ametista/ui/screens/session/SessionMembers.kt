@@ -52,8 +52,16 @@ import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 import org.jetbrains.compose.resources.painterResource
 
+/**
+ * **viewModel** -> The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.SessionScreen]
+ */
 private lateinit var viewModel: SessionScreenViewModel
 
+/**
+ * Section with the account details of the current [localUser]
+ *
+ * @param screenViewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.SessionScreen]
+ */
 @Composable
 @NonRestartableComposable
 fun SessionMembers(
@@ -103,6 +111,11 @@ fun SessionMembers(
     )
 }
 
+/**
+ * The component to display the details of an [AmetistaMember]
+ *
+ * @param member The member to display
+ */
 @Composable
 @NonRestartableComposable
 private fun Member(
@@ -165,6 +178,11 @@ private fun Member(
     SectionDivider()
 }
 
+/**
+ * The layout to display when no member (apart the [localUser]) are registered in the system
+ *
+ * @param noMembers Whether some member are registered in the system
+ */
 @Composable
 @NonRestartableComposable
 private fun NoMembers(

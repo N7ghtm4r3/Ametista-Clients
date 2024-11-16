@@ -18,17 +18,36 @@ import com.tecknobit.equinox.environment.records.EquinoxUser.getValidUserLanguag
 import com.tecknobit.equinox.inputs.InputValidator.DEFAULT_LANGUAGE
 import com.tecknobit.equinox.inputs.InputValidator.LANGUAGES_SUPPORTED
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxAuthViewModel
+import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 
+/**
+ * The **AuthScreenViewModel** class is the support class used to execute the authentication requests to the backend
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxAuthViewModel
+ * @see EquinoxViewModel
+ * @see ViewModel
+ * @see FetcherManagerWrapper
+ */
 class AuthScreenViewModel : EquinoxAuthViewModel(
     snackbarHostState = SnackbarHostState(),
     requester = requester,
     localUser = localUser
 ) {
 
+    /**
+     * **isAdmin** -> whether the user who trying to authenticate is an [ADMIN]
+     */
     lateinit var isAdmin: MutableState<Boolean>
 
+    /**
+     * **isAdminSignUp** -> whether the user is an [ADMIN] and the auth operation is a sign-up operation
+     */
     lateinit var isAdminSignUp: MutableState<Boolean>
 
+    /**
+     * Method to execute the authentication ope
+     */
     fun login() {
         if (isAdmin.value)
             adminAuth()
@@ -36,6 +55,9 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
             viewerSignIn()
     }
 
+    /**
+     * Method to execute the [ADMIN] authentication ope
+     */
     private fun adminAuth() {
         if (isAdminSignUp.value)
             adminSignUp()
@@ -43,6 +65,9 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
             adminsSignIn()
     }
 
+    /**
+     * Method to execute the [ADMIN] sign-up ope
+     */
     private fun adminSignUp() {
         if (signUpFormIsValid()) {
             val language = getUserLanguage()
@@ -74,6 +99,11 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
         }
     }
 
+    /**
+     * Method to get the current user language
+     *
+     * @return the user language as [String]
+     */
     private fun getUserLanguage(): String {
         val currentLanguageTag = getValidUserLanguage()
         val language = LANGUAGES_SUPPORTED[currentLanguageTag]
@@ -83,6 +113,9 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
             currentLanguageTag
     }
 
+    /**
+     * Method to execute the [ADMIN] sign-in ope
+     */
     private fun adminsSignIn() {
         if (signInFormIsValid()) {
             requester.changeHost(
@@ -110,6 +143,9 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
         }
     }
 
+    /**
+     * Method to execute the [VIEWER] sign-in ope
+     */
     private fun viewerSignIn() {
         if (signInFormIsValid()) {
             requester.changeHost(
@@ -137,6 +173,16 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
         }
     }
 
+    /**
+     * Method to launch the application after the authentication request, will be instantiated with the user details
+     * both the [requester] and the [localUser]
+     *
+     * @param response: the response of the authentication request
+     * @param name: the name of the user
+     * @param surname: the surname of the user
+     * @param language: the language of the user
+     * @param custom: the custom parameters added in a customization of the [EquinoxUser]
+     */
     @CustomParametersOrder(order = [ROLE_KEY])
     override fun launchApp(
         response: JsonHelper,

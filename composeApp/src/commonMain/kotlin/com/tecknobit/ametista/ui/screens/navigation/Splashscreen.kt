@@ -21,8 +21,18 @@ import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The [Splashscreen] class is used to retrieve and load the session data and enter the application's workflow
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxScreen
+ * @see AmetistaScreen
+ */
 class Splashscreen: AmetistaScreen<EquinoxViewModel>() {
 
+    /**
+     * Method to arrange the content of the screen to display
+     */
     @Composable
     override fun ArrangeScreenContent() {
         AmetistaTheme {
@@ -68,8 +78,6 @@ class Splashscreen: AmetistaScreen<EquinoxViewModel>() {
 
     /**
      * Function to collect or instantiate the states of the screen
-     *
-     * No-any params required
      */
     @Composable
     override fun CollectStates() {

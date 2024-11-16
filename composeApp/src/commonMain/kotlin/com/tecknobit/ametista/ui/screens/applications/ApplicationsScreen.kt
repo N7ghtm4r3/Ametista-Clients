@@ -65,20 +65,28 @@ import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.WorkOnApplication
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
+import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
+import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The [ApplicationsScreen] class is used to display the list of [AmetistaApplication] registered by
+ * the system
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxScreen
+ * @see AmetistaScreen
+ */
 class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
     viewModel = ApplicationsScreenViewModel()
 ) {
 
     /**
-     * Function to arrange the content of the screen to display
-     *
-     * No-any params required
+     * Method to arrange the content of the screen to display
      */
     @Composable
     override fun ArrangeScreenContent() {
@@ -163,6 +171,12 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
         }
     }
 
+    /**
+     * Section dedicated to the filters section allows the user to filter the list of the applications
+     * fetched from the server
+     *
+     * @param paddingValues The padding to apply to the section
+     */
     @Composable
     @NonRestartableComposable
     private fun FiltersSection(
@@ -199,6 +213,11 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
         }
     }
 
+    /**
+     * The search bar used to type the name to filter the applications list
+     *
+     * @param modifier The modifier to apply to the component
+     */
     @Composable
     @NonRestartableComposable
     private fun SearchBar(
@@ -224,6 +243,11 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
         )
     }
 
+    /**
+     * The menu with the available platforms to use as filters
+     *
+     * @param modifier The modifier to apply to the component
+     */
     @Composable
     @NonRestartableComposable
     private fun PlatformsMenu(
@@ -271,6 +295,11 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
         }
     }
 
+    /**
+     * Platform item menu of the [PlatformsMenu] component
+     *
+     * @param platform The related platform
+     */
     @Composable
     @NonRestartableComposable
     private fun PlatformItem(
@@ -316,9 +345,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
     }
 
     /**
-     * Function to collect or instantiate the states of the screen
-     *
-     * No-any params required
+     * Method to collect or instantiate the states of the screen
      */
     @Composable
     override fun CollectStates() {

@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.dokar.chiptextfield.Chip
 import com.dokar.chiptextfield.ChipTextFieldState
 import com.tecknobit.ametista.requester
+import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
 import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.Platform.WEB
@@ -28,6 +29,19 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 
+/**
+ * The **PlatformScreenViewModel** class is the support class used to execute the requests related
+ * to the [PlatformScreen]
+ *
+ * @param applicationId The identifier of the application displayed
+ * @param platform The specific platform of the application displayed
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see ApplicationViewModel
+ * @see EquinoxViewModel
+ * @see ViewModel
+ * @see FetcherManagerWrapper
+ */
 class PlatformScreenViewModel(
     val applicationId: String,
     val platform: Platform
@@ -37,10 +51,16 @@ class PlatformScreenViewModel(
 
     companion object {
 
+        /**
+         * **MAX_CHIPS_FILTERS** -> the max value allowed to filters the issues
+         */
         const val MAX_CHIPS_FILTERS = 10
 
     }
 
+    /**
+     * **paginationState** -> the state used to manage the pagination for the [loadIssues] method
+     */
     val paginationState = PaginationState<Int, AmetistaAnalytic>(
         initialPageKey = DEFAULT_PAGE,
         onRequestPage = { pageNumber ->
@@ -50,26 +70,52 @@ class PlatformScreenViewModel(
         }
     )
 
+    /**
+     * **analyticType** -> the type of the analytic displayed
+     */
     lateinit var analyticType: MutableState<AnalyticType>
 
+    /**
+     * **filtersState** -> the state used to contain the filters for the issues
+     */
     lateinit var filtersState: ChipTextFieldState<Chip>
 
+    /**
+     * **_filters** -> the filters selected
+     */
     private var _filters = HashSet<String>()
 
+    /**
+     * **_filtersSet** -> whether the filter have been set
+     */
     private val _filtersSet = MutableStateFlow(
         value = false
     )
     val filtersSet: StateFlow<Boolean> = _filtersSet
 
+    /**
+     * **_performanceData** -> the container state for the performance data
+     */
     private val _performanceData = MutableStateFlow<PerformanceData?>(
         value = null
     )
     val performanceData: StateFlow<PerformanceData?> = _performanceData
 
+    /**
+     * **newVersionFilters** -> the new versions to filter the [_performanceData]
+     */
     lateinit var newVersionFilters: MutableList<String>
 
+    /**
+     * **performanceDataFilters** -> used to to filter the [_performanceData]
+     */
     private val performanceDataFilters = PerformanceDataFilters()
 
+    /**
+     * Method to load issues
+     *
+     * @param pageNumber The number of the page to request to the server
+     */
     private fun loadIssues(
         pageNumber: Int
     ) {
@@ -101,6 +147,11 @@ class PlatformScreenViewModel(
         }
     }
 
+    /**
+     * Method to filter the issues to load
+     *
+     * @param onSuccess The action to execute when the filter operation has been executed
+     */
     fun filterIssues(
         onSuccess: () -> Unit
     ) {
@@ -110,12 +161,18 @@ class PlatformScreenViewModel(
         onSuccess.invoke()
     }
 
+    /**
+     * Method to clear the current filters selected by the user
+     */
     fun clearFilters() {
         _filters.clear()
         _filtersSet.value = false
         paginationState.refresh()
     }
 
+    /**
+     * Method to request the performance data analytics
+     */
     fun getPerformanceAnalytics() {
         requester.sendRequest(
             request = {
@@ -132,6 +189,11 @@ class PlatformScreenViewModel(
         )
     }
 
+    /**
+     * Method to get all the available version samples for the performance data collected
+     *
+     * @param data The specific analytic from fetch the versions
+     */
     fun getAvailableVersionsSamples(
         data: PerformanceDataItem
     ): SnapshotStateList<String> {
@@ -154,6 +216,13 @@ class PlatformScreenViewModel(
         return sampleVersions.toMutableStateList()
     }
 
+    /**
+     * Method to filter the performance data collected
+     *
+     * @param data The specific analytic to filter
+     * @param state The container state to get the initial and the final temporal dates range
+     * @param onFilter The action to execute when the filter has done
+     */
     @OptIn(ExperimentalMaterial3Api::class)
     fun filterPerformance(
         data: PerformanceDataItem,
@@ -172,6 +241,11 @@ class PlatformScreenViewModel(
         getPerformanceAnalytics()
     }
 
+    /**
+     * Method to clear the current for the performance data filters selected by the user
+     *
+     * @param data The specific analytic to filtered
+     */
     fun clearPerformanceFilter(
         data: PerformanceDataItem
     ) {

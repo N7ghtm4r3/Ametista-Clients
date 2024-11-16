@@ -65,6 +65,8 @@ import com.tecknobit.ametista.ui.components.LaunchTime
 import com.tecknobit.ametista.ui.components.NetworkRequests
 import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
 import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
+import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType.ISSUE
@@ -73,9 +75,22 @@ import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType
 import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
 import com.tecknobit.equinoxcompose.components.EmptyListUI
+import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 
+/**
+ * The [ApplicationsScreen] class is used to display the list of [AmetistaApplication] registered by
+ * the system
+ *
+ * @param applicationId The identifier of the application displayed
+ * @param applicationName
+ * @param platform The specific platform of the application displayed
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxScreen
+ * @see AmetistaScreen
+ */
 class PlatformScreen(
     applicationId: String,
     private val applicationName: String,
@@ -87,16 +102,23 @@ class PlatformScreen(
     )
 ) {
 
+    /**
+     * **filtersSet** -> whether the filters has been set
+     */
     private lateinit var filtersSet: State<Boolean>
 
+    /**
+     * **filterList** -> the list of the current filters
+     */
     private lateinit var filterList: MutableState<Boolean>
 
+    /**
+     * **performanceData** -> the performance data state container
+     */
     private lateinit var performanceData: State<PerformanceData?>
 
     /**
      * Function to arrange the content of the screen to display
-     *
-     * No-any params required
      */
     @Composable
     override fun ArrangeScreenContent() {
@@ -151,6 +173,9 @@ class PlatformScreen(
         }
     }
 
+    /**
+     * The custom [FloatingActionButton] used to manage the filtering operations
+     */
     @Composable
     @NonRestartableComposable
     private fun FilterButton() {
@@ -185,6 +210,9 @@ class PlatformScreen(
         }
     }
 
+    /**
+     * The selector used to display the specific analytic data
+     */
     @Composable
     @NonRestartableComposable
     private fun AnalyticsSelector() {
@@ -221,6 +249,11 @@ class PlatformScreen(
         }
     }
 
+    /**
+     * Method to get the representative icon for the analytic section
+     *
+     * @return the representative icon as [ImageVector]
+     */
     private fun AnalyticType.icon(): ImageVector {
         return when (this) {
             ISSUE -> Icons.Default.BugReport
@@ -228,6 +261,9 @@ class PlatformScreen(
         }
     }
 
+    /**
+     * The available analytic can be choose
+     */
     @Composable
     @NonRestartableComposable
     private fun AnalyticsItems() {
@@ -256,6 +292,9 @@ class PlatformScreen(
         }
     }
 
+    /**
+     * List of the [IssueAnalytic] related to the application displayed
+     */
     @Composable
     @NonRestartableComposable
     private fun Issues() {
@@ -290,6 +329,9 @@ class PlatformScreen(
         )
     }
 
+    /**
+     * Wrapper component to arrange based on the current window with size the performance data
+     */
     @Composable
     @NonRestartableComposable
     private fun Performance() {
@@ -305,6 +347,9 @@ class PlatformScreen(
         }
     }
 
+    /**
+     * Custom grid to display the performance data on the grid layout
+     */
     @Composable
     @NonRestartableComposable
     private fun PerformanceGrid() {
@@ -352,6 +397,9 @@ class PlatformScreen(
         }
     }
 
+    /**
+     * Custom column to display the performance data on the column layout
+     */
     @Composable
     @NonRestartableComposable
     private fun PerformanceColumn() {
@@ -385,6 +433,11 @@ class PlatformScreen(
         }
     }
 
+    /**
+     * Layout visible when no issues have been reported
+     *
+     * @param noIssues Whether there are some issues available
+     */
     @Composable
     @NonRestartableComposable
     private fun NoIssues(
@@ -410,8 +463,6 @@ class PlatformScreen(
 
     /**
      * Function to collect or instantiate the states of the screen
-     *
-     * No-any params required
      */
     @Composable
     override fun CollectStates() {
