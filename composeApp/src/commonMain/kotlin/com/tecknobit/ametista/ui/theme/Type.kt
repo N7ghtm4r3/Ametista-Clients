@@ -4,8 +4,14 @@ import androidx.compose.material3.Typography
 import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
 
+/**
+ * **baseline** -> baseline of the application
+ */
 val baseline = Typography()
 
+/**
+ * **Typography** -> the Ametista's Typography
+ */
 val AppTypography = Typography(
     displayLarge = baseline.displayLarge.copy(fontFamily = displayFontFamily),
     displayMedium = baseline.displayMedium.copy(fontFamily = displayFontFamily),

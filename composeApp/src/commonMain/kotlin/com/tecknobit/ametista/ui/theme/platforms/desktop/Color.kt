@@ -2,6 +2,9 @@ package com.tecknobit.ametista.ui.theme.platforms.desktop
 
 import androidx.compose.ui.graphics.Color
 
+/**
+ * Sets of default light theme colors
+ */
 val primaryLight = Color(0xFF006874)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF9EEFFD)
@@ -110,6 +113,9 @@ val surfaceContainerLightHighContrast = Color(0xFFE9EFF0)
 val surfaceContainerHighLightHighContrast = Color(0xFFE3E9EA)
 val surfaceContainerHighestLightHighContrast = Color(0xFFDEE3E5)
 
+/**
+ * Sets of default dark theme colors
+ */
 val primaryDark = Color(0xFF82D3E0)
 val onPrimaryDark = Color(0xFF00363D)
 val primaryContainerDark = Color(0xFF004F58)

@@ -10,6 +10,9 @@ import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Au
 import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Dark
 import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Light
 
+/**
+ * **lightScheme** default light colors scheme
+ */
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
     onPrimary = onPrimaryLight,
@@ -48,6 +51,9 @@ private val lightScheme = lightColorScheme(
     surfaceContainerHighest = surfaceContainerHighestLight,
 )
 
+/**
+ * **darkScheme** default dark colors scheme
+ */
 private val darkScheme = darkColorScheme(
     primary = primaryDark,
     onPrimary = onPrimaryDark,
@@ -86,6 +92,9 @@ private val darkScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDark,
 )
 
+/**
+ * **mediumContrastLightColorScheme** medium contrast light colors scheme
+ */
 private val mediumContrastLightColorScheme = lightColorScheme(
     primary = primaryLightMediumContrast,
     onPrimary = onPrimaryLightMediumContrast,
@@ -124,6 +133,9 @@ private val mediumContrastLightColorScheme = lightColorScheme(
     surfaceContainerHighest = surfaceContainerHighestLightMediumContrast,
 )
 
+/**
+ * **mediumContrastLightColorScheme** high contrast light colors scheme
+ */
 private val highContrastLightColorScheme = lightColorScheme(
     primary = primaryLightHighContrast,
     onPrimary = onPrimaryLightHighContrast,
@@ -162,6 +174,9 @@ private val highContrastLightColorScheme = lightColorScheme(
     surfaceContainerHighest = surfaceContainerHighestLightHighContrast,
 )
 
+/**
+ * **mediumContrastDarkColorScheme** medium contrast dark colors scheme
+ */
 private val mediumContrastDarkColorScheme = darkColorScheme(
     primary = primaryDarkMediumContrast,
     onPrimary = onPrimaryDarkMediumContrast,
@@ -200,6 +215,9 @@ private val mediumContrastDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDarkMediumContrast,
 )
 
+/**
+ * **highContrastDarkColorScheme** high contrast dark colors scheme
+ */
 private val highContrastDarkColorScheme = darkColorScheme(
     primary = primaryDarkHighContrast,
     onPrimary = onPrimaryDarkHighContrast,
@@ -238,6 +256,12 @@ private val highContrastDarkColorScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
 )
 
+/**
+ * Method to apply the Ametista theme to the content
+ *
+ * @param darkTheme Whether the theme to use is the dark one
+ * @param content The content to display
+ */
 @Composable
 fun AmetistaTheme(
     darkTheme: Boolean = when (localUser.theme!!) {
