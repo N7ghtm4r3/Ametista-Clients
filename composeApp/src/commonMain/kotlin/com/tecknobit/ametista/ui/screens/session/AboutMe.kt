@@ -185,7 +185,6 @@ private fun ProfilePicPicker() {
 /**
  * Function to display the section of the user's email and allowing the user to change it
  *
- * No-any params required
  */
 @Composable
 @NonRestartableComposable
@@ -235,7 +234,6 @@ private fun EmailSection() {
 /**
  * Function to display the section of the user's password and allowing the user to change it
  *
- * No-any params required
  */
 @Composable
 @NonRestartableComposable

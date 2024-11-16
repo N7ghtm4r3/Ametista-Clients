@@ -72,6 +72,13 @@ import io.github.vinceglb.filekit.core.PickerType
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The layout to work on [AmetistaApplication] such add a new one or edit an existing one
+ *
+ * @param show whether the layout is visible or not
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param application The application to edit if not *null*
+ */
 @Composable
 @NonRestartableComposable
 fun WorkOnApplication(
@@ -159,6 +166,12 @@ fun WorkOnApplication(
     }
 }
 
+/**
+ * The title section for the [WorkOnApplication] component
+ *
+ * @param closeDialog The action to execute when the dialog has been closed
+ * @param isInEditMode whether the operation to execute is an edit or an add one
+ */
 @Composable
 @NonRestartableComposable
 private fun DialogTitle(
@@ -189,6 +202,12 @@ private fun DialogTitle(
     }
 }
 
+/**
+ * The content section for the [WorkOnApplication] component
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param borderColor The color border indicator for the [AppIconPicker] component
+ */
 @Composable
 @NonRestartableComposable
 private fun DialogContent(
@@ -226,6 +245,12 @@ private fun DialogContent(
     }
 }
 
+/**
+ * The picker to choose the application icon
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param borderColor The color border indicator for the picker
+ */
 @Composable
 @NonRestartableComposable
 private fun AppIconPicker(
@@ -286,6 +311,13 @@ private fun AppIconPicker(
     }
 }
 
+/**
+ * The actions section for the [WorkOnApplication] component
+ *
+ * @param closeDialog The action to execute when the dialog has been closed
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param application The application to edit if not *null*
+ */
 @Composable
 @NonRestartableComposable
 private fun DialogActions(
@@ -338,10 +370,24 @@ private fun DialogActions(
     }
 }
 
+/**
+ * Method to review the application during the runtime
+ *
+ * @param flowAction The action to execute after the app has been reviewed or the normal workflow if
+ * not reviewed
+ */
 expect fun reviewApp(
     flowAction: () -> Unit
 )
 
+/**
+ * The [EquinoxAlertDialog] to warn the user about the application deletion
+ *
+ * @param show whether the layout is visible or not
+ * @param application The application to delete
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param onDelete The action to execute when the application has been deleted
+ */
 @Composable
 @NonRestartableComposable
 fun DeleteApplication(

@@ -35,14 +35,28 @@ import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.apimanager.annotations.Wrapper
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 
+/**
+ * **ICONS_REGEX** -> the regex to determine whether the application icon is selected one or provided
+ * by the server
+ */
 private const val ICONS_REGEX = "icons"
 
+/**
+ * The component to display the applications list
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen]
+ */
 @Composable
 @NonRestartableComposable
 expect fun Applications(
     viewModel: ApplicationsScreenViewModel
 )
 
+/**
+ * The layout to display when the applications list is empty
+ *
+ * @param noApplications Whether the applications list is empty or not
+ */
 @Composable
 @NonRestartableComposable
 fun NoApplications(
@@ -66,6 +80,13 @@ fun NoApplications(
     }
 }
 
+/**
+ * The component to the details of an [AmetistaApplication]
+ *
+ * @param isTheFirst Whether is the first application of the list displayed
+ * @param application The application to display
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen]
+ */
 @Composable
 @NonRestartableComposable
 expect fun ApplicationItem(
@@ -74,6 +95,13 @@ expect fun ApplicationItem(
     viewModel: ApplicationsScreenViewModel
 )
 
+/**
+ * Method to get the complete url to display the application icon
+ *
+ * @param application The application from get the icon url
+ *
+ * @return the complete icon url as [String]
+ */
 @Wrapper
 fun getApplicationIconCompleteUrl(
     application: AmetistaApplication
@@ -83,6 +111,13 @@ fun getApplicationIconCompleteUrl(
     )
 }
 
+/**
+ * Method to get the complete url to display the application icon
+ *
+ * @param url The slice of the icon url
+ *
+ * @return the complete icon url as [String]
+ */
 fun getApplicationIconCompleteUrl(
     url: String
 ): String {
@@ -91,12 +126,23 @@ fun getApplicationIconCompleteUrl(
     return localUser.hostAddress + "/" + url
 }
 
+/**
+ * Method to navigate to the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen] screen
+ *
+ * @param application The application related to the screen to show
+ */
 fun navToApplicationScreen(
     application: AmetistaApplication
 ) {
     navigator.navigate("$APPLICATION_SCREEN/${application.id}")
 }
 
+/**
+ * The component to display the icon of the application
+ *
+ * @param modifier The [Modifier] to apply to the component
+ * @param application The application to display its icon
+ */
 @Composable
 @NonRestartableComposable
 expect fun ApplicationIcon(
@@ -104,6 +150,12 @@ expect fun ApplicationIcon(
     application: AmetistaApplication
 )
 
+/**
+ * The component to display the description of the application
+ *
+ * @param expand Whether the layout is visible or not
+ * @param application The application to display its description
+ */
 @Composable
 @NonRestartableComposable
 fun ExpandApplicationDescription(

@@ -19,8 +19,13 @@ import io.github.vinceglb.filekit.core.PlatformFile
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
 
-@NonRestartableComposable
+/**
+ * Function to check whether are available any updates for each platform and then launch the application
+ * which the correct first screen to display
+ *
+ */
 @Composable
+@NonRestartableComposable
 actual fun CheckForUpdatesAndLaunch() {
     var launchApp by remember { mutableStateOf(true) }
     UpdaterDialog(
@@ -39,25 +44,41 @@ actual fun CheckForUpdatesAndLaunch() {
 /**
  * Function to manage correctly the back navigation from the current screen
  *
- * No-any params required
  */
 @Composable
 @NonRestartableComposable
 actual fun CloseApplicationOnNavBack() {
 }
 
+/**
+ * Function to get the current screen dimension of the device where the application is running
+ *
+ *
+ * @return the width size class based on the current dimension of the screen as [WindowWidthSizeClass]
+ */
 @Composable
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 actual fun getCurrentWidthSizeClass(): WindowWidthSizeClass {
     return calculateWindowSizeClass().widthSizeClass
 }
 
+/**
+ * Function to get the image picture's path
+ *
+ * @param imagePic: the asset from fetch its path
+ *
+ * @return the asset path as [String]
+ */
 actual fun getImagePath(
     imagePic: PlatformFile?
 ): String? {
     return imagePic?.path
 }
 
+/**
+ * Function to set locale language for the application
+ *
+ */
 actual fun setUserLanguage() {
     var tag = localUser.language
     if (tag == null)

@@ -46,6 +46,11 @@ import com.tecknobit.equinoxcompose.components.Tile
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 
+/**
+ * Method to get the related icon based on the [Platform] value
+ *
+ * @return platform icon as [ImageVector]
+ */
 fun Platform.icon(): ImageVector {
     return when (this) {
         ANDROID -> Icons.Default.Android
@@ -55,6 +60,12 @@ fun Platform.icon(): ImageVector {
     }
 }
 
+/**
+ * Custom grid to display the platforms attached to an application
+ *
+ * @param viewModel The viewmodel of the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param applicationPlatforms The platforms attached to the application
+ */
 @Composable
 @NonRestartableComposable
 fun PlatformsCustomGrid(
@@ -88,8 +99,22 @@ fun PlatformsCustomGrid(
     }
 }
 
+/**
+ * Method to get the correct size for a [Tile] component
+ *
+ * @return the size as [Dp]
+ */
 expect fun tileSize(): Dp
 
+/**
+ * Custom [Row] to display the platforms
+ *
+ * @param viewModel The viewmodel of the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param applicationPlatforms The platforms attached to the application
+ * @param platforms The platforms to display in the [Row]
+ * @param size The size of the [Tile]
+ *
+ */
 @Composable
 @NonRestartableComposable
 private fun PlatformsRow(
@@ -110,6 +135,15 @@ private fun PlatformsRow(
     }
 }
 
+/**
+ * Method to arrange the tiles in the [Row]
+ *
+ * @param viewModel The viewmodel of the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param applicationPlatforms The platforms attached to the application
+ * @param platforms The platforms to display in the [Row]
+ * @param size The size of the [Tile]
+ *
+ */
 @Composable
 @NonRestartableComposable
 private fun DrawTiles(
@@ -166,6 +200,11 @@ private fun DrawTiles(
     }
 }
 
+/**
+ * Method to get the related theme based on the [Platform] value
+ *
+ * @param content The UI content to display with the correct theme
+ */
 @Composable
 fun Platform.Theme(
     content: @Composable () -> Unit
@@ -197,6 +236,11 @@ fun Platform.Theme(
     }
 }
 
+/**
+ * Method to copy to the clipboard a content value
+ *
+ * @param content The content to copy
+ */
 expect fun copyToClipboard(
     content: String
 )

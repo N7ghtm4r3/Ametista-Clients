@@ -8,6 +8,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts.StartIntentSenderForResult
+import androidx.annotation.CallSuper
+import androidx.annotation.ContentView
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -20,6 +22,13 @@ import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.AUTH_SCREEN
 import com.tecknobit.equinoxcompose.helpers.session.setUpSession
 import io.github.vinceglb.filekit.core.FileKit
 
+/**
+ * The [MainActivity] is used as entry point of Ametista's application for Android
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see ComponentActivity
+ *
+ */
 class MainActivity : ComponentActivity() {
 
     companion object {
@@ -43,6 +52,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * If your ComponentActivity is annotated with [ContentView], this will
+     * call [setContentView] for you.
+     */
+    @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ContextProvider.setCurrentActivity(this)
@@ -53,6 +69,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    /**
+     * Function to init the instances for the session
+     *
+     * No-any params required
+     */
     @Composable
     @NonRestartableComposable
     private fun InitSession() {

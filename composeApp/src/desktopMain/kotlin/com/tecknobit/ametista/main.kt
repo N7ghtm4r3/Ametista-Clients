@@ -14,6 +14,12 @@ import com.tecknobit.equinoxcompose.helpers.session.setUpSession
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The [main] function is used as entry point of Nova's application for Desktop
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ */
 fun main() = application {
     Window(
         onCloseRequest = ::exitApplication,
@@ -28,6 +34,10 @@ fun main() = application {
     }
 }
 
+/**
+ * Function to init the instances for the session
+ *
+ */
 @Composable
 @NonRestartableComposable
 private fun InitSession() {

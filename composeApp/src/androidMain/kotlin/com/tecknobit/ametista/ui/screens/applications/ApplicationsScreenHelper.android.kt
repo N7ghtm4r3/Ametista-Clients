@@ -49,6 +49,11 @@ import com.tecknobit.ametistacore.models.AmetistaApplication
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 import org.jetbrains.compose.resources.painterResource
 
+/**
+ * The component to display the applications list
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen]
+ */
 @Composable
 @NonRestartableComposable
 actual fun Applications(
@@ -84,6 +89,13 @@ actual fun Applications(
     )
 }
 
+/**
+ * The component to the details of an [AmetistaApplication]
+ *
+ * @param isTheFirst Whether is the first application of the list displayed
+ * @param application The application to display
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen]
+ */
 @Composable
 @NonRestartableComposable
 actual fun ApplicationItem(
@@ -199,8 +211,14 @@ actual fun ApplicationItem(
     }
 }
 
-@NonRestartableComposable
+/**
+ * The component to display the icon of the application
+ *
+ * @param modifier The [Modifier] to apply to the component
+ * @param application The application to display its icon
+ */
 @Composable
+@NonRestartableComposable
 actual fun ApplicationIcon(
     modifier: Modifier,
     application: AmetistaApplication

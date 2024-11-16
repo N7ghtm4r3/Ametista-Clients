@@ -26,6 +26,11 @@ import java.io.InputStream
 import java.util.Locale
 import kotlin.math.min
 
+/**
+ * Function to check whether are available any updates for each platform and then launch the application
+ * which the correct first screen to display
+ *
+ */
 @Composable
 @NonRestartableComposable
 actual fun CheckForUpdatesAndLaunch() {
@@ -48,7 +53,6 @@ actual fun CheckForUpdatesAndLaunch() {
 /**
  * Function to manage correctly the back navigation from the current screen
  *
- * No-any params required
  */
 @Composable
 @NonRestartableComposable
@@ -59,6 +63,11 @@ actual fun CloseApplicationOnNavBack() {
     }
 }
 
+/**
+ * Function to get the current screen dimension of the device where the application is running
+ *
+ * @return the width size class based on the current dimension of the screen as [WindowWidthSizeClass]
+ */
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 actual fun getCurrentWidthSizeClass(): WindowWidthSizeClass {
@@ -68,6 +77,13 @@ actual fun getCurrentWidthSizeClass(): WindowWidthSizeClass {
     ).widthSizeClass
 }
 
+/**
+ * Function to get the image picture's path
+ *
+ * @param imagePic: the asset from fetch its path
+ *
+ * @return the asset path as [String]
+ */
 actual fun getImagePath(
     imagePic: PlatformFile?
 ): String? {
@@ -122,6 +138,10 @@ private fun getFilePath(
     return file.path
 }
 
+/**
+ * Function to set locale language for the application
+ *
+ */
 actual fun setUserLanguage() {
     var tag = localUser.language
     if (tag == null)
