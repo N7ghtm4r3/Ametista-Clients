@@ -11,6 +11,10 @@ import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import com.tecknobit.ametista.getCurrentWidthSizeClass
 
+/**
+ * Custom [HorizontalDivider] for the [com.tecknobit.ametista.ui.screens.session.SessionScreen] to divide
+ * each section
+ */
 @Composable
 @NonRestartableComposable
 fun SectionDivider() {

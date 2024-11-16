@@ -14,6 +14,11 @@ import androidx.compose.ui.unit.dp
 import com.tecknobit.ametistacore.models.AmetistaUser.Role
 import com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER
 
+/**
+ * The badge of a [Role]
+ *
+ * @param role The role to create the related badge
+ */
 @Composable
 @NonRestartableComposable
 fun RoleBadge(

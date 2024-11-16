@@ -83,10 +83,20 @@ import ir.ehsannarmani.compose_charts.models.PopupProperties
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * **axisProperties** custom axis properties for the [PerformanceCard]
+ */
 private val axisProperties = GridProperties.AxisProperties(
     enabled = false
 )
 
+/**
+ * Specific card with the chart of the LAUNCH_TIME analytic
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param cardHeight The height of the card
+ * @param performanceData The related performance data of the chart
+ */
 @Wrapper
 @Composable
 @NonRestartableComposable
@@ -121,6 +131,13 @@ fun LaunchTime(
     }
 }
 
+/**
+ * Specific card with the chart of the NETWORK_REQUESTS analytic
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param cardHeight The height of the card
+ * @param performanceData The related performance data of the chart
+ */
 @Wrapper
 @Composable
 @NonRestartableComposable
@@ -147,6 +164,13 @@ fun NetworkRequests(
     }
 }
 
+/**
+ * Specific card with the chart of the TOTAL_ISSUES analytic
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param cardHeight The height of the card
+ * @param performanceData The related performance data of the chart
+ */
 @Wrapper
 @Composable
 @NonRestartableComposable
@@ -173,6 +197,13 @@ fun IssuesNumber(
     }
 }
 
+/**
+ * Specific card with the chart of the ISSUES_PER_SESSION analytic
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param cardHeight The height of the card
+ * @param performanceData The related performance data of the chart
+ */
 @Wrapper
 @Composable
 @NonRestartableComposable
@@ -199,6 +230,16 @@ fun IssuesPerSessionsNumber(
     }
 }
 
+/**
+ * Container card for the [com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic] analytic
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param title The title of the card
+ * @param cardHeight The height of the card
+ * @param data The performance data for the chart
+ * @param popupProperties The properties for the popup
+ * @param noDataIcon The icon to display when there are no available data for the [LineChart]
+ */
 @Composable
 @NonRestartableComposable
 private fun PerformanceCard(
@@ -271,6 +312,13 @@ private fun PerformanceCard(
     }
 }
 
+/**
+ * The header of the [PerformanceCard] component
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param title The title of the card
+ * @param data The performance data for the chart
+ */
 @Composable
 @NonRestartableComposable
 private fun CardHeader(
@@ -305,6 +353,14 @@ private fun CardHeader(
     }
 }
 
+/**
+ * The actions section of the [PerformanceCard] component
+ *
+ * @param modifier The modifier to apply to the component
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param title The title of the card
+ * @param data The performance data for the chart
+ */
 @Composable
 @NonRestartableComposable
 private fun CardActions(
@@ -368,6 +424,13 @@ private fun CardActions(
     }
 }
 
+/**
+ * The component to display what represent the analytic of the [PerformanceCard]
+ *
+ * @param show Whether to display the information of the analytic related to the card
+ * @param title The title of the card
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ */
 @Composable
 @NonRestartableComposable
 private fun AnalyticInfo(
@@ -424,6 +487,11 @@ private fun AnalyticInfo(
     }
 }
 
+/**
+ * The component to display the custom legend for the [PerformanceCard] component
+ *
+ * @param sampleVersions The sample versions used to for the [LineChart]
+ */
 @Composable
 @NonRestartableComposable
 private fun ChartLegend(
@@ -447,6 +515,12 @@ private fun ChartLegend(
     }
 }
 
+/**
+ * The legend indicator for the [ChartLegend] component
+ *
+ * @param index The index of sample the in samples available
+ * @param sample The sample value (version of the application used as sample)
+ */
 @Composable
 @NonRestartableComposable
 private fun LegendItem(
@@ -476,6 +550,13 @@ private fun LegendItem(
     }
 }
 
+/**
+ * Method to get color for the chart line based on the index
+ *
+ * @param index The index of sample the in samples available
+ *
+ * @return the related color for the chart line [Color]
+ */
 @Composable
 private fun getLineColor(
     index: Int
@@ -487,6 +568,15 @@ private fun getLineColor(
     }
 }
 
+/**
+ * The layout to display when there are no available data for the [PerformanceCard] component
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param title The title of the card
+ * @param cardHeight The height of the card
+ * @param icon The representative icon for the no available chart data
+ * @param data The performance data for the chart
+ */
 @Composable
 @NonRestartableComposable
 private fun NoChartData(
@@ -512,6 +602,12 @@ private fun NoChartData(
     }
 }
 
+/**
+ * The title component to display a formatted text
+ *
+ * @param modifier The modifier to apply to the component
+ * @param title The title value
+ */
 @Composable
 @NonRestartableComposable
 private fun TitleText(
@@ -526,6 +622,13 @@ private fun TitleText(
     )
 }
 
+/**
+ * Method load the data for the chart
+ *
+ * @param lineColors The colors of the lines of the chart
+ * @param data The data to use to load the chart
+ * @param popupProperties The properties of the popup
+ */
 private fun loadChartData(
     lineColors: List<Color>,
     data: PerformanceDataItem,

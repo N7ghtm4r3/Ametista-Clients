@@ -15,6 +15,13 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
 
+/**
+ * The custom [Dialog] wrapped with the Equinox philosophy
+ *
+ * @param show Whether the layout is visible or not
+ * @param viewModel The viewmodel related to the screen which invoked this component
+ * @param content The content of the dialog
+ */
 @Composable
 @Deprecated(
     "JUST FOR TESTING WILL BE INTEGRATED IN THE OFFICIAL EQUINOX-COMPOSE LIBRARY",

@@ -75,6 +75,12 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
 
+/**
+ * The [EquinoxDialog] to use to fill with the filters value to use to fetch the issues
+ *
+ * @param show Whether the layout is visible or not
+ * @param viewModel The viewmodel related to the screen which invoked this component
+ */
 @Composable
 @NonRestartableComposable
 fun FilterDialog(
@@ -112,6 +118,11 @@ fun FilterDialog(
     )
 }
 
+/**
+ * The [FiltersInput] where insert the filters
+ *
+ * @param viewModel The viewmodel related to the screen which invoked this component
+ */
 @Composable
 @NonRestartableComposable
 private fun FiltersInput(
@@ -141,6 +152,14 @@ private fun FiltersInput(
     }
 }
 
+/**
+ * The layout where select the filters for the performance data
+ *
+ * @param show Whether the layout is visible or not
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param title The title of the chart where to use the filters
+ * @param data The performance data to filter
+ */
 @Composable
 @NonRestartableComposable
 fun FilterChartData(
@@ -227,6 +246,12 @@ fun FilterChartData(
     }
 }
 
+/**
+ * The component to select the temporal range to filter the performance data
+ *
+ * @param modifier The modifier to apply to the component
+ * @param state The [DateRangePickerState] for the [DateRangePicker]
+ */
 @Composable
 @NonRestartableComposable
 private fun TemporalRangeSelector(
@@ -253,6 +278,11 @@ private fun TemporalRangeSelector(
     HorizontalDivider()
 }
 
+/**
+ * The headline section of the [TemporalRangeSelector]
+ *
+ * @param state The [DateRangePickerState] for the [DateRangePicker]
+ */
 @Composable
 @NonRestartableComposable
 private fun DatePickerHeadline(
@@ -283,6 +313,12 @@ private fun DatePickerHeadline(
     }
 }
 
+/**
+ * The date indicator section to display the selected range
+ *
+ * @param dateFormatter The formatter to use to display the range
+ * @param date The date selected
+ */
 @Composable
 @NonRestartableComposable
 private fun SelectedDateIndicator(
@@ -302,6 +338,13 @@ private fun SelectedDateIndicator(
     }
 }
 
+/**
+ * The component to select the versions samples to filter the performance data
+ *
+ * @param modifier The modifier to apply to the selector
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param data The performance data to filter
+ */
 @Composable
 @NonRestartableComposable
 private fun VersionsSelector(
@@ -374,6 +417,11 @@ private fun VersionsSelector(
     )
 }
 
+/**
+ * The filter header component
+ *
+ * @param text The header text
+ */
 @Composable
 @NonRestartableComposable
 private fun FilterSectionHeader(
@@ -390,6 +438,13 @@ private fun FilterSectionHeader(
     )
 }
 
+/**
+ * Method to get the title related to the filter
+ *
+ * @param title The title as [StringResource] from fetch the title of the filter
+ *
+ * @return filter title as [StringResource]
+ */
 private fun getFilterTitle(
     title: StringResource
 ): StringResource {
@@ -401,6 +456,13 @@ private fun getFilterTitle(
     }
 }
 
+/**
+ * The actions section for the [FilterChartData] component
+ *
+ * @param modifier The modifier to apply to the component
+ * @param closeModal The action to execute when the modal has been closed
+ * @param onConfirm The action to execute when the user confirm the action
+ */
 @Composable
 @NonRestartableComposable
 private fun ActionButtons(
@@ -430,6 +492,12 @@ private fun ActionButtons(
     }
 }
 
+/**
+ * Method show the error occurred during filtering
+ *
+ * @param toaster The toaster to use to display the [errorMessage]
+ * @param errorMessage The error message to display
+ */
 private fun showErrorToast(
     toaster: ToasterState,
     errorMessage: String

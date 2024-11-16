@@ -55,8 +55,17 @@ import com.tecknobit.ametistacore.models.analytics.issues.WebIssueAnalytic
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * **fileLineRegex** the regex to use to highlight the (Line Class.extension) from the error has been thrown
+ */
 private val fileLineRegex = "([\\w.]+\\.(kt|java):\\d+)".toRegex()
 
+/**
+ * The component to represent the details of an [IssueAnalytic]
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param issue The issue to represent
+ */
 @Composable
 @NonRestartableComposable
 fun Issue(
@@ -92,6 +101,13 @@ fun Issue(
     )
 }
 
+/**
+ * The component to display the stack trace of the error
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param expand Whether the component is visible or not
+ * @param issue The issue to represent
+ */
 @Composable
 @NonRestartableComposable
 private fun IssueStackTrace(
@@ -129,6 +145,11 @@ private fun IssueStackTrace(
     }
 }
 
+/**
+ * The section title of the [Issue] component
+ *
+ * @param issue The issue represented
+ */
 @Composable
 @NonRestartableComposable
 private fun IssueTitle(
@@ -147,6 +168,11 @@ private fun IssueTitle(
     )
 }
 
+/**
+ * Method to get the stacktrace of an [Issue] formatted
+ *
+ * @param issue The issue from fetch its stacktrace
+ */
 @Composable
 private fun parsedStackTrace(
     issue: IssueAnalytic
@@ -171,6 +197,11 @@ private fun parsedStackTrace(
     }
 }
 
+/**
+ * Section to display the default data of an issue
+ *
+ * @param issue The issue to represent
+ */
 @Composable
 @NonRestartableComposable
 private fun IssueVisibleData(
@@ -208,6 +239,11 @@ private fun IssueVisibleData(
     }
 }
 
+/**
+ * Section to display the data of a [WebIssueAnalytic]
+ *
+ * @param issue The web-issue to represent
+ */
 @Composable
 @NonRestartableComposable
 private fun WebIssueBrowserInfo(
@@ -240,6 +276,11 @@ private fun WebIssueBrowserInfo(
     }
 }
 
+/**
+ * Section to display the device data related to an issue
+ *
+ * @param issue The issue to represent
+ */
 @Composable
 @NonRestartableComposable
 private fun IssueDynamicData(
@@ -265,6 +306,11 @@ private fun IssueDynamicData(
     }
 }
 
+/**
+ * The container component for the data of an [AmetistaDevice] related to the [Issue] represented
+ *
+ * @param device The device to represent
+ */
 @Composable
 @NonRestartableComposable
 private fun IssueDeviceExpandableData(
@@ -298,6 +344,12 @@ private fun IssueDeviceExpandableData(
     }
 }
 
+/**
+ * The data of an [AmetistaDevice] related to the [Issue] represented
+ *
+ * @param modifier The modifier to apply to the component
+ * @param device The device to represent
+ */
 @Composable
 @NonRestartableComposable
 private fun IssueDeviceData(
@@ -338,7 +390,13 @@ private fun IssueDeviceData(
     }
 }
 
-
+/**
+ * The container component to display the issue data whit its header
+ *
+ * @param modifier The modifier to apply to the component
+ * @param header The header representative of the data to display
+ * @param data The issue data to display
+ */
 @Composable
 @NonRestartableComposable
 private fun IssueSection(

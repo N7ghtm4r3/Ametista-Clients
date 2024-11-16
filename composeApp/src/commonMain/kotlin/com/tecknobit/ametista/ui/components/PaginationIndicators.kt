@@ -11,13 +11,18 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The custom progress indicator visible when the first page of the items requested has been loading
+ */
 @Composable
+@NonRestartableComposable
 fun FirstPageProgressIndicator() {
     Column(
         modifier = Modifier
@@ -41,7 +46,11 @@ fun FirstPageProgressIndicator() {
     }
 }
 
+/**
+ * The custom progress indicator visible when a new page of items has been requested
+ */
 @Composable
+@NonRestartableComposable
 fun NewPageProgressIndicator() {
     Column(
         modifier = Modifier
