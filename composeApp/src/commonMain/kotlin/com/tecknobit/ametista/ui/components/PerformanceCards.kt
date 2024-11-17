@@ -117,7 +117,7 @@ fun LaunchTime(
             viewModel = viewModel,
             title = string.launch_time,
             cardHeight = cardHeight,
-            data = performanceData.launchTimes,
+            data = performanceData.launchTime,
             popupProperties = PopupProperties(
                 textStyle = TextStyle(
                     color = Color.White
