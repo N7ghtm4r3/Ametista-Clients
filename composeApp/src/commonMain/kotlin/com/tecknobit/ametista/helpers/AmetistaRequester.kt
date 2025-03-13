@@ -1,52 +1,49 @@
 package com.tecknobit.ametista.helpers
 
+import com.tecknobit.ametistacore.ADMIN_CODE_KEY
+import com.tecknobit.ametistacore.APPLICATIONS_KEY
+import com.tecknobit.ametistacore.APPLICATION_ICON_KEY
+import com.tecknobit.ametistacore.DESCRIPTION_KEY
+import com.tecknobit.ametistacore.FILTERS_KEY
+import com.tecknobit.ametistacore.ISSUES_KEY
+import com.tecknobit.ametistacore.MEMBERS_KEY
+import com.tecknobit.ametistacore.PERFORMANCE_ANALYTIC_TYPE_KEY
+import com.tecknobit.ametistacore.PLATFORMS_KEY
+import com.tecknobit.ametistacore.PLATFORM_KEY
+import com.tecknobit.ametistacore.ROLE_KEY
+import com.tecknobit.ametistacore.SESSION_KEY
+import com.tecknobit.ametistacore.VERSION_FILTERS_KEY
+import com.tecknobit.ametistacore.enums.PerformanceAnalyticType
+import com.tecknobit.ametistacore.enums.Platform
+import com.tecknobit.ametistacore.enums.Role
+import com.tecknobit.ametistacore.enums.Role.ADMIN
 import com.tecknobit.ametistacore.helpers.AmetistaEndpointsSet.CHANGE_PRESET_PASSWORD_ENDPOINT
-import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse
-import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
-import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE_SIZE
-import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.PAGE_KEY
-import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
-import com.tecknobit.ametistacore.models.AmetistaApplication
-import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATIONS_KEY
-import com.tecknobit.ametistacore.models.AmetistaApplication.APPLICATION_ICON_KEY
-import com.tecknobit.ametistacore.models.AmetistaApplication.DESCRIPTION_KEY
-import com.tecknobit.ametistacore.models.AmetistaApplication.FILTERS_KEY
-import com.tecknobit.ametistacore.models.AmetistaApplication.PLATFORMS_KEY
-import com.tecknobit.ametistacore.models.AmetistaMember
-import com.tecknobit.ametistacore.models.AmetistaUser.ADMIN_CODE_KEY
-import com.tecknobit.ametistacore.models.AmetistaUser.EMAIL_KEY
-import com.tecknobit.ametistacore.models.AmetistaUser.LANGUAGE_KEY
-import com.tecknobit.ametistacore.models.AmetistaUser.MEMBERS_KEY
-import com.tecknobit.ametistacore.models.AmetistaUser.NAME_KEY
-import com.tecknobit.ametistacore.models.AmetistaUser.PASSWORD_KEY
-import com.tecknobit.ametistacore.models.AmetistaUser.ROLE_KEY
-import com.tecknobit.ametistacore.models.AmetistaUser.Role.ADMIN
-import com.tecknobit.ametistacore.models.AmetistaUser.SESSION_KEY
-import com.tecknobit.ametistacore.models.AmetistaUser.SURNAME_KEY
-import com.tecknobit.ametistacore.models.Platform
-import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.PLATFORM_KEY
-import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic.ISSUES_KEY
-import com.tecknobit.ametistacore.models.analytics.issues.IssueAnalytic.VERSION_FILTERS_KEY
-import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic.PERFORMANCES_KEY
-import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic.PERFORMANCE_ANALYTIC_TYPE_KEY
-import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic.PerformanceAnalyticType
-import com.tecknobit.ametistacore.models.analytics.performance.PerformanceDataFilters
-import com.tecknobit.apimanager.apis.APIRequest.Params
-import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
-import com.tecknobit.apimanager.formatters.JsonHelper
-import com.tecknobit.equinox.environment.helpers.EquinoxBaseEndpointsSet.SIGN_IN_ENDPOINT
-import com.tecknobit.equinox.environment.helpers.EquinoxBaseEndpointsSet.SIGN_UP_ENDPOINT
 import com.tecknobit.equinoxcompose.network.EquinoxRequester
+import com.tecknobit.equinoxcore.annotations.Assembler
 import com.tecknobit.equinoxcore.annotations.RequestPath
+import com.tecknobit.equinoxcore.helpers.EMAIL_KEY
+import com.tecknobit.equinoxcore.helpers.LANGUAGE_KEY
+import com.tecknobit.equinoxcore.helpers.NAME_KEY
+import com.tecknobit.equinoxcore.helpers.PASSWORD_KEY
+import com.tecknobit.equinoxcore.helpers.SERVER_SECRET_KEY
+import com.tecknobit.equinoxcore.helpers.SURNAME_KEY
+import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.SIGN_IN_ENDPOINT
+import com.tecknobit.equinoxcore.network.EquinoxBaseEndpointsSet.Companion.SIGN_UP_ENDPOINT
 import com.tecknobit.equinoxcore.network.RequestMethod.*
+import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
+import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DEFAULT_PAGE_SIZE
+import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_KEY
+import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.PAGE_SIZE_KEY
+import io.ktor.client.request.forms.formData
+import io.ktor.http.Headers
+import io.ktor.http.HttpHeaders
+import io.ktor.http.content.PartData
 import kotlinx.serialization.json.JsonObject
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 
 /**
- * The **AmetistaRequester** class is useful to communicate with the Ametista's backend
+ * The `AmetistaRequester` class is useful to communicate with the Ametista's backend
  *
  * @param host The host where is running the Nova's backend
  * @param userId The user identifier
@@ -87,7 +84,7 @@ class AmetistaRequester(
      *
      */
     @RequestPath(path = "/api/v1/users/signUp", method = POST)
-    fun adminSignUp(
+    suspend fun adminSignUp(
         adminCode: String,
         name: String,
         surname: String,
@@ -95,14 +92,15 @@ class AmetistaRequester(
         password: String,
         language: String,
     ): JsonObject {
-        val payload = Params()
-        payload.addParam(ADMIN_CODE_KEY, adminCode)
-        payload.addParam(NAME_KEY, name)
-        payload.addParam(SURNAME_KEY, surname)
-        payload.addParam(EMAIL_KEY, email)
-        payload.addParam(PASSWORD_KEY, password)
-        payload.addParam(LANGUAGE_KEY, language)
-        payload.addParam(ROLE_KEY, ADMIN)
+        val payload = buildJsonObject {
+            put(ADMIN_CODE_KEY, adminCode)
+            put(NAME_KEY, name)
+            put(SURNAME_KEY, surname)
+            put(EMAIL_KEY, email)
+            put(PASSWORD_KEY, password)
+            put(LANGUAGE_KEY, language)
+            put(ROLE_KEY, ADMIN.name)
+        }
         return execPost(
             endpoint = SIGN_UP_ENDPOINT,
             payload = payload
@@ -120,15 +118,16 @@ class AmetistaRequester(
      *
      */
     @RequestPath(path = "/api/v1/users/signIn", method = POST)
-    fun adminSignIn(
+    suspend fun adminSignIn(
         adminCode: String,
         email: String,
         password: String,
     ): JsonObject {
-        val payload = Params()
-        payload.addParam(ADMIN_CODE_KEY, adminCode)
-        payload.addParam(EMAIL_KEY, email)
-        payload.addParam(PASSWORD_KEY, password)
+        val payload = buildJsonObject {
+            put(ADMIN_CODE_KEY, adminCode)
+            put(EMAIL_KEY, email)
+            put(PASSWORD_KEY, password)
+        }
         return execPost(
             endpoint = SIGN_IN_ENDPOINT,
             payload = payload
@@ -146,15 +145,16 @@ class AmetistaRequester(
      *
      */
     @RequestPath(path = "/api/v1/users/signIn", method = POST)
-    fun viewerSignIn(
+    suspend fun viewerSignIn(
         serverSecret: String,
         email: String,
         password: String,
     ): JsonObject {
-        val payload = Params()
-        payload.addParam(SERVER_SECRET_KEY, serverSecret)
-        payload.addParam(EMAIL_KEY, email)
-        payload.addParam(PASSWORD_KEY, password)
+        val payload = buildJsonObject {
+            put(SERVER_SECRET_KEY, serverSecret)
+            put(EMAIL_KEY, email)
+            put(PASSWORD_KEY, password)
+        }
         return execPost(
             endpoint = SIGN_IN_ENDPOINT,
             payload = payload
@@ -168,7 +168,7 @@ class AmetistaRequester(
      * @param pageSize The size of the result for the page
      */
     @RequestPath(path = "/api/v1/users/{user_id}/session/members", method = GET)
-    fun getSessionMembers(
+    suspend fun getSessionMembers(
         page: Int = DEFAULT_PAGE,
         pageSize: Int = DEFAULT_PAGE_SIZE,
     ): JsonObject {
@@ -177,9 +177,8 @@ class AmetistaRequester(
             pageSize = pageSize
         )
         return execGet(
-            endpoint = assembleSessionEndpoint(
-                query = query.createQueryString()
-            )
+            endpoint = assembleSessionEndpoint(),
+            query = query
         )
     }
 
@@ -194,15 +193,16 @@ class AmetistaRequester(
      *
      */
     @RequestPath(path = "/api/v1/users/{user_id}/session/members", method = POST)
-    fun addViewer(
+    suspend fun addViewer(
         name: String,
         surname: String,
         email: String,
     ): JsonObject {
-        val payload = Params()
-        payload.addParam(NAME_KEY, name)
-        payload.addParam(SURNAME_KEY, surname)
-        payload.addParam(EMAIL_KEY, email)
+        val payload = buildJsonObject {
+            put(NAME_KEY, name)
+            put(SURNAME_KEY, surname)
+            put(EMAIL_KEY, email)
+        }
         return execPost(
             endpoint = assembleSessionEndpoint(),
             payload = payload
@@ -217,8 +217,9 @@ class AmetistaRequester(
      * @return the result of the request as [JsonObject]
      *
      */
-    @RequestPath(path = "/api/v1/users/{user_id}/session/members/{member_id}", method = DELETE)
-    fun removeMember(
+    // TODO: TO EDIT 
+    /*@RequestPath(path = "/api/v1/users/{user_id}/session/members/{member_id}", method = DELETE)
+    suspend fun removeMember(
         member: AmetistaMember,
     ): JsonObject {
         return execDelete(
@@ -226,22 +227,23 @@ class AmetistaRequester(
                 subEndpoint = member.id
             )
         )
-    }
+    }*/
 
     /**
-     * Method to change the preset password by a [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER]
+     * Method to change the preset password by a [com.tecknobit.ametistacore.enums.Role.VIEWER]
      *
-     * @param password The password choose by the [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER]
+     * @param password The password choose by the [com.tecknobit.ametistacore.enums.Role.VIEWER]
      *
      * @return the result of the request as [JsonObject]
      *
      */
     @RequestPath(path = "/api/v1/users/{user_id}/changePresetPassword", method = PATCH)
-    fun changeViewerPresetPassword(
+    suspend fun changeViewerPresetPassword(
         password: String,
     ): JsonObject {
-        val payload = Params()
-        payload.addParam(PASSWORD_KEY, password)
+        val payload = buildJsonObject {
+            put(PASSWORD_KEY, password)
+        }
         return execPatch(
             endpoint = assembleUsersEndpointPath(
                 endpoint = CHANGE_PRESET_PASSWORD_ENDPOINT
@@ -254,18 +256,16 @@ class AmetistaRequester(
      * Method to assemble the endpoint to make the request to the users controller
      *
      * @param subEndpoint The endpoint path of the url
-     * @param query The query parameters
      *
      * @return an endpoint to make the request as [String]
      */
+    @Assembler
     private fun assembleSessionEndpoint(
         subEndpoint: String = "",
-        query: String = ""
     ): String {
         return assembleCustomEndpointPath(
             customEndpoint = "/$SESSION_KEY/$MEMBERS_KEY",
-            subEndpoint = subEndpoint,
-            query = query
+            subEndpoint = subEndpoint
         )
     }
 
@@ -280,7 +280,7 @@ class AmetistaRequester(
      * @return an endpoint to make the request as [String]
      */
     @RequestPath(path = "/api/v1/users/{user_id}/applications", method = GET)
-    fun getApplications(
+    suspend fun getApplications(
         page: Int = DEFAULT_PAGE,
         pageSize: Int = DEFAULT_PAGE_SIZE,
         name: String = "",
@@ -293,67 +293,69 @@ class AmetistaRequester(
             }
             platformsFormatter.deleteAt(platformsFormatter.lastIndex)
         }
-        val query = createPaginationQuery(
-            page = page,
-            pageSize = pageSize
-        )
-        query.addParam(NAME_KEY, name)
-        query.addParam(PLATFORMS_KEY, platformsFormatter.toString())
+        val query = buildJsonObject {
+            put(PAGE_KEY, page)
+            put(PAGE_SIZE_KEY, pageSize)
+            put(NAME_KEY, name)
+            put(PLATFORMS_KEY, platformsFormatter.toString())
+        }
         return execGet(
-            endpoint = assembleApplicationsEndpoint(
-                query = query.createQueryString()
-            )
+            endpoint = assembleApplicationsEndpoint(),
+            query = query
         )
     }
 
     /**
-     * Method to add a new [AmetistaApplication] to the system
+     * Method to add a new application to the system
      *
-     * @param icon The icon of the application
+     * @param iconBytes The bytes of the icon of the application
+     * @param iconName The name of the icon of the application
      * @param name The name of the application
      * @param description The description of the application
      *
      * @return an endpoint to make the request as [String]
      */
     @RequestPath(path = "/api/v1/users/{user_id}/applications", method = POST)
-    fun addApplication(
-        icon: String,
+    suspend fun addApplication(
+        iconBytes: ByteArray?,
+        iconName: String?,
         name: String,
         description: String,
     ): JsonObject {
-        val body = createApplicationPayload(
-            icon = icon,
+        val payload = createApplicationPayload(
+            iconBytes = iconBytes,
+            iconName = iconName,
             name = name,
             description = description
         )
         return execMultipartRequest(
             endpoint = assembleApplicationsEndpoint(),
-            body = body
+            payload = payload
         )
     }
 
     /**
-     * Method to edit an existing [AmetistaApplication]
+     * Method to edit an existing application
      *
-     * @param application The application to edit
-     * @param icon The icon of the application
+     * @param iconBytes The bytes of the icon of the application
+     * @param iconName The name of the icon of the application
      * @param name The name of the application
      * @param description The description of the application
      *
      * @return an endpoint to make the request as [String]
      */
-    @RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = POST)
-    fun editApplication(
+    // TODO: TO EDIT 
+    /*@RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = POST)
+    suspend fun editApplication(
         application: AmetistaApplication,
-        icon: String,
+        iconBytes: ByteArray?,
+        iconName: String?,
         name: String,
         description: String,
     ): JsonObject {
-        val body = createApplicationPayload(
-            icon = if (icon != application.icon)
-                icon
-            else
-                null,
+        val payload = createApplicationPayload(
+            iconBytes = iconBytes,
+            iconName = iconName,
             name = name,
             description = description
         )
@@ -361,53 +363,48 @@ class AmetistaRequester(
             endpoint = assembleApplicationsEndpoint(
                 subEndpoint = application.id
             ),
-            body = body
+            payload = payload
         )
-    }
+    }*/
 
     /**
      * Method to create the payload for the [addApplication] or [editApplication] requests
      *
-     * @param icon The icon of the application
+     * @param iconBytes The bytes of the icon of the application
+     * @param iconName The name of the icon of the application
      * @param name The name of the application
      * @param description The description of the application
      *
-     * @return the application payload as [MultipartBody]
+     * @return the application payload as [List] of [PartData]
      */
+    @Assembler
     private fun createApplicationPayload(
-        icon: String?,
+        iconBytes: ByteArray?,
+        iconName: String?,
         name: String,
-        description: String
-    ): MultipartBody {
-        val payload = MultipartBody.Builder()
-        if (icon != null) {
-            val iconFile = File(icon)
-            payload.addFormDataPart(
-                name = APPLICATION_ICON_KEY,
-                filename = iconFile.name,
-                body = iconFile.readBytes().toRequestBody("*/*".toMediaType())
-            )
+        description: String,
+    ): List<PartData> {
+        return formData {
+            iconBytes?.let {
+                append(APPLICATION_ICON_KEY, iconBytes, Headers.build {
+                    append(HttpHeaders.ContentType, "image/*")
+                    append(HttpHeaders.ContentDisposition, "filename=\"$iconName\"")
+                })
+            }
+            append(NAME_KEY, name)
+            append(DESCRIPTION_KEY, description)
         }
-        payload.addFormDataPart(
-            name = NAME_KEY,
-            value = name
-        )
-        payload.addFormDataPart(
-            name = DESCRIPTION_KEY,
-            value = description
-        )
-        return payload.build()
     }
 
     /**
-     * Method to get an existing [AmetistaApplication]
+     * Method to get an existing application
      *
      * @param applicationId The identifier of the application to get
      *
      * @return an endpoint to make the request as [String]
      */
     @RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = GET)
-    fun getApplication(
+    suspend fun getApplication(
         applicationId: String,
     ): JsonObject {
         return execGet(
@@ -430,10 +427,10 @@ class AmetistaRequester(
      */
     @RequestPath(
         path = "/api/v1/users/{user_id}/applications/{application_id}/issues",
-        query_parameters = "?platform={platform}",
+        queryParameters = "?platform={platform}",
         method = GET
     )
-    fun getIssues(
+    suspend fun getIssues(
         applicationId: String,
         platform: Platform,
         page: Int = DEFAULT_PAGE,
@@ -447,17 +444,17 @@ class AmetistaRequester(
             }
             filtersFormatter.deleteAt(filtersFormatter.lastIndex)
         }
-        val query = createPaginationQuery(
-            page = page,
-            pageSize = pageSize
-        )
-        query.addParam(PLATFORM_KEY, platform.name)
-        query.addParam(FILTERS_KEY, filtersFormatter.toString())
+        val query = buildJsonObject {
+            put(PAGE_KEY, page)
+            put(PAGE_SIZE_KEY, pageSize)
+            put(PLATFORM_KEY, platform.name)
+            put(FILTERS_KEY, filtersFormatter.toString())
+        }
         return execGet(
             endpoint = assembleApplicationsEndpoint(
-                subEndpoint = "$applicationId/$ISSUES_KEY",
-                query = query.createQueryString()
-            )
+                subEndpoint = "$applicationId/$ISSUES_KEY"
+            ),
+            query = query
         )
     }
 
@@ -469,29 +466,32 @@ class AmetistaRequester(
      * @param performanceDataFilters The filters value to use to filter the data
      *
      * @return an endpoint to make the request as [String]
-     */
+     *//*
     @RequestPath(
         path = "/api/v1/users/{user_id}/applications/{application_id}/performance",
-        query_parameters = "?platform={platform}",
+        queryParameters = "?platform={platform}",
         method = POST
     )
-    fun getPerformanceData(
+    // TODO: TO SET 
+    suspend fun getPerformanceData(
         applicationId: String,
         platform: Platform,
         performanceDataFilters: PerformanceDataFilters,
     ): JsonObject {
-        val query = Params()
-        query.addParam(PLATFORM_KEY, platform.name)
-        val payload = Params()
-        payload.addParam(FILTERS_KEY, performanceDataFilters.toPayload())
+        val query = buildJsonObject {
+            put(PLATFORM_KEY, platform.name)
+        }
+        val payload = buildJsonObject {
+            put(FILTERS_KEY, performanceDataFilters.toPayload())
+        }
         return execPost(
             endpoint = assembleApplicationsEndpoint(
-                subEndpoint = "$applicationId/$PERFORMANCES_KEY",
-                query = query.createQueryString()
+                subEndpoint = "$applicationId/$PERFORMANCES_KEY"
             ),
+            query = query,
             payload = payload
         )
-    }
+    }*/
 
     /**
      * Method to get the version samples for each analytic
@@ -504,22 +504,23 @@ class AmetistaRequester(
      */
     @RequestPath(
         path = "/api/v1/users/{user_id}/applications/{application_id}/versions",
-        query_parameters = "?platform={platform}&performance_analytic_type={performance_analytic_type}",
+        queryParameters = "?platform={platform}&performance_analytic_type={performance_analytic_type}",
         method = GET
     )
-    fun getVersionSamples(
+    suspend fun getVersionSamples(
         applicationId: String,
         platform: Platform,
         analyticType: PerformanceAnalyticType,
     ): JsonObject {
-        val query = Params()
-        query.addParam(PLATFORM_KEY, platform.name)
-        query.addParam(PERFORMANCE_ANALYTIC_TYPE_KEY, analyticType.name)
+        val query = buildJsonObject {
+            put(PLATFORM_KEY, platform.name)
+            put(PERFORMANCE_ANALYTIC_TYPE_KEY, analyticType.name)
+        }
         return execGet(
             endpoint = assembleApplicationsEndpoint(
-                subEndpoint = "$applicationId/$VERSION_FILTERS_KEY",
-                query = query.createQueryString()
-            )
+                subEndpoint = "$applicationId/$VERSION_FILTERS_KEY"
+            ),
+            query = query
         )
     }
 
@@ -530,8 +531,9 @@ class AmetistaRequester(
      *
      * @return an endpoint to make the request as [String]
      */
-    @RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = DELETE)
-    fun deleteApplication(
+    // TODO: TO SET 
+    /*@RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = DELETE)
+    suspend fun deleteApplication(
         application: AmetistaApplication,
     ): JsonObject {
         return execDelete(
@@ -539,76 +541,23 @@ class AmetistaRequester(
                 subEndpoint = application.id
             )
         )
-    }
+    }*/
 
     /**
      * Method to assemble the endpoint to make the request to the applications controller
      *
      * @param subEndpoint The endpoint path of the url
-     * @param query The query parameters
      *
      * @return an endpoint to make the request as [String]
      */
+    @Assembler
     private fun assembleApplicationsEndpoint(
         subEndpoint: String = "",
-        query: String = ""
     ): String {
         return assembleCustomEndpointPath(
             customEndpoint = "/$APPLICATIONS_KEY",
-            subEndpoint = subEndpoint,
-            query = query
+            subEndpoint = subEndpoint
         )
-    }
-
-    /**
-     * Method to execute and manage the paginated response of a request
-     *
-     * @param request The request to execute
-     * @param supplier The supplier function to instantiate a [T] item
-     * @param onSuccess The action to execute if the request has been successful
-     * @param onFailure The action to execute if the request has been failed
-     * @param onConnectionError The action to execute if the request has been failed for a connection error
-     *
-     * @param T generic type of the items in the page response
-     */
-    fun <T> sendPaginatedRequest(
-        request: AmetistaRequester.() -> JsonObject,
-        supplier: (JsonObject) -> T,
-        onSuccess: (PaginatedResponse<T>) -> Unit,
-        onFailure: (JsonHelper) -> Unit,
-        onConnectionError: ((JsonHelper) -> Unit)? = null,
-    ) {
-        sendRequest(
-            request = { request.invoke(this) },
-            onSuccess = { responsePage ->
-                onSuccess.invoke(
-                    PaginatedResponse(
-                        hPage = responsePage,
-                        supplier = supplier
-                    )
-                )
-            },
-            onFailure = onFailure,
-            onConnectionError = onConnectionError
-        )
-    }
-
-    /**
-     * Method to create the query with the pagination parameters
-     *
-     * @param page The number of the page to request to the backend
-     * @param pageSize The size of the result for the page
-     *
-     * @return the paginated query as [Params]
-     */
-    protected fun createPaginationQuery(
-        page: Int,
-        pageSize: Int,
-    ): Params {
-        val query = Params()
-        query.addParam(PAGE_KEY, page.toString())
-        query.addParam(PAGE_SIZE_KEY, pageSize.toString())
-        return query
     }
 
 }
