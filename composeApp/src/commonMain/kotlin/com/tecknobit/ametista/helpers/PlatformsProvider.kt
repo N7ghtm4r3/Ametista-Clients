@@ -37,11 +37,8 @@ import com.tecknobit.ametista.ui.theme.platforms.android.AndroidPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.desktop.DesktopPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.ios.IosPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.web.WebPlatformTheme
-import com.tecknobit.ametistacore.models.Platform
-import com.tecknobit.ametistacore.models.Platform.ANDROID
-import com.tecknobit.ametistacore.models.Platform.DESKTOP
-import com.tecknobit.ametistacore.models.Platform.IOS
-import com.tecknobit.ametistacore.models.Platform.WEB
+import com.tecknobit.ametistacore.enums.Platform
+import com.tecknobit.ametistacore.enums.Platform.*
 import com.tecknobit.equinoxcompose.components.Tile
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
@@ -236,11 +233,3 @@ fun Platform.Theme(
     }
 }
 
-/**
- * Method to copy to the clipboard a content value
- *
- * @param content The content to copy
- */
-expect fun copyToClipboard(
-    content: String
-)

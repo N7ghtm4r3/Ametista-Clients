@@ -78,7 +78,6 @@ import com.pushpal.jetlime.JetLimeEvent
 import com.pushpal.jetlime.JetLimeEventDefaults
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.PlatformsCustomGrid
-import com.tecknobit.ametista.helpers.copyToClipboard
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.DeleteApplication
@@ -92,6 +91,7 @@ import com.tecknobit.ametistacore.models.Platform.entries
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent
+import com.tecknobit.equinoxcompose.utilities.copyOnClipboard
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -380,7 +380,7 @@ class ApplicationScreen(
                 title = stringResource(Res.string.application_id_title),
                 description = stringResource(Res.string.application_id_text),
                 onClick = {
-                    copyToClipboard(
+                    copyOnClipboard(
                         content = applicationId
                     )
                 }

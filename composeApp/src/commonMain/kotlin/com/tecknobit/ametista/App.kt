@@ -3,7 +3,6 @@ package com.tecknobit.ametista
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.dm_sans
 import ametista.composeapp.generated.resources.kanit
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.text.font.FontFamily
@@ -29,12 +28,11 @@ import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Compan
 import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.PLATFORM_SCREEN
 import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.SESSION_SCREEN
 import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.SPLASHSCREEN
+import com.tecknobit.ametistacore.PLATFORM_KEY
 import com.tecknobit.ametistacore.enums.Platform
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.DEFAULT_VIEWER_PASSWORD
-import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.PLATFORM_KEY
 import com.tecknobit.equinoxcore.helpers.IDENTIFIER_KEY
 import com.tecknobit.equinoxcore.helpers.NAME_KEY
-import io.github.vinceglb.filekit.core.PlatformFile
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
@@ -44,38 +42,38 @@ import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
- * **bodyFontFamily** -> the Ametista's body font family
+ * `bodyFontFamily` -> the Ametista's body font family
  */
 lateinit var bodyFontFamily: FontFamily
 
 /**
- * **displayFontFamily** -> the Ametista's font family
+ * `displayFontFamily` -> the Ametista's font family
  */
 lateinit var displayFontFamily: FontFamily
 
 /**
- * **navigator** -> the navigator instance is useful to manage the navigation between the screens of the application
+ * `navigator` -> the navigator instance is useful to manage the navigation between the screens of the application
  */
 lateinit var navigator: Navigator
 
 /**
- * **imageLoader** -> the image loader used by coil library to load the image and by-passing the https self-signed certificates
+ * `imageLoader` -> the image loader used by coil library to load the image and by-passing the https self-signed certificates
  */
 lateinit var imageLoader: ImageLoader
 
 /**
- * **localUser** -> the helper to manage the local sessions stored locally in
+ * `localUser` -> the helper to manage the local sessions stored locally in
  * the device
  */
 val localUser = AmetistaLocalUser()
 
 /**
- * **requester** -> the instance to manage the requests with the backend
+ * `requester` -> the instance to manage the requests with the backend
  */
 lateinit var requester: AmetistaRequester
 
 /**
- * Common entry point of the **Ametista** application
+ * Common entry point of the **Ametista` application
  *
  */
 @Composable
@@ -193,23 +191,3 @@ expect fun setUserLanguage()
 @Composable
 @NonRestartableComposable
 expect fun CloseApplicationOnNavBack()
-
-/**
- * Function to get the current screen dimension of the device where the application is running
- *
- *
- * @return the width size class based on the current dimension of the screen as [WindowWidthSizeClass]
- */
-@Composable
-expect fun getCurrentWidthSizeClass(): WindowWidthSizeClass
-
-/**
- * Function to get the image picture's path
- *
- * @param imagePic The asset from fetch its path
- *
- * @return the asset path as [String]
- */
-expect fun getImagePath(
-    imagePic: PlatformFile?
-): String?
