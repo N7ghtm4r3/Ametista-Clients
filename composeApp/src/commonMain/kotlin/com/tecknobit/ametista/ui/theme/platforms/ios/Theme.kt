@@ -7,9 +7,9 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.ui.theme.AppTypography
-import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Auto
-import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Dark
-import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Light
+import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Auto
+import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Dark
+import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Light
 
 /**
  * **lightScheme** default light colors scheme

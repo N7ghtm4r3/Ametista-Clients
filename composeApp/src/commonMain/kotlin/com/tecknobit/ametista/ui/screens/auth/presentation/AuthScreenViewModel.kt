@@ -3,16 +3,17 @@ package com.tecknobit.ametista.ui.screens.auth.presentation
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.viewModelScope
+import com.tecknobit.ametista.APPLICATIONS_SCREEN
+import com.tecknobit.ametista.CHANGE_VIEWER_PASSWORD_SCREEN
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.requester
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.APPLICATIONS_SCREEN
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.CHANGE_VIEWER_PASSWORD_SCREEN
 import com.tecknobit.ametistacore.ROLE_KEY
 import com.tecknobit.ametistacore.enums.Role
 import com.tecknobit.ametistacore.enums.Role.ADMIN
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.equinoxcompose.viewmodels.EquinoxAuthViewModel
+import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcore.annotations.CustomParametersOrder
 import com.tecknobit.equinoxcore.helpers.LANGUAGE_KEY
 import com.tecknobit.equinoxcore.json.treatsAsString
@@ -24,10 +25,10 @@ import kotlinx.serialization.json.JsonObject
  * The **AuthScreenViewModel** class is the support class used to execute the authentication requests to the backend
  *
  * @author N7ghtm4r3 - Tecknobit
- * @see EquinoxAuthViewModel
  * @see EquinoxViewModel
- * @see ViewModel
- * @see FetcherManagerWrapper
+ * @see EquinoxAuthViewModel
+ * @see androidx.lifecycle.ViewModel
+ * @see com.tecknobit.equinoxcompose.session.Retriever
  */
 class AuthScreenViewModel : EquinoxAuthViewModel(
     snackbarHostState = SnackbarHostState(),
@@ -77,7 +78,7 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
             viewModelScope.launch {
                 requester.sendRequest(
                     request = {
-                        requester.adminSignUp(
+                        adminSignUp(
                             adminCode = serverSecret.value,
                             name = name.value,
                             surname = surname.value,
@@ -112,7 +113,7 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
             viewModelScope.launch {
                 requester.sendRequest(
                     request = {
-                        requester.adminSignIn(
+                        adminSignIn(
                             adminCode = serverSecret.value,
                             email = email.value,
                             password = password.value
@@ -144,7 +145,7 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
             viewModelScope.launch {
                 requester.sendRequest(
                     request = {
-                        requester.viewerSignIn(
+                        viewerSignIn(
                             serverSecret = serverSecret.value,
                             email = email.value,
                             password = password.value

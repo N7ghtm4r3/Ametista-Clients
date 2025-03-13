@@ -20,9 +20,9 @@ import kotlinx.serialization.json.buildJsonObject
  * to an [AmetistaApplication]
  *
  * @author N7ghtm4r3 - Tecknobit
+ * @see androidx.lifecycle.ViewModel
+ * @see com.tecknobit.equinoxcompose.session.Retriever
  * @see EquinoxViewModel
- * @see ViewModel
- * @see FetcherManagerWrapper
  */
 @Structure
 abstract class ApplicationViewModel : EquinoxViewModel(

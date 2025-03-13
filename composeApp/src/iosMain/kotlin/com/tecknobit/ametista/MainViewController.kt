@@ -1,7 +1,6 @@
 package com.tecknobit.ametista
 
 import androidx.compose.ui.window.ComposeUIViewController
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.AUTH_SCREEN
 import com.tecknobit.equinoxcompose.session.setUpSession
 
 /**

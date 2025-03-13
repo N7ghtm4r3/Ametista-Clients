@@ -23,9 +23,9 @@ import kotlinx.serialization.json.buildJsonObject
  *
  * @author N7ghtm4r3 - Tecknobit
  * @see ApplicationViewModel
+ * @see androidx.lifecycle.ViewModel
+ * @see com.tecknobit.equinoxcompose.session.Retriever
  * @see EquinoxViewModel
- * @see ViewModel
- * @see FetcherManagerWrapper
  */
 class ApplicationsScreenViewModel : ApplicationViewModel() {
 

@@ -44,22 +44,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.CloseApplicationOnNavBack
 import com.tecknobit.ametista.ui.screens.changeviewerpassword.presentation.ChangeViewerPasswordScreenViewModel
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isNewPasswordValid
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
-import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
+import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * The [ChangeViewerPasswordScreen] class is used to allow a [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER]
+ * The [ChangeViewerPasswordScreen] class is used to allow a [com.tecknobit.ametistacore.enums.Role.VIEWER]
  * to change the default preset password
  *
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxScreen
- * @see AmetistaScreen
  */
-class ChangeViewerPasswordScreen : AmetistaScreen<ChangeViewerPasswordScreenViewModel>(
+class ChangeViewerPasswordScreen : EquinoxScreen<ChangeViewerPasswordScreenViewModel>(
     viewModel = ChangeViewerPasswordScreenViewModel()
 ) {
 

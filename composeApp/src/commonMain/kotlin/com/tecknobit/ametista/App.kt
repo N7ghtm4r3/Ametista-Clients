@@ -14,22 +14,11 @@ import coil3.request.addLastModifiedToFileCacheKey
 import com.tecknobit.ametista.helpers.AmetistaLocalUser
 import com.tecknobit.ametista.helpers.AmetistaRequester
 import com.tecknobit.ametista.helpers.customHttpClient
-import com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen
 import com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen
 import com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen
 import com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
-import com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen
-import com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.APPLICATIONS_SCREEN
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.APPLICATION_SCREEN
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.AUTH_SCREEN
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.CHANGE_VIEWER_PASSWORD_SCREEN
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.PLATFORM_SCREEN
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.SESSION_SCREEN
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.SPLASHSCREEN
 import com.tecknobit.ametistacore.PLATFORM_KEY
-import com.tecknobit.ametistacore.enums.Platform
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.equinoxcore.helpers.IDENTIFIER_KEY
 import com.tecknobit.equinoxcore.helpers.NAME_KEY
@@ -71,6 +60,41 @@ val localUser = AmetistaLocalUser()
  * `requester` -> the instance to manage the requests with the backend
  */
 lateinit var requester: AmetistaRequester
+
+/**
+ * **SPLASH_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.navigation.Splashscreen]
+ */
+const val SPLASHSCREEN = "Splashscreen"
+
+/**
+ * **AUTH_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen]
+ */
+const val AUTH_SCREEN = "AuthScreen"
+
+/**
+ * **CHANGE_VIEWER_PASSWORD_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen]
+ */
+const val CHANGE_VIEWER_PASSWORD_SCREEN = "ChangeViewerPasswordScreen"
+
+/**
+ * **SESSION_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
+ */
+const val SESSION_SCREEN = "SessionScreen"
+
+/**
+ * **APPLICATIONS_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen]
+ */
+const val APPLICATIONS_SCREEN = "ApplicationsScreen"
+
+/**
+ * **APPLICATION_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen]
+ */
+const val APPLICATION_SCREEN = "ApplicationScreen"
+
+/**
+ * **PLATFORM_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen]
+ */
+const val PLATFORM_SCREEN = "PlatformScreen"
 
 /**
  * Common entry point of the **Ametista` application
@@ -118,7 +142,8 @@ fun App() {
             scene(
                 route = SESSION_SCREEN
             ) {
-                SessionScreen().ShowContent()
+                // TODO: TO SET
+                //  SessionScreen().ShowContent()
             }
             scene(
                 route = APPLICATIONS_SCREEN
@@ -128,22 +153,24 @@ fun App() {
             scene(
                 route = "$APPLICATION_SCREEN/{$IDENTIFIER_KEY}"
             ) { backstackEntry ->
+                // TODO: TO SET
                 val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
-                ApplicationScreen(
+                /*ApplicationScreen(
                     applicationId = applicationId
-                ).ShowContent()
+                ).ShowContent()*/
             }
             scene(
                 route = "$PLATFORM_SCREEN/{$IDENTIFIER_KEY}/{$NAME_KEY}/{$PLATFORM_KEY}"
             ) { backstackEntry ->
-                val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
+                // TODO: TO SET
+                /*val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
                 val applicationName = backstackEntry.path<String>(NAME_KEY)!!
                 val platform = backstackEntry.path<String>(PLATFORM_KEY)!!
                 PlatformScreen(
                     applicationId = applicationId,
                     applicationName = applicationName,
                     platform = Platform.valueOf(platform)
-                ).ShowContent()
+                ).ShowContent()*/
             }
         }
     }

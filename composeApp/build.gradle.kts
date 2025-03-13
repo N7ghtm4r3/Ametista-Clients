@@ -22,7 +22,7 @@ plugins {
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
+            jvmTarget.set(JvmTarget.JVM_22)
         }
     }
 
@@ -40,7 +40,7 @@ kotlin {
     jvm("desktop") {
         kotlin {
             jvmToolchain {
-                languageVersion.set(JavaLanguageVersion.of(21))
+                languageVersion.set(JavaLanguageVersion.of(22))
             }
         }
     }
@@ -165,8 +165,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_22
+        targetCompatibility = JavaVersion.VERSION_22
     }
     buildFeatures {
         compose = true
@@ -224,14 +224,6 @@ compose.desktop {
             version.set("7.5.0")
             obfuscate.set(true)
         }
-    }
-}
-
-configurations.all {
-    exclude("commons-logging", "commons-logging")
-    // TODO TO REMOVE IN THE NEXT VERSION (DEPRECATED TRIGGER SEARCH)
-    resolutionStrategy {
-        force("com.github.N7ghtm4r3:GitHubManager:1.0.1")
     }
 }
 

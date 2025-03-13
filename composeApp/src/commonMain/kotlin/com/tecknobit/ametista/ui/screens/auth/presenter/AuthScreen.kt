@@ -69,9 +69,9 @@ import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.CloseApplicationOnNavBack
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.ui.screens.auth.presentation.AuthScreenViewModel
-import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
+import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isHostValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isNameValid
@@ -86,9 +86,9 @@ import org.jetbrains.compose.resources.stringResource
  *
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxScreen
- * @see AmetistaScreen
+ * 
  */
-class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
+class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
     viewModel = AuthScreenViewModel()
 ) {
 
