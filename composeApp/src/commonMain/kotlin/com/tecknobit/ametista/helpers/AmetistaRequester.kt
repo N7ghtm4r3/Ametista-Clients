@@ -1,5 +1,6 @@
 package com.tecknobit.ametista.helpers
 
+import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
 import com.tecknobit.ametistacore.ADMIN_CODE_KEY
 import com.tecknobit.ametistacore.APPLICATIONS_KEY
 import com.tecknobit.ametistacore.APPLICATION_ICON_KEY
@@ -531,8 +532,7 @@ class AmetistaRequester(
      *
      * @return an endpoint to make the request as [String]
      */
-    // TODO: TO SET 
-    /*@RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = DELETE)
+    @RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = DELETE)
     suspend fun deleteApplication(
         application: AmetistaApplication,
     ): JsonObject {
@@ -541,7 +541,7 @@ class AmetistaRequester(
                 subEndpoint = application.id
             )
         )
-    }*/
+    }
 
     /**
      * Method to assemble the endpoint to make the request to the applications controller

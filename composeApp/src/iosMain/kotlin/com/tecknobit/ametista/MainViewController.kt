@@ -1,6 +1,7 @@
 package com.tecknobit.ametista
 
 import androidx.compose.ui.window.ComposeUIViewController
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.AUTH_SCREEN
 import com.tecknobit.equinoxcompose.session.setUpSession
 
 /**
@@ -8,7 +9,12 @@ import com.tecknobit.equinoxcompose.session.setUpSession
  */
 fun MainViewController() = ComposeUIViewController {
     setUpSession {
-        // TODO TO SET
+        localUser.clear()
+        requester.setUserCredentials(
+            userId = null,
+            userToken = null
+        )
+        navigator.navigate(AUTH_SCREEN)
     }
     App()
 }

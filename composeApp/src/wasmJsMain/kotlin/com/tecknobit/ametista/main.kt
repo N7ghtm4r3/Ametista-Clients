@@ -2,6 +2,7 @@ package com.tecknobit.ametista
 
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.AUTH_SCREEN
 import com.tecknobit.equinoxcompose.session.setUpSession
 import kotlinx.browser.document
 
@@ -12,7 +13,12 @@ import kotlinx.browser.document
 fun main() {
     ComposeViewport(document.body!!) {
         setUpSession {
-            // TODO TO SET
+            localUser.clear()
+            requester.setUserCredentials(
+                userId = null,
+                userToken = null
+            )
+            navigator.navigate(AUTH_SCREEN)
         }
         App()
     }

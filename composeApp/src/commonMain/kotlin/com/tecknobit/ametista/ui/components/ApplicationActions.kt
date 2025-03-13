@@ -6,8 +6,6 @@ import ametista.composeapp.generated.resources.add_application
 import ametista.composeapp.generated.resources.app_description
 import ametista.composeapp.generated.resources.app_name_field
 import ametista.composeapp.generated.resources.confirm
-import ametista.composeapp.generated.resources.delete_application_text
-import ametista.composeapp.generated.resources.delete_application_title
 import ametista.composeapp.generated.resources.dismiss
 import ametista.composeapp.generated.resources.edit_application
 import ametista.composeapp.generated.resources.logo
@@ -24,12 +22,10 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -64,7 +60,6 @@ import com.tecknobit.ametista.ui.screens.shared.presentations.ApplicationViewMod
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppDescriptionValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppNameValid
 import com.tecknobit.ametistacore.models.AmetistaApplication
-import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
@@ -380,42 +375,3 @@ expect fun reviewApp(
     flowAction: () -> Unit
 )
 
-/**
- * The [EquinoxAlertDialog] to warn the user about the application deletion
- *
- * @param show whether the layout is visible or not
- * @param application The application to delete
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
- * @param onDelete The action to execute when the application has been deleted
- */
-@Composable
-@NonRestartableComposable
-fun DeleteApplication(
-    show: MutableState<Boolean>,
-    application: AmetistaApplication,
-    viewModel: ApplicationViewModel,
-    onDelete: () -> Unit
-) {
-    EquinoxAlertDialog(
-        modifier = Modifier
-            .widthIn(
-                max = 400.dp
-            ),
-        show = show,
-        viewModel = viewModel,
-        icon = Icons.Default.Delete,
-        title = stringResource(string.delete_application_title, application.name),
-        text = stringResource(string.delete_application_text),
-        dismissText = stringResource(string.dismiss),
-        confirmText = stringResource(string.confirm),
-        confirmAction = {
-            viewModel.deleteApplication(
-                application = application,
-                onDelete = {
-                    show.value = false
-                    onDelete.invoke()
-                }
-            )
-        }
-    )
-}

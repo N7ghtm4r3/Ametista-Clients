@@ -3,13 +3,17 @@ package com.tecknobit.ametista.ui.screens.shared.presentations
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.viewModelScope
 import com.tecknobit.ametista.requester
+import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
 import com.tecknobit.ametista.ui.theme.platforms.android.errorDark
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppDescriptionValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppNameValid
-import com.tecknobit.ametistacore.models.AmetistaApplication
-import com.tecknobit.apimanager.annotations.Structure
-import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcore.annotations.Structure
+import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.buildJsonObject
 
 /**
  * The **ApplicationViewModel** class is the support class used to execute the managing requests related
@@ -72,18 +76,22 @@ abstract class ApplicationViewModel : EquinoxViewModel(
     ) {
         if (!validForm())
             return
-        requester.sendRequest(
-            request = {
-                requester.editApplication(
-                    application = application,
-                    icon = appIcon.value,
-                    name = appName.value,
-                    description = appDescription.value
-                )
-            },
-            onSuccess = { onSuccess.invoke() },
-            onFailure = { showSnackbarMessage(it) }
-        )
+        viewModelScope.launch {
+            requester.sendRequest(
+                request = {
+                    // TODO: TO SET
+                    buildJsonObject { }
+                    /*editApplication(
+                        application = application,
+                        icon = appIcon.value,
+                        name = appName.value,
+                        description = appDescription.value
+                    )*/
+                },
+                onSuccess = { onSuccess.invoke() },
+                onFailure = { showSnackbarMessage(it) }
+            )
+        }
     }
 
     /**
@@ -117,15 +125,17 @@ abstract class ApplicationViewModel : EquinoxViewModel(
         application: AmetistaApplication,
         onDelete: () -> Unit
     ) {
-        requester.sendRequest(
-            request = {
-                requester.deleteApplication(
-                    application = application
-                )
-            },
-            onSuccess = { onDelete.invoke() },
-            onFailure = { showSnackbarMessage(it) }
-        )
+        viewModelScope.launch {
+            requester.sendRequest(
+                request = {
+                    deleteApplication(
+                        application = application
+                    )
+                },
+                onSuccess = { onDelete.invoke() },
+                onFailure = { showSnackbarMessage(it) }
+            )
+        }
     }
 
 }

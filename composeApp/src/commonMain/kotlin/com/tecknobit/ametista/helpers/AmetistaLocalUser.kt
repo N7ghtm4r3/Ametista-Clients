@@ -31,10 +31,6 @@ class AmetistaLocalUser : EquinoxLocalUser(
             }
         }
 
-    init {
-        initLocalUser()
-    }
-
     /**
      * Method to init the local user session
      */

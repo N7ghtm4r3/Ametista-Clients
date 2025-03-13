@@ -4,20 +4,22 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.viewModelScope
 import com.tecknobit.ametista.requester
+import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
 import com.tecknobit.ametista.ui.screens.shared.presentations.ApplicationViewModel
-import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
-import com.tecknobit.ametistacore.models.AmetistaApplication
-import com.tecknobit.ametistacore.models.Platform
-import com.tecknobit.apimanager.annotations.Wrapper
-import com.tecknobit.equinoxcompose.helpers.session.setHasBeenDisconnectedValue
-import com.tecknobit.equinoxcompose.helpers.session.setServerOfflineValue
-import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
+import com.tecknobit.ametistacore.enums.Platform
+import com.tecknobit.equinoxcompose.session.setHasBeenDisconnectedValue
+import com.tecknobit.equinoxcompose.session.setServerOfflineValue
+import com.tecknobit.equinoxcore.annotations.Wrapper
+import com.tecknobit.equinoxcore.network.Requester.Companion.sendPaginatedRequest
+import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
+import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.buildJsonObject
 
 /**
  * The **ApplicationsScreenViewModel** class is the support class used to execute the requests related
- * to the [ApplicationsScreen]
+ * to the [com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication]
  *
  * @author N7ghtm4r3 - Tecknobit
  * @see ApplicationViewModel
@@ -66,7 +68,7 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
                         platforms = platformsFilter
                     )
                 },
-                supplier = { jApplication -> AmetistaApplication(jApplication) },
+                serializer = AmetistaApplication.serializer(),
                 onSuccess = { page ->
                     setServerOfflineValue(false)
                     paginationState.appendPage(
@@ -164,17 +166,21 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
     ) {
         if (!validForm())
             return
-        requester.sendRequest(
-            request = {
-                requester.addApplication(
-                    icon = appIcon.value,
-                    name = appName.value,
-                    description = appDescription.value
-                )
-            },
-            onSuccess = { onSuccess.invoke() },
-            onFailure = { showSnackbarMessage(it) }
-        )
+        viewModelScope.launch {
+            requester.sendRequest(
+                request = {
+                    // TODO: TO EDIT
+                    /*requester.addApplication(
+                        icon = appIcon.value,
+                        name = appName.value,
+                        description = appDescription.value
+                    )*/
+                    buildJsonObject { }
+                },
+                onSuccess = { onSuccess.invoke() },
+                onFailure = { showSnackbarMessage(it) }
+            )
+        }
     }
 
 }
