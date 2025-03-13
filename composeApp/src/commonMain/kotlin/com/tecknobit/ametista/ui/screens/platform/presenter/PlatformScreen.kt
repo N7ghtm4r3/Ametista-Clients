@@ -125,7 +125,7 @@ class PlatformScreen(
     override fun ArrangeScreenContent() {
         platform.Theme {
             ManagedContent(
-                viewModel = viewModel!!,
+                viewModel = viewModel,
                 content = {
                     Scaffold(
                         topBar = {
@@ -150,7 +150,7 @@ class PlatformScreen(
                                 }
                             )
                         },
-                        snackbarHost = { SnackbarHost(viewModel!!.snackbarHostState!!) },
+                        snackbarHost = { SnackbarHost(viewModel.snackbarHostState!!) },
                         floatingActionButton = { FilterButton() }
                     ) { paddingValues ->
                         Column(
@@ -181,7 +181,7 @@ class PlatformScreen(
     @NonRestartableComposable
     private fun FilterButton() {
         AnimatedVisibility(
-            visible = viewModel!!.analyticType.value == ISSUE,
+            visible = viewModel.analyticType.value == ISSUE,
             enter = fadeIn(),
             exit = fadeOut()
         ) {
@@ -196,11 +196,11 @@ class PlatformScreen(
                 }
                 FilterDialog(
                     show = filterList,
-                    viewModel = viewModel!!
+                    viewModel = viewModel
                 )
             } else {
                 FloatingActionButton(
-                    onClick = { viewModel!!.clearFilters() }
+                    onClick = { viewModel.clearFilters() }
                 ) {
                     Icon(
                         imageVector = Icons.Default.FilterListOff,
@@ -221,7 +221,7 @@ class PlatformScreen(
             val lastEntry = entries.last()
             entries.forEach { type ->
                 SegmentedButton(
-                    selected = viewModel!!.analyticType.value == type,
+                    selected = viewModel.analyticType.value == type,
                     icon = {
                         Icon(
                             imageVector = type.icon(),
@@ -244,7 +244,7 @@ class PlatformScreen(
                             bottomStart = 10.dp
                         )
                     },
-                    onClick = { viewModel!!.analyticType.value = type }
+                    onClick = { viewModel.analyticType.value = type }
                 )
             }
         }
@@ -278,15 +278,15 @@ class PlatformScreen(
                 )
         ) {
             AnimatedVisibility(
-                visible = viewModel!!.analyticType.value == ISSUE
+                visible = viewModel.analyticType.value == ISSUE
             ) {
                 Issues()
             }
             AnimatedVisibility(
-                visible = viewModel!!.analyticType.value == PERFORMANCE
+                visible = viewModel.analyticType.value == PERFORMANCE
             ) {
                 LaunchedEffect(Unit) {
-                    viewModel!!.getPerformanceAnalytics()
+                    viewModel.getPerformanceAnalytics()
                 }
                 Performance()
             }
@@ -303,7 +303,7 @@ class PlatformScreen(
         PaginatedLazyColumn(
             modifier = Modifier
                 .fillMaxSize(),
-            paginationState = viewModel!!.paginationState,
+            paginationState = viewModel.paginationState,
             firstPageProgressIndicator = { FirstPageProgressIndicator() },
             newPageProgressIndicator = { NewPageProgressIndicator() },
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -311,7 +311,7 @@ class PlatformScreen(
                 bottom = 16.dp
             )
         ) {
-            val issues = viewModel!!.paginationState.allItems!!
+            val issues = viewModel.paginationState.allItems!!
             issuesIsEmpty.value = issues.isEmpty()
             if (issues.isNotEmpty()) {
                 items(
@@ -319,7 +319,7 @@ class PlatformScreen(
                     key = { issue -> issue.id }
                 ) { issue ->
                     Issue(
-                        viewModel = viewModel!!,
+                        viewModel = viewModel,
                         issue = issue as IssueAnalytic
                     )
                 }
@@ -368,28 +368,28 @@ class PlatformScreen(
             ) {
                 item {
                     LaunchTime(
-                        viewModel = viewModel!!,
+                        viewModel = viewModel,
                         cardHeight = cardHeight,
                         performanceData = performanceData.value
                     )
                 }
                 item {
                     NetworkRequests(
-                        viewModel = viewModel!!,
+                        viewModel = viewModel,
                         cardHeight = cardHeight,
                         performanceData = performanceData.value
                     )
                 }
                 item {
                     IssuesNumber(
-                        viewModel = viewModel!!,
+                        viewModel = viewModel,
                         cardHeight = cardHeight,
                         performanceData = performanceData.value
                     )
                 }
                 item {
                     IssuesPerSessionsNumber(
-                        viewModel = viewModel!!,
+                        viewModel = viewModel,
                         cardHeight = cardHeight,
                         performanceData = performanceData.value
                     )
@@ -409,25 +409,25 @@ class PlatformScreen(
         ) {
             item {
                 LaunchTime(
-                    viewModel = viewModel!!,
+                    viewModel = viewModel,
                     performanceData = performanceData.value
                 )
             }
             item {
                 NetworkRequests(
-                    viewModel = viewModel!!,
+                    viewModel = viewModel,
                     performanceData = performanceData.value
                 )
             }
             item {
                 IssuesNumber(
-                    viewModel = viewModel!!,
+                    viewModel = viewModel,
                     performanceData = performanceData.value
                 )
             }
             item {
                 IssuesPerSessionsNumber(
-                    viewModel = viewModel!!,
+                    viewModel = viewModel,
                     performanceData = performanceData.value
                 )
             }
@@ -467,10 +467,10 @@ class PlatformScreen(
      */
     @Composable
     override fun CollectStates() {
-        filtersSet = viewModel!!.filtersSet.collectAsState()
+        filtersSet = viewModel.filtersSet.collectAsState()
         filterList = remember { mutableStateOf(false) }
-        viewModel!!.analyticType = remember { mutableStateOf(ISSUE) }
-        performanceData = viewModel!!.performanceData.collectAsState()
+        viewModel.analyticType = remember { mutableStateOf(ISSUE) }
+        performanceData = viewModel.performanceData.collectAsState()
     }
 
 }

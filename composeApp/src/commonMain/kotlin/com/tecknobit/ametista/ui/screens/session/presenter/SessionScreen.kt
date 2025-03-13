@@ -116,7 +116,7 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
                 },
                 floatingActionButton = {
                     AnimatedVisibility(
-                        visible = viewModel!!.sessionScreenSection.value == MEMBERS && localUser.isAdmin(),
+                        visible = viewModel.sessionScreenSection.value == MEMBERS && localUser.isAdmin(),
                         enter = fadeIn(),
                         exit = fadeOut()
                     ) {
@@ -131,7 +131,7 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
                         AddViewer()
                     }
                 },
-                snackbarHost = { SnackbarHost(viewModel!!.snackbarHostState!!) }
+                snackbarHost = { SnackbarHost(viewModel.snackbarHostState!!) }
             ) { paddingValues ->
                 Column(
                     modifier = Modifier
@@ -164,7 +164,7 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
             val lastEntry = SessionScreenSection.entries.last()
             SessionScreenSection.entries.forEach { section ->
                 SegmentedButton(
-                    selected = viewModel!!.sessionScreenSection.value == section,
+                    selected = viewModel.sessionScreenSection.value == section,
                     icon = {
                         Icon(
                             imageVector = section.icon(),
@@ -187,7 +187,7 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
                             bottomStart = 10.dp
                         )
                     },
-                    onClick = { viewModel!!.sessionScreenSection.value = section }
+                    onClick = { viewModel.sessionScreenSection.value = section }
                 )
             }
         }
@@ -224,17 +224,17 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
     @NonRestartableComposable
     private fun DisplaySection() {
         AnimatedVisibility(
-            visible = viewModel!!.sessionScreenSection.value == ABOUT_ME
+            visible = viewModel.sessionScreenSection.value == ABOUT_ME
         ) {
             AboutMe(
-                screenViewModel = viewModel!!
+                screenViewModel = viewModel
             )
         }
         AnimatedVisibility(
-            visible = viewModel!!.sessionScreenSection.value == MEMBERS
+            visible = viewModel.sessionScreenSection.value == MEMBERS
         ) {
             SessionMembers(
-                screenViewModel = viewModel!!
+                screenViewModel = viewModel
             )
         }
     }
@@ -246,15 +246,15 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
     @NonRestartableComposable
     private fun AddViewer() {
         if (addViewer.value) {
-            viewModel!!.suspendRefresher()
-            viewModel!!.viewerName = remember { mutableStateOf("") }
-            viewModel!!.viewerNameError = remember { mutableStateOf(false) }
-            viewModel!!.viewerSurname = remember { mutableStateOf("") }
-            viewModel!!.viewerSurnameError = remember { mutableStateOf(false) }
-            viewModel!!.viewerEmail = remember { mutableStateOf("") }
-            viewModel!!.viewerEmailError = remember { mutableStateOf(false) }
+            viewModel.suspendRefresher()
+            viewModel.viewerName = remember { mutableStateOf("") }
+            viewModel.viewerNameError = remember { mutableStateOf(false) }
+            viewModel.viewerSurname = remember { mutableStateOf("") }
+            viewModel.viewerSurnameError = remember { mutableStateOf(false) }
+            viewModel.viewerEmail = remember { mutableStateOf("") }
+            viewModel.viewerEmailError = remember { mutableStateOf(false) }
             val closeModal = {
-                viewModel!!.restartRefresher()
+                viewModel.restartRefresher()
                 addViewer.value = false
             }
             ModalBottomSheet(
@@ -318,21 +318,21 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
                 EquinoxOutlinedTextField(
                     modifier = Modifier
                         .weight(1f),
-                    value = viewModel!!.viewerName,
+                    value = viewModel.viewerName,
                     label = stringResource(string.name),
                     keyboardOptions = keyboardOptions,
                     errorText = stringResource(string.wrong_name),
-                    isError = viewModel!!.viewerNameError,
+                    isError = viewModel.viewerNameError,
                     validator = { isNameValid(it) }
                 )
                 EquinoxOutlinedTextField(
                     modifier = Modifier
                         .weight(1f),
-                    value = viewModel!!.viewerSurname,
+                    value = viewModel.viewerSurname,
                     label = stringResource(string.surname),
                     keyboardOptions = keyboardOptions,
                     errorText = stringResource(string.wrong_surname),
-                    isError = viewModel!!.viewerSurnameError,
+                    isError = viewModel.viewerSurnameError,
                     validator = { isSurnameValid(it) }
                 )
             }
@@ -343,7 +343,7 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
                 EquinoxOutlinedTextField(
                     modifier = Modifier
                         .weight(1f),
-                    value = viewModel!!.viewerEmail,
+                    value = viewModel.viewerEmail,
                     label = string.email,
                     mustBeInLowerCase = true,
                     allowsBlankSpaces = false,
@@ -352,7 +352,7 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
                         keyboardType = KeyboardType.Email
                     ),
                     errorText = string.wrong_email,
-                    isError = viewModel!!.viewerEmailError,
+                    isError = viewModel.viewerEmailError,
                     validator = { isEmailValid(it) }
                 )
                 Column(
@@ -367,7 +367,7 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
                             ),
                         shape = CircleShape,
                         onClick = {
-                            viewModel!!.addViewer(
+                            viewModel.addViewer(
                                 onSuccess = { addViewer.value = false }
                             )
                         }
@@ -387,7 +387,7 @@ class SessionScreen : AmetistaScreen<SessionScreenViewModel>(
      */
     @Composable
     override fun CollectStates() {
-        viewModel!!.sessionScreenSection = remember { mutableStateOf(ABOUT_ME) }
+        viewModel.sessionScreenSection = remember { mutableStateOf(ABOUT_ME) }
         addViewer = remember { mutableStateOf(false) }
     }
 

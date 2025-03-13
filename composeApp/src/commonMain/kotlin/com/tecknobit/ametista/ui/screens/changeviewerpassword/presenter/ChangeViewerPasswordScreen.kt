@@ -84,7 +84,7 @@ class ChangeViewerPasswordScreen : AmetistaScreen<ChangeViewerPasswordScreenView
                         }
                     )
                 },
-                snackbarHost = { SnackbarHost(viewModel!!.snackbarHostState!!) }
+                snackbarHost = { SnackbarHost(viewModel.snackbarHostState!!) }
             ) { paddingValues ->
                 Column(
                     modifier = Modifier
@@ -107,7 +107,7 @@ class ChangeViewerPasswordScreen : AmetistaScreen<ChangeViewerPasswordScreenView
                         )
                         var hiddenPassword by remember { mutableStateOf(true) }
                         EquinoxOutlinedTextField(
-                            value = viewModel!!.password,
+                            value = viewModel.password,
                             label = stringResource(Res.string.password),
                             allowsBlankSpaces = false,
                             trailingIcon = {
@@ -131,7 +131,7 @@ class ChangeViewerPasswordScreen : AmetistaScreen<ChangeViewerPasswordScreenView
                                 keyboardType = KeyboardType.Password
                             ),
                             errorText = stringResource(Res.string.wrong_password),
-                            isError = viewModel!!.passwordError,
+                            isError = viewModel.passwordError,
                             validator = { isNewPasswordValid(it) }
                         )
                         Button(
@@ -143,7 +143,7 @@ class ChangeViewerPasswordScreen : AmetistaScreen<ChangeViewerPasswordScreenView
                             shape = RoundedCornerShape(
                                 size = 10.dp
                             ),
-                            onClick = { viewModel!!.changeViewerPassword() }
+                            onClick = { viewModel.changeViewerPassword() }
                         ) {
                             Text(
                                 text = stringResource(Res.string.confirm)
@@ -160,8 +160,8 @@ class ChangeViewerPasswordScreen : AmetistaScreen<ChangeViewerPasswordScreenView
      */
     @Composable
     override fun CollectStates() {
-        viewModel!!.password = remember { mutableStateOf("") }
-        viewModel!!.passwordError = remember { mutableStateOf(false) }
+        viewModel.password = remember { mutableStateOf("") }
+        viewModel.passwordError = remember { mutableStateOf(false) }
     }
 
 }

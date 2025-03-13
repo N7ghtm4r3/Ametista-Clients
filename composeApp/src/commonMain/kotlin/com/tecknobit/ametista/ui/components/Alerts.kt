@@ -13,6 +13,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
 import com.tecknobit.ametista.ui.screens.shared.presentations.ApplicationViewModel
 import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
 import org.jetbrains.compose.resources.stringResource
@@ -41,7 +42,10 @@ fun DeleteApplication(
         show = show,
         viewModel = viewModel,
         icon = Icons.Default.Delete,
-        title = stringResource(string.delete_application_title, application.name),
+        title = stringResource(
+            resource = string.delete_application_title,
+            application.name
+        ),
         text = stringResource(string.delete_application_text),
         dismissText = stringResource(string.dismiss),
         confirmText = stringResource(string.confirm),

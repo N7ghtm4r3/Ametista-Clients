@@ -71,14 +71,13 @@ import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.ui.screens.auth.presentation.AuthScreenViewModel
 import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
-import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
-import com.tecknobit.equinox.inputs.InputValidator.isHostValid
-import com.tecknobit.equinox.inputs.InputValidator.isNameValid
-import com.tecknobit.equinox.inputs.InputValidator.isPasswordValid
-import com.tecknobit.equinox.inputs.InputValidator.isServerSecretValid
-import com.tecknobit.equinox.inputs.InputValidator.isSurnameValid
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
-import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isHostValid
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isNameValid
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isServerSecretValid
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isSurnameValid
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -101,7 +100,7 @@ class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
         AmetistaTheme {
             CloseApplicationOnNavBack()
             Scaffold(
-                snackbarHost = { SnackbarHost(hostState = viewModel!!.snackbarHostState!!) },
+                snackbarHost = { SnackbarHost(hostState = viewModel.snackbarHostState!!) },
             ) {
                 Column(
                     modifier = Modifier
@@ -203,57 +202,57 @@ class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
                     imeAction = ImeAction.Next
                 )
                 EquinoxOutlinedTextField(
-                    value = viewModel!!.host,
+                    value = viewModel.host,
                     label = stringResource(Res.string.host),
                     keyboardOptions = keyboardOptions,
                     errorText = stringResource(Res.string.wrong_host_address),
-                    isError = viewModel!!.hostError,
+                    isError = viewModel.hostError,
                     validator = { isHostValid(it) }
                 )
                 EquinoxOutlinedTextField(
-                    value = viewModel!!.serverSecret,
+                    value = viewModel.serverSecret,
                     label = stringResource(
-                        if (viewModel!!.isAdmin.value) {
+                        if (viewModel.isAdmin.value) {
                             Res.string.admin_code
                         } else
                             Res.string.server_secret
                     ),
                     keyboardOptions = keyboardOptions,
                     errorText = stringResource(
-                        if (viewModel!!.isAdmin.value) {
+                        if (viewModel.isAdmin.value) {
                             Res.string.wrong_admin_code
                         } else
                             Res.string.wrong_server_secret
                     ),
-                    isError = viewModel!!.serverSecretError,
+                    isError = viewModel.serverSecretError,
                     validator = { isServerSecretValid(it) }
                 )
                 AnimatedVisibility(
-                    visible = viewModel!!.isAdminSignUp.value
+                    visible = viewModel.isAdminSignUp.value
                 ) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
                         EquinoxOutlinedTextField(
-                            value = viewModel!!.name,
+                            value = viewModel.name,
                             label = stringResource(Res.string.name),
                             keyboardOptions = keyboardOptions,
                             errorText = stringResource(Res.string.wrong_name),
-                            isError = viewModel!!.nameError,
+                            isError = viewModel.nameError,
                             validator = { isNameValid(it) }
                         )
                         EquinoxOutlinedTextField(
-                            value = viewModel!!.surname,
+                            value = viewModel.surname,
                             label = stringResource(Res.string.surname),
                             keyboardOptions = keyboardOptions,
                             errorText = stringResource(Res.string.wrong_surname),
-                            isError = viewModel!!.surnameError,
+                            isError = viewModel.surnameError,
                             validator = { isSurnameValid(it) }
                         )
                     }
                 }
                 EquinoxOutlinedTextField(
-                    value = viewModel!!.email,
+                    value = viewModel.email,
                     label = stringResource(Res.string.email),
                     mustBeInLowerCase = true,
                     allowsBlankSpaces = false,
@@ -262,12 +261,12 @@ class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
                         keyboardType = KeyboardType.Email
                     ),
                     errorText = stringResource(Res.string.wrong_email),
-                    isError = viewModel!!.emailError,
+                    isError = viewModel.emailError,
                     validator = { isEmailValid(it) }
                 )
                 var hiddenPassword by remember { mutableStateOf(true) }
                 EquinoxOutlinedTextField(
-                    value = viewModel!!.password,
+                    value = viewModel.password,
                     label = stringResource(Res.string.password),
                     allowsBlankSpaces = false,
                     trailingIcon = {
@@ -291,7 +290,7 @@ class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
                         keyboardType = KeyboardType.Password
                     ),
                     errorText = stringResource(Res.string.wrong_password),
-                    isError = viewModel!!.passwordError,
+                    isError = viewModel.passwordError,
                     validator = { isPasswordValid(it) }
                 )
                 Button(
@@ -306,7 +305,7 @@ class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
                     shape = RoundedCornerShape(
                         size = 10.dp
                     ),
-                    onClick = { viewModel!!.login() }
+                    onClick = { viewModel.login() }
                 ) {
                     Text(
                         text = stringResource(Res.string.login)
@@ -332,12 +331,12 @@ class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
                 text = stringResource(Res.string.i_am_an_admin)
             )
             Switch(
-                checked = viewModel!!.isAdmin.value,
+                checked = viewModel.isAdmin.value,
                 onCheckedChange = { isAdmin ->
-                    viewModel!!.isAdmin.value = isAdmin
-                    viewModel!!.isAdminSignUp.value = false
-                    viewModel!!.serverSecret.value = ""
-                    viewModel!!.serverSecretError.value = false
+                    viewModel.isAdmin.value = isAdmin
+                    viewModel.isAdminSignUp.value = false
+                    viewModel.serverSecret.value = ""
+                    viewModel.serverSecretError.value = false
                 }
             )
         }
@@ -350,7 +349,7 @@ class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
     @NonRestartableComposable
     private fun LoginMode() {
         AnimatedVisibility(
-            visible = viewModel!!.isAdmin.value
+            visible = viewModel.isAdmin.value
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -358,7 +357,7 @@ class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
             ) {
                 Text(
                     text = stringResource(
-                        if (viewModel!!.isAdminSignUp.value)
+                        if (viewModel.isAdminSignUp.value)
                             Res.string.have_an_account
                         else
                             Res.string.are_you_new_to_ametista
@@ -371,10 +370,10 @@ class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
                             start = 5.dp
                         )
                         .clickable {
-                            viewModel!!.isAdminSignUp.value = !viewModel!!.isAdminSignUp.value
+                            viewModel.isAdminSignUp.value = !viewModel.isAdminSignUp.value
                         },
                     text = stringResource(
-                        if (viewModel!!.isAdminSignUp.value)
+                        if (viewModel.isAdminSignUp.value)
                             Res.string.sign_in
                         else
                             Res.string.sign_up
@@ -393,20 +392,20 @@ class AuthScreen : AmetistaScreen<AuthScreenViewModel>(
      */
     @Composable
     override fun CollectStates() {
-        viewModel!!.isAdmin = remember { mutableStateOf(false) }
-        viewModel!!.isAdminSignUp = remember { mutableStateOf(false) }
-        viewModel!!.host = remember { mutableStateOf("") }
-        viewModel!!.hostError = remember { mutableStateOf(false) }
-        viewModel!!.serverSecret = remember { mutableStateOf("") }
-        viewModel!!.serverSecretError = remember { mutableStateOf(false) }
-        viewModel!!.name = remember { mutableStateOf("") }
-        viewModel!!.nameError = remember { mutableStateOf(false) }
-        viewModel!!.surname = remember { mutableStateOf("") }
-        viewModel!!.surnameError = remember { mutableStateOf(false) }
-        viewModel!!.email = remember { mutableStateOf("") }
-        viewModel!!.emailError = remember { mutableStateOf(false) }
-        viewModel!!.password = remember { mutableStateOf("") }
-        viewModel!!.passwordError = remember { mutableStateOf(false) }
+        viewModel.isAdmin = remember { mutableStateOf(false) }
+        viewModel.isAdminSignUp = remember { mutableStateOf(false) }
+        viewModel.host = remember { mutableStateOf("") }
+        viewModel.hostError = remember { mutableStateOf(false) }
+        viewModel.serverSecret = remember { mutableStateOf("") }
+        viewModel.serverSecretError = remember { mutableStateOf(false) }
+        viewModel.name = remember { mutableStateOf("") }
+        viewModel.nameError = remember { mutableStateOf(false) }
+        viewModel.surname = remember { mutableStateOf("") }
+        viewModel.surnameError = remember { mutableStateOf(false) }
+        viewModel.email = remember { mutableStateOf("") }
+        viewModel.emailError = remember { mutableStateOf(false) }
+        viewModel.password = remember { mutableStateOf("") }
+        viewModel.passwordError = remember { mutableStateOf(false) }
     }
 
 }

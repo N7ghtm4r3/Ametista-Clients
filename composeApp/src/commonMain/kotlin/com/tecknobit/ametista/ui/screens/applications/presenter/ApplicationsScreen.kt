@@ -95,7 +95,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
         AmetistaTheme {
             CloseApplicationOnNavBack()
             ManagedContent(
-                viewModel = viewModel!!,
+                viewModel = viewModel,
                 content = {
                     Scaffold(
                         topBar = {
@@ -139,13 +139,13 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                         },
                         snackbarHost = {
                             SnackbarHost(
-                                hostState = viewModel!!.snackbarHostState!!
+                                hostState = viewModel.snackbarHostState!!
                             )
                         },
                         floatingActionButton = {
                             if (localUser.isAdmin()) {
                                 FloatingActionButton(
-                                    onClick = { viewModel!!.workOnApplication.value = true }
+                                    onClick = { viewModel.workOnApplication.value = true }
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Add,
@@ -153,8 +153,8 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                                     )
                                 }
                                 WorkOnApplication(
-                                    show = viewModel!!.workOnApplication,
-                                    viewModel = viewModel!!
+                                    show = viewModel.workOnApplication,
+                                    viewModel = viewModel
                                 )
                             }
                         }
@@ -164,7 +164,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                                 paddingValues = paddingValues
                             )
                             Applications(
-                                viewModel = viewModel!!
+                                viewModel = viewModel
                             )
                         }
                     }
@@ -227,10 +227,10 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
     ) {
         EquinoxOutlinedTextField(
             modifier = modifier,
-            value = viewModel!!.filterQuery,
+            value = viewModel.filterQuery,
             onValueChange = { query ->
-                viewModel!!.filterQuery.value = query
-                viewModel!!.paginationState.refresh()
+                viewModel.filterQuery.value = query
+                viewModel.paginationState.refresh()
             },
             placeholder = Res.string.search_placeholder,
             trailingIcon = {
@@ -267,7 +267,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                 IconButton(
                     onClick = {
                         expanded = false
-                        viewModel!!.clearFilters()
+                        viewModel.clearFilters()
                     }
                 ) {
                     Icon(
@@ -328,9 +328,9 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                     Checkbox(
                         modifier = Modifier
                             .weight(1f),
-                        checked = viewModel!!.platformsFilter.contains(platform),
+                        checked = viewModel.platformsFilter.contains(platform),
                         onCheckedChange = { checked ->
-                            viewModel!!.managePlatforms(
+                            viewModel.managePlatforms(
                                 checked = checked,
                                 platform = platform
                             )
@@ -339,7 +339,7 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
                 }
             },
             onClick = {
-                viewModel!!.managePlatforms(
+                viewModel.managePlatforms(
                     platform = platform
                 )
             }
@@ -351,9 +351,9 @@ class ApplicationsScreen : AmetistaScreen<ApplicationsScreenViewModel>(
      */
     @Composable
     override fun CollectStates() {
-        viewModel!!.filterQuery = remember { mutableStateOf("") }
-        viewModel!!.platformsFilter = remember { mutableStateListOf() }
-        viewModel!!.workOnApplication = remember { mutableStateOf(false) }
+        viewModel.filterQuery = remember { mutableStateOf("") }
+        viewModel.platformsFilter = remember { mutableStateListOf() }
+        viewModel.workOnApplication = remember { mutableStateOf(false) }
     }
 
 }

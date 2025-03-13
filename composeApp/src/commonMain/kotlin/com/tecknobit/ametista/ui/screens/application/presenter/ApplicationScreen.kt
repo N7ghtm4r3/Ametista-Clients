@@ -134,7 +134,7 @@ class ApplicationScreen(
             ) {
                 val isAdmin = localUser.isAdmin()
                 ManagedContent(
-                    viewModel = viewModel!!,
+                    viewModel = viewModel,
                     content = {
                         Scaffold(
                             topBar = {
@@ -154,7 +154,7 @@ class ApplicationScreen(
                                         if (isAdmin) {
                                             IconButton(
                                                 onClick = {
-                                                    viewModel!!.workOnApplication.value = true
+                                                    viewModel.workOnApplication.value = true
                                                 }
                                             ) {
                                                 Icon(
@@ -163,8 +163,8 @@ class ApplicationScreen(
                                                 )
                                             }
                                             WorkOnApplication(
-                                                show = viewModel!!.workOnApplication,
-                                                viewModel = viewModel!!,
+                                                show = viewModel.workOnApplication,
+                                                viewModel = viewModel,
                                                 application = application.value
                                             )
                                             val deleteApplication =
@@ -180,7 +180,7 @@ class ApplicationScreen(
                                             DeleteApplication(
                                                 show = deleteApplication,
                                                 application = application.value!!,
-                                                viewModel = viewModel!!,
+                                                viewModel = viewModel,
                                                 onDelete = { navigator.goBack() }
                                             )
                                         }
@@ -189,7 +189,7 @@ class ApplicationScreen(
                             },
                             snackbarHost = {
                                 SnackbarHost(
-                                    hostState = viewModel!!.snackbarHostState!!
+                                    hostState = viewModel.snackbarHostState!!
                                 )
                             },
                             floatingActionButton = {
@@ -308,7 +308,7 @@ class ApplicationScreen(
         val platforms = application.value!!.platforms
         if (platforms.isNotEmpty()) {
             PlatformsCustomGrid(
-                viewModel = viewModel!!,
+                viewModel = viewModel,
                 applicationPlatforms = platforms
             )
         } else {
@@ -467,7 +467,7 @@ class ApplicationScreen(
      */
     override fun onStart() {
         super.onStart()
-        viewModel!!.refreshApplication()
+        viewModel.refreshApplication()
     }
 
     /**
@@ -475,8 +475,8 @@ class ApplicationScreen(
      */
     @Composable
     override fun CollectStates() {
-        application = viewModel!!.application.collectAsState()
-        viewModel!!.workOnApplication = remember { mutableStateOf(false) }
+        application = viewModel.application.collectAsState()
+        viewModel.workOnApplication = remember { mutableStateOf(false) }
         showConnectionProcedure = remember { mutableStateOf(false) }
     }
 
