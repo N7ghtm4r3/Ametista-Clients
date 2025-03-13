@@ -8,12 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.text.font.FontFamily
 import coil3.ImageLoader
-import coil3.addLastModifiedToFileCacheKey
 import coil3.compose.LocalPlatformContext
-import coil3.network.okhttp.OkHttpNetworkFetcherFactory
+import coil3.network.ktor3.KtorNetworkFetcherFactory
 import coil3.request.CachePolicy
+import coil3.request.addLastModifiedToFileCacheKey
 import com.tecknobit.ametista.helpers.AmetistaLocalUser
 import com.tecknobit.ametista.helpers.AmetistaRequester
+import com.tecknobit.ametista.helpers.customHttpClient
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
 import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.AUTH_SCREEN
@@ -28,27 +29,19 @@ import com.tecknobit.ametista.ui.screens.changeviewerpassword.ChangeViewerPasswo
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
 import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
 import com.tecknobit.ametista.ui.screens.session.SessionScreen
-import com.tecknobit.ametistacore.models.AmetistaApplication.IDENTIFIER_KEY
-import com.tecknobit.ametistacore.models.AmetistaUser.DEFAULT_VIEWER_PASSWORD
-import com.tecknobit.ametistacore.models.Platform
+import com.tecknobit.ametistacore.enums.Platform
+import com.tecknobit.ametistacore.helpers.AmetistaValidator.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.PLATFORM_KEY
-import com.tecknobit.equinox.environment.records.EquinoxUser.NAME_KEY
+import com.tecknobit.equinoxcore.helpers.IDENTIFIER_KEY
+import com.tecknobit.equinoxcore.helpers.NAME_KEY
 import io.github.vinceglb.filekit.core.PlatformFile
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
-import okhttp3.OkHttpClient
 import org.jetbrains.compose.resources.Font
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import java.security.SecureRandom
-import java.security.cert.X509Certificate
-import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLContext
-import javax.net.ssl.SSLSession
-import javax.net.ssl.TrustManager
-import javax.net.ssl.X509TrustManager
 
 /**
  * **bodyFontFamily** -> the Ametista's body font family
@@ -64,11 +57,6 @@ lateinit var displayFontFamily: FontFamily
  * **navigator** -> the navigator instance is useful to manage the navigation between the screens of the application
  */
 lateinit var navigator: Navigator
-
-/**
- * **sslContext** -> the context helper to TLS protocols
- */
-private val sslContext = SSLContext.getInstance("TLS")
 
 /**
  * **imageLoader** -> the image loader used by coil library to load the image and by-passing the https self-signed certificates
@@ -95,19 +83,12 @@ lateinit var requester: AmetistaRequester
 fun App() {
     bodyFontFamily = FontFamily(Font(Res.font.dm_sans))
     displayFontFamily = FontFamily(Font(Res.font.kanit))
-    sslContext.init(null, validateSelfSignedCertificate(), SecureRandom())
     imageLoader = ImageLoader.Builder(LocalPlatformContext.current)
         .components {
             add(
-                OkHttpNetworkFetcherFactory {
-                    OkHttpClient.Builder()
-                        .sslSocketFactory(sslContext.socketFactory,
-                            validateSelfSignedCertificate()[0] as X509TrustManager
-                        )
-                        .hostnameVerifier { _: String?, _: SSLSession? -> true }
-                        .connectTimeout(2, TimeUnit.SECONDS)
-                        .build()
-                }
+                KtorNetworkFetcherFactory(
+                    httpClient = customHttpClient()
+                )
             )
         }
         .addLastModifiedToFileCacheKey(true)
@@ -171,24 +152,6 @@ fun App() {
 }
 
 /**
- * Method to validate a self-signed SLL certificate and bypass the checks of its validity<br></br>
- *
- * @return list of trust managers as [Array] of [TrustManager]
- * @apiNote this method disable all checks on the SLL certificate validity, so is recommended to
- * use for test only or in a private distribution on own infrastructure
- */
-private fun validateSelfSignedCertificate(): Array<TrustManager> {
-    return arrayOf(object : X509TrustManager {
-        override fun getAcceptedIssuers(): Array<X509Certificate> {
-            return arrayOf()
-        }
-
-        override fun checkClientTrusted(certs: Array<X509Certificate>, authType: String) {}
-        override fun checkServerTrusted(certs: Array<X509Certificate>, authType: String) {}
-    })
-}
-
-/**
  * Function to check whether are available any updates for each platform and then launch the application
  * which the correct first screen to display
  *
@@ -207,7 +170,7 @@ fun startSession() {
         userId = localUser.userId,
         userToken = localUser.userToken
     )
-    val route = if (localUser.userId == null)
+    val route = if (!localUser.isAuthenticated)
         AUTH_SCREEN
     else if (localUser.password == DEFAULT_VIEWER_PASSWORD)
         CHANGE_VIEWER_PASSWORD_SCREEN

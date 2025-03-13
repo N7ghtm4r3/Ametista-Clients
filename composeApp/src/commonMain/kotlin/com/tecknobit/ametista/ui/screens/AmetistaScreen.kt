@@ -14,11 +14,11 @@ import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.navigator
-import com.tecknobit.apimanager.annotations.Structure
 import com.tecknobit.equinox.environment.records.EquinoxItem
 import com.tecknobit.equinoxcompose.components.EmptyListUI
-import com.tecknobit.equinoxcompose.helpers.session.EquinoxScreen
-import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
+import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcore.annotations.Structure
 
 /**
  * The [AmetistaScreen] class is useful to provides the basic behavior of a Ametista's UI screen

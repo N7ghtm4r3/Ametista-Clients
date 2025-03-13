@@ -149,4 +149,4 @@ This section concerns Privacy and policy for Android's application published on 
 Store. <br>
 Ametista application **will not share any personal data of the user with third part applications.** 
 
-Copyright © 2024 Tecknobit
+Copyright © 2025 Tecknobit

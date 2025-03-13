@@ -6,14 +6,16 @@ import com.tecknobit.ametistacore.models.AmetistaUser.Role.ADMIN
 import com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER
 import com.tecknobit.apimanager.formatters.JsonHelper
 import com.tecknobit.equinox.annotations.CustomParametersOrder
-import com.tecknobit.equinox.environment.records.EquinoxLocalUser
+import com.tecknobit.equinoxcompose.session.EquinoxLocalUser
 
 /**
  * The {@code AmetistaLocalUser} class is useful to represent a user in the client application
  *
  * @author N7ghtm4r3 - Tecknobit
  */
-class AmetistaLocalUser : EquinoxLocalUser() {
+class AmetistaLocalUser : EquinoxLocalUser(
+    localStoragePath = "Ametista"
+) {
 
     companion object {
 

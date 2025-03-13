@@ -6,7 +6,9 @@ import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.util.UUID
 
 plugins {
@@ -25,12 +27,43 @@ kotlin {
         }
     }
 
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "Ametista"
+            isStatic = true
+        }
+    }
+
     jvm("desktop") {
         kotlin {
             jvmToolchain {
                 languageVersion.set(JavaLanguageVersion.of(21))
             }
         }
+    }
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "composeApp"
+        browser {
+            val rootDirPath = project.rootDir.path
+            val projectDirPath = project.projectDir.path
+            commonWebpackConfig {
+                outputFileName = "Ametista.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(rootDirPath)
+                        add(projectDirPath)
+                    }
+                }
+            }
+        }
+        binaries.executable()
     }
     
     sourceSets {
@@ -45,39 +78,62 @@ kotlin {
             implementation(libs.app.update.ktx)
             implementation(libs.review)
             implementation(libs.review.ktx)
+            implementation(libs.ktor.client.okhttp)
         }
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.materialIconsExtended)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.equinox)
-            implementation(libs.equinox.compose)
-            implementation(libs.precompose)
-            implementation(libs.coil3.coil.compose)
-            implementation(libs.coil.network.okhttp)
-            implementation(libs.apimanager)
-            implementation(libs.lazyPaginationCompose)
-            implementation(libs.ametistacore)
-            implementation(libs.filekit.core)
-            implementation(libs.filekit.compose)
-            implementation(libs.material3.window.size)
-            implementation(libs.jetlime)
-            implementation(libs.richeditor.compose)
-            implementation(libs.chiptextfield.m3)
-            implementation(libs.compose.charts)
-            implementation(libs.sonner)
-            implementation(libs.json)
+
+        val commonMain by getting {
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.materialIconsExtended)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+                implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.androidx.lifecycle.runtime.compose)
+                implementation(libs.equinox.core)
+                implementation(libs.equinox.compose)
+                implementation(libs.precompose)
+                implementation(libs.coil.compose)
+                implementation(libs.coil.network.ktor3)
+                implementation(libs.lazyPaginationCompose)
+                implementation(libs.ametistacore)
+                implementation(libs.filekit.core)
+                implementation(libs.filekit.compose)
+                implementation(libs.material3.window.size)
+                implementation(libs.jetlime)
+                implementation(libs.richeditor.compose)
+                implementation(libs.chiptextfield.m3)
+                implementation(libs.compose.charts)
+                implementation(libs.sonner)
+            }
         }
+
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.octocatkdu)
+            implementation(libs.ktor.client.okhttp)
+        }
+
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(libs.ktor.client.cio)
+            }
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.js)
+            }
         }
     }
 }
@@ -94,8 +150,8 @@ android {
         applicationId = "com.tecknobit.ametista"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 2
-        versionName = "1.0.0"
+        versionCode = 3
+        versionName = "1.0.1"
     }
     packaging {
         resources {
@@ -139,10 +195,10 @@ compose.desktop {
                 "jdk.security.auth"
             )
             packageName = "Ametista"
-            packageVersion = "1.0.0"
+            packageVersion = "1.0.1"
             description =
                 "Self-hosted issues tracker and performance stats collector about Compose Multiplatform applications"
-            copyright = "© 2024 Tecknobit"
+            copyright = "© 2025 Tecknobit"
             vendor = "Tecknobit"
             licenseFile.set(project.file("src/desktopMain/resources/LICENSE"))
             macOS {
@@ -157,7 +213,7 @@ compose.desktop {
                 iconFile.set(project.file("src/desktopMain/resources/logo.png"))
                 packageName = "com-tecknobit-ametista"
                 debMaintainer = "infotecknobitcompany@gmail.com"
-                appRelease = "1.0.0"
+                appRelease = "1.0.1"
                 appCategory = "PERSONALIZATION"
                 rpmLicenseType = "MIT"
             }
@@ -186,6 +242,6 @@ tasks.withType<DokkaTask>().configureEach {
 
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
         customAssets = listOf(file("../docs/logo-icon.svg"))
-        footerMessage = "(c) 2024 Tecknobit"
+        footerMessage = "(c) 2025 Tecknobit"
     }
 }
