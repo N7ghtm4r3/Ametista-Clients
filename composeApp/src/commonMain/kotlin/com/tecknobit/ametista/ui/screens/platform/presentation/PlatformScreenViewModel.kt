@@ -67,9 +67,9 @@
 //    }
 //
 //    /**
-//     * **paginationState** -> the state used to manage the pagination for the [loadIssues] method
+//     * **applicationsState** -> the state used to manage the pagination for the [loadIssues] method
 //     */
-//    val paginationState = PaginationState<Int, AmetistaAnalytic>(
+//    val applicationsState = PaginationState<Int, AmetistaAnalytic>(
 //        initialPageKey = DEFAULT_PAGE,
 //        onRequestPage = { pageNumber ->
 //            loadIssues(
@@ -144,7 +144,7 @@
 //                        IssueAnalytic(jIssue)
 //                },
 //                onSuccess = { page ->
-//                    paginationState.appendPage(
+//                    applicationsState.appendPage(
 //                        items = page.data,
 //                        nextPageKey = page.nextPage,
 //                        isLastPage = page.isLastPage
@@ -165,7 +165,7 @@
 //    ) {
 //        _filters = filtersState.chips.map { chip -> chip.text }.toHashSet()
 //        _filtersSet.value = _filters.isNotEmpty()
-//        paginationState.refresh()
+//        applicationsState.refresh()
 //        onSuccess.invoke()
 //    }
 //
@@ -175,7 +175,7 @@
 //    fun clearFilters() {
 //        _filters.clear()
 //        _filtersSet.value = false
-//        paginationState.refresh()
+//        applicationsState.refresh()
 //    }
 //
 //    /**

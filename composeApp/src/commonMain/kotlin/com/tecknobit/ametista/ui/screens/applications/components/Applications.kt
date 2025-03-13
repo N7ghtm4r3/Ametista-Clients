@@ -1,9 +1,10 @@
-@file:OptIn(ExperimentalFoundationApi::class)
+@file:OptIn(ExperimentalFoundationApi::class, ExperimentalMultiplatform::class)
 
-package com.tecknobit.ametista.ui.screens.applications
+package com.tecknobit.ametista.ui.screens.applications.components
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.logo
+import ametista.composeapp.generated.resources.no_applications
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
@@ -39,28 +40,77 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
+import com.tecknobit.ametista.APPLICATION_SCREEN
 import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.localUser
+import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
 import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
-import com.tecknobit.ametista.ui.components.WorkOnApplication
+import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
 import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
-import com.tecknobit.ametistacore.models.AmetistaApplication
+import com.tecknobit.equinoxcompose.components.EmptyState
+import com.tecknobit.equinoxcompose.utilities.CompactClassComponent
+import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.EXPANDED_CONTENT
+import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.MEDIUM_CONTENT
+import com.tecknobit.equinoxcompose.utilities.ResponsiveClassComponent
+import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
+import com.tecknobit.equinoxcore.annotations.Wrapper
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 import org.jetbrains.compose.resources.painterResource
 
 /**
+ * **ICONS_REGEX** -> the regex to determine whether the application icon is selected one or provided
+ * by the server
+ */
+private const val ICONS_REGEX = "icons"
+
+/**
  * The component to display the applications list
  *
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen]
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen]
  */
 @Composable
 @NonRestartableComposable
-actual fun Applications(
+fun Applications(
     viewModel: ApplicationsScreenViewModel,
 ) {
-    val applicationsIsEmpty = remember { mutableStateOf(false) }
+    ResponsiveContent(
+        onExpandedSizeClass = {
+            ApplicationsGrid(
+                viewModel = viewModel
+            )
+        },
+        onMediumSizeClass = {
+            ApplicationsGrid(
+                viewModel = viewModel
+            )
+        },
+        onCompactSizeClass = {
+            ApplicationsList(
+                viewModel = viewModel
+            )
+        }
+    )
+}
+
+@Composable
+@NonRestartableComposable
+@ResponsiveClassComponent(
+    classes = [EXPANDED_CONTENT, MEDIUM_CONTENT],
+)
+private fun ApplicationsGrid(
+    viewModel: ApplicationsScreenViewModel,
+) {
+
+}
+
+@Composable
+@CompactClassComponent
+@NonRestartableComposable
+private fun ApplicationsList(
+    viewModel: ApplicationsScreenViewModel,
+) {
     PaginatedLazyColumn(
         modifier = Modifier
             .padding(
@@ -68,26 +118,20 @@ actual fun Applications(
             ),
         paginationState = viewModel.applicationsState,
         firstPageProgressIndicator = { FirstPageProgressIndicator() },
-        newPageProgressIndicator = { NewPageProgressIndicator() }
+        newPageProgressIndicator = { NewPageProgressIndicator() },
+        firstPageEmptyIndicator = { NoApplications() }
     ) {
-        val applications = viewModel.applicationsState.allItems!!
-        applicationsIsEmpty.value = applications.isEmpty()
-        if(applications.isNotEmpty()) {
-            itemsIndexed(
-                items = applications,
-                key = { _ , application -> application.id }
-            ) { index, application ->
-                ApplicationItem(
-                    isTheFirst = index == 0,
-                    application = application,
-                    viewModel = viewModel
-                )
-            }
+        itemsIndexed(
+            items = viewModel.applicationsState.allItems!!,
+            key = { _, application -> application.id }
+        ) { index, application ->
+            ApplicationItem(
+                isTheFirst = index == 0,
+                application = application,
+                viewModel = viewModel
+            )
         }
     }
-    NoApplications(
-        noApplications = applicationsIsEmpty.value
-    )
 }
 
 /**
@@ -95,20 +139,20 @@ actual fun Applications(
  *
  * @param isTheFirst Whether is the first application of the list displayed
  * @param application The application to display
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen]
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen]
  */
 @Composable
 @NonRestartableComposable
-actual fun ApplicationItem(
+private fun ApplicationItem(
     isTheFirst: Boolean,
     application: AmetistaApplication,
-    viewModel: ApplicationsScreenViewModel
+    viewModel: ApplicationsScreenViewModel,
 ) {
     val isAdmin = localUser.isAdmin()
     val editApplication = remember { mutableStateOf(false) }
     val expandDescription = remember { mutableStateOf(false) }
     val deleteApplication = remember { mutableStateOf(false) }
-    if(isTheFirst)
+    if (isTheFirst)
         HorizontalDivider()
     ListItem(
         modifier = Modifier
@@ -199,7 +243,7 @@ actual fun ApplicationItem(
         }
     )
     HorizontalDivider()
-    ExpandApplicationDescription(
+    /*ExpandApplicationDescription(
         expand = expandDescription,
         application = application
     )
@@ -209,7 +253,7 @@ actual fun ApplicationItem(
             viewModel = viewModel,
             application = application
         )
-    }
+    }*/
 }
 
 /**
@@ -220,9 +264,9 @@ actual fun ApplicationItem(
  */
 @Composable
 @NonRestartableComposable
-actual fun ApplicationIcon(
-    modifier: Modifier,
-    application: AmetistaApplication
+private fun ApplicationIcon(
+    modifier: Modifier = Modifier,
+    application: AmetistaApplication,
 ) {
     AsyncImage(
         modifier = modifier
@@ -246,5 +290,47 @@ actual fun ApplicationIcon(
         contentDescription = "Application icon",
         contentScale = ContentScale.Crop,
         error = painterResource(Res.drawable.logo)
+    )
+}
+
+@Wrapper
+fun getApplicationIconCompleteUrl(
+    application: AmetistaApplication,
+): String {
+    return getApplicationIconCompleteUrl(
+        url = application.applicationIcon
+    )
+}
+
+/**
+ * Method to get the complete url to display the application icon
+ *
+ * @param url The slice of the icon url
+ *
+ * @return the complete icon url as [String]
+ */
+fun getApplicationIconCompleteUrl(
+    url: String,
+): String {
+    if (!url.startsWith(ICONS_REGEX))
+        return url
+    return localUser.hostAddress + "/" + url
+}
+
+fun navToApplicationScreen(
+    application: AmetistaApplication,
+) {
+    navigator.navigate("$APPLICATION_SCREEN/${application.id}")
+}
+
+/**
+ * The layout to display when the applications list is empty
+ */
+@Composable
+@NonRestartableComposable
+private fun NoApplications() {
+    EmptyState(
+        resource = Res.drawable.no_applications,
+        contentDescription = "No applications available"
     )
 }

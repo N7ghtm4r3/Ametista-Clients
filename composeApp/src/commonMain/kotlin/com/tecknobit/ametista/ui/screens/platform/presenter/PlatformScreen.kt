@@ -306,7 +306,7 @@
 //        PaginatedLazyColumn(
 //            modifier = Modifier
 //                .fillMaxSize(),
-//            paginationState = viewModel.paginationState,
+//            applicationsState = viewModel.applicationsState,
 //            firstPageProgressIndicator = { FirstPageProgressIndicator() },
 //            newPageProgressIndicator = { NewPageProgressIndicator() },
 //            verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -314,7 +314,7 @@
 //                bottom = 16.dp
 //            )
 //        ) {
-//            val issues = viewModel.paginationState.allItems!!
+//            val issues = viewModel.applicationsState.allItems!!
 //            issuesIsEmpty.value = issues.isEmpty()
 //            if (issues.isNotEmpty()) {
 //                items(

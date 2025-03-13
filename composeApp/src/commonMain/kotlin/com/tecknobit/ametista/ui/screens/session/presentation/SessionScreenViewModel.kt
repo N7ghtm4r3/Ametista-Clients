@@ -88,9 +88,9 @@
 //    lateinit var viewerEmailError: MutableState<Boolean>
 //
 //    /**
-//     * **paginationState** -> the state used to manage the pagination for the [loadMembers] method
+//     * **applicationsState** -> the state used to manage the pagination for the [loadMembers] method
 //     */
-//    val paginationState = PaginationState<Int, AmetistaMember>(
+//    val applicationsState = PaginationState<Int, AmetistaMember>(
 //        initialPageKey = DEFAULT_PAGE,
 //        onRequestPage = { pageNumber ->
 //            loadMembers(
@@ -117,7 +117,7 @@
 //                supplier = { jMember -> AmetistaMember(jMember) },
 //                onSuccess = { page ->
 //                    setServerOfflineValue(false)
-//                    paginationState.appendPage(
+//                    applicationsState.appendPage(
 //                        items = page.data,
 //                        nextPageKey = page.nextPage,
 //                        isLastPage = page.isLastPage
@@ -158,7 +158,7 @@
 //                )
 //            },
 //            onSuccess = {
-//                paginationState.refresh()
+//                applicationsState.refresh()
 //                onSuccess.invoke()
 //            },
 //            onFailure = { showSnackbarMessage(it) }
@@ -179,7 +179,7 @@
 //                    member = member
 //                )
 //            },
-//            onSuccess = { paginationState.refresh() },
+//            onSuccess = { applicationsState.refresh() },
 //            onFailure = { showSnackbarMessage(it) }
 //        )
 //    }

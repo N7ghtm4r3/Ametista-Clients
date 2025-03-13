@@ -30,9 +30,9 @@ import kotlinx.serialization.json.buildJsonObject
 class ApplicationsScreenViewModel : ApplicationViewModel() {
 
     /**
-     * **paginationState** -> the state used to manage the pagination for the [loadApplications] method
+     * **applicationsState** -> the state used to manage the pagination for the [loadApplications] method
      */
-    val paginationState = PaginationState<Int, AmetistaApplication>(
+    val applicationsState = PaginationState<Int, AmetistaApplication>(
         initialPageKey = DEFAULT_PAGE,
         onRequestPage = { pageNumber ->
             loadApplications(
@@ -71,7 +71,7 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
                 serializer = AmetistaApplication.serializer(),
                 onSuccess = { page ->
                     setServerOfflineValue(false)
-                    paginationState.appendPage(
+                    applicationsState.appendPage(
                         items = page.data,
                         nextPageKey = page.nextPage,
                         isLastPage = page.isLastPage
@@ -112,7 +112,7 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
             platformsFilter.add(platform)
         else
             platformsFilter.remove(platform)
-        paginationState.refresh()
+        applicationsState.refresh()
     }
 
     /**
@@ -124,7 +124,7 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
             platformsFilter.clear()
         if (filterQuery.value.isNotEmpty() || platformsFilterChanged) {
             filterQuery.value = ""
-            paginationState.refresh()
+            applicationsState.refresh()
         }
     }
 
@@ -142,7 +142,7 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
             addApplication(
                 onSuccess = {
                     onSuccess.invoke()
-                    paginationState.refresh()
+                    applicationsState.refresh()
                 }
             )
         } else {
@@ -150,7 +150,7 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
                 application = application,
                 onSuccess = {
                     onSuccess.invoke()
-                    paginationState.refresh()
+                    applicationsState.refresh()
                 }
             )
         }

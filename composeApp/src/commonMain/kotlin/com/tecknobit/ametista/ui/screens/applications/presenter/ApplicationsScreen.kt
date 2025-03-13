@@ -37,6 +37,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.CloseApplicationOnNavBack
 import com.tecknobit.ametista.localUser
+import com.tecknobit.ametista.ui.screens.applications.components.Applications
 import com.tecknobit.ametista.ui.screens.applications.components.PlatformsMenu
 import com.tecknobit.ametista.ui.screens.applications.components.ProfilePic
 import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
@@ -47,7 +48,7 @@ import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * The [ApplicationsScreen] class is used to display the list of [AmetistaApplication] registered by
+ * The [ApplicationsScreen] class is used to display the list of Ametista's application registered by
  * the system
  *
  * @author N7ghtm4r3 - Tecknobit
@@ -110,9 +111,9 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
                             FiltersSection(
                                 paddingValues = paddingValues
                             )
-                            /*Applications(
+                            Applications(
                                 viewModel = viewModel
-                            )*/
+                            )
                         }
                     }
                 }
@@ -176,7 +177,7 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
         DebouncedOutlinedTextField(
             modifier = modifier,
             value = viewModel.filterQuery,
-            debounce = { viewModel.paginationState.refresh() },
+            debounce = { viewModel.applicationsState.refresh() },
             placeholder = Res.string.search_placeholder,
             trailingIcon = {
                 Icon(

@@ -193,7 +193,8 @@ fun startSession() {
     requester = AmetistaRequester(
         host = localUser.hostAddress,
         userId = localUser.userId,
-        userToken = localUser.userToken
+        userToken = localUser.userToken,
+        debugMode = true // TODO: TO REMOVE 
     )
     val route = if (!localUser.isAuthenticated)
         AUTH_SCREEN

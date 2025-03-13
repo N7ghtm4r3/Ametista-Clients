@@ -18,6 +18,7 @@ import com.tecknobit.equinoxcore.annotations.CustomParametersOrder
 import com.tecknobit.equinoxcore.helpers.LANGUAGE_KEY
 import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
+import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.JsonObject
 
@@ -89,7 +90,7 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
                     },
                     onSuccess = { response ->
                         launchApp(
-                            response = response,
+                            response = response.toResponseData(),
                             name = name.value,
                             surname = surname.value,
                             language = language,
@@ -121,7 +122,7 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
                     },
                     onSuccess = { response ->
                         launchApp(
-                            response = response,
+                            response = response.toResponseData(),
                             name = name.value,
                             surname = surname.value,
                             language = response[LANGUAGE_KEY].treatsAsString(),
@@ -153,7 +154,7 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
                     },
                     onSuccess = { response ->
                         launchApp(
-                            response = response,
+                            response = response.toResponseData(),
                             name = name.value,
                             surname = surname.value,
                             language = response[LANGUAGE_KEY].treatsAsString(),

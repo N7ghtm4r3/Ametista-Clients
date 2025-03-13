@@ -77,14 +77,14 @@
 //                .widthIn(
 //                    max = MAX_CONTAINER_WIDTH
 //                ),
-//            paginationState = viewModel.paginationState,
+//            applicationsState = viewModel.applicationsState,
 //            columns = GridCells.Adaptive(
 //                minSize = 400.dp
 //            ),
 //            firstPageProgressIndicator = { FirstPageProgressIndicator() },
 //            newPageProgressIndicator = { NewPageProgressIndicator() }
 //        ) {
-//            val applications = viewModel.paginationState.allItems!!
+//            val applications = viewModel.applicationsState.allItems!!
 //            applicationsIsEmpty.value = applications.isEmpty()
 //            if(applications.isNotEmpty()) {
 //                items(
@@ -183,7 +183,7 @@
 //                show = deleteApplication,
 //                viewModel = viewModel,
 //                application = application,
-//                onDelete = { viewModel.paginationState.refresh() }
+//                onDelete = { viewModel.applicationsState.refresh() }
 //            )
 //        }
 //    }
