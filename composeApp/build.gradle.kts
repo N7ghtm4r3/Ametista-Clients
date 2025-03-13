@@ -72,7 +72,6 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.ui.text.google.fonts)
-            implementation(libs.androidx.startup.runtime)
             implementation(libs.app.update)
             implementation(libs.app.update.ktx)
             implementation(libs.review)
@@ -100,7 +99,6 @@ kotlin {
                 implementation(libs.ametistacore)
                 implementation(libs.filekit.core)
                 implementation(libs.filekit.compose)
-                implementation(libs.material3.window.size)
                 implementation(libs.jetlime)
                 implementation(libs.richeditor.compose)
                 // TODO TO SET FROM LOCAL

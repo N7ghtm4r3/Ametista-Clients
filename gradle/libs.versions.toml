@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.2"
+agp = "8.5.2"
 ametistacore = "1.0.1"
 android-compileSdk = "35"
 android-minSdk = "26"
@@ -16,11 +16,9 @@ filekitCore = "0.8.8"
 jetlime = "3.0.1"
 kotlin = "2.1.0"
 kotlinx-coroutines = "1.10.1"
-material3WindowSizeClass = "1.7.3"
 precompose = "1.7.0-alpha03"
 richeditorCompose = "1.0.0-rc09"
 sonner = "0.3.8"
-startupRuntime = "1.2.0"
 uiTextGoogleFonts = "1.7.8"
 lazy-pagination-compose = "1.4.0"
 appUpdate = "2.1.0"
@@ -31,7 +29,6 @@ dokka = "2.0.0"
 
 [libraries]
 ametistacore = { module = "com.tecknobit.ametistacore:ametistacore", version.ref = "ametistacore" }
-androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startupRuntime" }
 chiptextfield-m3 = { module = "io.github.dokar3:chiptextfield-m3", version.ref = "chiptextfieldM3" }
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "ktor" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil-compose" }
@@ -49,7 +46,6 @@ androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", nam
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
-material3-window-size = { module = "org.jetbrains.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
 precompose = { module = "moe.tlaster:precompose", version.ref = "precompose" }
 lazyPaginationCompose = { module = "io.github.ahmad-hamwi:lazy-pagination-compose", version.ref = "lazy-pagination-compose" }
 richeditor-compose = { module = "com.mohamedrejeb.richeditor:richeditor-compose", version.ref = "richeditorCompose" }
