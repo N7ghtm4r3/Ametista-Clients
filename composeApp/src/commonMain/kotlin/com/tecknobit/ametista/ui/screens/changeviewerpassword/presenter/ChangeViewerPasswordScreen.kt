@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.tecknobit.ametista.ui.screens.changeviewerpassword
+package com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.change_preset_password
@@ -43,7 +43,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.CloseApplicationOnNavBack
-import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametista.ui.screens.changeviewerpassword.presentation.ChangeViewerPasswordScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isNewPasswordValid
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField

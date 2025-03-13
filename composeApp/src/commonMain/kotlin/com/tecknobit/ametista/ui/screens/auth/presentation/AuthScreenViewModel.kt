@@ -1,12 +1,12 @@
-package com.tecknobit.ametista.ui.screens.auth
+package com.tecknobit.ametista.ui.screens.auth.presentation
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.requester
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CHANGE_VIEWER_PASSWORD_SCREEN
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.APPLICATIONS_SCREEN
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.CHANGE_VIEWER_PASSWORD_SCREEN
 import com.tecknobit.ametistacore.models.AmetistaUser.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.ametistacore.models.AmetistaUser.LANGUAGE_KEY
 import com.tecknobit.ametistacore.models.AmetistaUser.ROLE_KEY
@@ -177,11 +177,11 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
      * Method to launch the application after the authentication request, will be instantiated with the user details
      * both the [requester] and the [localUser]
      *
-     * @param response: the response of the authentication request
-     * @param name: the name of the user
-     * @param surname: the surname of the user
-     * @param language: the language of the user
-     * @param custom: the custom parameters added in a customization of the [EquinoxUser]
+     * @param response The response of the authentication request
+     * @param name The name of the user
+     * @param surname The surname of the user
+     * @param language The language of the user
+     * @param custom The custom parameters added in a customization of the [EquinoxUser]
      */
     @CustomParametersOrder(order = [ROLE_KEY])
     override fun launchApp(

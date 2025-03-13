@@ -15,20 +15,20 @@ import coil3.request.addLastModifiedToFileCacheKey
 import com.tecknobit.ametista.helpers.AmetistaLocalUser
 import com.tecknobit.ametista.helpers.AmetistaRequester
 import com.tecknobit.ametista.helpers.customHttpClient
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.AUTH_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CHANGE_VIEWER_PASSWORD_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.PLATFORM_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SESSION_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
-import com.tecknobit.ametista.ui.screens.application.ApplicationScreen
-import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
-import com.tecknobit.ametista.ui.screens.auth.AuthScreen
-import com.tecknobit.ametista.ui.screens.changeviewerpassword.ChangeViewerPasswordScreen
+import com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen
+import com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen
+import com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen
+import com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
-import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
-import com.tecknobit.ametista.ui.screens.session.SessionScreen
+import com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen
+import com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.APPLICATIONS_SCREEN
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.APPLICATION_SCREEN
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.AUTH_SCREEN
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.CHANGE_VIEWER_PASSWORD_SCREEN
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.PLATFORM_SCREEN
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.SESSION_SCREEN
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.SPLASHSCREEN
 import com.tecknobit.ametistacore.enums.Platform
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.PLATFORM_KEY
@@ -206,7 +206,7 @@ expect fun getCurrentWidthSizeClass(): WindowWidthSizeClass
 /**
  * Function to get the image picture's path
  *
- * @param imagePic: the asset from fetch its path
+ * @param imagePic The asset from fetch its path
  *
  * @return the asset path as [String]
  */

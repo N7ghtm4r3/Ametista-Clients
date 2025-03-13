@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.tecknobit.ametista.ui.screens.session
+package com.tecknobit.ametista.ui.screens.session.components
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.change_email
@@ -85,8 +85,9 @@ import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.RoleBadge
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
+import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.SPLASHSCREEN
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isNewPasswordValid
 import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme
 import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Dark
@@ -401,7 +402,7 @@ private fun UserData(
 /**
  * Method to allow the user to change the current language setting
  *
- * @param changeLanguage: the state whether display this section
+ * @param changeLanguage The state whether display this section
  */
 @Composable
 @NonRestartableComposable
@@ -451,7 +452,7 @@ private fun ChangeLanguage(
 /**
  * Method to allow the user to change the current theme setting
  *
- * @param changeTheme: the state whether display this section
+ * @param changeTheme The state whether display this section
  */
 @Composable
 @NonRestartableComposable
@@ -505,10 +506,10 @@ private fun ChangeTheme(
 /**
  * Method to allow the user to change a current setting
  *
- * @param showModal: the state whether display the [ModalBottomSheet]
- * @param sheetState: the state to apply to the [ModalBottomSheet]
- * @param onDismissRequest: the action to execute when the the [ModalBottomSheet] has been dismissed
- * @param content: the content to display
+ * @param showModal The state whether display the [ModalBottomSheet]
+ * @param sheetState The state to apply to the [ModalBottomSheet]
+ * @param onDismissRequest The action to execute when the the [ModalBottomSheet] has been dismissed
+ * @param content The content to display
  */
 @Composable
 @NonRestartableComposable

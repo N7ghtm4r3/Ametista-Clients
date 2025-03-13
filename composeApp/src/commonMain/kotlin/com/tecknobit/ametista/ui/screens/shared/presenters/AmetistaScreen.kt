@@ -1,4 +1,4 @@
-package com.tecknobit.ametista.ui.screens
+package com.tecknobit.ametista.ui.screens.shared.presenters
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn

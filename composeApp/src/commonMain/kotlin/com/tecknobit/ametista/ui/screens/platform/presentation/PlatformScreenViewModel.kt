@@ -1,4 +1,4 @@
-package com.tecknobit.ametista.ui.screens.platform
+package com.tecknobit.ametista.ui.screens.platform.presentation
 
 import androidx.compose.material3.DateRangePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,7 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.dokar.chiptextfield.Chip
 import com.dokar.chiptextfield.ChipTextFieldState
 import com.tecknobit.ametista.requester
-import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
+import com.tecknobit.ametista.ui.screens.shared.presentations.ApplicationViewModel
 import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.Platform.WEB

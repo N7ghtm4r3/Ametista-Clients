@@ -62,12 +62,11 @@ import com.dokar.chiptextfield.rememberChipTextFieldState
 import com.dokar.sonner.Toast
 import com.dokar.sonner.ToastType
 import com.dokar.sonner.Toaster
-import com.dokar.sonner.ToasterState
 import com.dokar.sonner.rememberToasterState
 import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.displayFontFamily
-import com.tecknobit.ametista.ui.screens.platform.PlatformScreenViewModel
-import com.tecknobit.ametista.ui.screens.platform.PlatformScreenViewModel.Companion.MAX_CHIPS_FILTERS
+import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel
+import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel.Companion.MAX_CHIPS_FILTERS
 import com.tecknobit.ametistacore.models.AmetistaApplication.MAX_VERSION_SAMPLES
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData.PerformanceDataItem
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData.PerformanceDataItem.MAX_TEMPORAL_RANGE
@@ -499,8 +498,8 @@ private fun ActionButtons(
  * @param errorMessage The error message to display
  */
 private fun showErrorToast(
-    toaster: ToasterState,
-    errorMessage: String
+    toaster ToasterState,
+    errorMessage: String,
 ) {
     toaster.show(
         Toast(

@@ -31,8 +31,8 @@ import androidx.lifecycle.viewModelScope
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.icons.Globe
 import com.tecknobit.ametista.ui.icons.Ios
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.PLATFORM_SCREEN
-import com.tecknobit.ametista.ui.screens.application.ApplicationScreenViewModel
+import com.tecknobit.ametista.ui.screens.application.presentation.ApplicationScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.PLATFORM_SCREEN
 import com.tecknobit.ametista.ui.theme.platforms.android.AndroidPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.desktop.DesktopPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.ios.IosPlatformTheme

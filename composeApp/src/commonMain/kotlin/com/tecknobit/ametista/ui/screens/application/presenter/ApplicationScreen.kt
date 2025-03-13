@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class, ExperimentalRichTextApi::class)
 
-package com.tecknobit.ametista.ui.screens.application
+package com.tecknobit.ametista.ui.screens.application.presenter
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.application_id_text
@@ -80,11 +80,12 @@ import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.helpers.PlatformsCustomGrid
 import com.tecknobit.ametista.helpers.copyToClipboard
 import com.tecknobit.ametista.localUser
-import com.tecknobit.ametista.model.ConnectionProcedureStep
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.WorkOnApplication
-import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametista.ui.screens.application.data.ConnectionProcedureStep
+import com.tecknobit.ametista.ui.screens.application.presentation.ApplicationScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform.entries
@@ -224,7 +225,7 @@ class ApplicationScreen(
 
     @Composable
     @NonRestartableComposable
-    // TODO: THE ORIGINAL COMPONENT MUST BE GENERAL AND NOT SPECIFIC LIKE THIS, BUT ALLOWING THE CUSTOMIZATION
+    // TODO THE ORIGINAL COMPONENT MUST BE GENERAL AND NOT SPECIFIC LIKE THIS, BUT ALLOWING THE CUSTOMIZATION
     private fun ExpandableText(
         paddingValues: PaddingValues
     ) {

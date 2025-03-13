@@ -51,14 +51,14 @@ class AmetistaLocalUser : EquinoxLocalUser(
     /**
      * Method to insert and init a new local user
      *
-     * @param hostAddress: the host address which the user communicate
+     * @param hostAddress The host address which the user communicate
      * @param name:        the name of the user
      * @param surname:     the surname of the user
      * @param email:       the email of the user
      * @param password:    the password of the user
      * @param language:    the language of the user
      * @param hResponse:   the payload response received from an authentication request
-     * @param custom: the custom parameters added in a customization of the {@link EquinoxUser}
+     * @param custom The custom parameters added in a customization of the {@link EquinoxUser}
      */
     @CustomParametersOrder(order = [ROLE_KEY])
     override fun insertNewUser(
@@ -89,7 +89,7 @@ class AmetistaLocalUser : EquinoxLocalUser(
     /**
      * Method to set the [role] instance
      *
-     * @param role: the role of the user
+     * @param role The role of the user
      */
     fun setRole(
         role: Role
@@ -140,7 +140,7 @@ class AmetistaLocalUser : EquinoxLocalUser(
      * Method to store and set a preference
      *
      * @param key   :   the key of the preference
-     * @param value : the value of the preference
+     * @param value  The value of the preference
      */
     override fun setPreference(
         key: String,
@@ -155,7 +155,7 @@ class AmetistaLocalUser : EquinoxLocalUser(
     /**
      * Method to get a stored preference
      *
-     * @param key : the key of the preference to get
+     * @param key  The key of the preference to get
      * @return the preference stored as [String]
      */
     override fun getPreference(

@@ -1,10 +1,10 @@
-package com.tecknobit.ametista.ui.screens.applications
+package com.tecknobit.ametista.ui.screens.applications.presentation
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.viewModelScope
 import com.tecknobit.ametista.requester
-import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
+import com.tecknobit.ametista.ui.screens.shared.presentations.ApplicationViewModel
 import com.tecknobit.ametistacore.helpers.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform

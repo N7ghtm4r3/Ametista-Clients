@@ -1,4 +1,4 @@
-package com.tecknobit.ametista.model
+package com.tecknobit.ametista.ui.screens.application.data
 
 /**
  * The [ConnectionProcedureStep] is used represent a single step for the connection procedure

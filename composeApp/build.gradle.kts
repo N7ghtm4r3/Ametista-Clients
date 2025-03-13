@@ -104,9 +104,11 @@ kotlin {
                 implementation(libs.material3.window.size)
                 implementation(libs.jetlime)
                 implementation(libs.richeditor.compose)
-                implementation(libs.chiptextfield.m3)
+                // TODO TO SET FROM LOCAL
+                //implementation(libs.chiptextfield.m3)
                 implementation(libs.compose.charts)
                 implementation(libs.sonner)
+                implementation(libs.kotlinx.serialization.json)
             }
         }
 
@@ -228,7 +230,7 @@ compose.desktop {
 
 configurations.all {
     exclude("commons-logging", "commons-logging")
-    // TODO: TO REMOVE IN THE NEXT VERSION (DEPRECATED TRIGGER SEARCH)
+    // TODO TO REMOVE IN THE NEXT VERSION (DEPRECATED TRIGGER SEARCH)
     resolutionStrategy {
         force("com.github.N7ghtm4r3:GitHubManager:1.0.1")
     }

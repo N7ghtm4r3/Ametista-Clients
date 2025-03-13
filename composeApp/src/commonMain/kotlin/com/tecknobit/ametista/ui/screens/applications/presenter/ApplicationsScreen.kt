@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.tecknobit.ametista.ui.screens.applications
+package com.tecknobit.ametista.ui.screens.applications.presenter
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.applications
@@ -63,7 +63,9 @@ import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.components.WorkOnApplication
-import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametista.ui.screens.applications.Applications
+import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform

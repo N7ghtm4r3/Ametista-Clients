@@ -58,9 +58,9 @@ import coil3.request.crossfade
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.getImagePath
 import com.tecknobit.ametista.imageLoader
-import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreenViewModel
 import com.tecknobit.ametista.ui.screens.applications.getApplicationIconCompleteUrl
-import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
+import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presentations.ApplicationViewModel
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppDescriptionValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppNameValid
 import com.tecknobit.ametistacore.models.AmetistaApplication

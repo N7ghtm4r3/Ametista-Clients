@@ -8,7 +8,7 @@ import com.tecknobit.equinoxcompose.session.setUpSession
  */
 fun MainViewController() = ComposeUIViewController {
     setUpSession {
-        // TODO: TO SET
+        // TODO TO SET
     }
     App()
 }

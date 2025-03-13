@@ -18,7 +18,7 @@ import androidx.compose.ui.res.vectorResource
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.tecknobit.ametista.helpers.ContextProvider
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.AUTH_SCREEN
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.AUTH_SCREEN
 import com.tecknobit.equinoxcompose.helpers.session.setUpSession
 import io.github.vinceglb.filekit.core.FileKit
 

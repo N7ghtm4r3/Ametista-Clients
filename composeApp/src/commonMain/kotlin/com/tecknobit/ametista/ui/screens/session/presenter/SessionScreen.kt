@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.tecknobit.ametista.ui.screens.session
+package com.tecknobit.ametista.ui.screens.session.presenter
 
 import ametista.composeapp.generated.resources.Res.string
 import ametista.composeapp.generated.resources.about_me
@@ -61,10 +61,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.localUser
-import com.tecknobit.ametista.ui.screens.AmetistaScreen
-import com.tecknobit.ametista.ui.screens.session.SessionScreenViewModel.SessionScreenSection
-import com.tecknobit.ametista.ui.screens.session.SessionScreenViewModel.SessionScreenSection.ABOUT_ME
-import com.tecknobit.ametista.ui.screens.session.SessionScreenViewModel.SessionScreenSection.MEMBERS
+import com.tecknobit.ametista.ui.screens.session.components.AboutMe
+import com.tecknobit.ametista.ui.screens.session.components.SessionMembers
+import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewModel
+import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewModel.SessionScreenSection
+import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewModel.SessionScreenSection.ABOUT_ME
+import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewModel.SessionScreenSection.MEMBERS
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
 import com.tecknobit.equinox.inputs.InputValidator.isNameValid

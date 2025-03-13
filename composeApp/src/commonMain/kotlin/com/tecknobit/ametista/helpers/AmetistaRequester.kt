@@ -31,30 +31,27 @@ import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalyt
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic.PERFORMANCE_ANALYTIC_TYPE_KEY
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic.PerformanceAnalyticType
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceDataFilters
-import com.tecknobit.apimanager.annotations.RequestPath
 import com.tecknobit.apimanager.apis.APIRequest.Params
-import com.tecknobit.apimanager.apis.APIRequest.RequestMethod.DELETE
-import com.tecknobit.apimanager.apis.APIRequest.RequestMethod.GET
-import com.tecknobit.apimanager.apis.APIRequest.RequestMethod.PATCH
-import com.tecknobit.apimanager.apis.APIRequest.RequestMethod.POST
 import com.tecknobit.apimanager.apis.ServerProtector.SERVER_SECRET_KEY
 import com.tecknobit.apimanager.formatters.JsonHelper
 import com.tecknobit.equinox.environment.helpers.EquinoxBaseEndpointsSet.SIGN_IN_ENDPOINT
 import com.tecknobit.equinox.environment.helpers.EquinoxBaseEndpointsSet.SIGN_UP_ENDPOINT
-import com.tecknobit.equinox.environment.helpers.EquinoxRequester
+import com.tecknobit.equinoxcompose.network.EquinoxRequester
+import com.tecknobit.equinoxcore.annotations.RequestPath
+import com.tecknobit.equinoxcore.network.RequestMethod.*
+import kotlinx.serialization.json.JsonObject
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import org.json.JSONObject
 import java.io.File
 
 /**
  * The **AmetistaRequester** class is useful to communicate with the Ametista's backend
  *
- * @param host: the host where is running the Nova's backend
- * @param userId: the user identifier
- * @param userToken: the user token
- * @param debugMode: whether the requester is still in development and who is developing needs the log of the requester's
+ * @param host The host where is running the Nova's backend
+ * @param userId The user identifier
+ * @param userToken The user token
+ * @param debugMode Whether the requester is still in development and who is developing needs the log of the requester's
  * workflow, if it is enabled all the details of the requests sent and the errors occurred will be printed in the console
  *
  * @author N7ghtm4r3 - Tecknobit
@@ -71,7 +68,7 @@ class AmetistaRequester(
     userId = userId,
     userToken = userToken,
     connectionTimeout = 2000,
-    enableCertificatesValidation = true,
+    byPassSSLValidation = true,
     debugMode = debugMode,
     connectionErrorMessage = "No internet connection"
 ) {
@@ -79,14 +76,14 @@ class AmetistaRequester(
     /**
      * Method to sign-up as an [ADMIN]
      *
-     * @param adminCode: the admin code Ametista's backend
-     * @param name: the name of the user
-     * @param surname: the surname of the user
-     * @param email: the email of the user
-     * @param password: the password of the user
-     * @param language: the language of the user
+     * @param adminCode The admin code Ametista's backend
+     * @param name The name of the user
+     * @param surname The surname of the user
+     * @param email The email of the user
+     * @param password The password of the user
+     * @param language The language of the user
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      *
      */
     @RequestPath(path = "/api/v1/users/signUp", method = POST)
@@ -96,8 +93,8 @@ class AmetistaRequester(
         surname: String,
         email: String,
         password: String,
-        language: String
-    ): JSONObject {
+        language: String,
+    ): JsonObject {
         val payload = Params()
         payload.addParam(ADMIN_CODE_KEY, adminCode)
         payload.addParam(NAME_KEY, name)
@@ -115,19 +112,19 @@ class AmetistaRequester(
     /**
      * Method to sign-in as an [ADMIN]
      *
-     * @param adminCode: the admin code Ametista's backend
-     * @param email: the email of the user
-     * @param password: the password of the user
+     * @param adminCode The admin code Ametista's backend
+     * @param email The email of the user
+     * @param password The password of the user
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      *
      */
     @RequestPath(path = "/api/v1/users/signIn", method = POST)
     fun adminSignIn(
         adminCode: String,
         email: String,
-        password: String
-    ): JSONObject {
+        password: String,
+    ): JsonObject {
         val payload = Params()
         payload.addParam(ADMIN_CODE_KEY, adminCode)
         payload.addParam(EMAIL_KEY, email)
@@ -141,19 +138,19 @@ class AmetistaRequester(
     /**
      * Method to sign-in as an [ADMIN]
      *
-     * @param serverSecret: the secret of the personal Ametista's backend
-     * @param email: the email of the user
-     * @param password: the password of the user
+     * @param serverSecret The secret of the personal Ametista's backend
+     * @param email The email of the user
+     * @param password The password of the user
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      *
      */
     @RequestPath(path = "/api/v1/users/signIn", method = POST)
     fun viewerSignIn(
         serverSecret: String,
         email: String,
-        password: String
-    ): JSONObject {
+        password: String,
+    ): JsonObject {
         val payload = Params()
         payload.addParam(SERVER_SECRET_KEY, serverSecret)
         payload.addParam(EMAIL_KEY, email)
@@ -173,8 +170,8 @@ class AmetistaRequester(
     @RequestPath(path = "/api/v1/users/{user_id}/session/members", method = GET)
     fun getSessionMembers(
         page: Int = DEFAULT_PAGE,
-        pageSize: Int = DEFAULT_PAGE_SIZE
-    ): JSONObject {
+        pageSize: Int = DEFAULT_PAGE_SIZE,
+    ): JsonObject {
         val query = createPaginationQuery(
             page = page,
             pageSize = pageSize
@@ -189,19 +186,19 @@ class AmetistaRequester(
     /**
      * Method to add a new [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER] in the system
      *
-     * @param name: the name of the user
-     * @param surname: the surname of the user
-     * @param email: the email of the user
+     * @param name The name of the user
+     * @param surname The surname of the user
+     * @param email The email of the user
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      *
      */
     @RequestPath(path = "/api/v1/users/{user_id}/session/members", method = POST)
     fun addViewer(
         name: String,
         surname: String,
-        email: String
-    ): JSONObject {
+        email: String,
+    ): JsonObject {
         val payload = Params()
         payload.addParam(NAME_KEY, name)
         payload.addParam(SURNAME_KEY, surname)
@@ -215,15 +212,15 @@ class AmetistaRequester(
     /**
      * Method to remove an [com.tecknobit.ametistacore.models.AmetistaMember] from the system
      *
-     * @param member: the member to remove
+     * @param member The member to remove
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      *
      */
     @RequestPath(path = "/api/v1/users/{user_id}/session/members/{member_id}", method = DELETE)
     fun removeMember(
-        member: AmetistaMember
-    ): JSONObject {
+        member: AmetistaMember,
+    ): JsonObject {
         return execDelete(
             endpoint = assembleSessionEndpoint(
                 subEndpoint = member.id
@@ -234,15 +231,15 @@ class AmetistaRequester(
     /**
      * Method to change the preset password by a [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER]
      *
-     * @param password: the password choose by the [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER]
+     * @param password The password choose by the [com.tecknobit.ametistacore.models.AmetistaUser.Role.VIEWER]
      *
-     * @return the result of the request as [JSONObject]
+     * @return the result of the request as [JsonObject]
      *
      */
     @RequestPath(path = "/api/v1/users/{user_id}/changePresetPassword", method = PATCH)
     fun changeViewerPresetPassword(
-        password: String
-    ): JSONObject {
+        password: String,
+    ): JsonObject {
         val payload = Params()
         payload.addParam(PASSWORD_KEY, password)
         return execPatch(
@@ -287,8 +284,8 @@ class AmetistaRequester(
         page: Int = DEFAULT_PAGE,
         pageSize: Int = DEFAULT_PAGE_SIZE,
         name: String = "",
-        platforms: List<Platform> = emptyList()
-    ): JSONObject {
+        platforms: List<Platform> = emptyList(),
+    ): JsonObject {
         val platformsFormatter = StringBuilder()
         if (platforms.isNotEmpty()) {
             platforms.forEach { platform: Platform ->
@@ -322,8 +319,8 @@ class AmetistaRequester(
     fun addApplication(
         icon: String,
         name: String,
-        description: String
-    ): JSONObject {
+        description: String,
+    ): JsonObject {
         val body = createApplicationPayload(
             icon = icon,
             name = name,
@@ -350,8 +347,8 @@ class AmetistaRequester(
         application: AmetistaApplication,
         icon: String,
         name: String,
-        description: String
-    ): JSONObject {
+        description: String,
+    ): JsonObject {
         val body = createApplicationPayload(
             icon = if (icon != application.icon)
                 icon
@@ -411,8 +408,8 @@ class AmetistaRequester(
      */
     @RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = GET)
     fun getApplication(
-        applicationId: String
-    ): JSONObject {
+        applicationId: String,
+    ): JsonObject {
         return execGet(
             endpoint = assembleApplicationsEndpoint(
                 subEndpoint = applicationId
@@ -441,8 +438,8 @@ class AmetistaRequester(
         platform: Platform,
         page: Int = DEFAULT_PAGE,
         pageSize: Int = DEFAULT_PAGE_SIZE,
-        filters: HashSet<String> = HashSet()
-    ): JSONObject {
+        filters: HashSet<String> = HashSet(),
+    ): JsonObject {
         val filtersFormatter = StringBuilder()
         if (filters.isNotEmpty()) {
             filters.forEach { filter: String ->
@@ -481,8 +478,8 @@ class AmetistaRequester(
     fun getPerformanceData(
         applicationId: String,
         platform: Platform,
-        performanceDataFilters: PerformanceDataFilters
-    ): JSONObject {
+        performanceDataFilters: PerformanceDataFilters,
+    ): JsonObject {
         val query = Params()
         query.addParam(PLATFORM_KEY, platform.name)
         val payload = Params()
@@ -513,8 +510,8 @@ class AmetistaRequester(
     fun getVersionSamples(
         applicationId: String,
         platform: Platform,
-        analyticType: PerformanceAnalyticType
-    ): JSONObject {
+        analyticType: PerformanceAnalyticType,
+    ): JsonObject {
         val query = Params()
         query.addParam(PLATFORM_KEY, platform.name)
         query.addParam(PERFORMANCE_ANALYTIC_TYPE_KEY, analyticType.name)
@@ -535,8 +532,8 @@ class AmetistaRequester(
      */
     @RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = DELETE)
     fun deleteApplication(
-        application: AmetistaApplication
-    ): JSONObject {
+        application: AmetistaApplication,
+    ): JsonObject {
         return execDelete(
             endpoint = assembleApplicationsEndpoint(
                 subEndpoint = application.id
@@ -575,11 +572,11 @@ class AmetistaRequester(
      * @param T generic type of the items in the page response
      */
     fun <T> sendPaginatedRequest(
-        request: AmetistaRequester.() -> JSONObject,
-        supplier: (JSONObject) -> T,
+        request: AmetistaRequester.() -> JsonObject,
+        supplier: (JsonObject) -> T,
         onSuccess: (PaginatedResponse<T>) -> Unit,
         onFailure: (JsonHelper) -> Unit,
-        onConnectionError: ((JsonHelper) -> Unit)? = null
+        onConnectionError: ((JsonHelper) -> Unit)? = null,
     ) {
         sendRequest(
             request = { request.invoke(this) },

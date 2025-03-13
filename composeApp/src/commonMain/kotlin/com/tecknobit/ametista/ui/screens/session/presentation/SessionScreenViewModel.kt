@@ -1,4 +1,4 @@
-package com.tecknobit.ametista.ui.screens.session
+package com.tecknobit.ametista.ui.screens.session.presentation
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState

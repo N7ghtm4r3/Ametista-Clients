@@ -1,4 +1,4 @@
-package com.tecknobit.ametista.ui.screens.auth
+package com.tecknobit.ametista.ui.screens.auth.presenter
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.admin_code
@@ -68,7 +68,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.CloseApplicationOnNavBack
 import com.tecknobit.ametista.displayFontFamily
-import com.tecknobit.ametista.ui.screens.AmetistaScreen
+import com.tecknobit.ametista.ui.screens.auth.presentation.AuthScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.equinox.inputs.InputValidator.isEmailValid
 import com.tecknobit.equinox.inputs.InputValidator.isHostValid

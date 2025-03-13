@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.tecknobit.ametista.ui.screens.platform
+package com.tecknobit.ametista.ui.screens.platform.presenter
 
 import ametista.composeapp.generated.resources.Res.string
 import ametista.composeapp.generated.resources.no_issues
@@ -64,8 +64,9 @@ import com.tecknobit.ametista.ui.components.IssuesPerSessionsNumber
 import com.tecknobit.ametista.ui.components.LaunchTime
 import com.tecknobit.ametista.ui.components.NetworkRequests
 import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
-import com.tecknobit.ametista.ui.screens.AmetistaScreen
-import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
+import com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen
+import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.ametistacore.models.Platform
 import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.AnalyticType

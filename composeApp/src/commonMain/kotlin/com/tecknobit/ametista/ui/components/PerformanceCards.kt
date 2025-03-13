@@ -64,8 +64,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.ui.icons.ChartNetwork
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
-import com.tecknobit.ametista.ui.screens.platform.PlatformScreenViewModel
+import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
 import com.tecknobit.ametistacore.models.AmetistaApplication.MAX_VERSION_SAMPLES
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData
 import com.tecknobit.ametistacore.models.analytics.performance.PerformanceData.PerformanceDataItem

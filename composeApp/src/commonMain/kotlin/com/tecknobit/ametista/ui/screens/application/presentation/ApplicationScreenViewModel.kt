@@ -1,7 +1,8 @@
-package com.tecknobit.ametista.ui.screens.application
+package com.tecknobit.ametista.ui.screens.application.presentation
 
 import com.tecknobit.ametista.requester
-import com.tecknobit.ametista.ui.sharedviewmodels.ApplicationViewModel
+import com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen
+import com.tecknobit.ametista.ui.screens.shared.presentations.ApplicationViewModel
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.equinox.Requester.Companion.responseData
 import com.tecknobit.equinoxcompose.helpers.session.setHasBeenDisconnectedValue

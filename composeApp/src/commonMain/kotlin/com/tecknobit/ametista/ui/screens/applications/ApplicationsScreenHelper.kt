@@ -30,7 +30,8 @@ import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.icons.Boxes
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
+import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.APPLICATION_SCREEN
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import com.tecknobit.apimanager.annotations.Wrapper
 import com.tecknobit.equinoxcompose.components.EmptyListUI

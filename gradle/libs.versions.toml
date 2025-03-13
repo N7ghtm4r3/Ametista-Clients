@@ -26,6 +26,7 @@ lazy-pagination-compose = "1.4.0"
 appUpdate = "2.1.0"
 octocatkdu = "1.0.5"
 review = "2.0.2"
+kotlinxSerializationJson = "1.8.0"
 dokka = "2.0.0"
 
 [libraries]
@@ -58,6 +59,7 @@ octocatkdu = { module = "io.github.n7ghtm4r3:octocatkdu", version.ref = "octocat
 review = { module = "com.google.android.play:review", version.ref = "review" }
 review-ktx = { module = "com.google.android.play:review-ktx", version.ref = "review" }
 sonner = { module = "io.github.dokar3:sonner", version.ref = "sonner" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 dokka-base = { module = "org.jetbrains.dokka:dokka-base", version.ref = "dokka" }
 
 [plugins]

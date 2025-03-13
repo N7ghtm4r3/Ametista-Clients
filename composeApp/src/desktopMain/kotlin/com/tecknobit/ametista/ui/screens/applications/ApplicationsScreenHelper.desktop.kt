@@ -47,7 +47,8 @@ import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
 import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
 import com.tecknobit.ametista.ui.components.WorkOnApplication
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
+import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
+import com.tecknobit.ametista.ui.screens.shared.presenters.AmetistaScreen.Companion.CONTAINER_MAX_WIDTH
 import com.tecknobit.ametistacore.models.AmetistaApplication
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyVerticalGrid
 import org.jetbrains.compose.resources.painterResource

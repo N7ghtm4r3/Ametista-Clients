@@ -65,7 +65,7 @@ actual fun getCurrentWidthSizeClass(): WindowWidthSizeClass {
 /**
  * Function to get the image picture's path
  *
- * @param imagePic: the asset from fetch its path
+ * @param imagePic The asset from fetch its path
  *
  * @return the asset path as [String]
  */

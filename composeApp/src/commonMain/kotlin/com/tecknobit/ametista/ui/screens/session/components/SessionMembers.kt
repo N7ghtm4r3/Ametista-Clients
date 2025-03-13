@@ -1,4 +1,4 @@
-package com.tecknobit.ametista.ui.screens.session
+package com.tecknobit.ametista.ui.screens.session.components
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.Res.string
@@ -46,6 +46,7 @@ import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
 import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
 import com.tecknobit.ametista.ui.components.RoleBadge
 import com.tecknobit.ametista.ui.components.SectionDivider
+import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewModel
 import com.tecknobit.ametistacore.models.AmetistaMember
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.helpers.session.ManagedContent

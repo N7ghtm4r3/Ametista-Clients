@@ -1,4 +1,4 @@
-package com.tecknobit.ametista.ui.sharedviewmodels
+package com.tecknobit.ametista.ui.screens.shared.presentations
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.MutableState

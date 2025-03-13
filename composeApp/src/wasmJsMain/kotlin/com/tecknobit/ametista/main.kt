@@ -12,7 +12,7 @@ import kotlinx.browser.document
 fun main() {
     ComposeViewport(document.body!!) {
         setUpSession {
-            // TODO: TO SET
+            // TODO TO SET
         }
         App()
     }
