@@ -14,8 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.tecknobit.ametista.helpers.ContextProvider
 import com.tecknobit.equinoxcompose.session.setUpSession
+import com.tecknobit.equinoxcore.utilities.ContextActivityProvider
 import io.github.vinceglb.filekit.core.FileKit
 
 /**
@@ -57,7 +57,9 @@ class MainActivity : ComponentActivity() {
     @CallSuper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ContextProvider.setCurrentActivity(this)
+        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
+        ContextActivityProvider.setCurrentActivity(this)
+        FileKit.init(this)
         enableEdgeToEdge()
         setContent {
             InitSession()
@@ -75,8 +77,6 @@ class MainActivity : ComponentActivity() {
     private fun InitSession() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
-        FileKit.init(this)
-        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
         setUpSession(
             hasBeenDisconnectedAction = {
                 localUser.clear()

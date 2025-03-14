@@ -18,6 +18,7 @@ import com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScre
 import com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen
 import com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
+import com.tecknobit.ametista.ui.screens.upsertapplication.presenter.UpsertApplicationScreen
 import com.tecknobit.ametistacore.PLATFORM_KEY
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.equinoxcore.helpers.IDENTIFIER_KEY
@@ -92,6 +93,11 @@ const val APPLICATIONS_SCREEN = "ApplicationsScreen"
 const val APPLICATION_SCREEN = "ApplicationScreen"
 
 /**
+ * **UPSERT_APPLICATION_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.upsertapplication.presenter.UpsertApplicationScreen]
+ */
+const val UPSERT_APPLICATION_SCREEN = "UpsertApplicationScreen"
+
+/**
  * **PLATFORM_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen]
  */
 const val PLATFORM_SCREEN = "PlatformScreen"
@@ -158,6 +164,14 @@ fun App() {
                 /*ApplicationScreen(
                     applicationId = applicationId
                 ).ShowContent()*/
+            }
+            scene(
+                route = "$UPSERT_APPLICATION_SCREEN/{$IDENTIFIER_KEY}?"
+            ) { backstackEntry ->
+                val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)
+                UpsertApplicationScreen(
+                    applicationId = applicationId
+                ).ShowContent()
             }
             scene(
                 route = "$PLATFORM_SCREEN/{$IDENTIFIER_KEY}/{$NAME_KEY}/{$PLATFORM_KEY}"

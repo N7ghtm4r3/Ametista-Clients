@@ -13,11 +13,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -38,7 +38,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.CloseApplicationOnNavBack
+import com.tecknobit.ametista.UPSERT_APPLICATION_SCREEN
 import com.tecknobit.ametista.localUser
+import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.ui.screens.applications.components.Applications
 import com.tecknobit.ametista.ui.screens.applications.components.PlatformsMenu
 import com.tecknobit.ametista.ui.screens.applications.components.ProfilePic
@@ -94,18 +96,17 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
                         floatingActionButton = {
                             if (localUser.isAdmin()) {
                                 FloatingActionButton(
-                                    onClick = { viewModel.workOnApplication.value = true }
+                                    onClick = {
+                                        navigator.navigate(
+                                            route = UPSERT_APPLICATION_SCREEN
+                                        )
+                                    }
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Add,
                                         contentDescription = null
                                     )
                                 }
-                                // TODO: TO SET
-                                /*WorkOnApplication(
-                                    show = viewModel.workOnApplication,
-                                    viewModel = viewModel
-                                )*/
                             }
                         }
                     ) { paddingValues ->
@@ -173,7 +174,9 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
         DebouncedOutlinedTextField(
             maxLines = 1,
             width = 250.dp,
-            shape = CardDefaults.shape,
+            shape = RoundedCornerShape(
+                size = 10.dp
+            ),
             value = viewModel.filterQuery,
             debounce = { viewModel.applicationsState.refresh() },
             placeholder = Res.string.search_placeholder,
@@ -196,7 +199,6 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
     override fun CollectStates() {
         viewModel.filterQuery = remember { mutableStateOf("") }
         viewModel.platformsFilter = remember { mutableStateListOf() }
-        viewModel.workOnApplication = remember { mutableStateOf(false) }
     }
 
 }

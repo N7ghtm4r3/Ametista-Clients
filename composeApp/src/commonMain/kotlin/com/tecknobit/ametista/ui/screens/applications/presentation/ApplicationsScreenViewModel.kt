@@ -11,11 +11,9 @@ import com.tecknobit.equinoxcompose.session.setHasBeenDisconnectedValue
 import com.tecknobit.equinoxcompose.session.setServerOfflineValue
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import com.tecknobit.equinoxcore.network.Requester.Companion.sendPaginatedRequest
-import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.launch
-import kotlinx.serialization.json.buildJsonObject
 
 /**
  * The **ApplicationsScreenViewModel** class is the support class used to execute the requests related
@@ -113,74 +111,6 @@ class ApplicationsScreenViewModel : ApplicationViewModel() {
         else
             platformsFilter.remove(platform)
         applicationsState.refresh()
-    }
-
-    /**
-     * Method to clear the current filters selected by the user
-     */
-    fun clearFilters() {
-        val platformsFilterChanged = platformsFilter.isNotEmpty()
-        if (platformsFilterChanged)
-            platformsFilter.clear()
-        if (filterQuery.value.isNotEmpty() || platformsFilterChanged) {
-            filterQuery.value = ""
-            applicationsState.refresh()
-        }
-    }
-
-    /**
-     * Method to work on an application
-     *
-     * @param application The application to work on
-     * @param onSuccess The action to execute when the operation on the application has been executed
-     */
-    fun workOnApplication(
-        application: AmetistaApplication?,
-        onSuccess: () -> Unit
-    ) {
-        if (application == null) {
-            addApplication(
-                onSuccess = {
-                    onSuccess.invoke()
-                    applicationsState.refresh()
-                }
-            )
-        } else {
-            editApplication(
-                application = application,
-                onSuccess = {
-                    onSuccess.invoke()
-                    applicationsState.refresh()
-                }
-            )
-        }
-    }
-
-    /**
-     * Method to add a new application on the system
-     *
-     * @param onSuccess The action to execute when the operation on the application has been executed
-     */
-    private fun addApplication(
-        onSuccess: () -> Unit
-    ) {
-        if (!validForm())
-            return
-        viewModelScope.launch {
-            requester.sendRequest(
-                request = {
-                    // TODO: TO EDIT
-                    /*requester.addApplication(
-                        icon = appIcon.value,
-                        name = appName.value,
-                        description = appDescription.value
-                    )*/
-                    buildJsonObject { }
-                },
-                onSuccess = { onSuccess.invoke() },
-                onFailure = { showSnackbarMessage(it) }
-            )
-        }
     }
 
 }

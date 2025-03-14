@@ -9,7 +9,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -45,14 +44,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.tecknobit.ametista.APPLICATION_SCREEN
-import com.tecknobit.ametista.bodyFontFamily
-import com.tecknobit.ametista.displayFontFamily
+import com.tecknobit.ametista.UPSERT_APPLICATION_SCREEN
 import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
@@ -89,7 +86,6 @@ fun ApplicationItem(
     viewModel: ApplicationsScreenViewModel,
 ) {
     val isAdmin = localUser.isAdmin()
-    val editApplication = remember { mutableStateOf(false) }
     val deleteApplication = remember { mutableStateOf(false) }
     val state = rememberModalBottomSheetState(
         skipPartiallyExpanded = true
@@ -99,7 +95,6 @@ fun ApplicationItem(
         onExpandedSizeClass = {
             ExpandedApplicationCard(
                 isAdmin = isAdmin,
-                editApplication = editApplication,
                 expandDescription = state,
                 scope = scope,
                 deleteApplication = deleteApplication,
@@ -111,7 +106,6 @@ fun ApplicationItem(
             ApplicationListItem(
                 isTheFirst = isTheFirst,
                 isAdmin = isAdmin,
-                editApplication = editApplication,
                 expandDescription = state,
                 scope = scope,
                 deleteApplication = deleteApplication,
@@ -124,7 +118,6 @@ fun ApplicationItem(
             ApplicationListItem(
                 isTheFirst = isTheFirst,
                 isAdmin = isAdmin,
-                editApplication = editApplication,
                 expandDescription = state,
                 scope = scope,
                 deleteApplication = deleteApplication,
@@ -139,14 +132,6 @@ fun ApplicationItem(
         scope = scope,
         application = application
     )
-    /*
-    if (isAdmin) {
-        WorkOnApplication(
-            show = editApplication,
-            viewModel = viewModel,
-            application = application
-        )
-    }*/
 }
 
 @Composable
@@ -154,7 +139,6 @@ fun ApplicationItem(
 @NonRestartableComposable
 private fun ExpandedApplicationCard(
     isAdmin: Boolean,
-    editApplication: MutableState<Boolean>,
     expandDescription: SheetState,
     scope: CoroutineScope,
     deleteApplication: MutableState<Boolean>,
@@ -185,7 +169,7 @@ private fun ExpandedApplicationCard(
                 },
                 onLongClick = if (isAdmin) {
                     {
-                        editApplication.value = true
+                        navigator.navigate("$UPSERT_APPLICATION_SCREEN/${application.id}")
                     }
                 } else
                     null
@@ -194,7 +178,6 @@ private fun ExpandedApplicationCard(
         ApplicationListItem(
             background = Color.Transparent,
             isAdmin = isAdmin,
-            editApplication = editApplication,
             expandDescription = expandDescription,
             scope = scope,
             deleteApplication = deleteApplication,
@@ -210,7 +193,6 @@ private fun ApplicationListItem(
     background: Color = ListItemDefaults.containerColor,
     isTheFirst: Boolean = false,
     isAdmin: Boolean,
-    editApplication: MutableState<Boolean>,
     expandDescription: SheetState,
     scope: CoroutineScope,
     deleteApplication: MutableState<Boolean>,
@@ -234,7 +216,7 @@ private fun ApplicationListItem(
                 },
                 onLongClick = if (isAdmin) {
                     {
-                        editApplication.value = true
+                        navigator.navigate("$UPSERT_APPLICATION_SCREEN/${application.id}")
                     }
                 } else
                     null
@@ -358,40 +340,6 @@ private fun ApplicationIcon(
 }
 
 /**
- * The component to display the icon of the application
- *
- * @param application The application to display its icon
- */
-@Composable
-@ExpandedClassComponent
-@NonRestartableComposable
-private fun ColumnScope.ApplicationDetails(
-    application: AmetistaApplication,
-) {
-    Column(
-        modifier = Modifier
-            .weight(1f)
-            .padding(
-                all = 16.dp
-            ),
-    ) {
-        Text(
-            text = application.name,
-            fontFamily = displayFontFamily,
-            fontSize = 20.sp
-        )
-        Text(
-            text = application.description,
-            maxLines = 6,
-            textAlign = TextAlign.Justify,
-            overflow = TextOverflow.Ellipsis,
-            fontFamily = bodyFontFamily,
-            fontSize = 14.sp
-        )
-    }
-}
-
-/**
  * Method to get the complete url to display the application icon
  *
  * @param application The application to fetch the icon url
@@ -399,7 +347,7 @@ private fun ColumnScope.ApplicationDetails(
  * @return the complete icon url as [String]
  */
 @Wrapper
-private fun getApplicationIconCompleteUrl(
+fun getApplicationIconCompleteUrl(
     application: AmetistaApplication,
 ): String {
     return getApplicationIconCompleteUrl(
@@ -414,7 +362,7 @@ private fun getApplicationIconCompleteUrl(
  *
  * @return the complete icon url as [String]
  */
-private fun getApplicationIconCompleteUrl(
+fun getApplicationIconCompleteUrl(
     url: String,
 ): String {
     if (!url.startsWith(ICONS_REGEX))

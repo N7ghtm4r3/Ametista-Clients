@@ -287,18 +287,11 @@ class AmetistaRequester(
         name: String = "",
         platforms: List<Platform> = emptyList(),
     ): JsonObject {
-        val platformsFormatter = StringBuilder()
-        if (platforms.isNotEmpty()) {
-            platforms.forEach { platform: Platform ->
-                platformsFormatter.append(platform.name).append(",")
-            }
-            platformsFormatter.deleteAt(platformsFormatter.lastIndex)
-        }
         val query = buildJsonObject {
             put(PAGE_KEY, page)
             put(PAGE_SIZE_KEY, pageSize)
             put(NAME_KEY, name)
-            put(PLATFORMS_KEY, platformsFormatter.toString())
+            put(PLATFORMS_KEY, platforms.joinToString { it.name })
         }
         return execGet(
             endpoint = assembleApplicationsEndpoint(),
@@ -345,10 +338,9 @@ class AmetistaRequester(
      *
      * @return an endpoint to make the request as [String]
      */
-    // TODO: TO EDIT 
-    /*@RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = POST)
+    @RequestPath(path = "/api/v1/users/{user_id}/applications/{application_id}", method = POST)
     suspend fun editApplication(
-        application: AmetistaApplication,
+        applicationId: String,
         iconBytes: ByteArray?,
         iconName: String?,
         name: String,
@@ -362,11 +354,11 @@ class AmetistaRequester(
         )
         return execMultipartRequest(
             endpoint = assembleApplicationsEndpoint(
-                subEndpoint = application.id
+                subEndpoint = applicationId
             ),
             payload = payload
         )
-    }*/
+    }
 
     /**
      * Method to create the payload for the [addApplication] or [editApplication] requests
