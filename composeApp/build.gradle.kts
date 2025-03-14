@@ -101,8 +101,6 @@ kotlin {
                 implementation(libs.filekit.compose)
                 implementation(libs.jetlime)
                 implementation(libs.richeditor.compose)
-                // TODO TO SET FROM LOCAL
-                //implementation(libs.chiptextfield.m3)
                 implementation(libs.compose.charts)
                 implementation(libs.sonner)
                 implementation(libs.kotlinx.serialization.json)

@@ -7,8 +7,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.viewModelScope
-import com.dokar.chiptextfield.Chip
-import com.dokar.chiptextfield.ChipTextFieldState
 import com.tecknobit.ametista.requester
 import com.tecknobit.ametista.ui.screens.platform.data.AmetistaAnalytic
 import com.tecknobit.ametista.ui.screens.platform.data.issues.IssueAnalyticImpl
@@ -28,7 +26,7 @@ import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromJsonElement
@@ -63,9 +61,9 @@ class PlatformScreenViewModel(
     }
 
     /**
-     * `applicationsState` -> the state used to manage the pagination for the [loadIssues] method
+     * `analyticsState` -> the state used to manage the pagination for the [loadIssues] method
      */
-    val applicationsState = PaginationState<Int, AmetistaAnalytic>(
+    val analyticsState = PaginationState<Int, AmetistaAnalytic>(
         initialPageKey = DEFAULT_PAGE,
         onRequestPage = { pageNumber ->
             loadIssues(
@@ -82,12 +80,7 @@ class PlatformScreenViewModel(
     /**
      * `filtersState` -> the state used to contain the filters for the issues
      */
-    lateinit var filtersState: ChipTextFieldState<Chip>
-
-    /**
-     * `_filters` -> the filters selected
-     */
-    private var _filters = HashSet<String>()
+    lateinit var filtersState: MutableState<String>
 
     /**
      * `_filtersSet` -> whether the filter have been set
@@ -95,7 +88,7 @@ class PlatformScreenViewModel(
     private val _filtersSet = MutableStateFlow(
         value = false
     )
-    val filtersSet: StateFlow<Boolean> = _filtersSet
+    val filtersSet = _filtersSet.asStateFlow()
 
     /**
      * `_performanceData` -> the container state for the performance data
@@ -103,7 +96,7 @@ class PlatformScreenViewModel(
     private val _performanceData = MutableStateFlow<PerformanceData?>(
         value = null
     )
-    val performanceData: StateFlow<PerformanceData?> = _performanceData
+    val performanceData = _performanceData.asStateFlow()
 
     /**
      * `newVersionFilters` -> the new versions to filter the [_performanceData]
@@ -130,7 +123,7 @@ class PlatformScreenViewModel(
                         applicationId = applicationId,
                         platform = platform,
                         page = pageNumber,
-                        filters = _filters
+                        filters = filtersState.value
                     )
                 },
                 serializer = if (platform == WEB)
@@ -138,7 +131,7 @@ class PlatformScreenViewModel(
                 else
                     IssueAnalyticImpl.serializer(),
                 onSuccess = { page ->
-                    applicationsState.appendPage(
+                    analyticsState.appendPage(
                         items = page.data,
                         nextPageKey = page.nextPage,
                         isLastPage = page.isLastPage
@@ -157,9 +150,8 @@ class PlatformScreenViewModel(
     fun filterIssues(
         onSuccess: () -> Unit,
     ) {
-        _filters = filtersState.chips.map { chip -> chip.text }.toHashSet()
-        _filtersSet.value = _filters.isNotEmpty()
-        applicationsState.refresh()
+        _filtersSet.value = filtersState.value.isNotEmpty()
+        analyticsState.refresh()
         onSuccess.invoke()
     }
 
@@ -167,9 +159,9 @@ class PlatformScreenViewModel(
      * Method to clear the current filters selected by the user
      */
     fun clearFilters() {
-        _filters.clear()
+        filtersState.value = ""
         _filtersSet.value = false
-        applicationsState.refresh()
+        analyticsState.refresh()
     }
 
     /**

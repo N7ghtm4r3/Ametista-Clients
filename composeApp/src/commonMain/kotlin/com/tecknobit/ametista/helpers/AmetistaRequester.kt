@@ -1,6 +1,7 @@
 package com.tecknobit.ametista.helpers
 
 import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
+import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceDataFilters
 import com.tecknobit.ametistacore.ADMIN_CODE_KEY
 import com.tecknobit.ametistacore.APPLICATIONS_KEY
 import com.tecknobit.ametistacore.APPLICATION_ICON_KEY
@@ -40,8 +41,10 @@ import io.ktor.client.request.forms.formData
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
 import io.ktor.http.content.PartData
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.json.put
 
 /**
@@ -429,20 +432,13 @@ class AmetistaRequester(
         platform: Platform,
         page: Int = DEFAULT_PAGE,
         pageSize: Int = DEFAULT_PAGE_SIZE,
-        filters: HashSet<String> = HashSet(),
+        filters: String,
     ): JsonObject {
-        val filtersFormatter = StringBuilder()
-        if (filters.isNotEmpty()) {
-            filters.forEach { filter: String ->
-                filtersFormatter.append(filter).append(",")
-            }
-            filtersFormatter.deleteAt(filtersFormatter.lastIndex)
-        }
         val query = buildJsonObject {
             put(PAGE_KEY, page)
             put(PAGE_SIZE_KEY, pageSize)
             put(PLATFORM_KEY, platform.name)
-            put(FILTERS_KEY, filtersFormatter.toString())
+            put(FILTERS_KEY, filters)
         }
         return execGet(
             endpoint = assembleApplicationsEndpoint(
@@ -475,7 +471,7 @@ class AmetistaRequester(
             put(PLATFORM_KEY, platform.name)
         }
         val payload = buildJsonObject {
-            put(FILTERS_KEY, performanceDataFilters.toPayload())
+            put(FILTERS_KEY, Json.encodeToJsonElement(performanceDataFilters))
         }
         return execPost(
             endpoint = assembleApplicationsEndpoint(

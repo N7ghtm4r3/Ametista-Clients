@@ -8,6 +8,7 @@ import com.tecknobit.ametistacore.NETWORK_REQUESTS_KEY
 import com.tecknobit.ametistacore.PERFORMANCE_ANALYTIC_TYPE_KEY
 import com.tecknobit.ametistacore.TOTAL_ISSUES_KEY
 import com.tecknobit.ametistacore.enums.PerformanceAnalyticType
+import com.tecknobit.ametistacore.enums.PerformanceAnalyticType.LAUNCH_TIME
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -27,11 +28,11 @@ data class PerformanceData(
 
     @Serializable
     data class PerformanceDataItem(
-        val data: Map<String, List<PerformanceAnalytic>>,
+        val data: Map<String, List<PerformanceAnalytic>> = emptyMap(),
         @SerialName(PERFORMANCE_ANALYTIC_TYPE_KEY)
-        val analyticType: PerformanceAnalyticType,
+        val analyticType: PerformanceAnalyticType = LAUNCH_TIME,
         @SerialName(IS_CUSTOM_FILTERED_KEY)
-        val customFiltered: Boolean,
+        val customFiltered: Boolean = false,
     ) {
 
         /**

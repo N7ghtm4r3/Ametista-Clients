@@ -19,8 +19,10 @@ import com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScre
 import com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen
 import com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
+import com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen
 import com.tecknobit.ametista.ui.screens.upsertapplication.presenter.UpsertApplicationScreen
 import com.tecknobit.ametistacore.PLATFORM_KEY
+import com.tecknobit.ametistacore.enums.Platform
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.equinoxcore.helpers.IDENTIFIER_KEY
 import com.tecknobit.equinoxcore.helpers.NAME_KEY
@@ -176,15 +178,14 @@ fun App() {
             scene(
                 route = "$PLATFORM_SCREEN/{$IDENTIFIER_KEY}/{$NAME_KEY}/{$PLATFORM_KEY}"
             ) { backstackEntry ->
-                // TODO: TO SET
-                /*val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
+                val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
                 val applicationName = backstackEntry.path<String>(NAME_KEY)!!
                 val platform = backstackEntry.path<String>(PLATFORM_KEY)!!
                 PlatformScreen(
                     applicationId = applicationId,
                     applicationName = applicationName,
                     platform = Platform.valueOf(platform)
-                ).ShowContent()*/
+                ).ShowContent()
             }
         }
     }

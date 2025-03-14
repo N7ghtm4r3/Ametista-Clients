@@ -2,6 +2,10 @@ package com.tecknobit.ametista.ui.components
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.no_connected_platform
+import ametista.composeapp.generated.resources.no_issues_android
+import ametista.composeapp.generated.resources.no_issues_desktop
+import ametista.composeapp.generated.resources.no_issues_ios
+import ametista.composeapp.generated.resources.no_issues_web
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,6 +46,7 @@ import com.tecknobit.ametistacore.enums.Platform.*
 import com.tecknobit.equinoxcompose.components.Tile
 import com.tecknobit.equinoxcompose.utilities.responsiveAssignment
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.getString
 
 /**
@@ -228,6 +233,17 @@ fun Platform.Theme(
                 content.invoke()
             }
         }
+    }
+}
+
+// TODO: TO COMMENT
+@Composable
+fun Platform.noIssues(): DrawableResource {
+    return when (this) {
+        ANDROID -> Res.drawable.no_issues_android
+        IOS -> Res.drawable.no_issues_ios
+        DESKTOP -> Res.drawable.no_issues_desktop
+        WEB -> Res.drawable.no_issues_web
     }
 }
 

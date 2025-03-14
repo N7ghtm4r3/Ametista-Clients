@@ -85,7 +85,7 @@
 //                        .widthIn(
 //                            max = 800.dp
 //                        ),
-//                    applicationsState = viewModel.applicationsState,
+//                    analyticsState = viewModel.analyticsState,
 //                    firstPageProgressIndicator = { FirstPageProgressIndicator() },
 //                    newPageProgressIndicator = { NewPageProgressIndicator() },
 //                    verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -93,7 +93,7 @@
 //                        bottom = 16.dp
 //                    )
 //                ) {
-//                    val members = viewModel.applicationsState.allItems!!
+//                    val members = viewModel.analyticsState.allItems!!
 //                    membersIsEmpty.value = members.isEmpty()
 //                    if (members.isNotEmpty()) {
 //                        items(
