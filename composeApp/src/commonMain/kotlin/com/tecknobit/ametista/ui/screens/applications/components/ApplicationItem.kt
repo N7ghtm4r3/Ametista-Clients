@@ -249,8 +249,7 @@ private fun ApplicationListItem(
                 text = application.description,
                 minLines = 3,
                 maxLines = 3,
-                textAlign = TextAlign.Justify,
-                overflow = TextOverflow.Ellipsis
+                textAlign = TextAlign.Justify
             )
         },
         trailingContent = {

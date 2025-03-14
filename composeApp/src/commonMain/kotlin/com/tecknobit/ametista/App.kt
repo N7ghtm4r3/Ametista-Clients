@@ -14,6 +14,7 @@ import coil3.request.addLastModifiedToFileCacheKey
 import com.tecknobit.ametista.helpers.AmetistaLocalUser
 import com.tecknobit.ametista.helpers.AmetistaRequester
 import com.tecknobit.ametista.helpers.customHttpClient
+import com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen
 import com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen
 import com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen
 import com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen
@@ -159,11 +160,10 @@ fun App() {
             scene(
                 route = "$APPLICATION_SCREEN/{$IDENTIFIER_KEY}"
             ) { backstackEntry ->
-                // TODO: TO SET
                 val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
-                /*ApplicationScreen(
+                ApplicationScreen(
                     applicationId = applicationId
-                ).ShowContent()*/
+                ).ShowContent()
             }
             scene(
                 route = "$UPSERT_APPLICATION_SCREEN/{$IDENTIFIER_KEY}?"

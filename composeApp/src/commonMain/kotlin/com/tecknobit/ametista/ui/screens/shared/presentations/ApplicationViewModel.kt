@@ -29,9 +29,9 @@ abstract class ApplicationViewModel : EquinoxViewModel(
      * @param application The application to delete
      * @param onDelete The action to execute when the application has been deleted
      */
-    open fun deleteApplication(
+    fun deleteApplication(
         application: AmetistaApplication,
-        onDelete: () -> Unit
+        onDelete: () -> Unit,
     ) {
         viewModelScope.launch {
             requester.sendRequest(

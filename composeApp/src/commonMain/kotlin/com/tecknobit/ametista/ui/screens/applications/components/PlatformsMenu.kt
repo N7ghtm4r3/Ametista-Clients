@@ -22,9 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.tecknobit.ametista.ui.components.icon
 import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
 import com.tecknobit.ametistacore.enums.Platform
-import icon
 
 /**
  * The menu with the available platforms to use as filters
