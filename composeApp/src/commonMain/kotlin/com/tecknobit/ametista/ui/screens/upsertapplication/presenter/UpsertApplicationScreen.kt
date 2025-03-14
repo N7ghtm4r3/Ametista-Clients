@@ -73,6 +73,15 @@ import io.github.vinceglb.filekit.core.PickerType
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * The `UpsertApplicationScreen` class is used to allow the user to create or update an application
+ *
+ * @param applicationId The identifier of the application to edit
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see EquinoxScreen
+ *
+ */
 class UpsertApplicationScreen(
     applicationId: String?,
 ) : EquinoxScreen<UpsertApplicationScreenViewModel>(
@@ -81,8 +90,14 @@ class UpsertApplicationScreen(
     )
 ) {
 
+    /**
+     * `isUpdating` -> whether the operation is an update of an existing application
+     */
     private val isUpdating = applicationId != null
 
+    /**
+     * `application` -> the application to edit
+     */
     private lateinit var application: State<AmetistaApplication?>
 
     /**
@@ -148,6 +163,9 @@ class UpsertApplicationScreen(
         }
     }
 
+    /**
+     * Form where the user can insert the application details to update or insert an application
+     */
     @Composable
     @NonRestartableComposable
     private fun Form() {
@@ -253,6 +271,9 @@ class UpsertApplicationScreen(
         }
     }
 
+    /**
+     * Custom [Button] to execute the update or insert action
+     */
     @Composable
     @NonRestartableComposable
     private fun UpsertButton() {
@@ -291,6 +312,9 @@ class UpsertApplicationScreen(
         }
     }
 
+    /**
+     * Method invoked when the [ShowContent] composable has been started
+     */
     override fun onStart() {
         super.onStart()
         viewModel.retrieveApplication()

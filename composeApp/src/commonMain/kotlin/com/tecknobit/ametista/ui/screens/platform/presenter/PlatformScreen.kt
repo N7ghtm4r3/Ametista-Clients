@@ -107,17 +107,17 @@
 //) {
 //
 //    /**
-//     * **filtersSet** -> whether the filters has been set
+//     * `filtersSet` -> whether the filters has been set
 //     */
 //    private lateinit var filtersSet: State<Boolean>
 //
 //    /**
-//     * **filterList** -> the list of the current filters
+//     * `filterList` -> the list of the current filters
 //     */
 //    private lateinit var filterList: MutableState<Boolean>
 //
 //    /**
-//     * **performanceData** -> the performance data state container
+//     * `performanceData` -> the performance data state container
 //     */
 //    private lateinit var performanceData: State<PerformanceData?>
 //

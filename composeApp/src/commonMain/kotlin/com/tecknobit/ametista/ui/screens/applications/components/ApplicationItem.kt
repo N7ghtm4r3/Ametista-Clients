@@ -66,7 +66,7 @@ import org.jetbrains.compose.resources.painterResource
 // TODO: TO COMMENT 
 
 /**
- * **ICONS_REGEX** -> the regex to determine whether the application icon is selected one or provided
+ * `ICONS_REGEX` -> the regex to determine whether the application icon is selected one or provided
  * by the server
  */
 private const val ICONS_REGEX = "icons"

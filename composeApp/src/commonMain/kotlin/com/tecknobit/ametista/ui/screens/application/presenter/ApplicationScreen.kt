@@ -113,12 +113,12 @@
 //) {
 //
 //    /**
-//     * **application** -> the application state container
+//     * `application` -> the application state container
 //     */
 //    private lateinit var application: State<AmetistaApplication?>
 //
 //    /**
-//     * **showConnectionProcedure** -> whether display the connection procedure
+//     * `showConnectionProcedure` -> whether display the connection procedure
 //     */
 //    private lateinit var showConnectionProcedure: MutableState<Boolean>
 //

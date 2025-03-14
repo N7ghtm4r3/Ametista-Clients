@@ -60,14 +60,14 @@
 //    companion object {
 //
 //        /**
-//         * **MAX_CHIPS_FILTERS** -> the max value allowed to filters the issues
+//         * `MAX_CHIPS_FILTERS` -> the max value allowed to filters the issues
 //         */
 //        const val MAX_CHIPS_FILTERS = 10
 //
 //    }
 //
 //    /**
-//     * **applicationsState** -> the state used to manage the pagination for the [loadIssues] method
+//     * `applicationsState` -> the state used to manage the pagination for the [loadIssues] method
 //     */
 //    val applicationsState = PaginationState<Int, AmetistaAnalytic>(
 //        initialPageKey = DEFAULT_PAGE,
@@ -79,22 +79,22 @@
 //    )
 //
 //    /**
-//     * **analyticType** -> the type of the analytic displayed
+//     * `analyticType` -> the type of the analytic displayed
 //     */
 //    lateinit var analyticType: MutableState<AnalyticType>
 //
 //    /**
-//     * **filtersState** -> the state used to contain the filters for the issues
+//     * `filtersState` -> the state used to contain the filters for the issues
 //     */
 //    lateinit var filtersState: ChipTextFieldState<Chip>
 //
 //    /**
-//     * **_filters** -> the filters selected
+//     * `_filters` -> the filters selected
 //     */
 //    private var _filters = HashSet<String>()
 //
 //    /**
-//     * **_filtersSet** -> whether the filter have been set
+//     * `_filtersSet` -> whether the filter have been set
 //     */
 //    private val _filtersSet = MutableStateFlow(
 //        value = false
@@ -102,7 +102,7 @@
 //    val filtersSet: StateFlow<Boolean> = _filtersSet
 //
 //    /**
-//     * **_performanceData** -> the container state for the performance data
+//     * `_performanceData` -> the container state for the performance data
 //     */
 //    private val _performanceData = MutableStateFlow<PerformanceData?>(
 //        value = null
@@ -110,12 +110,12 @@
 //    val performanceData: StateFlow<PerformanceData?> = _performanceData
 //
 //    /**
-//     * **newVersionFilters** -> the new versions to filter the [_performanceData]
+//     * `newVersionFilters` -> the new versions to filter the [_performanceData]
 //     */
 //    lateinit var newVersionFilters: MutableList<String>
 //
 //    /**
-//     * **performanceDataFilters** -> used to to filter the [_performanceData]
+//     * `performanceDataFilters` -> used to to filter the [_performanceData]
 //     */
 //    private val performanceDataFilters = PerformanceDataFilters()
 //

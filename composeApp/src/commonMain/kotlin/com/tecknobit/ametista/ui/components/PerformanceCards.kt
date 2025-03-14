@@ -85,7 +85,7 @@
 //import org.jetbrains.compose.resources.stringResource
 //
 ///**
-// * **axisProperties** custom axis properties for the [PerformanceCard]
+// * `axisProperties** custom axis properties for the [PerformanceCard]
 // */
 //private val axisProperties = GridProperties.AxisProperties(
 //    enabled = false

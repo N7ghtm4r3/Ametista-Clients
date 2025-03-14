@@ -26,12 +26,12 @@ class ChangeViewerPasswordScreenViewModel : EquinoxViewModel(
 ) {
 
     /**
-     * **password** -> the password of the user
+     * `password` -> the password of the user
      */
     lateinit var password: MutableState<String>
 
     /**
-     * **passwordError** -> whether the [password] field is not valid
+     * `passwordError` -> whether the [password] field is not valid
      */
     lateinit var passwordError: MutableState<Boolean>
 

@@ -63,42 +63,42 @@ val localUser = AmetistaLocalUser()
 lateinit var requester: AmetistaRequester
 
 /**
- * **SPLASH_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.navigation.Splashscreen]
+ * `SPLASH_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.navigation.Splashscreen]
  */
 const val SPLASHSCREEN = "Splashscreen"
 
 /**
- * **AUTH_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen]
+ * `AUTH_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen]
  */
 const val AUTH_SCREEN = "AuthScreen"
 
 /**
- * **CHANGE_VIEWER_PASSWORD_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen]
+ * `CHANGE_VIEWER_PASSWORD_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen]
  */
 const val CHANGE_VIEWER_PASSWORD_SCREEN = "ChangeViewerPasswordScreen"
 
 /**
- * **SESSION_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
+ * `SESSION_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
  */
 const val SESSION_SCREEN = "SessionScreen"
 
 /**
- * **APPLICATIONS_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen]
+ * `APPLICATIONS_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen]
  */
 const val APPLICATIONS_SCREEN = "ApplicationsScreen"
 
 /**
- * **APPLICATION_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen]
+ * `APPLICATION_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen]
  */
 const val APPLICATION_SCREEN = "ApplicationScreen"
 
 /**
- * **UPSERT_APPLICATION_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.upsertapplication.presenter.UpsertApplicationScreen]
+ * `UPSERT_APPLICATION_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.upsertapplication.presenter.UpsertApplicationScreen]
  */
 const val UPSERT_APPLICATION_SCREEN = "UpsertApplicationScreen"
 
 /**
- * **PLATFORM_SCREEN** -> route to navigate to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen]
+ * `PLATFORM_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen]
  */
 const val PLATFORM_SCREEN = "PlatformScreen"
 

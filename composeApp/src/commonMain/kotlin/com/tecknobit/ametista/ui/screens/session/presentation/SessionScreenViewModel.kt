@@ -36,59 +36,59 @@
 //) {
 //
 //    /**
-//     * **SessionScreenSection** -> session sections available
+//     * `SessionScreenSection` -> session sections available
 //     */
 //    enum class SessionScreenSection {
 //
 //        /**
-//         * **ABOUT_ME** -> section with the [localUser] details
+//         * `ABOUT_ME` -> section with the [localUser] details
 //         */
 //        ABOUT_ME,
 //
 //        /**
-//         * **MEMBERS** -> section with the current members registered in the system
+//         * `MEMBERS` -> section with the current members registered in the system
 //         */
 //        MEMBERS
 //
 //    }
 //
 //    /**
-//     * **sessionScreenSection** -> the container state to display the specific session section
+//     * `sessionScreenSection` -> the container state to display the specific session section
 //     */
 //    lateinit var sessionScreenSection: MutableState<SessionScreenSection>
 //
 //    /**
-//     * **viewerName** -> the value of the name of the viewer
+//     * `viewerName` -> the value of the name of the viewer
 //     */
 //    lateinit var viewerName: MutableState<String>
 //
 //    /**
-//     * **viewerNameError** -> whether the [viewerName] field is not valid
+//     * `viewerNameError` -> whether the [viewerName] field is not valid
 //     */
 //    lateinit var viewerNameError: MutableState<Boolean>
 //
 //    /**
-//     * **viewerSurname** -> the value of the surname of the viewer
+//     * `viewerSurname` -> the value of the surname of the viewer
 //     */
 //    lateinit var viewerSurname: MutableState<String>
 //
 //    /**
-//     * **viewerSurnameError** -> whether the [viewerSurname] field is not valid
+//     * `viewerSurnameError` -> whether the [viewerSurname] field is not valid
 //     */
 //    lateinit var viewerSurnameError: MutableState<Boolean>
 //
 //    /**
-//     * **viewerEmail** -> the value of the email of the viewer
+//     * `viewerEmail` -> the value of the email of the viewer
 //     */
 //    lateinit var viewerEmail: MutableState<String>
 //
 //    /**
-//     * **viewerEmailError** -> whether the [viewerEmail] field is not valid
+//     * `viewerEmailError` -> whether the [viewerEmail] field is not valid
 //     */
 //    lateinit var viewerEmailError: MutableState<Boolean>
 //
 //    /**
-//     * **applicationsState** -> the state used to manage the pagination for the [loadMembers] method
+//     * `applicationsState` -> the state used to manage the pagination for the [loadMembers] method
 //     */
 //    val applicationsState = PaginationState<Int, AmetistaMember>(
 //        initialPageKey = DEFAULT_PAGE,

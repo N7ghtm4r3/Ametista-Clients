@@ -31,7 +31,7 @@
 //) : ApplicationViewModel() {
 //
 //    /**
-//     * **_application** -> container state of the application
+//     * `_application` -> container state of the application
 //     */
 //    private val _application = MutableStateFlow<AmetistaApplication?>(
 //        value = null
@@ -39,7 +39,7 @@
 //    val application: StateFlow<AmetistaApplication?> = _application
 //
 //    /**
-//     * **applicationDeleted** -> whether the application has been deleted
+//     * `applicationDeleted` -> whether the application has been deleted
 //     */
 //    private var applicationDeleted = false
 //

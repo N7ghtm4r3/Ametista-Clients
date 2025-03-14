@@ -90,7 +90,7 @@
 //) {
 //
 //    /**
-//     * **addViewer** -> Whether the user requested to add a new user in the system
+//     * `addViewer` -> Whether the user requested to add a new user in the system
 //     */
 //    private lateinit var addViewer: MutableState<Boolean>
 //

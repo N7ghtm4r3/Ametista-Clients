@@ -58,7 +58,7 @@
 //import org.jetbrains.compose.resources.stringResource
 //
 ///**
-// * **fileLineRegex** the regex to use to highlight the (Line Class.extension) from the error has been thrown
+// * `fileLineRegex** the regex to use to highlight the (Line Class.extension) from the error has been thrown
 // */
 //private val fileLineRegex = "([\\w.]+\\.(kt|java):\\d+)".toRegex()
 //

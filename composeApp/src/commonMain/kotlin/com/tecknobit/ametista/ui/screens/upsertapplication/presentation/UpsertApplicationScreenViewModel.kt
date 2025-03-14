@@ -23,49 +23,69 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromJsonElement
 
+/**
+ * The `UpsertApplicationScreenViewModel` class is the support class used to insert or update an
+ * [AmetistaApplication]
+ *
+ * @param applicationId The identifier of the application to edit
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ * @see androidx.lifecycle.ViewModel
+ * @see com.tecknobit.equinoxcompose.session.Retriever
+ * @see EquinoxViewModel
+ */
 class UpsertApplicationScreenViewModel(
     private val applicationId: String? = null,
 ) : EquinoxViewModel(
     snackbarHostState = SnackbarHostState()
 ) {
 
+    /**
+     * `application` -> the application to edit
+     */
     private val _application = MutableStateFlow<AmetistaApplication?>(
         value = null
     )
     val application = _application.asStateFlow()
 
     /**
-     * **appIcon** -> the application icon
+     * `appIcon` -> the application icon
      */
     lateinit var appIcon: MutableState<String>
 
+    /**
+     * `appIconPayload` -> the payload of the application icon to set
+     */
     var appIconPayload: PlatformFile? = null
 
     /**
-     * **appIconBorderColor** -> the color used for the application icon picker
+     * `appIconBorderColor` -> the color used for the application icon picker
      */
     lateinit var appIconBorderColor: MutableState<Color>
 
     /**
-     * **appName** -> the value of the application name
+     * `appName` -> the value of the application name
      */
     lateinit var appName: MutableState<String>
 
     /**
-     * **appNameError** -> whether the [appName] field is not valid
+     * `appNameError` -> whether the [appName] field is not valid
      */
     lateinit var appNameError: MutableState<Boolean>
 
     /**
-     * **appDescription** -> the value of the application description
+     * `appDescription` -> the value of the application description
      */
     lateinit var appDescription: MutableState<String>
 
     /**
-     * **appDescriptionError** -> whether the [appDescription] field is not valid
+     * `appDescriptionError` -> whether the [appDescription] field is not valid
      */
     lateinit var appDescriptionError: MutableState<Boolean>
 
+    /**
+     * Method to retrieve the existing application data if needed
+     */
     fun retrieveApplication() {
         if (applicationId == null)
             return

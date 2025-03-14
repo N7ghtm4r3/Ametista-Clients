@@ -56,7 +56,7 @@
 //import org.jetbrains.compose.resources.painterResource
 //
 ///**
-// * **viewModel** -> The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.SessionScreen]
+// * `viewModel` -> The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.SessionScreen]
 // */
 //private lateinit var viewModel: SessionScreenViewModel
 //

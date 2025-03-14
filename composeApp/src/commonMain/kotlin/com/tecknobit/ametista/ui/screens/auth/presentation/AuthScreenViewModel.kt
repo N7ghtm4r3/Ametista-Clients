@@ -38,12 +38,12 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
 ) {
 
     /**
-     * **isAdmin** -> whether the user who trying to authenticate is an [ADMIN]
+     * `isAdmin` -> whether the user who trying to authenticate is an [ADMIN]
      */
     lateinit var isAdmin: MutableState<Boolean>
 
     /**
-     * **isAdminSignUp** -> whether the user is an [ADMIN] and the auth operation is a sign-up operation
+     * `isAdminSignUp` -> whether the user is an [ADMIN] and the auth operation is a sign-up operation
      */
     lateinit var isAdminSignUp: MutableState<Boolean>
 

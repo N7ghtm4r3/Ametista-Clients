@@ -28,17 +28,17 @@ import kotlinx.coroutines.launch
 class ApplicationsScreenViewModel : ApplicationViewModel() {
 
     /**
-     * **filterQuery** -> the query filter typed
+     * `filterQuery` -> the query filter typed
      */
     lateinit var filterQuery: MutableState<String>
 
     /**
-     * **platformsFilter** -> the list of platforms to use as filter
+     * `platformsFilter` -> the list of platforms to use as filter
      */
     lateinit var platformsFilter: SnapshotStateList<Platform>
 
     /**
-     * **applicationsState** -> the state used to manage the pagination for the [loadApplications] method
+     * `applicationsState` -> the state used to manage the pagination for the [loadApplications] method
      */
     val applicationsState = PaginationState<Int, AmetistaApplication>(
         initialPageKey = DEFAULT_PAGE,
