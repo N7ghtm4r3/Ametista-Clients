@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.FilterListOff
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -45,35 +44,22 @@ fun PlatformsMenu(
             ),
         horizontalAlignment = Alignment.End
     ) {
-        Row {
-            IconButton(
-                onClick = {
-                    expanded = false
-                    viewModel.clearFilters()
-                }
+        IconButton(
+            onClick = { expanded = true }
+        ) {
+            Icon(
+                imageVector = Icons.Default.FilterList,
+                contentDescription = null
+            )
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
             ) {
-                Icon(
-                    imageVector = Icons.Default.FilterListOff,
-                    contentDescription = null
-                )
-            }
-            IconButton(
-                onClick = { expanded = true }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.FilterList,
-                    contentDescription = null
-                )
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    Platform.entries.forEach { platform ->
-                        PlatformItem(
-                            platform = platform,
-                            viewModel = viewModel
-                        )
-                    }
+                Platform.entries.forEach { platform ->
+                    PlatformItem(
+                        platform = platform,
+                        viewModel = viewModel
+                    )
                 }
             }
         }

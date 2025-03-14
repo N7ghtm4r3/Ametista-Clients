@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -64,6 +65,8 @@ import com.tecknobit.equinoxcore.annotations.Wrapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
+
+// TODO: TO COMMENT 
 
 /**
  * **ICONS_REGEX** -> the regex to determine whether the application icon is selected one or provided
@@ -160,8 +163,15 @@ private fun ExpandedApplicationCard(
 ) {
     Card(
         modifier = Modifier
+            .padding(
+                horizontal = 16.dp
+            )
+            .padding(
+                top = 10.dp
+            )
             .fillMaxWidth()
             .height(120.dp)
+            .clip(CardDefaults.shape)
             .combinedClickable(
                 onClick = {
                     navToApplicationScreen(

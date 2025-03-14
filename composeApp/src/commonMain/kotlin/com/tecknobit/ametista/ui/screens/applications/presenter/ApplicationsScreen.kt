@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.KeyboardOptions
@@ -108,7 +109,10 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
                             }
                         }
                     ) { paddingValues ->
-                        Column {
+                        Column(
+                            modifier = Modifier
+                                .navigationBarsPadding()
+                        ) {
                             FiltersSection(
                                 paddingValues = paddingValues
                             )
@@ -168,6 +172,7 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
     private fun SearchBar() {
         DebouncedOutlinedTextField(
             maxLines = 1,
+            width = 250.dp,
             shape = CardDefaults.shape,
             value = viewModel.filterQuery,
             debounce = { viewModel.applicationsState.refresh() },
