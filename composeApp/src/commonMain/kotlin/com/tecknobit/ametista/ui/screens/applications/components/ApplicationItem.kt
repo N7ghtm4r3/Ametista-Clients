@@ -11,11 +11,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material.icons.filled.Delete
@@ -25,6 +25,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
@@ -38,6 +39,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -57,9 +59,6 @@ import com.tecknobit.ametista.ui.components.DeleteApplication
 import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
 import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
 import com.tecknobit.equinoxcompose.utilities.ExpandedClassComponent
-import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.COMPACT_CONTENT
-import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.MEDIUM_CONTENT
-import com.tecknobit.equinoxcompose.utilities.ResponsiveClassComponent
 import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import kotlinx.coroutines.CoroutineScope
@@ -116,6 +115,7 @@ fun ApplicationItem(
                 application = application,
                 viewModel = viewModel
             )
+            HorizontalDivider()
         },
         onCompactSizeClass = {
             ApplicationListItem(
@@ -128,6 +128,7 @@ fun ApplicationItem(
                 application = application,
                 viewModel = viewModel
             )
+            HorizontalDivider()
         }
     )
     ApplicationDescription(
@@ -159,18 +160,8 @@ private fun ExpandedApplicationCard(
 ) {
     Card(
         modifier = Modifier
-            .padding(
-                all = 10.dp
-            )
-            .size(
-                width = 400.dp,
-                height = 450.dp
-            )
-            .clip(
-                RoundedCornerShape(
-                    size = 15.dp
-                )
-            )
+            .fillMaxWidth()
+            .height(120.dp)
             .combinedClickable(
                 onClick = {
                     navToApplicationScreen(
@@ -188,51 +179,26 @@ private fun ExpandedApplicationCard(
                     }
                 } else
                     null
-            ),
-        shape = RoundedCornerShape(
-            size = 15.dp
-        )
+            )
     ) {
-        ApplicationIcon(
-            modifier = Modifier
-                .weight(1f),
-            application = application
+        ApplicationListItem(
+            background = Color.Transparent,
+            isAdmin = isAdmin,
+            editApplication = editApplication,
+            expandDescription = expandDescription,
+            scope = scope,
+            deleteApplication = deleteApplication,
+            application = application,
+            viewModel = viewModel
         )
-        ApplicationDetails(
-            application = application
-        )
-        if (isAdmin) {
-            HorizontalDivider(
-                color = MaterialTheme.colorScheme.primary
-            )
-            IconButton(
-                modifier = Modifier
-                    .align(Alignment.End),
-                onClick = { deleteApplication.value = true }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.error
-                )
-            }
-            DeleteApplication(
-                show = deleteApplication,
-                viewModel = viewModel,
-                application = application,
-                onDelete = { viewModel.applicationsState.refresh() }
-            )
-        }
     }
 }
 
 @Composable
 @NonRestartableComposable
-@ResponsiveClassComponent(
-    classes = [MEDIUM_CONTENT, COMPACT_CONTENT],
-)
 private fun ApplicationListItem(
-    isTheFirst: Boolean,
+    background: Color = ListItemDefaults.containerColor,
+    isTheFirst: Boolean = false,
     isAdmin: Boolean,
     editApplication: MutableState<Boolean>,
     expandDescription: SheetState,
@@ -263,22 +229,34 @@ private fun ApplicationListItem(
                 } else
                     null
             ),
+        colors = ListItemDefaults.colors(
+            containerColor = background
+        ),
         leadingContent = {
             ApplicationIcon(
                 modifier = Modifier
-                    .size(95.dp),
+                    .size(95.dp)
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = CircleShape
+                    )
+                    .clip(CircleShape),
                 application = application
             )
         },
         headlineContent = {
             Text(
-                text = application.name
+                text = application.name,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         },
         supportingContent = {
             Text(
                 text = application.description,
-                maxLines = 4,
+                minLines = 3,
+                maxLines = 3,
                 textAlign = TextAlign.Justify,
                 overflow = TextOverflow.Ellipsis
             )
@@ -352,13 +330,7 @@ private fun ApplicationIcon(
     application: AmetistaApplication,
 ) {
     AsyncImage(
-        modifier = modifier
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.primary,
-                shape = CircleShape
-            )
-            .clip(CircleShape),
+        modifier = modifier,
         model = ImageRequest.Builder(LocalPlatformContext.current)
             .data(
                 data = getApplicationIconCompleteUrl(

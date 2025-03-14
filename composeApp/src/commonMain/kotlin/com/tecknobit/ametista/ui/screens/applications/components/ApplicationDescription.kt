@@ -57,6 +57,9 @@ fun ApplicationDescription(
                         .padding(
                             horizontal = 16.dp
                         )
+                        .padding(
+                            bottom = 16.dp
+                        )
                         .verticalScroll(rememberScrollState()),
                     text = application.description,
                     textAlign = TextAlign.Justify,

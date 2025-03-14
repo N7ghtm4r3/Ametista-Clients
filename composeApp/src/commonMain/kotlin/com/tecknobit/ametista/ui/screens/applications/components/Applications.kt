@@ -4,7 +4,9 @@ package com.tecknobit.ametista.ui.screens.applications.components
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.no_applications
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -66,9 +68,6 @@ private fun ApplicationsGrid(
 ) {
     Column(
         modifier = Modifier
-            .padding(
-                bottom = 16.dp
-            )
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -78,9 +77,14 @@ private fun ApplicationsGrid(
                     max = MAX_CONTAINER_WIDTH
                 ),
             paginationState = viewModel.applicationsState,
-            columns = GridCells.Adaptive(
-                minSize = 400.dp
+            columns = GridCells.Fixed(3),
+            contentPadding = PaddingValues(
+                start = 16.dp,
+                end = 16.dp,
+                bottom = 16.dp
             ),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
             firstPageProgressIndicator = { FirstPageProgressIndicator() },
             newPageProgressIndicator = { NewPageProgressIndicator() },
             firstPageEmptyIndicator = { NoApplications() }

@@ -30,18 +30,16 @@ import icon
 /**
  * The menu with the available platforms to use as filters
  *
- * @param modifier The modifier to apply to the component
  * @param viewModel The support viewmodel for the scree
  */
 @Composable
 @NonRestartableComposable
 fun PlatformsMenu(
-    modifier: Modifier,
     viewModel: ApplicationsScreenViewModel,
 ) {
     var expanded by remember { mutableStateOf(false) }
     Column(
-        modifier = modifier
+        modifier = Modifier
             .padding(
                 start = 16.dp
             ),

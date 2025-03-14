@@ -152,13 +152,8 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                SearchBar(
-                    modifier = Modifier
-                        .weight(2f)
-                )
+                SearchBar()
                 PlatformsMenu(
-                    modifier = Modifier
-                        .weight(1f),
                     viewModel = viewModel
                 )
             }
@@ -167,16 +162,11 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
 
     /**
      * The search bar used to type the name to filter the applications list
-     *
-     * @param modifier The modifier to apply to the component
      */
     @Composable
     @NonRestartableComposable
-    private fun SearchBar(
-        modifier: Modifier
-    ) {
+    private fun SearchBar() {
         DebouncedOutlinedTextField(
-            modifier = modifier,
             maxLines = 1,
             shape = CardDefaults.shape,
             value = viewModel.filterQuery,
