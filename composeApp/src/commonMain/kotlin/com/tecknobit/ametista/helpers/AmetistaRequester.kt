@@ -8,6 +8,7 @@ import com.tecknobit.ametistacore.DESCRIPTION_KEY
 import com.tecknobit.ametistacore.FILTERS_KEY
 import com.tecknobit.ametistacore.ISSUES_KEY
 import com.tecknobit.ametistacore.MEMBERS_KEY
+import com.tecknobit.ametistacore.PERFORMANCES_KEY
 import com.tecknobit.ametistacore.PERFORMANCE_ANALYTIC_TYPE_KEY
 import com.tecknobit.ametistacore.PLATFORMS_KEY
 import com.tecknobit.ametistacore.PLATFORM_KEY
@@ -459,13 +460,12 @@ class AmetistaRequester(
      * @param performanceDataFilters The filters value to use to filter the data
      *
      * @return an endpoint to make the request as [String]
-     *//*
+     */
     @RequestPath(
         path = "/api/v1/users/{user_id}/applications/{application_id}/performance",
         queryParameters = "?platform={platform}",
         method = POST
     )
-    // TODO: TO SET 
     suspend fun getPerformanceData(
         applicationId: String,
         platform: Platform,
@@ -484,7 +484,7 @@ class AmetistaRequester(
             query = query,
             payload = payload
         )
-    }*/
+    }
 
     /**
      * Method to get the version samples for each analytic

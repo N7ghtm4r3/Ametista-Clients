@@ -1,5 +1,6 @@
-package com.tecknobit.ametista.ui.screens.applications.data.analytics
+package com.tecknobit.ametista.ui.screens.platform.data.performance
 
+import com.tecknobit.ametista.ui.screens.platform.data.AmetistaAnalytic
 import com.tecknobit.ametistacore.APP_VERSION_KEY
 import com.tecknobit.ametistacore.CREATION_DATE_KEY
 import com.tecknobit.ametistacore.DATA_UPDATES_KEY

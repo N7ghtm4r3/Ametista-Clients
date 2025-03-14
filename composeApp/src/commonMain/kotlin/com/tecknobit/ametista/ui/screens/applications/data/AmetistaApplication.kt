@@ -1,7 +1,7 @@
 package com.tecknobit.ametista.ui.screens.applications.data
 
-import com.tecknobit.ametista.ui.screens.applications.data.analytics.IssueAnalytic
-import com.tecknobit.ametista.ui.screens.applications.data.analytics.PerformanceAnalytic
+import com.tecknobit.ametista.ui.screens.platform.data.issues.IssueAnalyticImpl
+import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceAnalytic
 import com.tecknobit.ametista.ui.screens.shared.data.AmetistaItem
 import com.tecknobit.ametistacore.APPLICATION_ICON_KEY
 import com.tecknobit.ametistacore.CREATION_DATE_KEY
@@ -20,7 +20,7 @@ data class AmetistaApplication(
     val applicationIcon: String,
     val description: String,
     val platforms: Set<Platform>,
-    val issues: List<IssueAnalytic> = emptyList(),
+    val issues: List<IssueAnalyticImpl> = emptyList(),
     @SerialName(PERFORMANCE_ANALYTICS_KEY)
     val performanceAnalytics: List<PerformanceAnalytic> = emptyList(),
 ) : AmetistaItem
