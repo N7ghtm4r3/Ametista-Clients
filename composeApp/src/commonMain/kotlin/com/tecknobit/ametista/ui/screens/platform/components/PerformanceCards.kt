@@ -200,7 +200,7 @@ fun IssuesPerSessionsNumber(
 }
 
 /**
- * Container card for the [com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic] analytic
+ * Container card for the [com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceAnalytic] analytic
  *
  * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param title The title of the card
@@ -409,11 +409,11 @@ private fun CardActions(
     }
 }
 
-// TODO: TO COMMENT
 /**
  * The component to display what represent the analytic of the [PerformanceCard]
  *
- * @param show Whether to display the information of the analytic related to the card
+ * @param state The state useful to manage the visibility of the [ModalBottomSheet]
+ * @param scope The coroutine useful to manage the visibility of the [ModalBottomSheet]
  * @param title The title of the card
  * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  */

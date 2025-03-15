@@ -10,6 +10,23 @@ import com.tecknobit.ametistacore.enums.Platform
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+/**
+ * The [AmetistaApplication] class is used represent an application of the `Ametista` system
+ *
+ * @property id The identifier of the application
+ * @property name The name of the application
+ * @property creationDate The date when the application has been created
+ * @property applicationIcon The icon of the application
+ * @property description The description of the application
+ * @property platforms The platforms of the application
+ * @property issues The issues of the application
+ * @property performanceAnalytics The analytics performance of the application
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ *
+ * @see AmetistaItem
+ *
+ */
 @Serializable
 data class AmetistaApplication(
     override val id: String,

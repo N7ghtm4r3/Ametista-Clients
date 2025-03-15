@@ -27,6 +27,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -62,8 +63,6 @@ import com.tecknobit.equinoxcore.annotations.Wrapper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.painterResource
-
-// TODO: TO COMMENT 
 
 /**
  * `ICONS_REGEX` -> the regex to determine whether the application icon is selected one or provided
@@ -134,6 +133,16 @@ fun ApplicationItem(
     )
 }
 
+/**
+ * Custom [Card] used on expanded screen size classes used to display the data of an application
+ *
+ * @param isAdmin Whether the [localUser] is an admin
+ * @param expandDescription The state useful to manage the visibility of the [ModalBottomSheet]
+ * @param scope The coroutine useful to manage the visibility of the [ModalBottomSheet]
+ * @param deleteApplication Whether display the alert about the application deleted
+ * @param application The application to display
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen]
+ */
 @Composable
 @ExpandedClassComponent
 @NonRestartableComposable
@@ -187,6 +196,18 @@ private fun ExpandedApplicationCard(
     }
 }
 
+/**
+ * Custom [ListItem] used on medium and compact screen size classes used to display the data of an application
+ *
+ * @param background The background color to apply
+ * @param isTheFirst Whether is the first application of the list displayed
+ * @param isAdmin Whether the [localUser] is an admin
+ * @param expandDescription The state useful to manage the visibility of the [ModalBottomSheet]
+ * @param scope The coroutine useful to manage the visibility of the [ModalBottomSheet]
+ * @param deleteApplication Whether display the alert about the application deleted
+ * @param application The application to display
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen]
+ */
 @Composable
 @NonRestartableComposable
 private fun ApplicationListItem(

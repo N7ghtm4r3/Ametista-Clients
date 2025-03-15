@@ -13,10 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceData
 import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel
+import com.tecknobit.equinoxcompose.utilities.ExpandedClassComponent
+import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.COMPACT_CONTENT
+import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.MEDIUM_CONTENT
+import com.tecknobit.equinoxcompose.utilities.ResponsiveClassComponent
 import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
 
-// TODO: TO COMMENT
-
+/**
+ * Section where are displayed the data about the current performance the application has
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen]
+ * @param performanceData The data about the performance
+ */
 @Composable
 @NonRestartableComposable
 fun Performance(
@@ -45,7 +53,14 @@ fun Performance(
     )
 }
 
+/**
+ * Custom [LazyVerticalGrid] used to display the performance data
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen]
+ * @param performanceData The data about the performance
+ */
 @Composable
+@ExpandedClassComponent
 @NonRestartableComposable
 private fun PerformanceGrid(
     viewModel: PlatformScreenViewModel,
@@ -95,8 +110,17 @@ private fun PerformanceGrid(
     }
 }
 
+/**
+ * Custom [LazyColumn] used to display the performance data
+ *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen]
+ * @param performanceData The data about the performance
+ */
 @Composable
 @NonRestartableComposable
+@ResponsiveClassComponent(
+    classes = [MEDIUM_CONTENT, COMPACT_CONTENT]
+)
 private fun PerformanceColumn(
     viewModel: PlatformScreenViewModel,
     performanceData: PerformanceData,

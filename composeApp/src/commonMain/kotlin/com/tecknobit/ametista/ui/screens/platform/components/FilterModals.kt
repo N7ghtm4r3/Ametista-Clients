@@ -172,11 +172,11 @@ private fun FiltersInput(
     }
 }
 
-// TODO: TO COMMENT
-
 /**
  * The layout where select the filters for the performance data
  *
+ * @param state The state useful to manage the visibility of the [ModalBottomSheet]
+ * @param scope The coroutine useful to manage the visibility of the [ModalBottomSheet]
  * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param title The title of the chart where to use the filters
  * @param data The performance data to filter

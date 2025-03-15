@@ -42,7 +42,10 @@ import com.tecknobit.ametista.ui.theme.platforms.desktop.DesktopPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.ios.IosPlatformTheme
 import com.tecknobit.ametista.ui.theme.platforms.web.WebPlatformTheme
 import com.tecknobit.ametistacore.enums.Platform
-import com.tecknobit.ametistacore.enums.Platform.*
+import com.tecknobit.ametistacore.enums.Platform.ANDROID
+import com.tecknobit.ametistacore.enums.Platform.DESKTOP
+import com.tecknobit.ametistacore.enums.Platform.IOS
+import com.tecknobit.ametistacore.enums.Platform.WEB
 import com.tecknobit.equinoxcompose.components.Tile
 import com.tecknobit.equinoxcompose.utilities.responsiveAssignment
 import kotlinx.coroutines.launch
@@ -95,7 +98,7 @@ fun PlatformsCustomGrid(
 /**
  * Custom [Row] to display the platforms
  *
- * @param viewModel The viewmodel of the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param viewModel The viewmodel of the [com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen]
  * @param applicationPlatforms The platforms attached to the application
  * @param platforms The platforms to display in the [Row]
  * @param size The size of the [Tile]
@@ -124,7 +127,7 @@ private fun PlatformsRow(
 /**
  * Method to arrange the tiles in the [Row]
  *
- * @param viewModel The viewmodel of the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param viewModel The viewmodel of the [com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen]
  * @param applicationPlatforms The platforms attached to the application
  * @param platforms The platforms to display in the [Row]
  * @param size The size of the [Tile]
@@ -236,7 +239,9 @@ fun Platform.Theme(
     }
 }
 
-// TODO: TO COMMENT
+/**
+ * Method used to get the empty state resource to display when there aren't no issues to display
+ */
 @Composable
 fun Platform.noIssues(): DrawableResource {
     return when (this) {

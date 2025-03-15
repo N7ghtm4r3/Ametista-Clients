@@ -49,8 +49,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
-// TODO: TO COMMENT
-
+/**
+ * Step of the procedure to connect a platform for an application to the system
+ *
+ * @param state The state useful to manage the visibility of the [ModalBottomSheet]
+ * @param scope The coroutine useful to manage the visibility of the [ModalBottomSheet]
+ * @param applicationId The identifier of the application
+ */
 @Composable
 @NonRestartableComposable
 fun ConnectionProcedure(
@@ -103,6 +108,8 @@ fun ConnectionProcedure(
 
 /**
  * Steps list of the [ConnectionProcedure] component
+ *
+ * @param applicationId The identifier of the application
  */
 @Composable
 @NonRestartableComposable

@@ -10,7 +10,16 @@ import com.tecknobit.ametistacore.enums.PerformanceAnalyticType.TOTAL_ISSUES
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-// TODO: TO COMMENT
+/**
+ * The [PerformanceDataFilters] is used to filters the performance data to retrieve
+ *
+ * @property launchTimeFilter Used to filter the launch time collected
+ * @property networkRequestsFilter Used to filter the network requests collected
+ * @property totalIssuesFilter Used to filter the total issues collected
+ * @property issuesPerSessionFilter Used to filter the issues per session collected
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ */
 @Serializable
 class PerformanceDataFilters(
     @SerialName("LAUNCH_TIME")
@@ -59,6 +68,15 @@ class PerformanceDataFilters(
         }
     }
 
+    /**
+     * The [PerformanceFilter] is the container of the filter data
+     *
+     * @property initialDate The initial date from retrieve the data
+     * @property finalDate The final date to retrieve the data
+     * @property versions The versions of the data to retrieve
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     */
     @Serializable
     data class PerformanceFilter(
         @SerialName(INITIAL_DATE_KEY)

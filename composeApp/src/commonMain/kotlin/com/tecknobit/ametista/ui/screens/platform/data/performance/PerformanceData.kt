@@ -12,8 +12,16 @@ import com.tecknobit.ametistacore.enums.PerformanceAnalyticType.LAUNCH_TIME
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-// TODO: TO COMMENT
-
+/**
+ * The [PerformanceData] represents all the data about the performances of an application
+ *
+ * @property launchTime The container of the launch time collected
+ * @property networkRequests The container of the network requests collected
+ * @property totalIssues The container of the total issues collected
+ * @property issuesPerSession The container of the issues per session collected
+ *
+ * @author N7ghtm4r3 - Tecknobit
+ */
 @Serializable
 data class PerformanceData(
     @SerialName(LAUNCH_TIME_KEY)
@@ -26,6 +34,15 @@ data class PerformanceData(
     val issuesPerSession: PerformanceDataItem,
 ) {
 
+    /**
+     * The [PerformanceDataItem] represents the data about a specific type of performance
+     *
+     * @property data The collected data
+     * @property analyticType The type of the analytic collected
+     * @property customFiltered Whether the collected data have been filtered with custom filters
+     *
+     * @author N7ghtm4r3 - Tecknobit
+     */
     @Serializable
     data class PerformanceDataItem(
         val data: Map<String, List<PerformanceAnalytic>> = emptyMap(),

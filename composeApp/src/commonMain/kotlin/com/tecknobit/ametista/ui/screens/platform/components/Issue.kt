@@ -57,7 +57,7 @@ import com.tecknobit.ametista.ui.screens.applications.data.AmetistaDevice
 import com.tecknobit.ametista.ui.screens.platform.data.issues.IssueAnalytic
 import com.tecknobit.ametista.ui.screens.platform.data.issues.WebIssueAnalytic
 import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel
-import com.tecknobit.ametistacore.enums.Platform.*
+import com.tecknobit.ametistacore.enums.Platform.WEB
 import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
 import com.tecknobit.equinoxcompose.utilities.copyOnClipboard
 import com.tecknobit.equinoxcore.time.TimeFormatter.toDateString
@@ -121,12 +121,12 @@ fun Issue(
     )
 }
 
-// TODO: TO COMMENT
 /**
  * The component to display the stack trace of the error
  *
  * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
- * @param expand Whether the component is visible or not
+ * @param state The state useful to manage the visibility of the [ModalBottomSheet]
+ * @param scope The coroutine useful to manage the visibility of the [ModalBottomSheet]
  * @param issue The issue to represent
  */
 @Composable
@@ -176,6 +176,8 @@ private fun IssueStackTrace(
  * The section title of the [Issue] component
  *
  * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
+ * @param state The state useful to manage the visibility of the [ModalBottomSheet]
+ * @param scope The coroutine useful to manage the visibility of the [ModalBottomSheet]
  * @param issue The issue represented
  */
 @Composable

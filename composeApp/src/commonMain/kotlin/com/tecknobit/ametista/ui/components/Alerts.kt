@@ -23,7 +23,7 @@ import org.jetbrains.compose.resources.stringResource
  *
  * @param show whether the layout is visible or not
  * @param application The application to delete
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.application.ApplicationScreen]
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen]
  * @param onDelete The action to execute when the application has been deleted
  */
 @Composable
