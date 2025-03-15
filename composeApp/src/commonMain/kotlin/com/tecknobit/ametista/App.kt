@@ -111,7 +111,6 @@ const val PLATFORM_SCREEN = "PlatformScreen"
  *
  */
 @Composable
-@Preview
 fun App() {
     bodyFontFamily = FontFamily(Font(Res.font.dm_sans))
     displayFontFamily = FontFamily(Font(Res.font.kanit))
