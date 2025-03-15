@@ -16,6 +16,8 @@ import com.tecknobit.equinoxcompose.viewmodels.EquinoxAuthViewModel
 import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcore.annotations.CustomParametersOrder
 import com.tecknobit.equinoxcore.helpers.LANGUAGE_KEY
+import com.tecknobit.equinoxcore.helpers.NAME_KEY
+import com.tecknobit.equinoxcore.helpers.SURNAME_KEY
 import com.tecknobit.equinoxcore.json.treatsAsString
 import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
@@ -121,11 +123,12 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
                         )
                     },
                     onSuccess = { response ->
+                        val data = response.toResponseData()
                         launchApp(
-                            response = response.toResponseData(),
-                            name = name.value,
-                            surname = surname.value,
-                            language = response[LANGUAGE_KEY].treatsAsString(),
+                            response = data,
+                            name = data[NAME_KEY].treatsAsString(),
+                            surname = data[SURNAME_KEY].treatsAsString(),
+                            language = data[LANGUAGE_KEY].treatsAsString(),
                             custom = arrayOf(ADMIN)
                         )
                     },
@@ -153,11 +156,12 @@ class AuthScreenViewModel : EquinoxAuthViewModel(
                         )
                     },
                     onSuccess = { response ->
+                        val data = response.toResponseData()
                         launchApp(
-                            response = response.toResponseData(),
-                            name = name.value,
-                            surname = surname.value,
-                            language = response[LANGUAGE_KEY].treatsAsString(),
+                            response = data,
+                            name = data[NAME_KEY].treatsAsString(),
+                            surname = data[SURNAME_KEY].treatsAsString(),
+                            language = data[LANGUAGE_KEY].treatsAsString(),
                             custom = arrayOf(Role.VIEWER)
                         )
                     },

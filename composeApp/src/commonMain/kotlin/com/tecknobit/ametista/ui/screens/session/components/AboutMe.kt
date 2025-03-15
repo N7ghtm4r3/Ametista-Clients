@@ -156,9 +156,11 @@ private fun UserDetails(
             viewModel = viewModel
         )
         Column {
-            RoleBadge(
-                role = localUser.role!!
-            )
+            localUser.role?.let { role ->
+                RoleBadge(
+                    role = role
+                )
+            }
             Text(
                 text = localUser.completeName,
                 maxLines = 1,
