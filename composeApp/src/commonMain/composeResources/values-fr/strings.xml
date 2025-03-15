@@ -101,4 +101,5 @@
     <string name="change_preset_password">Modifier le mot de passe de la présélection</string>
     <string name="change_preset_password_info">Remplacez le mot de passe prédéfini par un mot de passe que vous êtes seul à connaître et conservez-le en lieu sûr.</string>
     <string name="retrieving_data">Récupération des données</string>
+    <string name="stacktrace_copied">Stacktrace copié!</string>
 </resources>

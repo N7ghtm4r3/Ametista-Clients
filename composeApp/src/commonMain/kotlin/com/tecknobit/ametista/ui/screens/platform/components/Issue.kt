@@ -11,6 +11,7 @@ import ametista.composeapp.generated.resources.hide_device_data
 import ametista.composeapp.generated.resources.model
 import ametista.composeapp.generated.resources.os_version
 import ametista.composeapp.generated.resources.show_device_data
+import ametista.composeapp.generated.resources.stacktrace_copied
 import ametista.composeapp.generated.resources.version
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
@@ -22,10 +23,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -44,6 +49,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,6 +59,7 @@ import com.tecknobit.ametista.ui.screens.platform.data.issues.WebIssueAnalytic
 import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel
 import com.tecknobit.ametistacore.enums.Platform.*
 import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
+import com.tecknobit.equinoxcompose.utilities.copyOnClipboard
 import com.tecknobit.equinoxcore.time.TimeFormatter.toDateString
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -96,6 +103,7 @@ fun Issue(
         }
     ) {
         IssueTitle(
+            viewModel = viewModel,
             issue = issue
         )
         IssueVisibleData(
@@ -140,6 +148,9 @@ private fun IssueStackTrace(
             }
         ) {
             IssueTitle(
+                viewModel = viewModel,
+                state = state,
+                scope = scope,
                 issue = issue
             )
             Text(
@@ -164,21 +175,51 @@ private fun IssueStackTrace(
 /**
  * The section title of the [Issue] component
  *
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param issue The issue represented
  */
 @Composable
 @NonRestartableComposable
 private fun IssueTitle(
+    viewModel: PlatformScreenViewModel,
+    state: SheetState? = null,
+    scope: CoroutineScope? = null,
     issue: IssueAnalytic,
 ) {
-    Text(
+    Row(
         modifier = Modifier
             .padding(
-                all = 10.dp
+                start = 10.dp
             ),
-        text = issue.name,
-        fontSize = 20.sp
-    )
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = issue.name,
+            fontSize = 20.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+        IconButton(
+            onClick = {
+                copyOnClipboard(
+                    content = issue.issue,
+                    onCopy = {
+                        scope?.launch {
+                            state!!.hide()
+                        }
+                        viewModel.showSnackbarMessage(
+                            message = string.stacktrace_copied
+                        )
+                    }
+                )
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Default.ContentCopy,
+                contentDescription = null
+            )
+        }
+    }
     HorizontalDivider(
         color = MaterialTheme.colorScheme.primary
     )

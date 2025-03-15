@@ -101,4 +101,5 @@
     <string name="change_preset_password">Cambiar contraseña preestablecida</string>
     <string name="change_preset_password_info">Cambia la contraseña preestablecida por una que sólo tú conozcas y mantenla a salvo</string>
     <string name="retrieving_data">Recuperación de datos</string>
+    <string name="stacktrace_copied">¡Stacktrace copiado!</string>
 </resources>
