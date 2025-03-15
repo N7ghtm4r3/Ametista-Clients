@@ -2,6 +2,7 @@ package com.tecknobit.ametista.helpers
 
 import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
 import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceDataFilters
+import com.tecknobit.ametista.ui.screens.session.data.AmetistaMember
 import com.tecknobit.ametistacore.ADMIN_CODE_KEY
 import com.tecknobit.ametistacore.APPLICATIONS_KEY
 import com.tecknobit.ametistacore.APPLICATION_ICON_KEY
@@ -222,8 +223,7 @@ class AmetistaRequester(
      * @return the result of the request as [JsonObject]
      *
      */
-    // TODO: TO EDIT 
-    /*@RequestPath(path = "/api/v1/users/{user_id}/session/members/{member_id}", method = DELETE)
+    @RequestPath(path = "/api/v1/users/{user_id}/session/members/{member_id}", method = DELETE)
     suspend fun removeMember(
         member: AmetistaMember,
     ): JsonObject {
@@ -232,7 +232,7 @@ class AmetistaRequester(
                 subEndpoint = member.id
             )
         )
-    }*/
+    }
 
     /**
      * Method to change the preset password by a [com.tecknobit.ametistacore.enums.Role.VIEWER]

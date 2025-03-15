@@ -20,6 +20,7 @@ import com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen
 import com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
 import com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen
+import com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen
 import com.tecknobit.ametista.ui.screens.upsertapplication.presenter.UpsertApplicationScreen
 import com.tecknobit.ametistacore.PLATFORM_KEY
 import com.tecknobit.ametistacore.enums.Platform
@@ -151,8 +152,7 @@ fun App() {
             scene(
                 route = SESSION_SCREEN
             ) {
-                // TODO: TO SET
-                //  SessionScreen().ShowContent()
+                SessionScreen().ShowContent()
             }
             scene(
                 route = APPLICATIONS_SCREEN
