@@ -51,7 +51,7 @@ object ContextProvider {
      * Sets the current [Activity] by holding a weak reference to it.
      * This method is called to update the reference when the current Activity changes.
      *
-     * @param activity: the [Activity] to be set as the current activity.
+     * @param activity The [Activity] to be set as the current activity.
      * @throws IllegalArgumentException if the provided [activity] is null.
      */
     fun setCurrentActivity(

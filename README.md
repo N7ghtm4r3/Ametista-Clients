@@ -1,6 +1,6 @@
 # Ametista-Clients
 
-**v1.0.0**
+**v1.0.1**
 
 This project, based on Java and the Spring Boot framework, is an open source self-hosted issues
 tracker and performance
@@ -13,11 +13,6 @@ fork
 it and work on it, if there are any errors, fixes to do or some idea to upgrade this project, please
 open a ticket or contact us to talk about, thanks and good use!
 
-## 🛠 Skills
-
-- Java
-- Kotlin
-
 ## Architecture
 
 ### Engine
@@ -27,20 +22,16 @@ analysis.
 
 ### Clients
 
-This project will be constantly developed to reach different platforms to work on, following the
-platforms releases
-steps:
-
 - Mobile
-  - <a href="https://play.google.com/store/apps/details?id=com.tecknobit.ametista">Android</a>
-  - iOS -> planned
-- <a href="https://github.com/N7ghtm4r3/Ametista-Clients/releases/tag/1.0.0">Ametista desktop
-  version</a>
+  - [Android](https://play.google.com/store/apps/details?id=com.tecknobit.ametista)
+  - [Ametista desktop version](https://github.com/N7ghtm4r3/Ametista-Clients/releases/tag/1.0.1)
+  - iOS -> source code available, but cannot distribute due
+    missing [Apple Developer Program license](https://developer.apple.com/programs/)
+  - [Ametista webapp version](https://github.com/N7ghtm4r3/Ametista-WebApp)
 
 ### Backend
 
-- <a href="https://github.com/N7ghtm4r3/Ametista/releases/tag/1.0.0">Backend service
-  "out-of-the-box"</a>
+- [Backend service "out-of-the-box"](https://github.com/N7ghtm4r3/Ametista/releases/tag/1.0.1)
 
 ## Usages
 
@@ -80,7 +71,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'com.tecknobit.ametistacore:ametistacore:1.0.0'
+  implementation 'com.tecknobit.ametistacore:ametistacore:1.0.1'
 }
 ```
 
@@ -93,7 +84,7 @@ repositories {
 }
 
 dependencies {
-  implementation("com.tecknobit.ametistacore:ametistacore:1.0.0")
+  implementation("com.tecknobit.ametistacore:ametistacore:1.0.1")
 }
 ```
 
@@ -149,4 +140,4 @@ This section concerns Privacy and policy for Android's application published on 
 Store. <br>
 Ametista application **will not share any personal data of the user with third part applications.** 
 
-Copyright © 2024 Tecknobit
+Copyright © 2025 Tecknobit

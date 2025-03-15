@@ -16,9 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tecknobit.ametista.CheckForUpdatesAndLaunch
-import com.tecknobit.ametista.ui.screens.AmetistaScreen
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
-import com.tecknobit.equinoxcompose.helpers.viewmodels.EquinoxViewModel
+import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -26,9 +25,9 @@ import org.jetbrains.compose.resources.stringResource
  *
  * @author N7ghtm4r3 - Tecknobit
  * @see EquinoxScreen
- * @see AmetistaScreen
+ * 
  */
-class Splashscreen: AmetistaScreen<EquinoxViewModel>() {
+class Splashscreen : EquinoxNoModelScreen() {
 
     /**
      * Method to arrange the content of the screen to display

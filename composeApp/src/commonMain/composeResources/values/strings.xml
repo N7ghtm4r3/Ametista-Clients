@@ -101,4 +101,8 @@
     <string name="change_preset_password">Change preset password</string>
     <string name="change_preset_password_info">Change the preset password with one only you know and keep it safe</string>
     <string name="retrieving_data">Retrieving data</string>
+    <string name="stacktrace_copied">Stacktrace copied!</string>
+    <string name="delete">Delete</string>
+    <string name="change_language">Change language</string>
+    <string name="change_theme">Change theme</string>
 </resources>

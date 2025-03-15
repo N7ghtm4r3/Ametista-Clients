@@ -28,30 +28,32 @@
     <link href="styles/prism.css" rel="Stylesheet">
     <link href="styles/logo-styles.css" rel="Stylesheet">
     <link href="styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <link href="ui-kit/ui-kit.min.css" rel="Stylesheet">
     <script type="text/javascript" src="scripts/clipboard.js" async="async"></script>
     <script type="text/javascript" src="scripts/navigation-loader.js" async="async"></script>
     <script type="text/javascript" src="scripts/platform-content-handler.js" async="async"></script>
     <script type="text/javascript" src="scripts/main.js" defer="defer"></script>
     <script type="text/javascript" src="scripts/prism.js" async="async"></script>
+    <script type="text/javascript" src="ui-kit/ui-kit.min.js" defer="defer"></script>
     <script type="text/javascript" src="scripts/symbol-parameters-wrapper_deferred.js"
             defer="defer"></script>
     <link href="images/logo-icon.svg">
 </head>
 <body>
 <div class="root">
-    <nav class="navigation" id="navigation-wrapper">
-        <div class="navigation--inner">
-            <div class="navigation-title">
-                <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
-                <div class="library-name">
-                    <a class="library-name--link" href="index.html">
-                        Ametista
-                    </a>
-                </div>
-                <div class="library-version">
-                </div>
-            </div>
-            <div class="filter-section" id="filter-section">
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+        <a class="library-name--link" href="index.html">
+            Ametista
+        </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only"
+                id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+            <div class="filter-section filter-section_loading" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active=""
                         data-filter=":composeApp:dokkaHtml/androidMain">android
                 </button>
@@ -61,42 +63,123 @@
                 <button class="platform-tag platform-selector jvm-like" data-active=""
                         data-filter=":composeApp:dokkaHtml/desktopMain">desktop
                 </button>
+                <button class="platform-tag platform-selector wasm-like" data-active=""
+                        data-filter=":composeApp:dokkaHtml/wasmJsMain">wasmJs
+                </button>
+                <div class="dropdown filter-section--dropdown" data-role="dropdown"
+                     id="filter-section-dropdown">
+                    <button class="button button_dropdown filter-section--dropdown-toggle"
+                            role="combobox"
+                            data-role="dropdown-toggle"
+                            aria-controls="platform-tags-listbox"
+                            aria-haspopup="listbox"
+                            aria-expanded="false"
+                            aria-label="Toggle source sets"
+                    ></button>
+                    <ul role="listbox" id="platform-tags-listbox" class="dropdown--list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header"><span>Platform filter</span>
+                            <button class="button" data-role="dropdown-toggle"
+                                    aria-label="Close platform filter">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like"
+                            tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":composeApp:dokkaHtml/androidMain"
+                                       data-filter=":composeApp:dokkaHtml/androidMain"/>
+                                <span class="checkbox--icon"></span>
+                                android
+                            </label>
+                        </li>
+                        <li role="option"
+                            class="dropdown--option platform-selector-option common-like"
+                            tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":composeApp:dokkaHtml/commonMain"
+                                       data-filter=":composeApp:dokkaHtml/commonMain"/>
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                        <li role="option" class="dropdown--option platform-selector-option jvm-like"
+                            tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":composeApp:dokkaHtml/desktopMain"
+                                       data-filter=":composeApp:dokkaHtml/desktopMain"/>
+                                <span class="checkbox--icon"></span>
+                                desktop
+                            </label>
+                        </li>
+                        <li role="option"
+                            class="dropdown--option platform-selector-option wasm-like"
+                            tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":composeApp:dokkaHtml/wasmJsMain"
+                                       data-filter=":composeApp:dokkaHtml/wasmJsMain"/>
+                                <span class="checkbox--icon"></span>
+                                wasmJs
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
             </div>
-        </div>
-        <div class="navigation-controls">
-            <button class="navigation-controls--btn navigation-controls--theme"
-                    id="theme-toggle-button" type="button">switch theme
+            <button class="navigation-controls--btn navigation-controls--btn_theme"
+                    id="theme-toggle-button"
+                    type="button">Switch theme
             </button>
-            <div class="navigation-controls--btn navigation-controls--search" id="searchBar"
-                 role="button">search in API
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar"
+                 role="button">Search in
+                API
             </div>
         </div>
     </nav>
     <div id="container">
         <div class="sidebar" id="leftColumn">
-            <div class="sidebar--inner" id="sideMenu"></div>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox">
+                    <div class="dropdown--header">
+                            <span>
+                                    Ametista
+                            </span>
+                        <button class="button" data-role="dropdown-toggle"
+                                aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
         </div>
         <div id="main">
             <div class="main-content" id="content"
-                 pageIds="Ametista::////PointingToDeclaration//-1927016931">
+                 pageIds="Ametista::////PointingToDeclaration//-1989926055">
                 <div class="breadcrumbs"></div>
                 <div class="cover ">
                     <h1 class="cover"><span><span>Ametista</span></span></h1>
                 </div>
                 <h2 class="">Packages</h2>
-                <div class="table"><a data-name="-1445499332%2FPackages%2F-1927016931"
+                <div class="table"><a data-name="-1445499332%2FPackages%2F-1989926055"
                                       anchor-label="com.tecknobit.ametista"
-                                      id="-1445499332%2FPackages%2F-1927016931"
-                                      data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain"></a>
+                                      id="-1445499332%2FPackages%2F-1989926055"
+                                      data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain,:composeApp:dokkaHtml/wasmJsMain"></a>
                     <div class="table-row"
-                         data-filterable-current=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain"
-                         data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain">
+                         data-filterable-current=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain,:composeApp:dokkaHtml/wasmJsMain"
+                         data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain,:composeApp:dokkaHtml/wasmJsMain">
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
               <div><a href="-ametista/com.tecknobit.ametista/index.html">com.tecknobit.ametista</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-1445499332%2FPackages%2F-1927016931"></span>
+                                   pointing-to="-1445499332%2FPackages%2F-1989926055"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
                                 <div class="pull-right">
@@ -104,25 +187,26 @@
                                         <div class="platform-tag jvm-like">android</div>
                                         <div class="platform-tag common-like">common</div>
                                         <div class="platform-tag jvm-like">desktop</div>
+                                        <div class="platform-tag wasm-like">wasmJs</div>
                                     </div>
                                 </div>
                             </div>
                             <div></div>
                         </div>
                     </div>
-                    <a data-name="-1855402989%2FPackages%2F-1927016931"
+                    <a data-name="-1855402989%2FPackages%2F-1989926055"
                        anchor-label="com.tecknobit.ametista.helpers"
-                       id="-1855402989%2FPackages%2F-1927016931"
-                       data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain"></a>
+                       id="-1855402989%2FPackages%2F-1989926055"
+                       data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain,:composeApp:dokkaHtml/wasmJsMain"></a>
                     <div class="table-row"
-                         data-filterable-current=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain"
-                         data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain">
+                         data-filterable-current=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain,:composeApp:dokkaHtml/wasmJsMain"
+                         data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain,:composeApp:dokkaHtml/wasmJsMain">
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
               <div><a href="-ametista/com.tecknobit.ametista.helpers/index.html">com.tecknobit.ametista.helpers</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-1855402989%2FPackages%2F-1927016931"></span>
+                                   pointing-to="-1855402989%2FPackages%2F-1989926055"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
                                 <div class="pull-right">
@@ -130,15 +214,16 @@
                                         <div class="platform-tag jvm-like">android</div>
                                         <div class="platform-tag common-like">common</div>
                                         <div class="platform-tag jvm-like">desktop</div>
+                                        <div class="platform-tag wasm-like">wasmJs</div>
                                     </div>
                                 </div>
                             </div>
                             <div></div>
                         </div>
                     </div>
-                    <a data-name="1947985591%2FPackages%2F-813795679"
-                       anchor-label="com.tecknobit.ametista.model"
-                       id="1947985591%2FPackages%2F-813795679"
+                    <a data-name="312263550%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.components"
+                       id="312263550%2FPackages%2F-813795679"
                        data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                     <div class="table-row"
                          data-filterable-current=":composeApp:dokkaHtml/commonMain"
@@ -146,40 +231,14 @@
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
-              <div><a href="-ametista/com.tecknobit.ametista.model/index.html">com.tecknobit.ametista.model</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="1947985591%2FPackages%2F-813795679"></span>
-                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-              </span></span></div>
-                                <div class="pull-right">
-                                    <div class="platform-tags no-gutters">
-                                        <div class="platform-tag common-like">common</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <a data-name="312263550%2FPackages%2F-1927016931"
-                       anchor-label="com.tecknobit.ametista.ui.components"
-                       id="312263550%2FPackages%2F-1927016931"
-                       data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain"></a>
-                    <div class="table-row"
-                         data-filterable-current=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain"
-                         data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain">
-                        <div>
-                            <div class="main-subrow ">
-                                <div class=""><span class="inline-flex">
               <div><a href="-ametista/com.tecknobit.ametista.ui.components/index.html">com.tecknobit.ametista.ui.components</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="312263550%2FPackages%2F-1927016931"></span>
+                                   pointing-to="312263550%2FPackages%2F-813795679"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
                                 <div class="pull-right">
                                     <div class="platform-tags no-gutters">
-                                        <div class="platform-tag jvm-like">android</div>
                                         <div class="platform-tag common-like">common</div>
-                                        <div class="platform-tag jvm-like">desktop</div>
                                     </div>
                                 </div>
                             </div>
@@ -210,9 +269,9 @@
                             <div></div>
                         </div>
                     </div>
-                    <a data-name="1255887459%2FPackages%2F-813795679"
-                       anchor-label="com.tecknobit.ametista.ui.screens"
-                       id="1255887459%2FPackages%2F-813795679"
+                    <a data-name="-1190482973%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.application.components"
+                       id="-1190482973%2FPackages%2F-813795679"
                        data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                     <div class="table-row"
                          data-filterable-current=":composeApp:dokkaHtml/commonMain"
@@ -220,9 +279,9 @@
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
-              <div><a href="-ametista/com.tecknobit.ametista.ui.screens/index.html">com.tecknobit.ametista.ui.screens</a></div>
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.application.components/index.html">com.tecknobit.ametista.ui.screens.application.components</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="1255887459%2FPackages%2F-813795679"></span>
+                                   pointing-to="-1190482973%2FPackages%2F-813795679"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
                                 <div class="pull-right">
@@ -234,9 +293,9 @@
                             <div></div>
                         </div>
                     </div>
-                    <a data-name="2126069445%2FPackages%2F-813795679"
-                       anchor-label="com.tecknobit.ametista.ui.screens.application"
-                       id="2126069445%2FPackages%2F-813795679"
+                    <a data-name="-1713474633%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.application.data"
+                       id="-1713474633%2FPackages%2F-813795679"
                        data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                     <div class="table-row"
                          data-filterable-current=":composeApp:dokkaHtml/commonMain"
@@ -244,9 +303,9 @@
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
-              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.application/index.html">com.tecknobit.ametista.ui.screens.application</a></div>
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.application.data/index.html">com.tecknobit.ametista.ui.screens.application.data</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="2126069445%2FPackages%2F-813795679"></span>
+                                   pointing-to="-1713474633%2FPackages%2F-813795679"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
                                 <div class="pull-right">
@@ -258,35 +317,9 @@
                             <div></div>
                         </div>
                     </div>
-                    <a data-name="258422290%2FPackages%2F-1927016931"
-                       anchor-label="com.tecknobit.ametista.ui.screens.applications"
-                       id="258422290%2FPackages%2F-1927016931"
-                       data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain"></a>
-                    <div class="table-row"
-                         data-filterable-current=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain"
-                         data-filterable-set=":composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/desktopMain">
-                        <div>
-                            <div class="main-subrow ">
-                                <div class=""><span class="inline-flex">
-              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.applications/index.html">com.tecknobit.ametista.ui.screens.applications</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="258422290%2FPackages%2F-1927016931"></span>
-                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-              </span></span></div>
-                                <div class="pull-right">
-                                    <div class="platform-tags no-gutters">
-                                        <div class="platform-tag jvm-like">android</div>
-                                        <div class="platform-tag common-like">common</div>
-                                        <div class="platform-tag jvm-like">desktop</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div></div>
-                        </div>
-                    </div>
-                    <a data-name="1444757335%2FPackages%2F-813795679"
-                       anchor-label="com.tecknobit.ametista.ui.screens.auth"
-                       id="1444757335%2FPackages%2F-813795679"
+                    <a data-name="1202207783%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.application.presentation"
+                       id="1202207783%2FPackages%2F-813795679"
                        data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                     <div class="table-row"
                          data-filterable-current=":composeApp:dokkaHtml/commonMain"
@@ -294,9 +327,9 @@
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
-              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.auth/index.html">com.tecknobit.ametista.ui.screens.auth</a></div>
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.application.presentation/index.html">com.tecknobit.ametista.ui.screens.application.presentation</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="1444757335%2FPackages%2F-813795679"></span>
+                                   pointing-to="1202207783%2FPackages%2F-813795679"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
                                 <div class="pull-right">
@@ -308,9 +341,9 @@
                             <div></div>
                         </div>
                     </div>
-                    <a data-name="-600991284%2FPackages%2F-813795679"
-                       anchor-label="com.tecknobit.ametista.ui.screens.changeviewerpassword"
-                       id="-600991284%2FPackages%2F-813795679"
+                    <a data-name="1671848127%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.application.presenter"
+                       id="1671848127%2FPackages%2F-813795679"
                        data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                     <div class="table-row"
                          data-filterable-current=":composeApp:dokkaHtml/commonMain"
@@ -318,9 +351,201 @@
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
-              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.changeviewerpassword/index.html">com.tecknobit.ametista.ui.screens.changeviewerpassword</a></div>
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.application.presenter/index.html">com.tecknobit.ametista.ui.screens.application.presenter</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-600991284%2FPackages%2F-813795679"></span>
+                                   pointing-to="1671848127%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-1589964170%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.applications.components"
+                       id="-1589964170%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.applications.components/index.html">com.tecknobit.ametista.ui.screens.applications.components</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-1589964170%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="1840776330%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.applications.data"
+                       id="1840776330%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.applications.data/index.html">com.tecknobit.ametista.ui.screens.applications.data</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="1840776330%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-447133190%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.applications.presentation"
+                       id="-447133190%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.applications.presentation/index.html">com.tecknobit.ametista.ui.screens.applications.presentation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-447133190%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="827677644%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.applications.presenter"
+                       id="827677644%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.applications.presenter/index.html">com.tecknobit.ametista.ui.screens.applications.presenter</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="827677644%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="1665218773%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.auth.presentation"
+                       id="1665218773%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.auth.presentation/index.html">com.tecknobit.ametista.ui.screens.auth.presentation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="1665218773%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="947409617%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.auth.presenter"
+                       id="947409617%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.auth.presenter/index.html">com.tecknobit.ametista.ui.screens.auth.presenter</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="947409617%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="1785742464%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.changeviewerpassword.presentation"
+                       id="1785742464%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.changeviewerpassword.presentation/index.html">com.tecknobit.ametista.ui.screens.changeviewerpassword.presentation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="1785742464%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-572137722%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter"
+                       id="-572137722%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter/index.html">com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-572137722%2FPackages%2F-813795679"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
                                 <div class="pull-right">
@@ -356,9 +581,9 @@
                             <div></div>
                         </div>
                     </div>
-                    <a data-name="-730831902%2FPackages%2F-813795679"
-                       anchor-label="com.tecknobit.ametista.ui.screens.platform"
-                       id="-730831902%2FPackages%2F-813795679"
+                    <a data-name="117056166%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.platform.components"
+                       id="117056166%2FPackages%2F-813795679"
                        data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                     <div class="table-row"
                          data-filterable-current=":composeApp:dokkaHtml/commonMain"
@@ -366,9 +591,9 @@
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
-              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.platform/index.html">com.tecknobit.ametista.ui.screens.platform</a></div>
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.platform.components/index.html">com.tecknobit.ametista.ui.screens.platform.components</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-730831902%2FPackages%2F-813795679"></span>
+                                   pointing-to="117056166%2FPackages%2F-813795679"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
                                 <div class="pull-right">
@@ -380,9 +605,9 @@
                             <div></div>
                         </div>
                     </div>
-                    <a data-name="-1181396469%2FPackages%2F-813795679"
-                       anchor-label="com.tecknobit.ametista.ui.screens.session"
-                       id="-1181396469%2FPackages%2F-813795679"
+                    <a data-name="-1823278918%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.platform.data"
+                       id="-1823278918%2FPackages%2F-813795679"
                        data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                     <div class="table-row"
                          data-filterable-current=":composeApp:dokkaHtml/commonMain"
@@ -390,9 +615,9 @@
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
-              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.session/index.html">com.tecknobit.ametista.ui.screens.session</a></div>
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.platform.data/index.html">com.tecknobit.ametista.ui.screens.platform.data</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-1181396469%2FPackages%2F-813795679"></span>
+                                   pointing-to="-1823278918%2FPackages%2F-813795679"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
                                 <div class="pull-right">
@@ -404,9 +629,9 @@
                             <div></div>
                         </div>
                     </div>
-                    <a data-name="569053660%2FPackages%2F-813795679"
-                       anchor-label="com.tecknobit.ametista.ui.sharedviewmodels"
-                       id="569053660%2FPackages%2F-813795679"
+                    <a data-name="197794930%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.platform.data.issues"
+                       id="197794930%2FPackages%2F-813795679"
                        data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                     <div class="table-row"
                          data-filterable-current=":composeApp:dokkaHtml/commonMain"
@@ -414,9 +639,273 @@
                         <div>
                             <div class="main-subrow ">
                                 <div class=""><span class="inline-flex">
-              <div><a href="-ametista/com.tecknobit.ametista.ui.sharedviewmodels/index.html">com.tecknobit.ametista.ui.sharedviewmodels</a></div>
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.platform.data.issues/index.html">com.tecknobit.ametista.ui.screens.platform.data.issues</a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="569053660%2FPackages%2F-813795679"></span>
+                                   pointing-to="197794930%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-1251717764%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.platform.data.performance"
+                       id="-1251717764%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.platform.data.performance/index.html">com.tecknobit.ametista.ui.screens.platform.data.performance</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-1251717764%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-678097366%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.platform.presentation"
+                       id="-678097366%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.platform.presentation/index.html">com.tecknobit.ametista.ui.screens.platform.presentation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-678097366%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="744195484%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.platform.presenter"
+                       id="744195484%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.platform.presenter/index.html">com.tecknobit.ametista.ui.screens.platform.presenter</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="744195484%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-1501040419%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.session.components"
+                       id="-1501040419%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.session.components/index.html">com.tecknobit.ametista.ui.screens.session.components</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-1501040419%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-1408664527%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.session.data"
+                       id="-1408664527%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.session.data/index.html">com.tecknobit.ametista.ui.screens.session.data</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-1408664527%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-890754399%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.session.presentation"
+                       id="-890754399%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.session.presentation/index.html">com.tecknobit.ametista.ui.screens.session.presentation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-890754399%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="1800377477%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.session.presenter"
+                       id="1800377477%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.session.presenter/index.html">com.tecknobit.ametista.ui.screens.session.presenter</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="1800377477%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-2101964984%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.shared.data"
+                       id="-2101964984%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.shared.data/index.html">com.tecknobit.ametista.ui.screens.shared.data</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-2101964984%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="185023615%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.shared.presentations"
+                       id="185023615%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.shared.presentations/index.html">com.tecknobit.ametista.ui.screens.shared.presentations</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="185023615%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="1113578966%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.upsertapplication.presentation"
+                       id="1113578966%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.upsertapplication.presentation/index.html">com.tecknobit.ametista.ui.screens.upsertapplication.presentation</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="1113578966%2FPackages%2F-813795679"></span>
+                <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+              </span></span></div>
+                                <div class="pull-right">
+                                    <div class="platform-tags no-gutters">
+                                        <div class="platform-tag common-like">common</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <a data-name="-1167149712%2FPackages%2F-813795679"
+                       anchor-label="com.tecknobit.ametista.ui.screens.upsertapplication.presenter"
+                       id="-1167149712%2FPackages%2F-813795679"
+                       data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                    <div class="table-row"
+                         data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                         data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                        <div>
+                            <div class="main-subrow ">
+                                <div class=""><span class="inline-flex">
+              <div><a href="-ametista/com.tecknobit.ametista.ui.screens.upsertapplication.presenter/index.html">com.tecknobit.ametista.ui.screens.upsertapplication.presenter</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-1167149712%2FPackages%2F-813795679"></span>
                 <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
               </span></span></div>
                                 <div class="pull-right">
@@ -551,11 +1040,15 @@
                 </div>
             </div>
             <div class="footer">
-                <span class="go-to-top-icon"><a href="#content"
-                                                id="go-to-top-link"></a></span><span>(c) 2024 Tecknobit</span><span
-                    class="pull-right"><span>Generated by </span><a
-                    href="https://github.com/Kotlin/dokka"><span>dokka</span><span
-                    class="padded-icon"></span></a></span>
+                <a href="#content" id="go-to-top-link"
+                   class="footer--button footer--button_go-to-top"></a>
+                <span>(c) 2025 Tecknobit</span>
+                <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
             </div>
         </div>
     </div>

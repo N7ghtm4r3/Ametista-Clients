@@ -5,8 +5,9 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat.Pkg
 import org.jetbrains.dokka.base.DokkaBase
 import org.jetbrains.dokka.base.DokkaBaseConfiguration
 import org.jetbrains.dokka.gradle.DokkaTask
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.util.UUID
 
 plugins {
@@ -15,22 +16,53 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.dokka)
+    kotlin("plugin.serialization") version "2.1.0"
 }
 
 kotlin {
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
+            jvmTarget.set(JvmTarget.JVM_22)
+        }
+    }
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "Ametista"
+            isStatic = true
         }
     }
 
     jvm("desktop") {
         kotlin {
             jvmToolchain {
-                languageVersion.set(JavaLanguageVersion.of(21))
+                languageVersion.set(JavaLanguageVersion.of(22))
             }
         }
+    }
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "composeApp"
+        browser {
+            val rootDirPath = project.rootDir.path
+            val projectDirPath = project.projectDir.path
+            commonWebpackConfig {
+                outputFileName = "Ametista.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(rootDirPath)
+                        add(projectDirPath)
+                    }
+                }
+            }
+        }
+        binaries.executable()
     }
     
     sourceSets {
@@ -40,44 +72,65 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.ui.text.google.fonts)
-            implementation(libs.androidx.startup.runtime)
             implementation(libs.app.update)
             implementation(libs.app.update.ktx)
             implementation(libs.review)
             implementation(libs.review.ktx)
+            implementation(libs.ktor.client.okhttp)
         }
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(compose.materialIconsExtended)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.equinox)
-            implementation(libs.equinox.compose)
-            implementation(libs.precompose)
-            implementation(libs.coil3.coil.compose)
-            implementation(libs.coil.network.okhttp)
-            implementation(libs.apimanager)
-            implementation(libs.lazyPaginationCompose)
-            implementation(libs.ametistacore)
-            implementation(libs.filekit.core)
-            implementation(libs.filekit.compose)
-            implementation(libs.material3.window.size)
-            implementation(libs.jetlime)
-            implementation(libs.richeditor.compose)
-            implementation(libs.chiptextfield.m3)
-            implementation(libs.compose.charts)
-            implementation(libs.sonner)
-            implementation(libs.json)
+
+        val commonMain by getting {
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(compose.materialIconsExtended)
+                implementation(compose.components.resources)
+                implementation(compose.components.uiToolingPreview)
+                implementation(libs.androidx.lifecycle.viewmodel)
+                implementation(libs.androidx.lifecycle.runtime.compose)
+                implementation(libs.equinox.core)
+                implementation(libs.equinox.compose)
+                implementation(libs.precompose)
+                implementation(libs.coil.compose)
+                implementation(libs.coil.network.ktor3)
+                implementation(libs.lazyPaginationCompose)
+                implementation(libs.ametistacore)
+                implementation(libs.filekit.core)
+                implementation(libs.filekit.compose)
+                implementation(libs.jetlime)
+                implementation(libs.richeditor.compose)
+                implementation(libs.compose.charts)
+                implementation(libs.sonner)
+                implementation(libs.kotlinx.serialization.json)
+            }
         }
+
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
             implementation(libs.octocatkdu)
+            implementation(libs.ktor.client.okhttp)
+        }
+
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation(libs.ktor.client.cio)
+            }
+        }
+
+        val wasmJsMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.js)
+            }
         }
     }
 }
@@ -94,8 +147,8 @@ android {
         applicationId = "com.tecknobit.ametista"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 2
-        versionName = "1.0.0"
+        versionCode = 3
+        versionName = "1.0.1"
     }
     packaging {
         resources {
@@ -108,8 +161,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_22
+        targetCompatibility = JavaVersion.VERSION_22
     }
     buildFeatures {
         compose = true
@@ -139,10 +192,10 @@ compose.desktop {
                 "jdk.security.auth"
             )
             packageName = "Ametista"
-            packageVersion = "1.0.0"
+            packageVersion = "1.0.1"
             description =
                 "Self-hosted issues tracker and performance stats collector about Compose Multiplatform applications"
-            copyright = "© 2024 Tecknobit"
+            copyright = "© 2025 Tecknobit"
             vendor = "Tecknobit"
             licenseFile.set(project.file("src/desktopMain/resources/LICENSE"))
             macOS {
@@ -157,7 +210,7 @@ compose.desktop {
                 iconFile.set(project.file("src/desktopMain/resources/logo.png"))
                 packageName = "com-tecknobit-ametista"
                 debMaintainer = "infotecknobitcompany@gmail.com"
-                appRelease = "1.0.0"
+                appRelease = "1.0.1"
                 appCategory = "PERSONALIZATION"
                 rpmLicenseType = "MIT"
             }
@@ -170,14 +223,6 @@ compose.desktop {
     }
 }
 
-configurations.all {
-    exclude("commons-logging", "commons-logging")
-    // TODO: TO REMOVE IN THE NEXT VERSION (DEPRECATED TRIGGER SEARCH)
-    resolutionStrategy {
-        force("com.github.N7ghtm4r3:GitHubManager:1.0.1")
-    }
-}
-
 tasks.withType<DokkaTask>().configureEach {
     dokkaSourceSets {
         moduleName.set("Ametista")
@@ -186,6 +231,6 @@ tasks.withType<DokkaTask>().configureEach {
 
     pluginConfiguration<DokkaBase, DokkaBaseConfiguration> {
         customAssets = listOf(file("../docs/logo-icon.svg"))
-        footerMessage = "(c) 2024 Tecknobit"
+        footerMessage = "(c) 2025 Tecknobit"
     }
 }

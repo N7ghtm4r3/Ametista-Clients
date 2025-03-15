@@ -29,58 +29,101 @@
     <link href="../../styles/prism.css" rel="Stylesheet">
     <link href="../../styles/logo-styles.css" rel="Stylesheet">
     <link href="../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+    <link href="../../ui-kit/ui-kit.min.css" rel="Stylesheet">
     <script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script>
     <script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script>
     <script type="text/javascript" src="../../scripts/platform-content-handler.js"
             async="async"></script>
     <script type="text/javascript" src="../../scripts/main.js" defer="defer"></script>
     <script type="text/javascript" src="../../scripts/prism.js" async="async"></script>
+    <script type="text/javascript" src="../../ui-kit/ui-kit.min.js" defer="defer"></script>
     <script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js"
             defer="defer"></script>
     <link href="../../images/logo-icon.svg">
 </head>
 <body>
 <div class="root">
-    <nav class="navigation" id="navigation-wrapper">
-        <div class="navigation--inner">
-            <div class="navigation-title">
-                <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
-                <div class="library-name">
-                    <a class="library-name--link" href="../../index.html">
-                        Ametista
-                    </a>
-                </div>
-                <div class="library-version">
-                </div>
-            </div>
-            <div class="filter-section" id="filter-section">
-                <button class="platform-tag platform-selector jvm-like" data-active=""
-                        data-filter=":composeApp:dokkaHtml/androidMain">android
-                </button>
+    <nav class="navigation theme-dark" id="navigation-wrapper">
+        <a class="library-name--link" href="../../index.html">
+            Ametista
+        </a>
+        <button class="navigation-controls--btn navigation-controls--btn_toc ui-kit_mobile-only"
+                id="toc-toggle"
+                type="button">Toggle table of contents
+        </button>
+        <div class="navigation-controls--break ui-kit_mobile-only"></div>
+        <div class="library-version" id="library-version">
+        </div>
+        <div class="navigation-controls">
+            <div class="filter-section filter-section_loading" id="filter-section">
                 <button class="platform-tag platform-selector common-like" data-active=""
                         data-filter=":composeApp:dokkaHtml/commonMain">common
                 </button>
-                <button class="platform-tag platform-selector jvm-like" data-active=""
-                        data-filter=":composeApp:dokkaHtml/desktopMain">desktop
-                </button>
+                <div class="dropdown filter-section--dropdown" data-role="dropdown"
+                     id="filter-section-dropdown">
+                    <button class="button button_dropdown filter-section--dropdown-toggle"
+                            role="combobox"
+                            data-role="dropdown-toggle"
+                            aria-controls="platform-tags-listbox"
+                            aria-haspopup="listbox"
+                            aria-expanded="false"
+                            aria-label="Toggle source sets"
+                    ></button>
+                    <ul role="listbox" id="platform-tags-listbox" class="dropdown--list"
+                        data-role="dropdown-listbox">
+                        <div class="dropdown--header"><span>Platform filter</span>
+                            <button class="button" data-role="dropdown-toggle"
+                                    aria-label="Close platform filter">
+                                <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                            </button>
+                        </div>
+                        <li role="option"
+                            class="dropdown--option platform-selector-option common-like"
+                            tabindex="0">
+                            <label class="checkbox">
+                                <input type="checkbox" class="checkbox--input"
+                                       id=":composeApp:dokkaHtml/commonMain"
+                                       data-filter=":composeApp:dokkaHtml/commonMain"/>
+                                <span class="checkbox--icon"></span>
+                                common
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="dropdown--overlay"></div>
+                </div>
             </div>
-        </div>
-        <div class="navigation-controls">
-            <button class="navigation-controls--btn navigation-controls--theme"
-                    id="theme-toggle-button" type="button">switch theme
+            <button class="navigation-controls--btn navigation-controls--btn_theme"
+                    id="theme-toggle-button"
+                    type="button">Switch theme
             </button>
-            <div class="navigation-controls--btn navigation-controls--search" id="searchBar"
-                 role="button">search in API
+            <div class="navigation-controls--btn navigation-controls--btn_search" id="searchBar"
+                 role="button">Search in
+                API
             </div>
         </div>
     </nav>
     <div id="container">
         <div class="sidebar" id="leftColumn">
-            <div class="sidebar--inner" id="sideMenu"></div>
+            <div class="dropdown theme-dark_mobile" data-role="dropdown" id="toc-dropdown">
+                <ul role="listbox" id="toc-listbox" class="dropdown--list dropdown--list_toc-list"
+                    data-role="dropdown-listbox">
+                    <div class="dropdown--header">
+                            <span>
+                                    Ametista
+                            </span>
+                        <button class="button" data-role="dropdown-toggle"
+                                aria-label="Close table of contents">
+                            <i class="ui-kit-icon ui-kit-icon_cross"></i>
+                        </button>
+                    </div>
+                    <div class="sidebar--inner" id="sideMenu"></div>
+                </ul>
+                <div class="dropdown--overlay"></div>
+            </div>
         </div>
         <div id="main">
             <div class="main-content" data-page-type="package" id="content"
-                 pageIds="Ametista::com.tecknobit.ametista.ui.components////PointingToDeclaration//-1927016931">
+                 pageIds="Ametista::com.tecknobit.ametista.ui.components////PointingToDeclaration//-813795679">
                 <div class="breadcrumbs"><a href="../../index.html">Ametista</a><span
                         class="delimiter">/</span><span class="current">com.tecknobit.ametista.ui.components</span>
                 </div>
@@ -93,14 +136,114 @@
                         <button class="section-tab" data-active=""
                                 data-togglable="FUNCTION,EXTENSION_FUNCTION">Functions
                         </button>
+                        <button class="section-tab" data-togglable="PROPERTY,EXTENSION_PROPERTY">
+                            Properties
+                        </button>
                     </div>
                     <div class="tabs-section-body">
+                        <div data-togglable="PROPERTY">
+                            <h2 class="">Properties</h2>
+                            <div class="table"><a data-name="-612946520%2FProperties%2F-813795679"
+                                                  anchor-label="titleStyle"
+                                                  id="-612946520%2FProperties%2F-813795679"
+                                                  data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="title-style.html"><span>title</span><wbr></wbr><span><span>Style</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-612946520%2FProperties%2F-813795679"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content"
+                                                         data-active=""
+                                                         data-togglable=":composeApp:dokkaHtml/commonMain">
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">val </span><a
+                                                                href="title-style.html">titleStyle</a><span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/text/TextStyle.html">TextStyle</a>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">
+                                                            <code class="lang-kotlin">titleStyle</code>
+                                                            the style to apply to the title of the
+                                                            <span data-unresolved-link="com.tecknobit.equinoxcompose.components//EquinoxAlertDialog/#androidx.compose.ui.Modifier#androidx.compose.ui.Modifier#androidx.compose.ui.text.TextStyle#androidx.compose.runtime.MutableState[kotlin.Boolean]#androidx.compose.ui.graphics.vector.ImageVector?#com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel?#kotlin.Function0[kotlin.Unit]#org.jetbrains.compose.resources.StringResource#org.jetbrains.compose.resources.StringResource#kotlin.Function0[kotlin.Unit]#org.jetbrains.compose.resources.StringResource?#androidx.compose.ui.text.TextStyle#kotlin.Function0[kotlin.Unit]#org.jetbrains.compose.resources.StringResource#androidx.compose.ui.text.TextStyle/PointingToDeclaration/">EquinoxAlertDialog</span>
+                                                        </p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div data-togglable="FUNCTION">
                             <h2 class="">Functions</h2>
-                            <div class="table"><a data-name="-1806653302%2FFunctions%2F-813795679"
-                                                  anchor-label="DeleteApplication"
-                                                  id="-1806653302%2FFunctions%2F-813795679"
+                            <div class="table"><a data-name="-911984556%2FFunctions%2F-813795679"
+                                                  anchor-label="DeleteAccount"
+                                                  id="-911984556%2FFunctions%2F-813795679"
                                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                                <div class="table-row"
+                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-delete-account.html"><span>Delete</span><wbr></wbr><span><span>Account</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="-911984556%2FFunctions%2F-813795679"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content"
+                                                         data-active=""
+                                                         data-togglable=":composeApp:dokkaHtml/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
+                                                                        class="token annotation builtin">Composable</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">fun </span><a
+                                                                href="-delete-account.html"><span
+                                                                class="token function">DeleteAccount</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">viewModel<span
+                                                                class="token operator">: </span><a
+                                                                href="../com.tecknobit.ametista.ui.screens.session.presentation/-session-screen-view-model/index.html">SessionScreenViewModel</a><span
+                                                                class="token punctuation">, </span></span><span
+                                                                class="parameter ">show<span
+                                                                class="token operator">: </span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span></span></span><span
+                                                                class="token punctuation">)</span>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">
+                                                            Alert to warn about the account
+                                                            deletion</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="712314613%2FFunctions%2F-813795679"
+                                   anchor-label="DeleteApplication"
+                                   id="712314613%2FFunctions%2F-813795679"
+                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                                 <div class="table-row"
                                      data-filterable-current=":composeApp:dokkaHtml/commonMain"
                                      data-filterable-set=":composeApp:dokkaHtml/commonMain">
@@ -108,7 +251,7 @@
                                         <div class=""><span class="inline-flex">
                   <div><a href="-delete-application.html"><span>Delete</span><wbr></wbr><span><span>Application</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-1806653302%2FFunctions%2F-813795679"></span>
+                                   pointing-to="712314613%2FFunctions%2F-813795679"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
                                         <div>
@@ -135,218 +278,29 @@
                                                                 class="token operator">: </span><a
                                                                 href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
                                                                 class="token operator">&lt;</span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
                                                                 class="token operator">&gt;</span><span
                                                                 class="token punctuation">, </span></span><span
                                                                 class="parameter ">application<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span
+                                                                class="token operator">: </span><a
+                                                                href="../com.tecknobit.ametista.ui.screens.applications.data/-ametista-application/index.html">AmetistaApplication</a><span
                                                                 class="token punctuation">, </span></span><span
                                                                 class="parameter ">viewModel<span
                                                                 class="token operator">: </span><a
-                                                                href="../com.tecknobit.ametista.ui.sharedviewmodels/-application-view-model/index.html">ApplicationViewModel</a><span
+                                                                href="../com.tecknobit.ametista.ui.screens.shared.presentations/-application-view-model/index.html">ApplicationViewModel</a><span
                                                                 class="token punctuation">, </span></span><span
                                                                 class="parameter ">onDelete<span
                                                                 class="token operator">: </span><span
                                                                 class="token punctuation">(</span><span
                                                                 class="token punctuation">)</span><span
                                                                 class="token operator"> -&gt; </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span
                                                                 class="token punctuation">)</span>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">The
-                                                            EquinoxAlertDialog to warn the user
-                                                            about the application deletion</p></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="458913048%2FFunctions%2F-813795679"
-                                   anchor-label="EquinoxDialog"
-                                   id="458913048%2FFunctions%2F-813795679"
-                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
-                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-equinox-dialog.html"><span>Equinox</span><wbr></wbr><span><span>Dialog</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="458913048%2FFunctions%2F-813795679"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content"
-                                                         data-active=""
-                                                         data-togglable=":composeApp:dokkaHtml/commonMain">
-                                                        <div class="symbol monospace">
-                                                            <div class="block">
-                                                                <div class="block"><span
-                                                                        class="token annotation builtin">@</span><a
-                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
-                                                                        class="token annotation builtin">Composable</span></a>
-                                                                </div>
-                                                            </div>
-                                                            <span class="token keyword">fun </span><a
-                                                                href="-equinox-dialog.html"><span
-                                                                class="token function"><strike>EquinoxDialog</strike></span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">show<span
-                                                                class="token operator">: </span><a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
-                                                                class="token operator">&lt;</span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span
-                                                                class="token operator">&gt;</span><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">viewModel<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span
-                                                                class="token operator">?</span><span
-                                                                class="token operator"> = </span>null<span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">content<span
-                                                                class="token operator">: </span><span><span
-                                                                class="token annotation builtin">@</span><a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
-                                                                class="token annotation builtin">Composable</span></a> </span><a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/foundation/layout/ColumnScope.html">ColumnScope</a><span
-                                                                class="token punctuation">.</span><span
-                                                                class="token punctuation">(</span><span
-                                                                class="token punctuation">)</span><span
-                                                                class="token operator"> -&gt; </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span
-                                                                class="token punctuation">)</span>
-                                                        </div>
-                                                        <div class="brief "><p class="paragraph">The
-                                                            custom <a
-                                                                    href="https://developer.android.com/reference/kotlin/androidx/compose/ui/window/package-summary.html">Dialog</a>
-                                                            wrapped with the Equinox philosophy</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="88873619%2FFunctions%2F-813795679"
-                                   anchor-label="FilterChartData"
-                                   id="88873619%2FFunctions%2F-813795679"
-                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
-                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-filter-chart-data.html"><span>Filter</span><wbr></wbr><span>Chart</span><wbr></wbr><span><span>Data</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="88873619%2FFunctions%2F-813795679"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content"
-                                                         data-active=""
-                                                         data-togglable=":composeApp:dokkaHtml/commonMain">
-                                                        <div class="symbol monospace">
-                                                            <div class="block">
-                                                                <div class="block"><span
-                                                                        class="token annotation builtin">@</span><a
-                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
-                                                                        class="token annotation builtin">Composable</span></a>
-                                                                </div>
-                                                            </div>
-                                                            <span class="token keyword">fun </span><a
-                                                                href="-filter-chart-data.html"><span
-                                                                class="token function">FilterChartData</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">show<span
-                                                                class="token operator">: </span><a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
-                                                                class="token operator">&lt;</span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span
-                                                                class="token operator">&gt;</span><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">viewModel<span
-                                                                class="token operator">: </span><a
-                                                                href="../com.tecknobit.ametista.ui.screens.platform/-platform-screen-view-model/index.html">PlatformScreenViewModel</a><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">title<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="org.jetbrains.compose.resources/StringResource///PointingToDeclaration/">StringResource</span><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">data<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></span></span><span
-                                                                class="token punctuation">)</span>
-                                                        </div>
-                                                        <div class="brief "><p class="paragraph">The
-                                                            layout where select the filters for the
-                                                            performance data</p></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-326382192%2FFunctions%2F-813795679"
-                                   anchor-label="FilterDialog"
-                                   id="-326382192%2FFunctions%2F-813795679"
-                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
-                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-filter-dialog.html"><span>Filter</span><wbr></wbr><span><span>Dialog</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-326382192%2FFunctions%2F-813795679"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content"
-                                                         data-active=""
-                                                         data-togglable=":composeApp:dokkaHtml/commonMain">
-                                                        <div class="symbol monospace">
-                                                            <div class="block">
-                                                                <div class="block"><span
-                                                                        class="token annotation builtin">@</span><a
-                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
-                                                                        class="token annotation builtin">Composable</span></a>
-                                                                </div>
-                                                            </div>
-                                                            <span class="token keyword">fun </span><a
-                                                                href="-filter-dialog.html"><span
-                                                                class="token function">FilterDialog</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">show<span
-                                                                class="token operator">: </span><a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
-                                                                class="token operator">&lt;</span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span
-                                                                class="token operator">&gt;</span><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">viewModel<span
-                                                                class="token operator">: </span><a
-                                                                href="../com.tecknobit.ametista.ui.screens.platform/-platform-screen-view-model/index.html">PlatformScreenViewModel</a></span></span><span
-                                                                class="token punctuation">)</span>
-                                                        </div>
-                                                        <div class="brief "><p class="paragraph">The
-                                                            <a href="-equinox-dialog.html">EquinoxDialog</a>
-                                                            to use to fill with the filters value to
-                                                            use to fetch the issues</p></div>
+                                                            <span data-unresolved-link="com.tecknobit.equinoxcompose.components//EquinoxAlertDialog/#androidx.compose.ui.Modifier#androidx.compose.ui.Modifier#androidx.compose.ui.text.TextStyle#androidx.compose.runtime.MutableState[kotlin.Boolean]#androidx.compose.ui.graphics.vector.ImageVector?#com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel?#kotlin.Function0[kotlin.Unit]#org.jetbrains.compose.resources.StringResource#org.jetbrains.compose.resources.StringResource#kotlin.Function0[kotlin.Unit]#org.jetbrains.compose.resources.StringResource?#androidx.compose.ui.text.TextStyle#kotlin.Function0[kotlin.Unit]#org.jetbrains.compose.resources.StringResource#androidx.compose.ui.text.TextStyle/PointingToDeclaration/">EquinoxAlertDialog</span>
+                                                            to warn the user about the application
+                                                            deletion</p></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -398,17 +352,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a data-name="-1474408684%2FFunctions%2F-813795679"
-                                   anchor-label="Issue" id="-1474408684%2FFunctions%2F-813795679"
+                                <a data-name="-476377736%2FFunctions%2F-813795679"
+                                   anchor-label="icon" id="-476377736%2FFunctions%2F-813795679"
                                    data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
-                                <div class="table-row"
+                                <div class="table-row" data-togglable="EXTENSION_FUNCTION"
                                      data-filterable-current=":composeApp:dokkaHtml/commonMain"
                                      data-filterable-set=":composeApp:dokkaHtml/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-issue.html"><span><span>Issue</span></span></a></div>
+                  <div><a href="icon.html"><span><span>icon</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-1474408684%2FFunctions%2F-813795679"></span>
+                                   pointing-to="-476377736%2FFunctions%2F-813795679"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
                                         <div>
@@ -418,49 +372,39 @@
                                                     <div class="content sourceset-dependent-content"
                                                          data-active=""
                                                          data-togglable=":composeApp:dokkaHtml/commonMain">
-                                                        <div class="symbol monospace">
-                                                            <div class="block">
-                                                                <div class="block"><span
-                                                                        class="token annotation builtin">@</span><a
-                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
-                                                                        class="token annotation builtin">Composable</span></a>
-                                                                </div>
-                                                            </div>
-                                                            <span class="token keyword">fun </span><a
-                                                                href="-issue.html"><span
-                                                                class="token function">Issue</span></a><span
+                                                        <div class="symbol monospace"><span
+                                                                class="token keyword">fun </span><span
+                                                                data-unresolved-link="com.tecknobit.ametistacore.enums/Platform///PointingToDeclaration/">Platform</span><span
+                                                                class="token punctuation">.</span><a
+                                                                href="icon.html"><span
+                                                                class="token function">icon</span></a><span
                                                                 class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">viewModel<span
+                                                                class="token punctuation">)</span><span
                                                                 class="token operator">: </span><a
-                                                                href="../com.tecknobit.ametista.ui.screens.platform/-platform-screen-view-model/index.html">PlatformScreenViewModel</a><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">issue<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></span></span><span
-                                                                class="token punctuation">)</span>
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/graphics/vector/ImageVector.html">ImageVector</a>
                                                         </div>
-                                                        <div class="brief "><p class="paragraph">The
-                                                            component to represent the details of an
-                                                            IssueAnalytic</p></div>
+                                                        <div class="brief "><p class="paragraph">
+                                                            Method to get the related icon based on
+                                                            the <span
+                                                                data-unresolved-link="com.tecknobit.ametistacore.enums/Platform///PointingToDeclaration/">Platform</span>
+                                                            value</p></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <a data-name="1964219479%2FFunctions%2F-813795679"
-                                   anchor-label="IssuesNumber"
-                                   id="1964219479%2FFunctions%2F-813795679"
+                                <a data-name="-1648671084%2FFunctions%2F-813795679"
+                                   anchor-label="Logout" id="-1648671084%2FFunctions%2F-813795679"
                                    data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                                 <div class="table-row"
                                      data-filterable-current=":composeApp:dokkaHtml/commonMain"
                                      data-filterable-set=":composeApp:dokkaHtml/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-issues-number.html"><span>Issues</span><wbr></wbr><span><span>Number</span></span></a></div>
+                  <div><a href="-logout.html"><span><span>Logout</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="1964219479%2FFunctions%2F-813795679"></span>
+                                   pointing-to="-1648671084%2FFunctions%2F-813795679"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
                                         <div>
@@ -479,46 +423,42 @@
                                                                 </div>
                                                             </div>
                                                             <span class="token keyword">fun </span><a
-                                                                href="-issues-number.html"><span
-                                                                class="token function">IssuesNumber</span></a><span
+                                                                href="-logout.html"><span
+                                                                class="token function">Logout</span></a><span
                                                                 class="token punctuation">(</span><span
                                                                 class="parameters "><span
                                                                 class="parameter ">viewModel<span
                                                                 class="token operator">: </span><a
-                                                                href="../com.tecknobit.ametista.ui.screens.platform/-platform-screen-view-model/index.html">PlatformScreenViewModel</a><span
+                                                                href="../com.tecknobit.ametista.ui.screens.session.presentation/-session-screen-view-model/index.html">SessionScreenViewModel</a><span
                                                                 class="token punctuation">, </span></span><span
-                                                                class="parameter ">cardHeight<span
+                                                                class="parameter ">show<span
                                                                 class="token operator">: </span><a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span
-                                                                class="token operator"> = </span>200.dp<span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">performanceData<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span
-                                                                class="token operator">?</span></span></span><span
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
+                                                                class="token operator">&lt;</span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-boolean/index.html">Boolean</a><span
+                                                                class="token operator">&gt;</span></span></span><span
                                                                 class="token punctuation">)</span>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">
-                                                            Specific card with the chart of the
-                                                            TOTAL_ISSUES analytic</p></div>
+                                                            Alert to warn about the logout
+                                                            action</p></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <a data-name="-2064127323%2FFunctions%2F-813795679"
-                                   anchor-label="IssuesPerSessionsNumber"
-                                   id="-2064127323%2FFunctions%2F-813795679"
+                                <a data-name="-624614204%2FFunctions%2F-813795679"
+                                   anchor-label="NavButton" id="-624614204%2FFunctions%2F-813795679"
                                    data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                                 <div class="table-row"
                                      data-filterable-current=":composeApp:dokkaHtml/commonMain"
                                      data-filterable-set=":composeApp:dokkaHtml/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-issues-per-sessions-number.html"><span>Issues</span><wbr></wbr><span>Per</span><wbr></wbr><span>Sessions</span><wbr></wbr><span><span>Number</span></span></a></div>
+                  <div><a href="-nav-button.html"><span>Nav</span><wbr></wbr><span><span>Button</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-2064127323%2FFunctions%2F-813795679"></span>
+                                   pointing-to="-624614204%2FFunctions%2F-813795679"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
                                         <div>
@@ -537,144 +477,13 @@
                                                                 </div>
                                                             </div>
                                                             <span class="token keyword">fun </span><a
-                                                                href="-issues-per-sessions-number.html"><span
-                                                                class="token function">IssuesPerSessionsNumber</span></a><span
+                                                                href="-nav-button.html"><span
+                                                                class="token function">NavButton</span></a><span
                                                                 class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">viewModel<span
-                                                                class="token operator">: </span><a
-                                                                href="../com.tecknobit.ametista.ui.screens.platform/-platform-screen-view-model/index.html">PlatformScreenViewModel</a><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">cardHeight<span
-                                                                class="token operator">: </span><a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span
-                                                                class="token operator"> = </span>200.dp<span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">performanceData<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span
-                                                                class="token operator">?</span></span></span><span
                                                                 class="token punctuation">)</span>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">
-                                                            Specific card with the chart of the
-                                                            ISSUES_PER_SESSION analytic</p></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-760960620%2FFunctions%2F-813795679"
-                                   anchor-label="LaunchTime"
-                                   id="-760960620%2FFunctions%2F-813795679"
-                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
-                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-launch-time.html"><span>Launch</span><wbr></wbr><span><span>Time</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-760960620%2FFunctions%2F-813795679"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content"
-                                                         data-active=""
-                                                         data-togglable=":composeApp:dokkaHtml/commonMain">
-                                                        <div class="symbol monospace">
-                                                            <div class="block">
-                                                                <div class="block"><span
-                                                                        class="token annotation builtin">@</span><a
-                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
-                                                                        class="token annotation builtin">Composable</span></a>
-                                                                </div>
-                                                            </div>
-                                                            <span class="token keyword">fun </span><a
-                                                                href="-launch-time.html"><span
-                                                                class="token function">LaunchTime</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">viewModel<span
-                                                                class="token operator">: </span><a
-                                                                href="../com.tecknobit.ametista.ui.screens.platform/-platform-screen-view-model/index.html">PlatformScreenViewModel</a><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">cardHeight<span
-                                                                class="token operator">: </span><a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span
-                                                                class="token operator"> = </span>200.dp<span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">performanceData<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span
-                                                                class="token operator">?</span></span></span><span
-                                                                class="token punctuation">)</span>
-                                                        </div>
-                                                        <div class="brief "><p class="paragraph">
-                                                            Specific card with the chart of the
-                                                            LAUNCH_TIME analytic</p></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-1668493746%2FFunctions%2F-813795679"
-                                   anchor-label="NetworkRequests"
-                                   id="-1668493746%2FFunctions%2F-813795679"
-                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
-                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-network-requests.html"><span>Network</span><wbr></wbr><span><span>Requests</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-1668493746%2FFunctions%2F-813795679"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content"
-                                                         data-active=""
-                                                         data-togglable=":composeApp:dokkaHtml/commonMain">
-                                                        <div class="symbol monospace">
-                                                            <div class="block">
-                                                                <div class="block"><span
-                                                                        class="token annotation builtin">@</span><a
-                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
-                                                                        class="token annotation builtin">Composable</span></a>
-                                                                </div>
-                                                            </div>
-                                                            <span class="token keyword">fun </span><a
-                                                                href="-network-requests.html"><span
-                                                                class="token function">NetworkRequests</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">viewModel<span
-                                                                class="token operator">: </span><a
-                                                                href="../com.tecknobit.ametista.ui.screens.platform/-platform-screen-view-model/index.html">PlatformScreenViewModel</a><span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">cardHeight<span
-                                                                class="token operator">: </span><a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/ui/unit/Dp.html">Dp</a><span
-                                                                class="token operator"> = </span>200.dp<span
-                                                                class="token punctuation">, </span></span><span
-                                                                class="parameter ">performanceData<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span
-                                                                class="token operator">?</span></span></span><span
-                                                                class="token punctuation">)</span>
-                                                        </div>
-                                                        <div class="brief "><p class="paragraph">
-                                                            Specific card with the chart of the
-                                                            NETWORK_REQUESTS analytic</p></div>
+                                                            Back navigation button</p></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -726,127 +535,66 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a data-name="-1645413354%2FFunctions%2F-1927016931"
-                                   anchor-label="reviewApp"
-                                   id="-1645413354%2FFunctions%2F-1927016931"
-                                   data-filterable-set=":composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/desktopMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/desktopMain"
-                                     data-filterable-set=":composeApp:dokkaHtml/commonMain,:composeApp:dokkaHtml/androidMain,:composeApp:dokkaHtml/desktopMain">
+                                <a data-name="883534426%2FFunctions%2F-813795679"
+                                   anchor-label="noIssues" id="883534426%2FFunctions%2F-813795679"
+                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                                <div class="table-row" data-togglable="EXTENSION_FUNCTION"
+                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="review-app.html"><span>review</span><wbr></wbr><span><span>App</span></span></a></div>
+                  <div><a href="no-issues.html"><span>no</span><wbr></wbr><span><span>Issues</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-1645413354%2FFunctions%2F-1927016931"></span>
+                                   pointing-to="883534426%2FFunctions%2F-813795679"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
                                         <div>
                                             <div class="title">
-                                                <div class="platform-hinted  with-platform-tabs"
+                                                <div class="platform-hinted "
                                                      data-platform-hinted="data-platform-hinted">
-                                                    <div class="platform-bookmarks-row"
-                                                         data-toggle-list="data-toggle-list">
-                                                        <button class="platform-bookmark"
-                                                                data-filterable-current=":composeApp:dokkaHtml/androidMain"
-                                                                data-filterable-set=":composeApp:dokkaHtml/androidMain"
-                                                                data-active=""
-                                                                data-toggle=":composeApp:dokkaHtml/androidMain">
-                                                            android
-                                                        </button>
-                                                        <button class="platform-bookmark"
-                                                                data-filterable-current=":composeApp:dokkaHtml/commonMain"
-                                                                data-filterable-set=":composeApp:dokkaHtml/commonMain"
-                                                                data-toggle=":composeApp:dokkaHtml/commonMain">
-                                                            common
-                                                        </button>
-                                                        <button class="platform-bookmark"
-                                                                data-filterable-current=":composeApp:dokkaHtml/desktopMain"
-                                                                data-filterable-set=":composeApp:dokkaHtml/desktopMain"
-                                                                data-toggle=":composeApp:dokkaHtml/desktopMain">
-                                                            desktop
-                                                        </button>
-                                                    </div>
-                                                    <div class="content sourceset-dependent-content"
-                                                         data-togglable=":composeApp:dokkaHtml/androidMain">
-                                                        <div class="symbol monospace"><span
-                                                                class="token keyword">actual </span><span
-                                                                class="token keyword">fun </span><a
-                                                                href="review-app.html"><span
-                                                                class="token function">reviewApp</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">flowAction<span
-                                                                class="token operator">: </span><span
-                                                                class="token punctuation">(</span><span
-                                                                class="token punctuation">)</span><span
-                                                                class="token operator"> -&gt; </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span
-                                                                class="token punctuation">)</span>
-                                                        </div>
-                                                        <div class="brief "><p class="paragraph">
-                                                            Method to review the application during
-                                                            the runtime</p></div>
-                                                    </div>
                                                     <div class="content sourceset-dependent-content"
                                                          data-active=""
                                                          data-togglable=":composeApp:dokkaHtml/commonMain">
-                                                        <div class="symbol monospace"><span
-                                                                class="token keyword">expect </span><span
-                                                                class="token keyword">fun </span><a
-                                                                href="review-app.html"><span
-                                                                class="token function">reviewApp</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">flowAction<span
-                                                                class="token operator">: </span><span
-                                                                class="token punctuation">(</span><span
-                                                                class="token punctuation">)</span><span
-                                                                class="token operator"> -&gt; </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span
-                                                                class="token punctuation">)</span>
-                                                        </div>
-                                                        <div class="brief "><p class="paragraph">
-                                                            Method to review the application during
-                                                            the runtime</p></div>
-                                                    </div>
-                                                    <div class="content sourceset-dependent-content"
-                                                         data-togglable=":composeApp:dokkaHtml/desktopMain">
-                                                        <div class="symbol monospace"><span
-                                                                class="token keyword">actual </span><span
-                                                                class="token keyword">fun </span><a
-                                                                href="review-app.html"><span
-                                                                class="token function">reviewApp</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">flowAction<span
-                                                                class="token operator">: </span><span
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
+                                                                        class="token annotation builtin">Composable</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">fun </span><span
+                                                                data-unresolved-link="com.tecknobit.ametistacore.enums/Platform///PointingToDeclaration/">Platform</span><span
+                                                                class="token punctuation">.</span><a
+                                                                href="no-issues.html"><span
+                                                                class="token function">noIssues</span></a><span
                                                                 class="token punctuation">(</span><span
                                                                 class="token punctuation">)</span><span
-                                                                class="token operator"> -&gt; </span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span
-                                                                class="token punctuation">)</span>
+                                                                class="token operator">: </span><span
+                                                                data-unresolved-link="org.jetbrains.compose.resources/DrawableResource///PointingToDeclaration/">DrawableResource</span>
                                                         </div>
                                                         <div class="brief "><p class="paragraph">
-                                                            Method to review the application during
-                                                            the runtime</p></div>
+                                                            Method used to get the empty state
+                                                            resource to display when there aren't no
+                                                            issues to display</p></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <a data-name="-2126174618%2FFunctions%2F-813795679"
-                                   anchor-label="RoleBadge"
-                                   id="-2126174618%2FFunctions%2F-813795679"
+                                <a data-name="1168818362%2FFunctions%2F-813795679"
+                                   anchor-label="PlatformsCustomGrid"
+                                   id="1168818362%2FFunctions%2F-813795679"
                                    data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
                                 <div class="table-row"
                                      data-filterable-current=":composeApp:dokkaHtml/commonMain"
                                      data-filterable-set=":composeApp:dokkaHtml/commonMain">
                                     <div class="main-subrow keyValue ">
                                         <div class=""><span class="inline-flex">
-                  <div><a href="-role-badge.html"><span>Role</span><wbr></wbr><span><span>Badge</span></span></a></div>
+                  <div><a href="-platforms-custom-grid.html"><span>Platforms</span><wbr></wbr><span>Custom</span><wbr></wbr><span><span>Grid</span></span></a></div>
 <span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-2126174618%2FFunctions%2F-813795679"></span>
+                                   pointing-to="1168818362%2FFunctions%2F-813795679"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
                                         <div>
@@ -865,126 +613,82 @@
                                                                 </div>
                                                             </div>
                                                             <span class="token keyword">fun </span><a
-                                                                href="-role-badge.html"><span
-                                                                class="token function">RoleBadge</span></a><span
+                                                                href="-platforms-custom-grid.html"><span
+                                                                class="token function">PlatformsCustomGrid</span></a><span
                                                                 class="token punctuation">(</span><span
                                                                 class="parameters "><span
-                                                                class="parameter ">role<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span></span></span><span
-                                                                class="token punctuation">)</span>
-                                                        </div>
-                                                        <div class="brief "><p class="paragraph">The
-                                                            badge of a Role</p></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-694108755%2FFunctions%2F-813795679"
-                                   anchor-label="SectionDivider"
-                                   id="-694108755%2FFunctions%2F-813795679"
-                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
-                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-section-divider.html"><span>Section</span><wbr></wbr><span><span>Divider</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-694108755%2FFunctions%2F-813795679"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content"
-                                                         data-active=""
-                                                         data-togglable=":composeApp:dokkaHtml/commonMain">
-                                                        <div class="symbol monospace">
-                                                            <div class="block">
-                                                                <div class="block"><span
-                                                                        class="token annotation builtin">@</span><a
-                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
-                                                                        class="token annotation builtin">Composable</span></a>
-                                                                </div>
-                                                            </div>
-                                                            <span class="token keyword">fun </span><a
-                                                                href="-section-divider.html"><span
-                                                                class="token function">SectionDivider</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="token punctuation">)</span>
-                                                        </div>
-                                                        <div class="brief "><p class="paragraph">
-                                                            Custom <a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/material3/package-summary.html">HorizontalDivider</a>
-                                                            for the <a
-                                                                href="../com.tecknobit.ametista.ui.screens.session/-session-screen/index.html">com.tecknobit.ametista.ui.screens.session.SessionScreen</a>
-                                                            to divide each section</p></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a data-name="-1171586939%2FFunctions%2F-813795679"
-                                   anchor-label="WorkOnApplication"
-                                   id="-1171586939%2FFunctions%2F-813795679"
-                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
-                                <div class="table-row"
-                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
-                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
-                                    <div class="main-subrow keyValue ">
-                                        <div class=""><span class="inline-flex">
-                  <div><a href="-work-on-application.html"><span>Work</span><wbr></wbr><span>On</span><wbr></wbr><span><span>Application</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon"
-                                   pointing-to="-1171586939%2FFunctions%2F-813795679"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-                                        <div>
-                                            <div class="title">
-                                                <div class="platform-hinted "
-                                                     data-platform-hinted="data-platform-hinted">
-                                                    <div class="content sourceset-dependent-content"
-                                                         data-active=""
-                                                         data-togglable=":composeApp:dokkaHtml/commonMain">
-                                                        <div class="symbol monospace">
-                                                            <div class="block">
-                                                                <div class="block"><span
-                                                                        class="token annotation builtin">@</span><a
-                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
-                                                                        class="token annotation builtin">Composable</span></a>
-                                                                </div>
-                                                            </div>
-                                                            <span class="token keyword">fun </span><a
-                                                                href="-work-on-application.html"><span
-                                                                class="token function">WorkOnApplication</span></a><span
-                                                                class="token punctuation">(</span><span
-                                                                class="parameters "><span
-                                                                class="parameter ">show<span
-                                                                class="token operator">: </span><a
-                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/MutableState.html">MutableState</a><span
-                                                                class="token operator">&lt;</span><a
-                                                                href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span
-                                                                class="token operator">&gt;</span><span
-                                                                class="token punctuation">, </span></span><span
                                                                 class="parameter ">viewModel<span
                                                                 class="token operator">: </span><a
-                                                                href="../com.tecknobit.ametista.ui.sharedviewmodels/-application-view-model/index.html">ApplicationViewModel</a><span
+                                                                href="../com.tecknobit.ametista.ui.screens.application.presentation/-application-screen-view-model/index.html">ApplicationScreenViewModel</a><span
                                                                 class="token punctuation">, </span></span><span
-                                                                class="parameter ">application<span
-                                                                class="token operator">: </span><span
-                                                                data-unresolved-link="/&amp;lt;Error class: unknown class&amp;gt;///PointingToDeclaration/">&lt;Error class: unknown class&gt;</span><span
-                                                                class="token operator">?</span><span
-                                                                class="token operator"> = </span>null</span></span><span
+                                                                class="parameter ">applicationPlatforms<span
+                                                                class="token operator">: </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin.collections/-set/index.html">Set</a><span
+                                                                class="token operator">&lt;</span><span
+                                                                data-unresolved-link="com.tecknobit.ametistacore.enums/Platform///PointingToDeclaration/">Platform</span><span
+                                                                class="token operator">&gt;</span></span></span><span
                                                                 class="token punctuation">)</span>
                                                         </div>
-                                                        <div class="brief "><p class="paragraph">The
-                                                            layout to work on AmetistaApplication
-                                                            such add a new one or edit an existing
-                                                            one</p></div>
+                                                        <div class="brief "><p class="paragraph">
+                                                            Custom grid to display the platforms
+                                                            attached to an application</p></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a data-name="755252886%2FFunctions%2F-813795679"
+                                   anchor-label="Theme" id="755252886%2FFunctions%2F-813795679"
+                                   data-filterable-set=":composeApp:dokkaHtml/commonMain"></a>
+                                <div class="table-row" data-togglable="EXTENSION_FUNCTION"
+                                     data-filterable-current=":composeApp:dokkaHtml/commonMain"
+                                     data-filterable-set=":composeApp:dokkaHtml/commonMain">
+                                    <div class="main-subrow keyValue ">
+                                        <div class=""><span class="inline-flex">
+                  <div><a href="-theme.html"><span><span>Theme</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon"
+                                   pointing-to="755252886%2FFunctions%2F-813795679"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+                                        <div>
+                                            <div class="title">
+                                                <div class="platform-hinted "
+                                                     data-platform-hinted="data-platform-hinted">
+                                                    <div class="content sourceset-dependent-content"
+                                                         data-active=""
+                                                         data-togglable=":composeApp:dokkaHtml/commonMain">
+                                                        <div class="symbol monospace">
+                                                            <div class="block">
+                                                                <div class="block"><span
+                                                                        class="token annotation builtin">@</span><a
+                                                                        href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
+                                                                        class="token annotation builtin">Composable</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <span class="token keyword">fun </span><span
+                                                                data-unresolved-link="com.tecknobit.ametistacore.enums/Platform///PointingToDeclaration/">Platform</span><span
+                                                                class="token punctuation">.</span><a
+                                                                href="-theme.html"><span
+                                                                class="token function">Theme</span></a><span
+                                                                class="token punctuation">(</span><span
+                                                                class="parameters "><span
+                                                                class="parameter ">content<span
+                                                                class="token operator">: </span><span><span
+                                                                class="token annotation builtin">@</span><a
+                                                                href="https://developer.android.com/reference/kotlin/androidx/compose/runtime/Composable.html"><span
+                                                                class="token annotation builtin">Composable</span></a> </span><span
+                                                                class="token punctuation">(</span><span
+                                                                class="token punctuation">)</span><span
+                                                                class="token operator"> -&gt; </span><a
+                                                                href="https://kotlinlang.org/api/core/kotlin-stdlib/kotlin/-unit/index.html">Unit</a></span></span><span
+                                                                class="token punctuation">)</span>
+                                                        </div>
+                                                        <div class="brief "><p class="paragraph">
+                                                            Method to get the related theme based on
+                                                            the <span
+                                                                data-unresolved-link="com.tecknobit.ametistacore.enums/Platform///PointingToDeclaration/">Platform</span>
+                                                            value</p></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -997,11 +701,15 @@
                 </div>
             </div>
             <div class="footer">
-                <span class="go-to-top-icon"><a href="#content"
-                                                id="go-to-top-link"></a></span><span>(c) 2024 Tecknobit</span><span
-                    class="pull-right"><span>Generated by </span><a
-                    href="https://github.com/Kotlin/dokka"><span>dokka</span><span
-                    class="padded-icon"></span></a></span>
+                <a href="#content" id="go-to-top-link"
+                   class="footer--button footer--button_go-to-top"></a>
+                <span>(c) 2025 Tecknobit</span>
+                <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
             </div>
         </div>
     </div>

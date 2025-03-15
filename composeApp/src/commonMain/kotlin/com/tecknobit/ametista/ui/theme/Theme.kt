@@ -6,12 +6,12 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import com.tecknobit.ametista.localUser
-import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Auto
-import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Dark
-import com.tecknobit.equinox.environment.records.EquinoxUser.ApplicationTheme.Light
+import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Auto
+import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Dark
+import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme.Light
 
 /**
- * **lightScheme** default light colors scheme
+ * `lightScheme** default light colors scheme
  */
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -52,7 +52,7 @@ private val lightScheme = lightColorScheme(
 )
 
 /**
- * **darkScheme** default dark colors scheme
+ * `darkScheme** default dark colors scheme
  */
 private val darkScheme = darkColorScheme(
     primary = primaryDark,
@@ -93,7 +93,7 @@ private val darkScheme = darkColorScheme(
 )
 
 /**
- * **mediumContrastLightColorScheme** medium contrast light colors scheme
+ * `mediumContrastLightColorScheme** medium contrast light colors scheme
  */
 private val mediumContrastLightColorScheme = lightColorScheme(
     primary = primaryLightMediumContrast,
@@ -134,7 +134,7 @@ private val mediumContrastLightColorScheme = lightColorScheme(
 )
 
 /**
- * **mediumContrastLightColorScheme** high contrast light colors scheme
+ * `mediumContrastLightColorScheme** high contrast light colors scheme
  */
 private val highContrastLightColorScheme = lightColorScheme(
     primary = primaryLightHighContrast,
@@ -175,7 +175,7 @@ private val highContrastLightColorScheme = lightColorScheme(
 )
 
 /**
- * **mediumContrastDarkColorScheme** medium contrast dark colors scheme
+ * `mediumContrastDarkColorScheme** medium contrast dark colors scheme
  */
 private val mediumContrastDarkColorScheme = darkColorScheme(
     primary = primaryDarkMediumContrast,
@@ -216,7 +216,7 @@ private val mediumContrastDarkColorScheme = darkColorScheme(
 )
 
 /**
- * **highContrastDarkColorScheme** high contrast dark colors scheme
+ * `highContrastDarkColorScheme** high contrast dark colors scheme
  */
 private val highContrastDarkColorScheme = darkColorScheme(
     primary = primaryDarkHighContrast,
@@ -264,12 +264,12 @@ private val highContrastDarkColorScheme = darkColorScheme(
  */
 @Composable
 fun AmetistaTheme(
-    darkTheme: Boolean = when (localUser.theme!!) {
+    darkTheme: Boolean = when (localUser.theme) {
         Auto -> isSystemInDarkTheme()
         Light -> false
         Dark -> true
     },
-    content: @Composable() () -> Unit
+    content: @Composable() () -> Unit,
 ) {
     val colorScheme = when {
       darkTheme -> darkScheme

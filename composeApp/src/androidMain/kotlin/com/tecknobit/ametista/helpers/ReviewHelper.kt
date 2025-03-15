@@ -7,7 +7,7 @@ import com.google.android.play.core.review.ReviewManagerFactory
 /**
  * The **ReviewHelper** class is useful to send a review in-app with the related API
  *
- * @param activity: the activity where the review helper has been instantiated
+ * @param activity The activity where the review helper has been instantiated
  *
  * @author N7ghtm4r3 - Tecknobit
  */
@@ -18,7 +18,7 @@ class ReviewHelper(
     /**
      * Function to launch the review in-app API
      *
-     * @param flowAction: the action to execute when the review in-app finished
+     * @param flowAction The action to execute when the review in-app finished
      */
     fun reviewInApp(
         flowAction: () -> Unit

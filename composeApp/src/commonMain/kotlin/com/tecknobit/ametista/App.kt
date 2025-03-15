@@ -3,111 +3,122 @@ package com.tecknobit.ametista
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.dm_sans
 import ametista.composeapp.generated.resources.kanit
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.text.font.FontFamily
 import coil3.ImageLoader
-import coil3.addLastModifiedToFileCacheKey
 import coil3.compose.LocalPlatformContext
-import coil3.network.okhttp.OkHttpNetworkFetcherFactory
+import coil3.network.ktor3.KtorNetworkFetcherFactory
 import coil3.request.CachePolicy
+import coil3.request.addLastModifiedToFileCacheKey
 import com.tecknobit.ametista.helpers.AmetistaLocalUser
 import com.tecknobit.ametista.helpers.AmetistaRequester
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATIONS_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.APPLICATION_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.AUTH_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.CHANGE_VIEWER_PASSWORD_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.PLATFORM_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SESSION_SCREEN
-import com.tecknobit.ametista.ui.screens.AmetistaScreen.Companion.SPLASHSCREEN
-import com.tecknobit.ametista.ui.screens.application.ApplicationScreen
-import com.tecknobit.ametista.ui.screens.applications.ApplicationsScreen
-import com.tecknobit.ametista.ui.screens.auth.AuthScreen
-import com.tecknobit.ametista.ui.screens.changeviewerpassword.ChangeViewerPasswordScreen
+import com.tecknobit.ametista.helpers.customHttpClient
+import com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen
+import com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen
+import com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen
+import com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen
 import com.tecknobit.ametista.ui.screens.navigation.Splashscreen
-import com.tecknobit.ametista.ui.screens.platform.PlatformScreen
-import com.tecknobit.ametista.ui.screens.session.SessionScreen
-import com.tecknobit.ametistacore.models.AmetistaApplication.IDENTIFIER_KEY
-import com.tecknobit.ametistacore.models.AmetistaUser.DEFAULT_VIEWER_PASSWORD
-import com.tecknobit.ametistacore.models.Platform
-import com.tecknobit.ametistacore.models.analytics.AmetistaAnalytic.PLATFORM_KEY
-import com.tecknobit.equinox.environment.records.EquinoxUser.NAME_KEY
-import io.github.vinceglb.filekit.core.PlatformFile
+import com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen
+import com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen
+import com.tecknobit.ametista.ui.screens.upsertapplication.presenter.UpsertApplicationScreen
+import com.tecknobit.ametistacore.PLATFORM_KEY
+import com.tecknobit.ametistacore.enums.Platform
+import com.tecknobit.ametistacore.helpers.AmetistaValidator.DEFAULT_VIEWER_PASSWORD
+import com.tecknobit.equinoxcore.helpers.IDENTIFIER_KEY
+import com.tecknobit.equinoxcore.helpers.NAME_KEY
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
 import moe.tlaster.precompose.navigation.path
 import moe.tlaster.precompose.navigation.rememberNavigator
-import okhttp3.OkHttpClient
 import org.jetbrains.compose.resources.Font
-import org.jetbrains.compose.ui.tooling.preview.Preview
-import java.security.SecureRandom
-import java.security.cert.X509Certificate
-import java.util.concurrent.TimeUnit
-import javax.net.ssl.SSLContext
-import javax.net.ssl.SSLSession
-import javax.net.ssl.TrustManager
-import javax.net.ssl.X509TrustManager
 
 /**
- * **bodyFontFamily** -> the Ametista's body font family
+ * `bodyFontFamily` -> the Ametista's body font family
  */
 lateinit var bodyFontFamily: FontFamily
 
 /**
- * **displayFontFamily** -> the Ametista's font family
+ * `displayFontFamily` -> the Ametista's font family
  */
 lateinit var displayFontFamily: FontFamily
 
 /**
- * **navigator** -> the navigator instance is useful to manage the navigation between the screens of the application
+ * `navigator` -> the navigator instance is useful to manage the navigation between the screens of the application
  */
 lateinit var navigator: Navigator
 
 /**
- * **sslContext** -> the context helper to TLS protocols
- */
-private val sslContext = SSLContext.getInstance("TLS")
-
-/**
- * **imageLoader** -> the image loader used by coil library to load the image and by-passing the https self-signed certificates
+ * `imageLoader` -> the image loader used by coil library to load the image and by-passing the https self-signed certificates
  */
 lateinit var imageLoader: ImageLoader
 
 /**
- * **localUser** -> the helper to manage the local sessions stored locally in
+ * `localUser` -> the helper to manage the local sessions stored locally in
  * the device
  */
 val localUser = AmetistaLocalUser()
 
 /**
- * **requester** -> the instance to manage the requests with the backend
+ * `requester` -> the instance to manage the requests with the backend
  */
 lateinit var requester: AmetistaRequester
 
 /**
- * Common entry point of the **Ametista** application
+ * `SPLASH_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.navigation.Splashscreen]
+ */
+const val SPLASHSCREEN = "Splashscreen"
+
+/**
+ * `AUTH_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.auth.presenter.AuthScreen]
+ */
+const val AUTH_SCREEN = "AuthScreen"
+
+/**
+ * `CHANGE_VIEWER_PASSWORD_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.changeviewerpassword.presenter.ChangeViewerPasswordScreen]
+ */
+const val CHANGE_VIEWER_PASSWORD_SCREEN = "ChangeViewerPasswordScreen"
+
+/**
+ * `SESSION_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
+ */
+const val SESSION_SCREEN = "SessionScreen"
+
+/**
+ * `APPLICATIONS_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen]
+ */
+const val APPLICATIONS_SCREEN = "ApplicationsScreen"
+
+/**
+ * `APPLICATION_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen]
+ */
+const val APPLICATION_SCREEN = "ApplicationScreen"
+
+/**
+ * `UPSERT_APPLICATION_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.upsertapplication.presenter.UpsertApplicationScreen]
+ */
+const val UPSERT_APPLICATION_SCREEN = "UpsertApplicationScreen"
+
+/**
+ * `PLATFORM_SCREEN` -> route to navigate to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen]
+ */
+const val PLATFORM_SCREEN = "PlatformScreen"
+
+/**
+ * Common entry point of the **Ametista` application
  *
  */
 @Composable
-@Preview
 fun App() {
     bodyFontFamily = FontFamily(Font(Res.font.dm_sans))
     displayFontFamily = FontFamily(Font(Res.font.kanit))
-    sslContext.init(null, validateSelfSignedCertificate(), SecureRandom())
     imageLoader = ImageLoader.Builder(LocalPlatformContext.current)
         .components {
             add(
-                OkHttpNetworkFetcherFactory {
-                    OkHttpClient.Builder()
-                        .sslSocketFactory(sslContext.socketFactory,
-                            validateSelfSignedCertificate()[0] as X509TrustManager
-                        )
-                        .hostnameVerifier { _: String?, _: SSLSession? -> true }
-                        .connectTimeout(2, TimeUnit.SECONDS)
-                        .build()
-                }
+                KtorNetworkFetcherFactory(
+                    httpClient = customHttpClient()
+                )
             )
         }
         .addLastModifiedToFileCacheKey(true)
@@ -155,6 +166,14 @@ fun App() {
                 ).ShowContent()
             }
             scene(
+                route = "$UPSERT_APPLICATION_SCREEN/{$IDENTIFIER_KEY}?"
+            ) { backstackEntry ->
+                val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)
+                UpsertApplicationScreen(
+                    applicationId = applicationId
+                ).ShowContent()
+            }
+            scene(
                 route = "$PLATFORM_SCREEN/{$IDENTIFIER_KEY}/{$NAME_KEY}/{$PLATFORM_KEY}"
             ) { backstackEntry ->
                 val applicationId = backstackEntry.path<String>(IDENTIFIER_KEY)!!
@@ -168,24 +187,6 @@ fun App() {
             }
         }
     }
-}
-
-/**
- * Method to validate a self-signed SLL certificate and bypass the checks of its validity<br></br>
- *
- * @return list of trust managers as [Array] of [TrustManager]
- * @apiNote this method disable all checks on the SLL certificate validity, so is recommended to
- * use for test only or in a private distribution on own infrastructure
- */
-private fun validateSelfSignedCertificate(): Array<TrustManager> {
-    return arrayOf(object : X509TrustManager {
-        override fun getAcceptedIssuers(): Array<X509Certificate> {
-            return arrayOf()
-        }
-
-        override fun checkClientTrusted(certs: Array<X509Certificate>, authType: String) {}
-        override fun checkServerTrusted(certs: Array<X509Certificate>, authType: String) {}
-    })
 }
 
 /**
@@ -207,7 +208,7 @@ fun startSession() {
         userId = localUser.userId,
         userToken = localUser.userToken
     )
-    val route = if (localUser.userId == null)
+    val route = if (!localUser.isAuthenticated)
         AUTH_SCREEN
     else if (localUser.password == DEFAULT_VIEWER_PASSWORD)
         CHANGE_VIEWER_PASSWORD_SCREEN
@@ -230,23 +231,3 @@ expect fun setUserLanguage()
 @Composable
 @NonRestartableComposable
 expect fun CloseApplicationOnNavBack()
-
-/**
- * Function to get the current screen dimension of the device where the application is running
- *
- *
- * @return the width size class based on the current dimension of the screen as [WindowWidthSizeClass]
- */
-@Composable
-expect fun getCurrentWidthSizeClass(): WindowWidthSizeClass
-
-/**
- * Function to get the image picture's path
- *
- * @param imagePic: the asset from fetch its path
- *
- * @return the asset path as [String]
- */
-expect fun getImagePath(
-    imagePic: PlatformFile?
-): String?
