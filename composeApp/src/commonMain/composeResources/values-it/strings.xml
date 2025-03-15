@@ -102,4 +102,7 @@
     <string name="change_preset_password_info">Cambia la password preimpostata con una che conoscete solo tu e tienila al sicuro.</string>
     <string name="retrieving_data">Recupero dati</string>
     <string name="stacktrace_copied">Stacktrace copiata!</string>
+    <string name="delete">Elimina</string>
+    <string name="change_language">Cambia lingua</string>
+    <string name="change_theme">Cambia tema</string>
 </resources>

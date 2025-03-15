@@ -1,65 +1,55 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalComposeApi::class,
+    ExperimentalLayoutApi::class
+)
 
 package com.tecknobit.ametista.ui.screens.session.components
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.change_email
+import ametista.composeapp.generated.resources.change_language
 import ametista.composeapp.generated.resources.change_password
-import ametista.composeapp.generated.resources.confirm
-import ametista.composeapp.generated.resources.delete_account
-import ametista.composeapp.generated.resources.delete_message
-import ametista.composeapp.generated.resources.dismiss
-import ametista.composeapp.generated.resources.email
+import ametista.composeapp.generated.resources.change_theme
+import ametista.composeapp.generated.resources.delete
 import ametista.composeapp.generated.resources.logo
 import ametista.composeapp.generated.resources.logout
-import ametista.composeapp.generated.resources.logout_message
 import ametista.composeapp.generated.resources.new_email
 import ametista.composeapp.generated.resources.new_password
-import ametista.composeapp.generated.resources.password
-import ametista.composeapp.generated.resources.theme
 import ametista.composeapp.generated.resources.wrong_email
 import ametista.composeapp.generated.resources.wrong_password
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.filled.AutoMode
-import androidx.compose.material.icons.filled.DarkMode
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Flag
-import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.AlternateEmail
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Password
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.SheetState
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.ExperimentalComposeApi
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -68,10 +58,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
@@ -80,106 +77,139 @@ import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import coil3.request.crossfade
 import com.tecknobit.ametista.SPLASHSCREEN
-import com.tecknobit.ametista.displayFontFamily
+import com.tecknobit.ametista.bodyFontFamily
 import com.tecknobit.ametista.imageLoader
 import com.tecknobit.ametista.localUser
 import com.tecknobit.ametista.navigator
+import com.tecknobit.ametista.ui.components.DeleteAccount
+import com.tecknobit.ametista.ui.components.Logout
 import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewModel
-import com.tecknobit.ametistacore.helpers.AmetistaValidator.isNewPasswordValid
-import com.tecknobit.equinoxcompose.components.EquinoxAlertDialog
+import com.tecknobit.equinoxcompose.components.ChameleonText
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
+import com.tecknobit.equinoxcompose.components.EquinoxTextField
+import com.tecknobit.equinoxcompose.components.stepper.Step
+import com.tecknobit.equinoxcompose.components.stepper.StepContent
+import com.tecknobit.equinoxcompose.components.stepper.Stepper
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme
 import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen.Companion.MAX_CONTAINER_WIDTH
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.LANGUAGES_SUPPORTED
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
+import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * `viewModel` -> The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
- */
-private lateinit var viewModel: SessionScreenViewModel
-
-/**
  * Section with the account details of the current [localUser]
  *
- * @param screenViewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
  */
 @Composable
 @NonRestartableComposable
 fun AboutMe(
-    screenViewModel: SessionScreenViewModel,
+    viewModel: SessionScreenViewModel,
 ) {
-    viewModel = screenViewModel
+    viewModel.profilePic = remember { mutableStateOf(localUser.profilePic) }
+    viewModel.email = remember { mutableStateOf(localUser.email) }
+    viewModel.password = remember { mutableStateOf(localUser.password) }
+    viewModel.language = remember { mutableStateOf(localUser.language) }
+    viewModel.theme = remember { mutableStateOf(localUser.theme) }
     Column(
         modifier = Modifier
             .widthIn(
                 max = MAX_CONTAINER_WIDTH
             )
-            .verticalScroll(rememberScrollState()),
+            .padding(
+                horizontal = 16.dp
+            ),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            ProfilePicPicker()
-            Text(
-                text = localUser.completeName
-            )
-            RoleBadge(
-                role = localUser.getRole()!!
-            )
-        }
-        HorizontalDivider(
-            color = MaterialTheme.colorScheme.primary
+        UserDetails(
+            viewModel = viewModel
         )
-        EmailSection()
-        PasswordSection()
-        LanguageSection()
-        ThemeSection()
-        UserActions()
+        Settings(
+            viewModel = viewModel
+        )
     }
 }
 
 /**
- * Picker to chose the profile picture to use
+ * The details of the [localUser]
  */
 @Composable
 @NonRestartableComposable
-private fun ProfilePicPicker() {
-    val currentProfilePic = remember { mutableStateOf(localUser.profilePic) }
-    val picker = rememberFilePickerLauncher(
+private fun UserDetails(
+    viewModel: SessionScreenViewModel,
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                top = 5.dp
+            ),
+        horizontalArrangement = Arrangement.spacedBy(15.dp)
+    ) {
+        ProfilePicker(
+            viewModel = viewModel
+        )
+        Column {
+            RoleBadge(
+                role = localUser.role!!
+            )
+            Text(
+                text = localUser.completeName,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            Text(
+                text = viewModel.email.value,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                fontSize = 14.sp
+            )
+            ActionButtons(
+                viewModel = viewModel
+            )
+        }
+    }
+}
+
+/**
+ * The profile picker to allow the [localUser] to change his/her profile picture
+ */
+@Composable
+@NonRestartableComposable
+private fun ProfilePicker(
+    viewModel: SessionScreenViewModel,
+) {
+    val launcher = rememberFilePickerLauncher(
         type = PickerType.Image,
         mode = PickerMode.Single
-    ) { profilePic ->
-        profilePic?.let {
+    ) { image ->
+        image?.let {
             viewModel.viewModelScope.launch {
                 viewModel.changeProfilePic(
-                    profilePicName = profilePic.name,
-                    profilePicBytes = profilePic.readBytes()
+                    profilePicName = image.name,
+                    profilePicBytes = image.readBytes()
                 )
             }
         }
     }
     AsyncImage(
         modifier = Modifier
-            .size(125.dp)
+            .size(120.dp)
             .border(
                 width = 1.dp,
                 color = MaterialTheme.colorScheme.primary,
                 shape = CircleShape
             )
             .clip(CircleShape)
-            .clickable { picker.launch() },
+            .clickable { launcher.launch() },
         model = ImageRequest.Builder(LocalPlatformContext.current)
-            .data(currentProfilePic.value)
+            .data(viewModel.profilePic)
             .crossfade(true)
             .crossfade(500)
             .build(),
@@ -191,437 +221,320 @@ private fun ProfilePicPicker() {
 }
 
 /**
- * Method to display the section of the user's email and allowing the user to change it
- *
+ * The actions can be execute on the [localUser] account such logout and delete account
  */
 @Composable
 @NonRestartableComposable
-private fun EmailSection() {
-    val changeEmail = remember { mutableStateOf(false) }
-    var userEmail by remember { mutableStateOf(localUser.email) }
-    viewModel.newEmail = remember { mutableStateOf("") }
-    viewModel.newEmailError = remember { mutableStateOf(false) }
-    val resetEmailLayout = {
-        viewModel.newEmail.value = ""
-        viewModel.newEmailError.value = false
-        changeEmail.value = false
-    }
-    UserData(
-        header = Res.string.email,
-        data = userEmail,
-        editAction = { changeEmail.value = true }
-    )
-    EquinoxAlertDialog(
-        onDismissAction = resetEmailLayout,
-        icon = Icons.Default.Email,
-        show = changeEmail,
-        title = Res.string.change_email,
-        text = {
-            EquinoxOutlinedTextField(
-                value = viewModel.newEmail,
-                label = Res.string.new_email,
-                mustBeInLowerCase = true,
-                errorText = Res.string.wrong_email,
-                isError = viewModel.newEmailError,
-                validator = { isEmailValid(it) }
-            )
-        },
-        confirmAction = {
-            viewModel.changeEmail(
-                onSuccess = {
-                    userEmail = viewModel.newEmail.value
-                    resetEmailLayout.invoke()
-                }
-            )
-        },
-        confirmText = Res.string.confirm,
-        dismissText = Res.string.dismiss
-    )
-}
-
-/**
- * Method to display the section of the user's password and allowing the user to change it
- *
- */
-@Composable
-@NonRestartableComposable
-private fun PasswordSection() {
-    val changePassword = remember { mutableStateOf(false) }
-    viewModel.newPassword = remember { mutableStateOf("") }
-    viewModel.newPasswordError = remember { mutableStateOf(false) }
-    val resetPasswordLayout = {
-        viewModel.newPassword.value = ""
-        viewModel.newPasswordError.value = false
-        changePassword.value = false
-    }
-    var hiddenPassword by remember { mutableStateOf(true) }
-    UserData(
-        header = Res.string.password,
-        data = "****",
-        editAction = { changePassword.value = true }
-    )
-    EquinoxAlertDialog(
-        onDismissAction = resetPasswordLayout,
-        icon = Icons.Default.Password,
-        show = changePassword,
-        title = Res.string.change_password,
-        text = {
-            EquinoxOutlinedTextField(
-                value = viewModel.newPassword,
-                label = Res.string.new_password,
-                trailingIcon = {
-                    IconButton(
-                        onClick = { hiddenPassword = !hiddenPassword }
-                    ) {
-                        Icon(
-                            imageVector = if (hiddenPassword)
-                                Icons.Default.Visibility
-                            else
-                                Icons.Default.VisibilityOff,
-                            contentDescription = null
-                        )
-                    }
-                },
-                visualTransformation = if (hiddenPassword)
-                    PasswordVisualTransformation()
-                else
-                    VisualTransformation.None,
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Password
-                ),
-                errorText = Res.string.wrong_password,
-                isError = viewModel.newPasswordError,
-                validator = { isNewPasswordValid(it) }
-            )
-        },
-        confirmAction = {
-            viewModel.changePassword(
-                onSuccess = resetPasswordLayout
-            )
-        },
-        confirmText = Res.string.confirm,
-        dismissText = Res.string.dismiss
-    )
-}
-
-/**
- * Method to display the section of the user's language and allowing the user to change it
- *
- */
-@Composable
-@NonRestartableComposable
-private fun LanguageSection() {
-    /*val changeLanguage = remember { mutableStateOf(false) }
-    UserData(
-        header = Res.string.language,
-        data = LANGUAGES_SUPPORTED[localUser.language]!!,
-        editAction = { changeLanguage.value = true }
-    )
-    ChangeLanguage(
-        changeLanguage = changeLanguage
-    )*/
-}
-
-/**
- * Method to display the section of the user's theme and allowing the user to change it
- *
- */
-@Composable
-@NonRestartableComposable
-private fun ThemeSection() {
-    val changeTheme = remember { mutableStateOf(false) }
-    UserData(
-        header = Res.string.theme,
-        data = localUser.theme.name,
-        editAction = { changeTheme.value = true }
-    )
-    ChangeTheme(
-        changeTheme = changeTheme
-    )
-}
-
-/**
- * Component to display the user data
- *
- * @param header The representative header text
- * @param data The data to display
- * @param editAction The action to execute when the user request to edit that [data]
- */
-@Composable
-@NonRestartableComposable
-private fun UserData(
-    header: StringResource,
-    data: String,
-    editAction: () -> Unit,
+private fun ActionButtons(
+    viewModel: SessionScreenViewModel,
 ) {
     Row(
-        modifier = Modifier
-            .padding(
-                start = 16.dp
-            )
+        horizontalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        Column(
-            modifier = Modifier
-                .weight(2f)
+        val logout = remember { mutableStateOf(false) }
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.inversePrimary
+            ),
+            shape = RoundedCornerShape(
+                size = 10.dp
+            ),
+            onClick = { logout.value = true }
         ) {
-            Text(
-                text = stringResource(header),
-                fontFamily = displayFontFamily,
-                fontSize = 14.sp
-            )
-            Text(
-                text = data,
-                fontSize = 20.sp
+            ChameleonText(
+                text = stringResource(Res.string.logout),
+                fontSize = 12.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                backgroundColor = MaterialTheme.colorScheme.inversePrimary
             )
         }
-        Column(
-            modifier = Modifier
-                .weight(1f),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.End
+        Logout(
+            viewModel = viewModel,
+            show = logout
+        )
+        val deleteAccount = remember { mutableStateOf(false) }
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.error
+            ),
+            shape = RoundedCornerShape(
+                size = 10.dp
+            ),
+            onClick = { deleteAccount.value = true }
         ) {
+            Text(
+                text = stringResource(Res.string.delete),
+                fontSize = 12.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
+        DeleteAccount(
+            viewModel = viewModel,
+            show = deleteAccount
+        )
+    }
+}
+
+/**
+ * The settings section to customize the [localUser] experience
+ */
+@Composable
+@NonRestartableComposable
+private fun Settings(
+    viewModel: SessionScreenViewModel,
+) {
+    val steps = remember {
+        arrayOf(
+            Step(
+                stepIcon = Icons.Default.AlternateEmail,
+                title = Res.string.change_email,
+                content = {
+                    ChangeEmail(
+                        viewModel = viewModel
+                    )
+                },
+                dismissAction = { visible -> visible.value = false },
+                confirmAction = { visible ->
+                    viewModel.changeEmail(
+                        onSuccess = {
+                            visible.value = false
+                        }
+                    )
+                }
+            ),
+            Step(
+                stepIcon = Icons.Default.Password,
+                title = Res.string.change_password,
+                content = {
+                    ChangePassword(
+                        viewModel = viewModel
+                    )
+                },
+                dismissAction = { visible -> visible.value = false },
+                confirmAction = { visible ->
+                    viewModel.changePassword(
+                        onSuccess = {
+                            visible.value = false
+                        }
+                    )
+                }
+            ),
+            Step(
+                stepIcon = Icons.Default.Language,
+                title = Res.string.change_language,
+                content = {
+                    ChangeLanguage(
+                        viewModel = viewModel
+                    )
+                },
+                dismissAction = { visible -> visible.value = false },
+                confirmAction = { visible ->
+                    viewModel.changeLanguage(
+                        onSuccess = {
+                            visible.value = false
+                            navigator.navigate(SPLASHSCREEN)
+                        }
+                    )
+                }
+            ),
+            Step(
+                stepIcon = Icons.Default.Palette,
+                title = Res.string.change_theme,
+                content = {
+                    ChangeTheme(
+                        viewModel = viewModel
+                    )
+                },
+                dismissAction = { visible -> visible.value = false },
+                confirmAction = { visible ->
+                    viewModel.changeTheme(
+                        onChange = {
+                            visible.value = false
+                            navigator.navigate(SPLASHSCREEN)
+                        }
+                    )
+                }
+            )
+        )
+    }
+    Stepper(
+        steps = steps
+    )
+}
+
+/**
+ * Section to change the [localUser]'s email
+ */
+@StepContent(
+    number = 1
+)
+@Composable
+@NonRestartableComposable
+private fun ChangeEmail(
+    viewModel: SessionScreenViewModel,
+) {
+    val focusRequester = remember { FocusRequester() }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+    viewModel.newEmail = remember { mutableStateOf("") }
+    viewModel.newEmailError = remember { mutableStateOf(false) }
+    EquinoxTextField(
+        modifier = Modifier
+            .focusRequester(focusRequester),
+        textFieldColors = TextFieldDefaults.colors(
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent,
+            errorIndicatorColor = Color.Transparent
+        ),
+        value = viewModel.newEmail,
+        textFieldStyle = TextStyle(
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold,
+            fontFamily = bodyFontFamily
+        ),
+        isError = viewModel.newEmailError,
+        mustBeInLowerCase = true,
+        allowsBlankSpaces = false,
+        validator = { isEmailValid(it) },
+        errorText = Res.string.wrong_email,
+        errorTextStyle = TextStyle(
+            fontSize = 14.sp,
+            fontFamily = bodyFontFamily
+        ),
+        placeholder = Res.string.new_email,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Email
+        )
+    )
+}
+
+/**
+ * Section to change the [localUser]'s password
+ */
+@StepContent(
+    number = 2
+)
+@Composable
+@NonRestartableComposable
+private fun ChangePassword(
+    viewModel: SessionScreenViewModel,
+) {
+    val focusRequester = remember { FocusRequester() }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
+    }
+    viewModel.newPassword = remember { mutableStateOf("") }
+    viewModel.newPasswordError = remember { mutableStateOf(false) }
+    var hiddenPassword by remember { mutableStateOf(true) }
+    EquinoxOutlinedTextField(
+        modifier = Modifier
+            .focusRequester(focusRequester),
+        outlinedTextFieldColors = TextFieldDefaults.colors(
+            unfocusedIndicatorColor = Color.Transparent,
+            focusedIndicatorColor = Color.Transparent,
+            errorIndicatorColor = Color.Transparent
+        ),
+        value = viewModel.newPassword,
+        outlinedTextFieldStyle = TextStyle(
+            fontSize = 14.sp,
+            fontWeight = FontWeight.SemiBold,
+            fontFamily = bodyFontFamily
+        ),
+        isError = viewModel.newPasswordError,
+        allowsBlankSpaces = false,
+        trailingIcon = {
             IconButton(
-                onClick = editAction
+                onClick = { hiddenPassword = !hiddenPassword }
             ) {
                 Icon(
-                    imageVector = Icons.Default.Edit,
+                    imageVector = if (hiddenPassword)
+                        Icons.Default.Visibility
+                    else
+                        Icons.Default.VisibilityOff,
                     contentDescription = null
                 )
             }
-        }
-    }
-    HorizontalDivider(
-        color = MaterialTheme.colorScheme.primary
+        },
+        visualTransformation = if (hiddenPassword)
+            PasswordVisualTransformation()
+        else
+            VisualTransformation.None,
+        validator = { isPasswordValid(it) },
+        errorText = stringResource(Res.string.wrong_password),
+        errorTextStyle = TextStyle(
+            fontSize = 14.sp,
+            fontFamily = bodyFontFamily
+        ),
+        placeholder = stringResource(Res.string.new_password),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Password
+        )
     )
 }
 
 /**
- * Method to allow the user to change the current language setting
- *
- * @param changeLanguage The state whether display this section
+ * Section to change the [localUser]'s language
  */
+@StepContent(
+    number = 3
+)
 @Composable
 @NonRestartableComposable
 private fun ChangeLanguage(
-    changeLanguage: MutableState<Boolean>,
+    viewModel: SessionScreenViewModel,
 ) {
-    ChangeInfo(
-        showModal = changeLanguage
+    Column(
+        modifier = Modifier
+            .selectableGroup()
     ) {
-        LANGUAGES_SUPPORTED.keys.forEach { language ->
+        LANGUAGES_SUPPORTED.entries.forEach { entry ->
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        viewModel.changeLanguage(
-                            onSuccess = {
-                                changeLanguage.value = false
-                                navToSplash()
-                            }
-                        )
-                    }
-                    .padding(
-                        all = 16.dp
-                    ),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Default.Flag,
-                    contentDescription = null,
-                    tint = if (localUser.language == language)
-                        MaterialTheme.colorScheme.primary
-                    else
-                        LocalContentColor.current
+                RadioButton(
+                    selected = viewModel.language.value == entry.key,
+                    onClick = { viewModel.language.value = entry.key }
                 )
                 Text(
-                    text = LANGUAGES_SUPPORTED[language]!!,
-                    fontFamily = displayFontFamily
+                    text = entry.value
                 )
             }
-            HorizontalDivider()
         }
     }
 }
 
 /**
- * Method to allow the user to change the current theme setting
- *
- * @param changeTheme The state whether display this section
+ * Section to change the [localUser]'s theme
  */
+@StepContent(
+    number = 4
+)
 @Composable
 @NonRestartableComposable
 private fun ChangeTheme(
-    changeTheme: MutableState<Boolean>,
+    viewModel: SessionScreenViewModel,
 ) {
-    ChangeInfo(
-        showModal = changeTheme
+    Column(
+        modifier = Modifier
+            .selectableGroup()
     ) {
-        ApplicationTheme.entries.forEach { theme ->
+        ApplicationTheme.entries.forEach { entry ->
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        viewModel.changeTheme(
-                            onChange = {
-                                changeTheme.value = false
-                                navToSplash()
-                            }
-                        )
-                    }
-                    .padding(
-                        all = 16.dp
-                    ),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = when (theme) {
-                        ApplicationTheme.Light -> Icons.Default.LightMode
-                        ApplicationTheme.Dark -> Icons.Default.DarkMode
-                        else -> Icons.Default.AutoMode
-                    },
-                    contentDescription = null,
-                    tint = if (localUser.theme == theme)
-                        MaterialTheme.colorScheme.primary
-                    else
-                        LocalContentColor.current
+                RadioButton(
+                    selected = viewModel.theme.value == entry,
+                    onClick = { viewModel.theme.value = entry }
                 )
                 Text(
-                    text = theme.toString(),
-                    fontFamily = displayFontFamily
+                    text = entry.name
                 )
             }
-            HorizontalDivider()
         }
     }
-}
-
-/**
- * Method to allow the user to change a current setting
- *
- * @param showModal The state whether display the [ModalBottomSheet]
- * @param sheetState The state to apply to the [ModalBottomSheet]
- * @param onDismissRequest The action to execute when the the [ModalBottomSheet] has been dismissed
- * @param content The content to display
- */
-@Composable
-@NonRestartableComposable
-private fun ChangeInfo(
-    showModal: MutableState<Boolean>,
-    sheetState: SheetState = rememberModalBottomSheetState(),
-    onDismissRequest: () -> Unit = { showModal.value = false },
-    content: @Composable ColumnScope.() -> Unit,
-) {
-    if (showModal.value) {
-        ModalBottomSheet(
-            sheetState = sheetState,
-            onDismissRequest = onDismissRequest
-        ) {
-            Column(
-                content = content
-            )
-        }
-    }
-}
-
-/**
- * Section to allow the user to logout or delete the account
- */
-@Composable
-@NonRestartableComposable
-private fun UserActions() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(
-                end = 10.dp
-            ),
-        horizontalArrangement = Arrangement.End
-    ) {
-        LogoutSection()
-        DeleteAccountSection()
-    }
-}
-
-/**
- * The section allows the user to disconnect from the current session
- */
-@Composable
-@NonRestartableComposable
-private fun LogoutSection() {
-    val logout = remember { mutableStateOf(false) }
-    Button(
-        shape = RoundedCornerShape(
-            size = 10.dp
-        ),
-        onClick = { logout.value = true }
-    ) {
-        Text(
-            text = stringResource(Res.string.logout)
-        )
-    }
-    EquinoxAlertDialog(
-        icon = Icons.AutoMirrored.Filled.Logout,
-        show = logout,
-        title = Res.string.logout,
-        text = Res.string.logout_message,
-        confirmAction = {
-            viewModel.logout {
-                navToSplash()
-            }
-        },
-        confirmText = Res.string.confirm,
-        dismissText = Res.string.dismiss
-    )
-}
-
-/**
- * The section allows the user to delete account
- */
-@Composable
-@NonRestartableComposable
-private fun DeleteAccountSection() {
-    val deleteAccount = remember { mutableStateOf(false) }
-    Button(
-        modifier = Modifier
-            .padding(
-                start = 10.dp
-            ),
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.error
-        ),
-        shape = RoundedCornerShape(
-            size = 10.dp
-        ),
-        onClick = { deleteAccount.value = true }
-    ) {
-        Text(
-            text = stringResource(Res.string.delete_account)
-        )
-    }
-    EquinoxAlertDialog(
-        modifier = Modifier
-            .widthIn(
-                max = 400.dp
-            ),
-        icon = Icons.Default.Delete,
-        show = deleteAccount,
-        title = Res.string.delete_account,
-        text = Res.string.delete_message,
-        confirmAction = {
-            viewModel.deleteAccount {
-                navToSplash()
-            }
-        },
-        confirmText = Res.string.confirm,
-        dismissText = Res.string.dismiss
-    )
-}
-
-/**
- * Method to navigate to the [com.tecknobit.ametista.ui.screens.navigation.Splashscreen]
- */
-private fun navToSplash() {
-    navigator.navigate(SPLASHSCREEN)
 }

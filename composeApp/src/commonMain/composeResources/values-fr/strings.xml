@@ -82,7 +82,7 @@
     <string name="are_you_new_to_ametista">Vous êtes nouveau sur Ametista ?</string>
     <string name="sign_up">S'inscrire</string>
     <string name="session">Session</string>
-    <string name="about_me">A propos de moi</string>
+    <string name="about_me">Moi</string>
     <string name="session_members">Les membres</string>
     <string name="no_members">Pas de membres</string>
     <string name="language">Langue</string>
@@ -102,4 +102,7 @@
     <string name="change_preset_password_info">Remplacez le mot de passe prédéfini par un mot de passe que vous êtes seul à connaître et conservez-le en lieu sûr.</string>
     <string name="retrieving_data">Récupération des données</string>
     <string name="stacktrace_copied">Stacktrace copié!</string>
+    <string name="delete">Supprimer</string>
+    <string name="change_language">Changer de langue</string>
+    <string name="change_theme">Changer de thème</string>
 </resources>

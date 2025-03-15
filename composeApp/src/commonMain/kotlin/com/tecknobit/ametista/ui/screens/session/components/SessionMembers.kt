@@ -50,15 +50,15 @@ import org.jetbrains.compose.resources.stringResource
 /**
  * Section with the account details of the current [localUser]
  *
- * @param screenViewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
  */
 @Composable
 @NonRestartableComposable
 fun SessionMembers(
-    screenViewModel: SessionScreenViewModel,
+    viewModel: SessionScreenViewModel,
 ) {
     ManagedContent(
-        viewModel = screenViewModel,
+        viewModel = viewModel,
         content = {
             Column(
                 modifier = Modifier
@@ -70,7 +70,7 @@ fun SessionMembers(
                         .widthIn(
                             max = MAX_CONTAINER_WIDTH
                         ),
-                    paginationState = screenViewModel.membersState,
+                    paginationState = viewModel.membersState,
                     firstPageProgressIndicator = { FirstPageProgressIndicator() },
                     newPageProgressIndicator = { NewPageProgressIndicator() },
                     firstPageEmptyIndicator = {
@@ -92,12 +92,12 @@ fun SessionMembers(
                     )
                 ) {
                     items(
-                        items = screenViewModel.membersState.allItems!!,
+                        items = viewModel.membersState.allItems!!,
                         key = { member -> member.id }
                     ) { member ->
                         Member(
                             member = member,
-                            viewModel = screenViewModel
+                            viewModel = viewModel
                         )
                     }
                 }

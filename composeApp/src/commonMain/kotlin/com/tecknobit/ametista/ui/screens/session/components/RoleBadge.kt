@@ -17,11 +17,13 @@ import com.tecknobit.ametistacore.enums.Role.VIEWER
 /**
  * The badge of a [Role]
  *
+ * @param modifier The modifier to apply to the component
  * @param role The role to create the related badge
  */
 @Composable
 @NonRestartableComposable
 fun RoleBadge(
+    modifier: Modifier = Modifier,
     role: Role,
 ) {
     val color = when (role) {
@@ -29,6 +31,7 @@ fun RoleBadge(
         else -> MaterialTheme.colorScheme.error
     }
     OutlinedCard(
+        modifier = modifier,
         colors = CardDefaults.outlinedCardColors(
             contentColor = color
         ),
@@ -43,7 +46,7 @@ fun RoleBadge(
         Text(
             modifier = Modifier
                 .padding(
-                    all = 1.dp
+                    all = 2.dp
                 ),
             text = role.name
         )

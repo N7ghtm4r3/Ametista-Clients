@@ -216,13 +216,13 @@ class SessionScreen : EquinoxScreen<SessionScreenViewModel>(
             when (section.value) {
                 ABOUT_ME -> {
                     AboutMe(
-                        screenViewModel = viewModel
+                        viewModel = viewModel
                     )
                 }
 
                 MEMBERS -> {
                     SessionMembers(
-                        screenViewModel = viewModel
+                        viewModel = viewModel
                     )
                 }
             }

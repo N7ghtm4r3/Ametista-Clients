@@ -20,7 +20,7 @@ class AmetistaLocalUser : EquinoxLocalUser(
     /**
      * `role` -> the role of the current user
      */
-    private var role: Role? = null
+    var role: Role? = null
         set(value) {
             if (field != value) {
                 setPreference(
@@ -36,7 +36,7 @@ class AmetistaLocalUser : EquinoxLocalUser(
      */
     override fun initLocalUser() {
         super.initLocalUser()
-        role = getRole()
+        role = retrieveRole()
     }
 
     /**
@@ -82,7 +82,7 @@ class AmetistaLocalUser : EquinoxLocalUser(
      *
      * @return role of the user as [Role]
      */
-    fun getRole(): Role? {
+    private fun retrieveRole(): Role? {
         val role = getPreference(
             key = ROLE_KEY
         )
