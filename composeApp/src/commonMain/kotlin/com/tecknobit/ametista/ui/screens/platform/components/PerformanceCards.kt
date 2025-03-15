@@ -50,7 +50,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NonRestartableComposable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -98,7 +97,7 @@ private val axisProperties = GridProperties.AxisProperties(
 /**
  * Specific card with the chart of the LAUNCH_TIME analytic
  *
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param cardHeight The height of the card
  * @param performanceData The related performance data of the chart
  */
@@ -108,39 +107,30 @@ private val axisProperties = GridProperties.AxisProperties(
 fun LaunchTime(
     viewModel: PlatformScreenViewModel,
     cardHeight: Dp = 200.dp,
-    performanceData: PerformanceData?,
+    performanceData: PerformanceData,
 ) {
-    if (performanceData == null) {
-        NoChartData(
-            viewModel = viewModel,
-            title = string.launch_time,
-            cardHeight = cardHeight,
-            icon = Icons.Default.RocketLaunch
-        )
-    } else {
-        PerformanceCard(
-            viewModel = viewModel,
-            title = string.launch_time,
-            cardHeight = cardHeight,
-            data = performanceData.launchTime,
-            popupProperties = PopupProperties(
-                textStyle = TextStyle(
-                    color = Color.White
-                ),
-                contentBuilder = { value ->
-                    val factor = 100
-                    "${round(value * factor) / factor} ms"
-                }
+    PerformanceCard(
+        viewModel = viewModel,
+        title = string.launch_time,
+        cardHeight = cardHeight,
+        data = performanceData.launchTime,
+        popupProperties = PopupProperties(
+            textStyle = TextStyle(
+                color = Color.White
             ),
-            noDataIcon = Icons.Default.RocketLaunch
-        )
-    }
+            contentBuilder = { value ->
+                val factor = 100
+                "${round(value * factor) / factor} ms"
+            }
+        ),
+        noDataIcon = Icons.Default.RocketLaunch
+    )
 }
 
 /**
  * Specific card with the chart of the NETWORK_REQUESTS analytic
  *
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param cardHeight The height of the card
  * @param performanceData The related performance data of the chart
  */
@@ -150,30 +140,21 @@ fun LaunchTime(
 fun NetworkRequests(
     viewModel: PlatformScreenViewModel,
     cardHeight: Dp = 200.dp,
-    performanceData: PerformanceData?,
+    performanceData: PerformanceData,
 ) {
-    if (performanceData == null) {
-        NoChartData(
-            viewModel = viewModel,
-            title = string.network_requests,
-            cardHeight = cardHeight,
-            icon = ChartNetwork
-        )
-    } else {
-        PerformanceCard(
-            viewModel = viewModel,
-            title = string.network_requests,
-            cardHeight = cardHeight,
-            data = performanceData.networkRequests,
-            noDataIcon = ChartNetwork
-        )
-    }
+    PerformanceCard(
+        viewModel = viewModel,
+        title = string.network_requests,
+        cardHeight = cardHeight,
+        data = performanceData.networkRequests,
+        noDataIcon = ChartNetwork
+    )
 }
 
 /**
  * Specific card with the chart of the TOTAL_ISSUES analytic
  *
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param cardHeight The height of the card
  * @param performanceData The related performance data of the chart
  */
@@ -183,30 +164,21 @@ fun NetworkRequests(
 fun IssuesNumber(
     viewModel: PlatformScreenViewModel,
     cardHeight: Dp = 200.dp,
-    performanceData: PerformanceData?,
+    performanceData: PerformanceData,
 ) {
-    if (performanceData == null) {
-        NoChartData(
-            viewModel = viewModel,
-            title = string.issues_number,
-            cardHeight = cardHeight,
-            icon = Icons.Default.BugReport
-        )
-    } else {
-        PerformanceCard(
-            viewModel = viewModel,
-            title = string.issues_number,
-            cardHeight = cardHeight,
-            data = performanceData.totalIssues,
-            noDataIcon = Icons.Default.BugReport
-        )
-    }
+    PerformanceCard(
+        viewModel = viewModel,
+        title = string.issues_number,
+        cardHeight = cardHeight,
+        data = performanceData.totalIssues,
+        noDataIcon = Icons.Default.BugReport
+    )
 }
 
 /**
  * Specific card with the chart of the ISSUES_PER_SESSION analytic
  *
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param cardHeight The height of the card
  * @param performanceData The related performance data of the chart
  */
@@ -216,30 +188,21 @@ fun IssuesNumber(
 fun IssuesPerSessionsNumber(
     viewModel: PlatformScreenViewModel,
     cardHeight: Dp = 200.dp,
-    performanceData: PerformanceData?,
+    performanceData: PerformanceData,
 ) {
-    if (performanceData == null) {
-        NoChartData(
-            viewModel = viewModel,
-            title = string.issues_per_session,
-            cardHeight = cardHeight,
-            icon = Icons.Default.Report
-        )
-    } else {
-        PerformanceCard(
-            viewModel = viewModel,
-            title = string.issues_per_session,
-            cardHeight = cardHeight,
-            data = performanceData.issuesPerSession,
-            noDataIcon = Icons.Default.Report
-        )
-    }
+    PerformanceCard(
+        viewModel = viewModel,
+        title = string.issues_per_session,
+        cardHeight = cardHeight,
+        data = performanceData.issuesPerSession,
+        noDataIcon = Icons.Default.Report
+    )
 }
 
 /**
  * Container card for the [com.tecknobit.ametistacore.models.analytics.performance.PerformanceAnalytic] analytic
  *
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param title The title of the card
  * @param cardHeight The height of the card
  * @param data The performance data for the chart
@@ -363,7 +326,7 @@ private fun CardHeader(
  * The actions section of the [PerformanceCard] component
  *
  * @param modifier The modifier to apply to the component
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param title The title of the card
  * @param data The performance data for the chart
  */
@@ -380,14 +343,14 @@ private fun CardActions(
         horizontalAlignment = Alignment.End
     ) {
         Row {
-            val state = rememberModalBottomSheetState(
+            val stateInfo = rememberModalBottomSheetState(
                 skipPartiallyExpanded = true
             )
-            val scope = rememberCoroutineScope()
+            val scopeInfo = rememberCoroutineScope()
             IconButton(
                 onClick = {
-                    scope.launch {
-                        state.show()
+                    scopeInfo.launch {
+                        stateInfo.show()
                     }
                 }
             ) {
@@ -397,8 +360,8 @@ private fun CardActions(
                 )
             }
             AnalyticInfo(
-                state = state,
-                scope = scope,
+                state = stateInfo,
+                scope = scopeInfo,
                 title = title,
                 viewModel = viewModel
             )
@@ -418,22 +381,29 @@ private fun CardActions(
                     }
                 }
             } else {
-                val filter = remember { mutableStateOf(false) }
+                val stateFilter = rememberModalBottomSheetState(
+                    skipPartiallyExpanded = true
+                )
+                val scopeFilter = rememberCoroutineScope()
                 IconButton(
-                    onClick = { filter.value = true }
+                    onClick = {
+                        scopeFilter.launch {
+                            stateFilter.show()
+                        }
+                    }
                 ) {
                     Icon(
                         imageVector = Icons.Default.FilterList,
                         contentDescription = null
                     )
                 }
-                // TODO: TO SET
-                /*FilterChartData(
-                    show = filter,
+                FilterChartData(
+                    state = stateFilter,
+                    scope = scopeFilter,
                     viewModel = viewModel,
                     title = title,
                     data = data
-                )*/
+                )
             }
         }
     }
@@ -445,7 +415,7 @@ private fun CardActions(
  *
  * @param show Whether to display the information of the analytic related to the card
  * @param title The title of the card
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  */
 @Composable
 @NonRestartableComposable
@@ -592,7 +562,7 @@ private fun getLineColor(
 /**
  * The layout to display when there are no available data for the [PerformanceCard] component
  *
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param title The title of the card
  * @param cardHeight The height of the card
  * @param icon The representative icon for the no available chart data

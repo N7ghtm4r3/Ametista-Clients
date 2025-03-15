@@ -67,7 +67,7 @@ private val fileLineRegex = "([\\w.]+\\.(kt|java):\\d+)".toRegex()
 /**
  * The component to represent the details of an [IssueAnalytic]
  *
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param issue The issue to represent
  */
 @Composable
@@ -117,7 +117,7 @@ fun Issue(
 /**
  * The component to display the stack trace of the error
  *
- * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.PlatformScreen] screen
+ * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  * @param expand Whether the component is visible or not
  * @param issue The issue to represent
  */

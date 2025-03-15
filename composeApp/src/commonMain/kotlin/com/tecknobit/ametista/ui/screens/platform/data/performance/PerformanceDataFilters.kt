@@ -1,16 +1,25 @@
 package com.tecknobit.ametista.ui.screens.platform.data.performance
 
+import com.tecknobit.ametistacore.FINAL_DATE_KEY
+import com.tecknobit.ametistacore.INITIAL_DATE_KEY
 import com.tecknobit.ametistacore.enums.PerformanceAnalyticType
 import com.tecknobit.ametistacore.enums.PerformanceAnalyticType.ISSUES_PER_SESSION
 import com.tecknobit.ametistacore.enums.PerformanceAnalyticType.LAUNCH_TIME
 import com.tecknobit.ametistacore.enums.PerformanceAnalyticType.NETWORK_REQUESTS
 import com.tecknobit.ametistacore.enums.PerformanceAnalyticType.TOTAL_ISSUES
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 // TODO: TO COMMENT
+@Serializable
 class PerformanceDataFilters(
+    @SerialName("LAUNCH_TIME")
     var launchTimeFilter: PerformanceFilter? = null,
+    @SerialName("NETWORK_REQUESTS")
     var networkRequestsFilter: PerformanceFilter? = null,
+    @SerialName("TOTAL_ISSUES")
     var totalIssuesFilter: PerformanceFilter? = null,
+    @SerialName("ISSUES_PER_SESSION")
     var issuesPerSessionFilter: PerformanceFilter? = null,
 ) {
 
@@ -50,8 +59,11 @@ class PerformanceDataFilters(
         }
     }
 
+    @Serializable
     data class PerformanceFilter(
+        @SerialName(INITIAL_DATE_KEY)
         val initialDate: Long,
+        @SerialName(FINAL_DATE_KEY)
         val finalDate: Long,
         val versions: List<String>,
     )

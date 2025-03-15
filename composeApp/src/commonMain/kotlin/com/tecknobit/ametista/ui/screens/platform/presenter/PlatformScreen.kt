@@ -278,10 +278,14 @@ class PlatformScreen(
                 LaunchedEffect(Unit) {
                     viewModel.getPerformanceAnalytics()
                 }
-                Performance(
-                    viewModel = viewModel,
-                    performanceData = performanceData.value!!
-                )
+                awaitNullItemLoaded(
+                    itemToWait = performanceData.value
+                ) { data ->
+                    Performance(
+                        viewModel = viewModel,
+                        performanceData = data
+                    )
+                }
             }
         }
     }

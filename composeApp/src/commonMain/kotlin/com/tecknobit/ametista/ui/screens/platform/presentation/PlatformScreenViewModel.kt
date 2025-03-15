@@ -14,6 +14,7 @@ import com.tecknobit.ametista.ui.screens.platform.data.issues.WebIssueAnalytic
 import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceData
 import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceData.PerformanceDataItem
 import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceDataFilters
+import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceDataFilters.PerformanceFilter
 import com.tecknobit.ametista.ui.screens.shared.presentations.ApplicationViewModel
 import com.tecknobit.ametistacore.enums.AnalyticType
 import com.tecknobit.ametistacore.enums.Platform
@@ -190,25 +191,23 @@ class PlatformScreenViewModel(
      *
      * @param data The specific analytic from fetch the versions
      */
-    fun getAvailableVersionsSamples(
+    suspend fun getAvailableVersionsSamples(
         data: PerformanceDataItem,
     ): SnapshotStateList<String> {
         val sampleVersions = HashSet<String>()
-        viewModelScope.launch {
-            requester.sendRequest(
-                request = {
-                    requester.getVersionSamples(
-                        applicationId = applicationId,
-                        platform = platform,
-                        analyticType = data.analyticType
-                    )
-                },
-                onSuccess = {
-                    sampleVersions.addAll(Json.decodeFromJsonElement(it.toResponseArrayData()))
-                },
-                onFailure = { sampleVersions.addAll(data.sampleVersions()) }
-            )
-        }
+        requester.sendRequest(
+            request = {
+                requester.getVersionSamples(
+                    applicationId = applicationId,
+                    platform = platform,
+                    analyticType = data.analyticType
+                )
+            },
+            onSuccess = {
+                sampleVersions.addAll(Json.decodeFromJsonElement(it.toResponseArrayData()))
+            },
+            onFailure = { sampleVersions.addAll(data.sampleVersions()) }
+        )
         return sampleVersions.toMutableStateList()
     }
 
@@ -227,7 +226,7 @@ class PlatformScreenViewModel(
     ) {
         performanceDataFilters.setFilter(
             data.analyticType,
-            PerformanceDataFilters.PerformanceFilter(
+            PerformanceFilter(
                 state.selectedStartDateMillis!!,
                 state.selectedEndDateMillis!!,
                 newVersionFilters

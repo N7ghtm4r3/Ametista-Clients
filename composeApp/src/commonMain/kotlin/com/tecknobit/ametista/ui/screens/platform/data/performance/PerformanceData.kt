@@ -50,7 +50,8 @@ data class PerformanceData(
          * @return whether there are no data available as `boolean`
          */
         fun noDataAvailable(): Boolean {
-            return data.isEmpty()
+            val values = data.values
+            return values.isEmpty() || values.first().isEmpty()
         }
 
         /**
@@ -65,9 +66,11 @@ data class PerformanceData(
             val endDate = getEndTemporalRangeDate()
             for (analytics in data.values) {
                 val checkTimestamp: Long = analytics[0].creationDate
-                if (checkTimestamp < startDate) startDate = checkTimestamp
+                if (checkTimestamp < startDate)
+                    startDate = checkTimestamp
             }
-            if (endDate - startDate >= MAX_TEMPORAL_RANGE) startDate = endDate - MAX_TEMPORAL_RANGE
+            if (endDate - startDate >= MAX_TEMPORAL_RANGE)
+                startDate = endDate - MAX_TEMPORAL_RANGE
             return startDate
         }
 
@@ -81,9 +84,9 @@ data class PerformanceData(
         fun getEndTemporalRangeDate(): Long {
             var endDate: Long = 0
             for (analytics in data.values) {
-                val lastIndex = analytics.size - 1
-                val checkTimestamp: Long = analytics[lastIndex].creationDate
-                if (checkTimestamp > endDate) endDate = checkTimestamp
+                val checkTimestamp: Long = analytics[analytics.lastIndex].creationDate
+                if (checkTimestamp > endDate)
+                    endDate = checkTimestamp
             }
             return endDate
         }
