@@ -98,6 +98,10 @@ dependencies {
   <img src="https://github.com/N7ghtm4r3/Ametista-Clients/blob/main/images/performances.png" alt="performances"/>
 </details>
 
+## Illustrations
+
+All the illustrations were sourced from [undraw](https://undraw.co/)!
+
 ## Authors
 
 - [@N7ghtm4r3](https://www.github.com/N7ghtm4r3)
