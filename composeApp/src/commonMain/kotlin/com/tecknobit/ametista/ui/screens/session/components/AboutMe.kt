@@ -50,7 +50,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -107,7 +106,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
  */
 @Composable
-@NonRestartableComposable
 fun AboutMe(
     viewModel: SessionScreenViewModel,
 ) {
@@ -140,7 +138,6 @@ fun AboutMe(
  * The details of the [localUser]
  */
 @Composable
-@NonRestartableComposable
 private fun UserDetails(
     viewModel: SessionScreenViewModel,
 ) {
@@ -183,7 +180,6 @@ private fun UserDetails(
  * The profile picker to allow the [localUser] to change his/her profile picture
  */
 @Composable
-@NonRestartableComposable
 private fun ProfilePicker(
     viewModel: SessionScreenViewModel,
 ) {
@@ -226,7 +222,6 @@ private fun ProfilePicker(
  * The actions can be execute on the [localUser] account such logout and delete account
  */
 @Composable
-@NonRestartableComposable
 private fun ActionButtons(
     viewModel: SessionScreenViewModel,
 ) {
@@ -283,7 +278,6 @@ private fun ActionButtons(
  * The settings section to customize the [localUser] experience
  */
 @Composable
-@NonRestartableComposable
 private fun Settings(
     viewModel: SessionScreenViewModel,
 ) {
@@ -373,7 +367,6 @@ private fun Settings(
     number = 1
 )
 @Composable
-@NonRestartableComposable
 private fun ChangeEmail(
     viewModel: SessionScreenViewModel,
 ) {
@@ -421,7 +414,6 @@ private fun ChangeEmail(
     number = 2
 )
 @Composable
-@NonRestartableComposable
 private fun ChangePassword(
     viewModel: SessionScreenViewModel,
 ) {
@@ -486,7 +478,6 @@ private fun ChangePassword(
     number = 3
 )
 @Composable
-@NonRestartableComposable
 private fun ChangeLanguage(
     viewModel: SessionScreenViewModel,
 ) {
@@ -517,7 +508,6 @@ private fun ChangeLanguage(
     number = 4
 )
 @Composable
-@NonRestartableComposable
 private fun ChangeTheme(
     viewModel: SessionScreenViewModel,
 ) {

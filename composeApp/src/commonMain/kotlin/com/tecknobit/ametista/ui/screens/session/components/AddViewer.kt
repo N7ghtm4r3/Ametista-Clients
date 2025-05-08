@@ -58,7 +58,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param scope The coroutine useful to manage the visibility of the [ModalBottomSheet]
  */
 @Composable
-@NonRestartableComposable
 fun AddViewer(
     viewModel: SessionScreenViewModel,
     state: SheetState,

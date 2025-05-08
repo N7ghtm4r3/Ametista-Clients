@@ -58,6 +58,7 @@ import com.tecknobit.ametista.ui.screens.platform.data.issues.IssueAnalytic
 import com.tecknobit.ametista.ui.screens.platform.data.issues.WebIssueAnalytic
 import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel
 import com.tecknobit.ametistacore.enums.Platform.WEB
+import com.tecknobit.equinoxcompose.utilities.LayoutCoordinator
 import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
 import com.tecknobit.equinoxcompose.utilities.copyOnClipboard
 import com.tecknobit.equinoxcore.time.TimeFormatter.toDateString
@@ -78,7 +79,6 @@ private val fileLineRegex = "([\\w.]+\\.(kt|java):\\d+)".toRegex()
  * @param issue The issue to represent
  */
 @Composable
-@NonRestartableComposable
 fun Issue(
     viewModel: PlatformScreenViewModel,
     issue: IssueAnalytic,
@@ -130,7 +130,6 @@ fun Issue(
  * @param issue The issue to represent
  */
 @Composable
-@NonRestartableComposable
 private fun IssueStackTrace(
     viewModel: PlatformScreenViewModel,
     state: SheetState,
@@ -341,7 +340,7 @@ private fun WebIssueBrowserInfo(
  * @param issue The issue to represent
  */
 @Composable
-@NonRestartableComposable
+@LayoutCoordinator
 private fun IssueDynamicData(
     issue: IssueAnalytic,
 ) {
@@ -375,7 +374,6 @@ private fun IssueDynamicData(
  * @param device The device to represent
  */
 @Composable
-@NonRestartableComposable
 private fun IssueDeviceExpandableData(
     device: AmetistaDevice,
 ) {
@@ -461,7 +459,6 @@ private fun IssueDeviceData(
  * @param data The issue data to display
  */
 @Composable
-@NonRestartableComposable
 private fun IssueSection(
     modifier: Modifier = Modifier,
     header: StringResource,

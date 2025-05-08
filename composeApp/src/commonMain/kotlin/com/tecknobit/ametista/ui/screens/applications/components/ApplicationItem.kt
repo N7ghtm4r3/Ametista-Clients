@@ -78,7 +78,6 @@ private const val ICONS_REGEX = "icons"
  * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen]
  */
 @Composable
-@NonRestartableComposable
 fun ApplicationItem(
     isTheFirst: Boolean = false,
     application: AmetistaApplication,
@@ -336,7 +335,6 @@ private fun ApplicationListItem(
  * @param application The application to display its icon
  */
 @Composable
-@NonRestartableComposable
 private fun ApplicationIcon(
     modifier: Modifier = Modifier,
     application: AmetistaApplication,

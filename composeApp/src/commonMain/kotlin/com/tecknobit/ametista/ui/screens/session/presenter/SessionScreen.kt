@@ -32,7 +32,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -51,6 +50,7 @@ import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewM
 import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewModel.SessionScreenSection.ABOUT_ME
 import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewModel.SessionScreenSection.MEMBERS
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
+import com.tecknobit.equinoxcompose.annotations.ScreenSection
 import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -140,7 +140,6 @@ class SessionScreen : EquinoxScreen<SessionScreenViewModel>(
      * The selector used to display the specific session section
      */
     @Composable
-    @NonRestartableComposable
     private fun SectionSelector() {
         SingleChoiceSegmentedButtonRow(
             modifier = Modifier
@@ -208,7 +207,7 @@ class SessionScreen : EquinoxScreen<SessionScreenViewModel>(
      * Wrapper method to display the specific session section
      */
     @Composable
-    @NonRestartableComposable
+    @ScreenSection
     private fun DisplaySection() {
         AnimatedContent(
             targetState = viewModel.sessionScreenSection

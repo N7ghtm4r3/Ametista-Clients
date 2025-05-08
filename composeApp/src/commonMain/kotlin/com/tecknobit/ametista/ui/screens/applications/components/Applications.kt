@@ -26,7 +26,6 @@ import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
  * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.applications.presenter.ApplicationsScreen]
  */
 @Composable
-@NonRestartableComposable
 fun Applications(
     viewModel: ApplicationsScreenViewModel,
 ) {

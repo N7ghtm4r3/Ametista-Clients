@@ -42,7 +42,6 @@ actual fun CheckForUpdatesAndLaunch() {
  *
  */
 @Composable
-@NonRestartableComposable
 actual fun CloseApplicationOnNavBack() {
     val context = LocalActivity.current!!
     BackHandler {

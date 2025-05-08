@@ -21,7 +21,6 @@ import java.util.Locale
  *
  */
 @Composable
-@NonRestartableComposable
 actual fun CheckForUpdatesAndLaunch() {
     AmetistaTheme {
         var launchApp by remember { mutableStateOf(true) }

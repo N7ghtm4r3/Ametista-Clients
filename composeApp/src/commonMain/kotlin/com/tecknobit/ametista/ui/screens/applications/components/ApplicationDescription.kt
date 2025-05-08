@@ -13,7 +13,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -24,8 +23,14 @@ import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
+/**
+ * Custom [ModalBottomSheet] used to display the description of the application
+ *
+ * @param state The state useful to manage the visibility of the [ModalBottomSheet]
+ * @param scope The coroutine useful to manage the visibility of the [ModalBottomSheet]
+ * @param application The application owner of the description
+ */
 @Composable
-@NonRestartableComposable
 fun ApplicationDescription(
     state: SheetState,
     scope: CoroutineScope,

@@ -38,7 +38,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -63,6 +62,7 @@ import com.tecknobit.ametista.ui.screens.upsertapplication.presentation.UpsertAp
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppDescriptionValid
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isAppNameValid
+import com.tecknobit.equinoxcompose.annotations.ScreenSection
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.equinoxcompose.session.ManagedContent
 import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
@@ -167,7 +167,7 @@ class UpsertApplicationScreen(
      * Form where the user can insert the application details to update or insert an application
      */
     @Composable
-    @NonRestartableComposable
+    @ScreenSection
     private fun Form() {
         Column(
             modifier = Modifier
@@ -219,7 +219,6 @@ class UpsertApplicationScreen(
      * The picker to choose the application icon
      */
     @Composable
-    @NonRestartableComposable
     private fun AppIconPicker() {
         val launcher = rememberFilePickerLauncher(
             type = PickerType.Image,
@@ -276,7 +275,6 @@ class UpsertApplicationScreen(
      * Custom [Button] to execute the update or insert action
      */
     @Composable
-    @NonRestartableComposable
     private fun UpsertButton() {
         Column(
             modifier = Modifier
@@ -338,7 +336,6 @@ class UpsertApplicationScreen(
      * correctly assign an initial value to the states
      */
     @Composable
-    @NonRestartableComposable
     override fun CollectStatesAfterLoading() {
         super.CollectStatesAfterLoading()
         viewModel.appIcon = remember {

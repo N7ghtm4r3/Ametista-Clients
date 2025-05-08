@@ -16,7 +16,6 @@ import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -47,7 +46,6 @@ val titleStyle = TextStyle(
  * @param onDelete The action to execute when the application has been deleted
  */
 @Composable
-@NonRestartableComposable
 fun DeleteApplication(
     show: MutableState<Boolean>,
     application: AmetistaApplication,
@@ -88,7 +86,6 @@ fun DeleteApplication(
  * @param show Whether the alert is shown
  */
 @Composable
-@NonRestartableComposable
 fun Logout(
     viewModel: SessionScreenViewModel,
     show: MutableState<Boolean>,
@@ -120,7 +117,6 @@ fun Logout(
  * @param show Whether the alert is shown
  */
 @Composable
-@NonRestartableComposable
 fun DeleteAccount(
     viewModel: SessionScreenViewModel,
     show: MutableState<Boolean>,

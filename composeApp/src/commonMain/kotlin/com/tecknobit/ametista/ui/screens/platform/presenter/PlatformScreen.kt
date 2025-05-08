@@ -35,7 +35,6 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -169,7 +168,6 @@ class PlatformScreen(
      * The custom [FloatingActionButton] used to manage the filtering operations
      */
     @Composable
-    @NonRestartableComposable
     private fun FilterButton() {
         AnimatedVisibility(
             visible = viewModel.analyticType.value == ISSUE,
@@ -206,7 +204,6 @@ class PlatformScreen(
      * The selector used to display the specific analytic data
      */
     @Composable
-    @NonRestartableComposable
     private fun AnalyticsSelector() {
         SingleChoiceSegmentedButtonRow {
             val lastEntry = entries.last()
@@ -257,7 +254,6 @@ class PlatformScreen(
      * The available analytic can be choose
      */
     @Composable
-    @NonRestartableComposable
     private fun AnalyticsItems() {
         Column(
             modifier = Modifier
@@ -296,7 +292,6 @@ class PlatformScreen(
      * List of the [IssueAnalytic] related to the application displayed
      */
     @Composable
-    @NonRestartableComposable
     private fun Issues() {
         PaginatedLazyColumn(
             modifier = Modifier

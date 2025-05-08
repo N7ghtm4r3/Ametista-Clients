@@ -187,21 +187,4 @@ class SessionScreenViewModel : EquinoxProfileViewModel(
         }
     }
 
-    /**
-     * Method to logout from the current session
-     *
-     * @param onLogout The action to execute when the logout has been executed
-     */
-    fun logout(
-        onLogout: () -> Unit,
-    ) {
-        clearSession {
-            requester.setUserCredentials(
-                userId = null,
-                userToken = null
-            )
-            onLogout.invoke()
-        }
-    }
-
 }

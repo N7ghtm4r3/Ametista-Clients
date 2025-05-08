@@ -46,6 +46,7 @@ import com.tecknobit.ametista.ui.screens.applications.components.PlatformsMenu
 import com.tecknobit.ametista.ui.screens.applications.components.ProfilePic
 import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
+import com.tecknobit.equinoxcompose.annotations.ScreenSection
 import com.tecknobit.equinoxcompose.components.DebouncedOutlinedTextField
 import com.tecknobit.equinoxcompose.session.ManagedContent
 import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
@@ -134,7 +135,7 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
      * @param paddingValues The padding to apply to the section
      */
     @Composable
-    @NonRestartableComposable
+    @ScreenSection
     private fun FiltersSection(
         paddingValues: PaddingValues
     ) {

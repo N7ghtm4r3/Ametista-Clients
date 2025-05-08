@@ -30,7 +30,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -220,7 +219,6 @@ class ApplicationScreen(
      * Section related to the [com.tecknobit.ametistacore.enums.Platform] connected of the [application]
      */
     @Composable
-    @NonRestartableComposable
     private fun PlatformsSections() {
         val platforms = application.value!!.platforms
         if (platforms.isNotEmpty()) {

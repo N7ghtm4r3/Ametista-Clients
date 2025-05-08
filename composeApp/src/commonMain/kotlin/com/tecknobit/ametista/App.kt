@@ -4,7 +4,6 @@ import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.dm_sans
 import ametista.composeapp.generated.resources.kanit
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.text.font.FontFamily
 import coil3.ImageLoader
 import coil3.compose.LocalPlatformContext
@@ -27,6 +26,10 @@ import com.tecknobit.ametistacore.enums.Platform
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.DEFAULT_VIEWER_PASSWORD
 import com.tecknobit.equinoxcore.helpers.IDENTIFIER_KEY
 import com.tecknobit.equinoxcore.helpers.NAME_KEY
+import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
+import com.tecknobit.equinoxcore.network.sendRequest
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import moe.tlaster.precompose.PreComposeApp
 import moe.tlaster.precompose.navigation.NavHost
 import moe.tlaster.precompose.navigation.Navigator
@@ -195,7 +198,6 @@ fun App() {
  *
  */
 @Composable
-@NonRestartableComposable
 expect fun CheckForUpdatesAndLaunch()
 
 /**
@@ -206,15 +208,29 @@ fun startSession() {
     requester = AmetistaRequester(
         host = localUser.hostAddress,
         userId = localUser.userId,
-        userToken = localUser.userToken
+        userToken = localUser.userToken,
+        debugMode = true //TODO: TO REMOVE
     )
     val route = if (!localUser.isAuthenticated)
         AUTH_SCREEN
-    else if (localUser.password == DEFAULT_VIEWER_PASSWORD)
-        CHANGE_VIEWER_PASSWORD_SCREEN
-    else
-        APPLICATIONS_SCREEN
-    setUserLanguage()
+    else {
+        MainScope().launch {
+            requester.sendRequest(
+                request = { getDynamicAccountData() },
+                onSuccess = { response ->
+                    localUser.updateDynamicAccountData(
+                        dynamicData = response.toResponseData()
+                    )
+                    setUserLanguage()
+                },
+                onFailure = { setUserLanguage() }
+            )
+        }
+        if (localUser.password == DEFAULT_VIEWER_PASSWORD)
+            CHANGE_VIEWER_PASSWORD_SCREEN
+        else
+            APPLICATIONS_SCREEN
+    }
     navigator.navigate(route)
 }
 
@@ -229,5 +245,4 @@ expect fun setUserLanguage()
  *
  */
 @Composable
-@NonRestartableComposable
 expect fun CloseApplicationOnNavBack()

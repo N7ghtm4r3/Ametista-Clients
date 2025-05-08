@@ -209,7 +209,6 @@ fun IssuesPerSessionsNumber(
  * @param noDataIcon The icon to display when there are no available data for the [LineChart]
  */
 @Composable
-@NonRestartableComposable
 private fun PerformanceCard(
     viewModel: PlatformScreenViewModel,
     title: StringResource,
@@ -333,7 +332,6 @@ private fun CardHeader(
  * @param data The performance data for the chart
  */
 @Composable
-@NonRestartableComposable
 private fun CardActions(
     modifier: Modifier,
     viewModel: PlatformScreenViewModel,
@@ -420,7 +418,6 @@ private fun CardActions(
  * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.platform.presenter.PlatformScreen] screen
  */
 @Composable
-@NonRestartableComposable
 private fun AnalyticInfo(
     state: SheetState,
     scope: CoroutineScope,
@@ -515,7 +512,6 @@ private fun ChartLegend(
  * @param sample The sample value (version of the application used as sample)
  */
 @Composable
-@NonRestartableComposable
 private fun LegendItem(
     index: Int,
     sample: String,
@@ -602,7 +598,6 @@ private fun NoChartData(
  * @param title The title value
  */
 @Composable
-@NonRestartableComposable
 private fun TitleText(
     modifier: Modifier = Modifier,
     title: StringResource,

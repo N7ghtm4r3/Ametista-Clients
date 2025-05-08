@@ -61,7 +61,6 @@ fun Performance(
  */
 @Composable
 @ExpandedClassComponent
-@NonRestartableComposable
 private fun PerformanceGrid(
     viewModel: PlatformScreenViewModel,
     performanceData: PerformanceData,
