@@ -91,7 +91,6 @@ import com.tecknobit.equinoxcompose.components.stepper.Step
 import com.tecknobit.equinoxcompose.components.stepper.StepContent
 import com.tecknobit.equinoxcompose.components.stepper.Stepper
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme
-import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen.Companion.MAX_CONTAINER_WIDTH
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.LANGUAGES_SUPPORTED
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
@@ -119,8 +118,9 @@ fun AboutMe(
     viewModel.theme = remember { mutableStateOf(localUser.theme) }
     Column(
         modifier = Modifier
+            // TODO: TO SET
             .widthIn(
-                max = MAX_CONTAINER_WIDTH
+                max = 1280.dp
             )
             .padding(
                 horizontal = 16.dp
@@ -300,7 +300,7 @@ private fun Settings(
                 dismissAction = { visible -> visible.value = false },
                 confirmAction = { visible ->
                     viewModel.changeEmail(
-                        onSuccess = {
+                        onChange = {
                             visible.value = false
                         }
                     )
@@ -317,7 +317,7 @@ private fun Settings(
                 dismissAction = { visible -> visible.value = false },
                 confirmAction = { visible ->
                     viewModel.changePassword(
-                        onSuccess = {
+                        onChange = {
                             visible.value = false
                         }
                     )
@@ -334,7 +334,7 @@ private fun Settings(
                 dismissAction = { visible -> visible.value = false },
                 confirmAction = { visible ->
                     viewModel.changeLanguage(
-                        onSuccess = {
+                        onChange = {
                             visible.value = false
                             navigator.navigate(SPLASHSCREEN)
                         }

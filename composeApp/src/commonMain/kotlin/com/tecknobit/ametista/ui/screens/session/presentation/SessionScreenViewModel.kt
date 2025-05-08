@@ -12,8 +12,8 @@ import com.tecknobit.equinoxcompose.viewmodels.EquinoxProfileViewModel
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isNameValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isSurnameValid
-import com.tecknobit.equinoxcore.network.Requester.Companion.sendPaginatedRequest
-import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
+import com.tecknobit.equinoxcore.network.sendPaginatedRequest
+import com.tecknobit.equinoxcore.network.sendRequest
 import com.tecknobit.equinoxcore.pagination.PaginatedResponse.Companion.DEFAULT_PAGE
 import io.github.ahmad_hamwi.compose.pagination.PaginationState
 import kotlinx.coroutines.launch

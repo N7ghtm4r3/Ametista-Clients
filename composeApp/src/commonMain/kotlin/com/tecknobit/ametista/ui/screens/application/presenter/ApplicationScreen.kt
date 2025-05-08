@@ -186,8 +186,9 @@ class ApplicationScreen(
                         ) {
                             Column(
                                 modifier = Modifier
+                                    // TODO: TO SET
                                     .widthIn(
-                                        max = MAX_CONTAINER_WIDTH
+                                        max = 1280.dp
                                     )
                             ) {
                                 ExpandableText(

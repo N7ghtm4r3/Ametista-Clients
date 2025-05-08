@@ -18,7 +18,6 @@ import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
 import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
 import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
 import com.tecknobit.equinoxcompose.components.EmptyState
-import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen.Companion.MAX_CONTAINER_WIDTH
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 
 /**
@@ -38,8 +37,9 @@ fun Applications(
     ) {
         PaginatedLazyColumn(
             modifier = Modifier
+                // TODO: TO SET
                 .widthIn(
-                    max = MAX_CONTAINER_WIDTH
+                    max = 1280.dp
                 )
                 .padding(
                     bottom = 16.dp

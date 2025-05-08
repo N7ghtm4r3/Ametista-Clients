@@ -151,8 +151,9 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
                     .padding(
                         all = 16.dp
                     )
+                    // TODO: TO SET
                     .widthIn(
-                        max = MAX_CONTAINER_WIDTH
+                        max = 1280.dp
                     ),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center

@@ -70,7 +70,6 @@ import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceDa
 import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel
 import com.tecknobit.ametistacore.MAX_VERSION_SAMPLES
 import com.tecknobit.equinoxcompose.components.EmptyListUI
-import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen.Companion.MAX_CONTAINER_WIDTH
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.models.DividerProperties
@@ -245,7 +244,10 @@ private fun PerformanceCard(
         Card(
             modifier = Modifier
                 .height(cardHeight)
-                .widthIn(MAX_CONTAINER_WIDTH)
+                // TODO: TO SET
+                .widthIn(
+                    max = 1280.dp
+                )
         ) {
             CardHeader(
                 viewModel = viewModel,

@@ -41,7 +41,6 @@ import com.tecknobit.ametista.ui.screens.session.presentation.SessionScreenViewM
 import com.tecknobit.ametista.ui.theme.AppTypography
 import com.tecknobit.equinoxcompose.components.EmptyState
 import com.tecknobit.equinoxcompose.session.ManagedContent
-import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen.Companion.MAX_CONTAINER_WIDTH
 import com.tecknobit.equinoxcompose.utilities.responsiveAssignment
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 import org.jetbrains.compose.resources.painterResource
@@ -67,8 +66,9 @@ fun SessionMembers(
             ) {
                 PaginatedLazyColumn(
                     modifier = Modifier
+                        // TODO: TO SET
                         .widthIn(
-                            max = MAX_CONTAINER_WIDTH
+                            max = 1280.dp
                         ),
                     paginationState = viewModel.membersState,
                     firstPageProgressIndicator = { FirstPageProgressIndicator() },

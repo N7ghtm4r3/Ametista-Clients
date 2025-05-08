@@ -67,6 +67,7 @@ import com.tecknobit.ametistacore.enums.Platform
 import com.tecknobit.equinoxcompose.components.EmptyState
 import com.tecknobit.equinoxcompose.session.ManagedContent
 import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
+import com.tecknobit.equinoxcompose.utilities.awaitNullItemLoaded
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 import org.jetbrains.compose.resources.stringResource
 
@@ -263,8 +264,9 @@ class PlatformScreen(
                 .padding(
                     vertical = 16.dp
                 )
+                // TODO: TO SET
                 .widthIn(
-                    max = MAX_CONTAINER_WIDTH
+                    max = 1280.dp
                 )
         ) {
             AnimatedVisibility(

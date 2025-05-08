@@ -171,8 +171,9 @@ class UpsertApplicationScreen(
     private fun Form() {
         Column(
             modifier = Modifier
+                // TODO: TO SET
                 .widthIn(
-                    max = MAX_CONTAINER_WIDTH
+                    max = 1280.dp
                 ),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp)

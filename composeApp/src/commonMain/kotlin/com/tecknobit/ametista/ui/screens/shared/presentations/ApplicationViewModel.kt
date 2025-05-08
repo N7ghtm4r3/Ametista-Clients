@@ -6,7 +6,7 @@ import com.tecknobit.ametista.requester
 import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
 import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
 import com.tecknobit.equinoxcore.annotations.Structure
-import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
+import com.tecknobit.equinoxcore.network.sendRequest
 import kotlinx.coroutines.launch
 
 /**

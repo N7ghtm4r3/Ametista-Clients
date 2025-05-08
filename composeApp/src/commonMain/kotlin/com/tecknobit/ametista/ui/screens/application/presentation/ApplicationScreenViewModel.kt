@@ -6,8 +6,8 @@ import com.tecknobit.ametista.ui.screens.application.presenter.ApplicationScreen
 import com.tecknobit.ametista.ui.screens.applications.data.AmetistaApplication
 import com.tecknobit.ametista.ui.screens.shared.presentations.ApplicationViewModel
 import com.tecknobit.equinoxcompose.session.setServerOfflineValue
-import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
 import com.tecknobit.equinoxcore.network.Requester.Companion.toResponseData
+import com.tecknobit.equinoxcore.network.sendRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
