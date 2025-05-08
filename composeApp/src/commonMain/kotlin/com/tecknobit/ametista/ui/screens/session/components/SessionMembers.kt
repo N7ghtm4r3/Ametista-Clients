@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMultiplatform::class)
+@file:OptIn(ExperimentalMultiplatform::class, ExperimentalComposeApi::class)
 
 package com.tecknobit.ametista.ui.screens.session.components
 
@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -22,6 +21,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +41,7 @@ import com.tecknobit.ametista.ui.theme.AppTypography
 import com.tecknobit.equinoxcompose.components.EmptyState
 import com.tecknobit.equinoxcompose.session.ManagedContent
 import com.tecknobit.equinoxcompose.utilities.responsiveAssignment
+import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -55,6 +56,8 @@ fun SessionMembers(
     viewModel: SessionScreenViewModel,
 ) {
     ManagedContent(
+        modifier = Modifier
+            .fillMaxSize(),
         viewModel = viewModel,
         content = {
             Column(
@@ -64,15 +67,14 @@ fun SessionMembers(
             ) {
                 PaginatedLazyColumn(
                     modifier = Modifier
-                        // TODO: TO SET
-                        .widthIn(
-                            max = 1280.dp
-                        ),
+                        .responsiveMaxWidth(),
                     paginationState = viewModel.membersState,
                     firstPageProgressIndicator = { FirstPageProgressIndicator() },
                     newPageProgressIndicator = { NewPageProgressIndicator() },
                     firstPageEmptyIndicator = {
                         EmptyState(
+                            containerModifier = Modifier
+                                .fillMaxSize(),
                             resource = Res.drawable.no_members,
                             contentDescription = "No members available",
                             resourceSize = responsiveAssignment(

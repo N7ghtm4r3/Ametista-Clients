@@ -1,4 +1,7 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMultiplatform::class)
+@file:OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalMultiplatform::class,
+    ExperimentalComposeApi::class
+)
 
 package com.tecknobit.ametista.ui.screens.platform.presenter
 
@@ -13,7 +16,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,6 +35,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
@@ -67,6 +70,7 @@ import com.tecknobit.equinoxcompose.components.EmptyState
 import com.tecknobit.equinoxcompose.session.ManagedContent
 import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
 import com.tecknobit.equinoxcompose.utilities.awaitNullItemLoaded
+import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 import org.jetbrains.compose.resources.stringResource
 
@@ -115,6 +119,8 @@ class PlatformScreen(
     override fun ArrangeScreenContent() {
         platform.Theme {
             ManagedContent(
+                modifier = Modifier
+                    .fillMaxSize(),
                 viewModel = viewModel,
                 content = {
                     Scaffold(
@@ -260,10 +266,7 @@ class PlatformScreen(
                 .padding(
                     vertical = 16.dp
                 )
-                // TODO: TO SET
-                .widthIn(
-                    max = 1280.dp
-                )
+                .responsiveMaxWidth()
         ) {
             AnimatedVisibility(
                 visible = viewModel.analyticType.value == ISSUE
@@ -301,6 +304,8 @@ class PlatformScreen(
             newPageProgressIndicator = { NewPageProgressIndicator() },
             firstPageEmptyIndicator = {
                 EmptyState(
+                    containerModifier = Modifier
+                        .fillMaxSize(),
                     resource = platform.noIssues(),
                     resourceSize = 300.dp,
                     contentDescription = "No issues reported",

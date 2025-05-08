@@ -99,7 +99,7 @@
     <string name="add_viewer_info">Questa operazione consente di creare un nuovo Viewer che può accedere a questa sessione. È necessario condividere le credenziali con questo/a utente che, al primo accesso, dovrà cambiare la password preimpostata (\"changeme\").</string>
     <string name="add">Aggiungi</string>
     <string name="change_preset_password">Modifica password di default</string>
-    <string name="change_preset_password_info">Cambia la password preimpostata con una che conoscete solo tu e tienila al sicuro.</string>
+    <string name="change_preset_password_info">Cambia la password preimpostata con una che conosci solo tu e tienila al sicuro.</string>
     <string name="retrieving_data">Recupero dati</string>
     <string name="stacktrace_copied">Stacktrace copiata!</string>
     <string name="delete">Elimina</string>

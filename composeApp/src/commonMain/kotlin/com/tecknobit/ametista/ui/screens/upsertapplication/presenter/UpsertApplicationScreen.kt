@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalComposeApi::class)
+
 package com.tecknobit.ametista.ui.screens.upsertapplication.presenter
 
 import ametista.composeapp.generated.resources.Res
@@ -20,7 +22,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,6 +39,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -67,6 +69,7 @@ import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.equinoxcompose.session.ManagedContent
 import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
 import com.tecknobit.equinoxcompose.utilities.responsiveAssignment
+import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.core.PickerMode
 import io.github.vinceglb.filekit.core.PickerType
@@ -108,6 +111,8 @@ class UpsertApplicationScreen(
     override fun ArrangeScreenContent() {
         AmetistaTheme {
             ManagedContent(
+                modifier = Modifier
+                    .fillMaxSize(),
                 viewModel = viewModel,
                 initialDelay = 500,
                 loadingRoutine = if (isUpdating) {
@@ -171,10 +176,7 @@ class UpsertApplicationScreen(
     private fun Form() {
         Column(
             modifier = Modifier
-                // TODO: TO SET
-                .widthIn(
-                    max = 1280.dp
-                ),
+                .responsiveMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {

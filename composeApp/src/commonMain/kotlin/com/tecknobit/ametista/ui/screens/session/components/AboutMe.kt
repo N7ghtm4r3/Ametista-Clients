@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -90,6 +89,7 @@ import com.tecknobit.equinoxcompose.components.stepper.Step
 import com.tecknobit.equinoxcompose.components.stepper.StepContent
 import com.tecknobit.equinoxcompose.components.stepper.Stepper
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme
+import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.LANGUAGES_SUPPORTED
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
@@ -116,10 +116,7 @@ fun AboutMe(
     viewModel.theme = remember { mutableStateOf(localUser.theme) }
     Column(
         modifier = Modifier
-            // TODO: TO SET
-            .widthIn(
-                max = 1280.dp
-            )
+            .responsiveMaxWidth()
             .padding(
                 horizontal = 16.dp
             ),

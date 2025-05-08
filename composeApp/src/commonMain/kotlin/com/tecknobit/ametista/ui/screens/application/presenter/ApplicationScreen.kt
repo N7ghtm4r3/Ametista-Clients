@@ -1,4 +1,7 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMultiplatform::class)
+@file:OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalMultiplatform::class,
+    ExperimentalComposeApi::class
+)
 
 package com.tecknobit.ametista.ui.screens.application.presenter
 
@@ -13,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -30,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -57,6 +60,7 @@ import com.tecknobit.equinoxcompose.components.ExpandableText
 import com.tecknobit.equinoxcompose.session.ManagedContent
 import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
 import com.tecknobit.equinoxcompose.utilities.responsiveAssignment
+import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 
@@ -90,6 +94,8 @@ class ApplicationScreen(
         AmetistaTheme {
             val isAdmin = localUser.isAdmin()
             ManagedContent(
+                modifier = Modifier
+                    .fillMaxSize(),
                 viewModel = viewModel,
                 initialDelay = 500,
                 loadingRoutine = { application.value != null },
@@ -185,10 +191,7 @@ class ApplicationScreen(
                         ) {
                             Column(
                                 modifier = Modifier
-                                    // TODO: TO SET
-                                    .widthIn(
-                                        max = 1280.dp
-                                    )
+                                    .responsiveMaxWidth()
                             ) {
                                 ExpandableText(
                                     containerModifier = Modifier
@@ -228,6 +231,8 @@ class ApplicationScreen(
             )
         } else {
             EmptyState(
+                containerModifier = Modifier
+                    .fillMaxSize(),
                 resource = Res.drawable.no_platforms,
                 contentDescription = "No platforms available",
                 resourceSize = responsiveAssignment(

@@ -1,15 +1,16 @@
-@file:OptIn(ExperimentalMultiplatform::class)
+@file:OptIn(ExperimentalMultiplatform::class, ExperimentalComposeApi::class)
 
 package com.tecknobit.ametista.ui.screens.applications.components
 
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.no_applications
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +19,7 @@ import com.tecknobit.ametista.ui.components.FirstPageProgressIndicator
 import com.tecknobit.ametista.ui.components.NewPageProgressIndicator
 import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
 import com.tecknobit.equinoxcompose.components.EmptyState
+import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
 import io.github.ahmad_hamwi.compose.pagination.PaginatedLazyColumn
 
 /**
@@ -36,13 +38,11 @@ fun Applications(
     ) {
         PaginatedLazyColumn(
             modifier = Modifier
-                // TODO: TO SET
-                .widthIn(
-                    max = 1280.dp
-                )
+                .responsiveMaxWidth()
                 .padding(
                     bottom = 16.dp
-                ),
+                )
+                .animateContentSize(),
             paginationState = viewModel.applicationsState,
             firstPageProgressIndicator = { FirstPageProgressIndicator() },
             newPageProgressIndicator = { NewPageProgressIndicator() },
@@ -69,6 +69,8 @@ fun Applications(
 @NonRestartableComposable
 private fun NoApplications() {
     EmptyState(
+        containerModifier = Modifier
+            .fillMaxSize(),
         resource = Res.drawable.no_applications,
         resourceSize = 275.dp,
         contentDescription = "No applications available"

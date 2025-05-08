@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeApi::class)
 
 package com.tecknobit.ametista.ui.screens.platform.components
 
@@ -23,7 +23,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -49,6 +48,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -70,6 +70,7 @@ import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceDa
 import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel
 import com.tecknobit.ametistacore.MAX_VERSION_SAMPLES
 import com.tecknobit.equinoxcompose.components.EmptyListUI
+import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
 import com.tecknobit.equinoxcore.annotations.Wrapper
 import ir.ehsannarmani.compose_charts.LineChart
 import ir.ehsannarmani.compose_charts.models.DividerProperties
@@ -243,10 +244,7 @@ private fun PerformanceCard(
         Card(
             modifier = Modifier
                 .height(cardHeight)
-                // TODO: TO SET
-                .widthIn(
-                    max = 1280.dp
-                )
+                .responsiveMaxWidth()
         ) {
             CardHeader(
                 viewModel = viewModel,
@@ -585,6 +583,8 @@ private fun NoChartData(
             data = data
         )
         EmptyListUI(
+            containerModifier = Modifier
+                .fillMaxSize(),
             icon = icon,
             subText = stringResource(string.no_events)
         )
