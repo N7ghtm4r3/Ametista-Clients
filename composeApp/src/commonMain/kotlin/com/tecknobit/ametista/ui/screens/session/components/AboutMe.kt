@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -50,7 +49,6 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -91,7 +89,7 @@ import com.tecknobit.equinoxcompose.components.stepper.Step
 import com.tecknobit.equinoxcompose.components.stepper.StepContent
 import com.tecknobit.equinoxcompose.components.stepper.Stepper
 import com.tecknobit.equinoxcompose.session.EquinoxLocalUser.ApplicationTheme
-import com.tecknobit.equinoxcompose.session.screens.EquinoxNoModelScreen.Companion.MAX_CONTAINER_WIDTH
+import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.LANGUAGES_SUPPORTED
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isPasswordValid
@@ -108,7 +106,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param viewModel The viewmodel related to the [com.tecknobit.ametista.ui.screens.session.presenter.SessionScreen]
  */
 @Composable
-@NonRestartableComposable
 fun AboutMe(
     viewModel: SessionScreenViewModel,
 ) {
@@ -119,9 +116,7 @@ fun AboutMe(
     viewModel.theme = remember { mutableStateOf(localUser.theme) }
     Column(
         modifier = Modifier
-            .widthIn(
-                max = MAX_CONTAINER_WIDTH
-            )
+            .responsiveMaxWidth()
             .padding(
                 horizontal = 16.dp
             ),
@@ -140,7 +135,6 @@ fun AboutMe(
  * The details of the [localUser]
  */
 @Composable
-@NonRestartableComposable
 private fun UserDetails(
     viewModel: SessionScreenViewModel,
 ) {
@@ -183,7 +177,6 @@ private fun UserDetails(
  * The profile picker to allow the [localUser] to change his/her profile picture
  */
 @Composable
-@NonRestartableComposable
 private fun ProfilePicker(
     viewModel: SessionScreenViewModel,
 ) {
@@ -226,7 +219,6 @@ private fun ProfilePicker(
  * The actions can be execute on the [localUser] account such logout and delete account
  */
 @Composable
-@NonRestartableComposable
 private fun ActionButtons(
     viewModel: SessionScreenViewModel,
 ) {
@@ -283,7 +275,6 @@ private fun ActionButtons(
  * The settings section to customize the [localUser] experience
  */
 @Composable
-@NonRestartableComposable
 private fun Settings(
     viewModel: SessionScreenViewModel,
 ) {
@@ -300,7 +291,7 @@ private fun Settings(
                 dismissAction = { visible -> visible.value = false },
                 confirmAction = { visible ->
                     viewModel.changeEmail(
-                        onSuccess = {
+                        onChange = {
                             visible.value = false
                         }
                     )
@@ -317,7 +308,7 @@ private fun Settings(
                 dismissAction = { visible -> visible.value = false },
                 confirmAction = { visible ->
                     viewModel.changePassword(
-                        onSuccess = {
+                        onChange = {
                             visible.value = false
                         }
                     )
@@ -334,7 +325,7 @@ private fun Settings(
                 dismissAction = { visible -> visible.value = false },
                 confirmAction = { visible ->
                     viewModel.changeLanguage(
-                        onSuccess = {
+                        onChange = {
                             visible.value = false
                             navigator.navigate(SPLASHSCREEN)
                         }
@@ -373,7 +364,6 @@ private fun Settings(
     number = 1
 )
 @Composable
-@NonRestartableComposable
 private fun ChangeEmail(
     viewModel: SessionScreenViewModel,
 ) {
@@ -421,7 +411,6 @@ private fun ChangeEmail(
     number = 2
 )
 @Composable
-@NonRestartableComposable
 private fun ChangePassword(
     viewModel: SessionScreenViewModel,
 ) {
@@ -486,7 +475,6 @@ private fun ChangePassword(
     number = 3
 )
 @Composable
-@NonRestartableComposable
 private fun ChangeLanguage(
     viewModel: SessionScreenViewModel,
 ) {
@@ -517,7 +505,6 @@ private fun ChangeLanguage(
     number = 4
 )
 @Composable
-@NonRestartableComposable
 private fun ChangeTheme(
     viewModel: SessionScreenViewModel,
 ) {

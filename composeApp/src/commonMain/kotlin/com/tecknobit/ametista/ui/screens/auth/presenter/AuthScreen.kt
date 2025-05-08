@@ -52,7 +52,6 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -71,6 +70,7 @@ import com.tecknobit.ametista.CloseApplicationOnNavBack
 import com.tecknobit.ametista.displayFontFamily
 import com.tecknobit.ametista.ui.screens.auth.presentation.AuthScreenViewModel
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
+import com.tecknobit.equinoxcompose.annotations.ScreenSection
 import com.tecknobit.equinoxcompose.components.EquinoxOutlinedTextField
 import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
 import com.tecknobit.equinoxcore.helpers.InputsValidator.Companion.isEmailValid
@@ -185,7 +185,7 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
      * Method to create the form where the user can fill it with his credentials
      */
     @Composable
-    @NonRestartableComposable
+    @ScreenSection
     private fun FormSection() {
         Column(
             modifier = Modifier
@@ -323,7 +323,6 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
      * the admin auth form
      */
     @Composable
-    @NonRestartableComposable
     private fun AdminSelector() {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -348,7 +347,6 @@ class AuthScreen : EquinoxScreen<AuthScreenViewModel>(
      * Dynamic layout to display the correct form based on the role selected by the user
      */
     @Composable
-    @NonRestartableComposable
     private fun LoginMode() {
         AnimatedVisibility(
             visible = viewModel.isAdmin.value

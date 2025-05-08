@@ -86,7 +86,6 @@ import org.jetbrains.compose.resources.stringResource
  * @param viewModel The viewmodel related to the screen which invoked this component
  */
 @Composable
-@NonRestartableComposable
 fun FilterDialog(
     show: MutableState<Boolean>,
     viewModel: PlatformScreenViewModel,
@@ -149,7 +148,6 @@ fun FilterDialog(
  * @param viewModel The viewmodel related to the screen which invoked this component
  */
 @Composable
-@NonRestartableComposable
 private fun FiltersInput(
     viewModel: PlatformScreenViewModel,
 ) {
@@ -182,7 +180,6 @@ private fun FiltersInput(
  * @param data The performance data to filter
  */
 @Composable
-@NonRestartableComposable
 fun FilterChartData(
     state: SheetState,
     scope: CoroutineScope,
@@ -359,7 +356,6 @@ private fun SelectedDateIndicator(
  * @param data The performance data to filter
  */
 @Composable
-@NonRestartableComposable
 private fun VersionsSelector(
     modifier: Modifier,
     viewModel: PlatformScreenViewModel,
@@ -442,7 +438,6 @@ private fun VersionsSelector(
  * @param text The header text
  */
 @Composable
-@NonRestartableComposable
 private fun FilterSectionHeader(
     text: StringResource,
 ) {
@@ -483,7 +478,6 @@ private fun getFilterTitle(
  * @param onConfirm The action to execute when the user confirm the action
  */
 @Composable
-@NonRestartableComposable
 private fun ActionButtons(
     modifier: Modifier,
     closeModal: () -> Unit,

@@ -32,7 +32,6 @@ import com.tecknobit.ametistacore.enums.Platform
  * @param viewModel The support viewmodel for the scree
  */
 @Composable
-@NonRestartableComposable
 fun PlatformsMenu(
     viewModel: ApplicationsScreenViewModel,
 ) {

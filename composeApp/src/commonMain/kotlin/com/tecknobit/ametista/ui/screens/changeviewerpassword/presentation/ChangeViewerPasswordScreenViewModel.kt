@@ -9,7 +9,7 @@ import com.tecknobit.ametista.navigator
 import com.tecknobit.ametista.requester
 import com.tecknobit.ametistacore.helpers.AmetistaValidator.isNewPasswordValid
 import com.tecknobit.equinoxcompose.viewmodels.EquinoxViewModel
-import com.tecknobit.equinoxcore.network.Requester.Companion.sendRequest
+import com.tecknobit.equinoxcore.network.sendRequest
 import kotlinx.coroutines.launch
 
 /**

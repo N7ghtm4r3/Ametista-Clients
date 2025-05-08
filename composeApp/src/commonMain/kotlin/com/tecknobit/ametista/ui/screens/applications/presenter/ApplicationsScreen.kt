@@ -1,4 +1,7 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMultiplatform::class)
+@file:OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalMultiplatform::class,
+    ExperimentalComposeApi::class
+)
 
 package com.tecknobit.ametista.ui.screens.applications.presenter
 
@@ -9,10 +12,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -28,6 +31,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -46,9 +50,11 @@ import com.tecknobit.ametista.ui.screens.applications.components.PlatformsMenu
 import com.tecknobit.ametista.ui.screens.applications.components.ProfilePic
 import com.tecknobit.ametista.ui.screens.applications.presentation.ApplicationsScreenViewModel
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
+import com.tecknobit.equinoxcompose.annotations.ScreenSection
 import com.tecknobit.equinoxcompose.components.DebouncedOutlinedTextField
 import com.tecknobit.equinoxcompose.session.ManagedContent
 import com.tecknobit.equinoxcompose.session.screens.EquinoxScreen
+import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -71,6 +77,8 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
         AmetistaTheme {
             CloseApplicationOnNavBack()
             ManagedContent(
+                modifier = Modifier
+                    .fillMaxSize(),
                 viewModel = viewModel,
                 content = {
                     Scaffold(
@@ -134,7 +142,7 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
      * @param paddingValues The padding to apply to the section
      */
     @Composable
-    @NonRestartableComposable
+    @ScreenSection
     private fun FiltersSection(
         paddingValues: PaddingValues
     ) {
@@ -151,9 +159,7 @@ class ApplicationsScreen : EquinoxScreen<ApplicationsScreenViewModel>(
                     .padding(
                         all = 16.dp
                     )
-                    .widthIn(
-                        max = MAX_CONTAINER_WIDTH
-                    ),
+                    .responsiveMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {

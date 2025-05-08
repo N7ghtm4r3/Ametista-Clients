@@ -22,7 +22,7 @@ plugins {
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_22)
+            jvmTarget.set(JvmTarget.JVM_18)
         }
     }
 
@@ -38,10 +38,8 @@ kotlin {
     }
 
     jvm("desktop") {
-        kotlin {
-            jvmToolchain {
-                languageVersion.set(JavaLanguageVersion.of(22))
-            }
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_18)
         }
     }
 
@@ -133,6 +131,8 @@ kotlin {
             }
         }
     }
+
+    jvmToolchain(18)
 }
 
 android {
@@ -147,8 +147,8 @@ android {
         applicationId = "com.tecknobit.ametista"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 4
-        versionName = "1.0.1"
+        versionCode = 5
+        versionName = "1.0.2"
     }
     packaging {
         resources {
@@ -161,8 +161,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_22
-        targetCompatibility = JavaVersion.VERSION_22
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
     buildFeatures {
         compose = true
@@ -192,7 +192,7 @@ compose.desktop {
                 "jdk.security.auth"
             )
             packageName = "Ametista"
-            packageVersion = "1.0.1"
+            packageVersion = "1.0.2"
             description =
                 "Self-hosted issues tracker and performance stats collector about Compose Multiplatform applications"
             copyright = "© 2025 Tecknobit"
@@ -210,9 +210,9 @@ compose.desktop {
                 iconFile.set(project.file("src/desktopMain/resources/logo.png"))
                 packageName = "com-tecknobit-ametista"
                 debMaintainer = "infotecknobitcompany@gmail.com"
-                appRelease = "1.0.1"
+                appRelease = "1.0.2"
                 appCategory = "PERSONALIZATION"
-                rpmLicenseType = "MIT"
+                rpmLicenseType = "APACHE2"
             }
         }
         buildTypes.release.proguard {

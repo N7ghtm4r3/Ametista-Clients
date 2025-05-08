@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.tecknobit.ametista.ui.screens.platform.data.performance.PerformanceData
 import com.tecknobit.ametista.ui.screens.platform.presentation.PlatformScreenViewModel
 import com.tecknobit.equinoxcompose.utilities.ExpandedClassComponent
+import com.tecknobit.equinoxcompose.utilities.LayoutCoordinator
 import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.COMPACT_CONTENT
 import com.tecknobit.equinoxcompose.utilities.ResponsiveClass.MEDIUM_CONTENT
 import com.tecknobit.equinoxcompose.utilities.ResponsiveClassComponent
@@ -26,7 +27,7 @@ import com.tecknobit.equinoxcompose.utilities.ResponsiveContent
  * @param performanceData The data about the performance
  */
 @Composable
-@NonRestartableComposable
+@LayoutCoordinator
 fun Performance(
     viewModel: PlatformScreenViewModel,
     performanceData: PerformanceData,
@@ -61,7 +62,6 @@ fun Performance(
  */
 @Composable
 @ExpandedClassComponent
-@NonRestartableComposable
 private fun PerformanceGrid(
     viewModel: PlatformScreenViewModel,
     performanceData: PerformanceData,

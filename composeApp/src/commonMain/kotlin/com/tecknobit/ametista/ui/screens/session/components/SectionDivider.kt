@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.Modifier
 import com.tecknobit.equinoxcompose.utilities.responsiveAssignment
 
@@ -15,7 +14,6 @@ import com.tecknobit.equinoxcompose.utilities.responsiveAssignment
  * each section
  */
 @Composable
-@NonRestartableComposable
 fun SectionDivider() {
     Row(
         modifier = Modifier
