@@ -266,7 +266,8 @@ class PlatformScreen(
                 .padding(
                     vertical = 16.dp
                 )
-                .responsiveMaxWidth()
+                .responsiveMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AnimatedVisibility(
                 visible = viewModel.analyticType.value == ISSUE
