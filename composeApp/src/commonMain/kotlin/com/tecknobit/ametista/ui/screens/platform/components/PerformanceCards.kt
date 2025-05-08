@@ -72,7 +72,10 @@ import com.tecknobit.ametistacore.MAX_VERSION_SAMPLES
 import com.tecknobit.equinoxcompose.components.EmptyListUI
 import com.tecknobit.equinoxcompose.utilities.responsiveMaxWidth
 import com.tecknobit.equinoxcore.annotations.Wrapper
+import com.tecknobit.equinoxcore.time.TimeFormatter.EUROPEAN_DATE_PATTERN
+import com.tecknobit.equinoxcore.time.TimeFormatter.toDateString
 import ir.ehsannarmani.compose_charts.LineChart
+import ir.ehsannarmani.compose_charts.extensions.format
 import ir.ehsannarmani.compose_charts.models.DividerProperties
 import ir.ehsannarmani.compose_charts.models.DrawStyle
 import ir.ehsannarmani.compose_charts.models.GridProperties
@@ -88,10 +91,18 @@ import org.jetbrains.compose.resources.stringResource
 import kotlin.math.round
 
 /**
- * `axisProperties** custom axis properties for the [PerformanceCard]
+ * `axisProperties` custom axis properties for the [PerformanceCard]
  */
 private val axisProperties = GridProperties.AxisProperties(
     enabled = false
+)
+
+/**
+ * `popupTextStyle` the style to apply to the text inside the popup
+ */
+private val popupTextStyle = TextStyle(
+    color = Color.White,
+    textAlign = TextAlign.Center
 )
 
 /**
@@ -109,18 +120,24 @@ fun LaunchTime(
     cardHeight: Dp = 200.dp,
     performanceData: PerformanceData,
 ) {
+    val launchTime = performanceData.launchTime
+    val versions = launchTime.sampleVersions().toList()
     PerformanceCard(
         viewModel = viewModel,
         title = string.launch_time,
         cardHeight = cardHeight,
-        data = performanceData.launchTime,
+        data = launchTime,
         popupProperties = PopupProperties(
-            textStyle = TextStyle(
-                color = Color.White
-            ),
-            contentBuilder = { value ->
+            textStyle = popupTextStyle,
+            contentBuilder = { dataIndex, valueIndex, value ->
+                val date = launchTime.getDateFromPoint(
+                    versions = versions,
+                    dataIndex = dataIndex,
+                    valueIndex = valueIndex
+                )
                 val factor = 100
-                "${round(value * factor) / factor} ms"
+                val millis = round(value * factor) / factor
+                "$date\n$millis ms"
             }
         ),
         noDataIcon = Icons.Default.RocketLaunch
@@ -142,11 +159,24 @@ fun NetworkRequests(
     cardHeight: Dp = 200.dp,
     performanceData: PerformanceData,
 ) {
+    val networkRequests = performanceData.networkRequests
+    val versions = networkRequests.sampleVersions().toList()
     PerformanceCard(
         viewModel = viewModel,
         title = string.network_requests,
         cardHeight = cardHeight,
-        data = performanceData.networkRequests,
+        data = networkRequests,
+        popupProperties = PopupProperties(
+            textStyle = popupTextStyle,
+            contentBuilder = { dataIndex, valueIndex, value ->
+                networkRequests.toPopupContent(
+                    versions = versions,
+                    dataIndex = dataIndex,
+                    valueIndex = valueIndex,
+                    value = value.toInt()
+                )
+            }
+        ),
         noDataIcon = ChartNetwork
     )
 }
@@ -166,11 +196,24 @@ fun IssuesNumber(
     cardHeight: Dp = 200.dp,
     performanceData: PerformanceData,
 ) {
+    val totalIssues = performanceData.totalIssues
+    val versions = totalIssues.sampleVersions().toList()
     PerformanceCard(
         viewModel = viewModel,
         title = string.issues_number,
         cardHeight = cardHeight,
-        data = performanceData.totalIssues,
+        data = totalIssues,
+        popupProperties = PopupProperties(
+            textStyle = popupTextStyle,
+            contentBuilder = { dataIndex, valueIndex, value ->
+                totalIssues.toPopupContent(
+                    versions = versions,
+                    dataIndex = dataIndex,
+                    valueIndex = valueIndex,
+                    value = value.toInt()
+                )
+            }
+        ),
         noDataIcon = Icons.Default.BugReport
     )
 }
@@ -190,13 +233,70 @@ fun IssuesPerSessionsNumber(
     cardHeight: Dp = 200.dp,
     performanceData: PerformanceData,
 ) {
+    val issuesPerSession = performanceData.issuesPerSession
+    val versions = issuesPerSession.sampleVersions().toList()
     PerformanceCard(
         viewModel = viewModel,
         title = string.issues_per_session,
         cardHeight = cardHeight,
-        data = performanceData.issuesPerSession,
+        data = issuesPerSession,
+        popupProperties = PopupProperties(
+            textStyle = popupTextStyle,
+            contentBuilder = { dataIndex, valueIndex, value ->
+                issuesPerSession.toPopupContent(
+                    versions = versions,
+                    dataIndex = dataIndex,
+                    valueIndex = valueIndex,
+                    value = value.format(2)
+                )
+            }
+        ),
         noDataIcon = Icons.Default.Report
     )
+}
+
+/**
+ * Method used to format the content to display on the popup
+ *
+ * @param versions The versions of the data samples
+ * @param dataIndex The index of the chart line
+ * @param valueIndex The index of the value displayed on the chart
+ * @param value The value of the performance stat
+ *
+ * @return the content formatted as [String]
+ */
+private fun PerformanceDataItem.toPopupContent(
+    versions: List<String>,
+    dataIndex: Int,
+    valueIndex: Int,
+    value: Any,
+): String {
+    val date = getDateFromPoint(
+        versions = versions,
+        dataIndex = dataIndex,
+        valueIndex = valueIndex
+    )
+    return "$date\n${value}"
+}
+
+/**
+ * Method used to get the date from a point of the chart
+ *
+ * @param versions The versions of the data samples
+ * @param dataIndex The index of the chart line
+ * @param valueIndex The index of the value displayed on the chart
+ *
+ * @return the date as [String]
+ */
+private fun PerformanceDataItem.getDateFromPoint(
+    versions: List<String>,
+    dataIndex: Int,
+    valueIndex: Int,
+): String {
+    return data[versions[dataIndex]]!![valueIndex].creationDate
+        .toDateString(
+            pattern = EUROPEAN_DATE_PATTERN
+        )
 }
 
 /**
@@ -256,7 +356,10 @@ private fun PerformanceCard(
             )
             LineChart(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .padding(
+                        bottom = 16.dp
+                    ),
                 gridProperties = GridProperties(
                     enabled = false,
                     xAxisProperties = axisProperties,
@@ -630,7 +733,7 @@ private fun loadChartData(
                 label = entry.key,
                 values = entry.value.map { analytic -> analytic.value },
                 color = SolidColor(lineColor),
-                firstGradientFillColor = lineColor.copy(alpha = .5f),
+                firstGradientFillColor = lineColor.copy(alpha = 0.7f),
                 secondGradientFillColor = Color.Transparent,
                 drawStyle = DrawStyle.Fill,
                 popupProperties = popupProperties
