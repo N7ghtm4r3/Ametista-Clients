@@ -1,7 +1,5 @@
 package com.tecknobit.ametista
 
-import OctocatKDUConfig
-import UpdaterDialog
 import ametista.composeapp.generated.resources.Res
 import ametista.composeapp.generated.resources.app_name
 import ametista.composeapp.generated.resources.app_version
@@ -12,6 +10,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.tecknobit.ametista.ui.theme.AmetistaTheme
+import com.tecknobit.octocatkdu.OctocatKDUConfig
+import com.tecknobit.octocatkdu.UpdaterDialog
 import org.jetbrains.compose.resources.stringResource
 import java.util.Locale
 

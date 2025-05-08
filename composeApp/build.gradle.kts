@@ -22,7 +22,7 @@ plugins {
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_22)
+            jvmTarget.set(JvmTarget.JVM_18)
         }
     }
 
@@ -38,10 +38,8 @@ kotlin {
     }
 
     jvm("desktop") {
-        kotlin {
-            jvmToolchain {
-                languageVersion.set(JavaLanguageVersion.of(22))
-            }
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_18)
         }
     }
 
@@ -133,6 +131,8 @@ kotlin {
             }
         }
     }
+
+    jvmToolchain(18)
 }
 
 android {
@@ -161,8 +161,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_22
-        targetCompatibility = JavaVersion.VERSION_22
+        sourceCompatibility = JavaVersion.VERSION_18
+        targetCompatibility = JavaVersion.VERSION_18
     }
     buildFeatures {
         compose = true
